@@ -7,7 +7,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ElkaUWP.Core.Views;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
@@ -40,7 +43,6 @@ namespace ElkaUWP.Core
         public App()
         {
             InitializeComponent();
-            
         }
 
         public override void ConfigureViewModelLocator()
@@ -111,6 +113,11 @@ namespace ElkaUWP.Core
             {
                 // TODO
             }
+
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
         /// <summary>
