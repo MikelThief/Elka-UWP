@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="ElkaUWP.LoginModule.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.2">
+            <ColorAnimationUsingKeyFrames
+                Storyboard.TargetName="contentArea"
+                Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                EnableDependentAnimation="True">
+                <!-- Left upper corner colors -->
+                <LinearColorKeyFrame KeyTime="0:0:0" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:1" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:2" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:3" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:4" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:5" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:6" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:7" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:8" Value="#963694"/>
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames
+                Storyboard.TargetName="contentArea"
+                Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                EnableDependentAnimation="True">
+                <!-- Right lower corner colors -->
+                <LinearColorKeyFrame KeyTime="0:0:0" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:1" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:2" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:3" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:4" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:5" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:6" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:7" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:8" Value="#22a7f0"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+
+    <Grid x:Name="contentArea">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0"/>
+                <GradientStop Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <StackPanel VerticalAlignment="Top" Margin="0,200,0,0" MinHeight="200">
+            <TextBlock Text="Lazarus" FontSize="100" HorizontalAlignment="Center" FontFamily="Segoe UI Light" VerticalAlignment="Top" Foreground="White" FontStyle="Italic"/>
+            <Button Margin="0,50,0,0" Content="Log in" HorizontalAlignment="Center" VerticalAlignment="Bottom" MinHeight="50"/>
+        </StackPanel>
+    </Grid>
+</Page>

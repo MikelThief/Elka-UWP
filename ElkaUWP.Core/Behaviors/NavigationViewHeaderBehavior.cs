@@ -17,50 +17,50 @@ namespace ElkaUWP.Core.Behaviors
 
         public object DefaultHeader
         {
-            get { return GetValue(DefaultHeaderProperty); }
-            set { SetValue(DefaultHeaderProperty, value); }
+            get { return GetValue(dp: DefaultHeaderProperty); }
+            set { SetValue(dp: DefaultHeaderProperty, value: value); }
         }
 
-        public static readonly DependencyProperty DefaultHeaderProperty = DependencyProperty.Register("DefaultHeader", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current.UpdateHeader()));
+        public static readonly DependencyProperty DefaultHeaderProperty = DependencyProperty.Register(name: "DefaultHeader", propertyType: typeof(object), ownerType: typeof(NavigationViewHeaderBehavior), typeMetadata: new PropertyMetadata(defaultValue: null, propertyChangedCallback: (d, e) => _current.UpdateHeader()));
 
         public static NavigationViewHeaderMode GetHeaderMode(Page item)
         {
-            return (NavigationViewHeaderMode)item.GetValue(HeaderModeProperty);
+            return (NavigationViewHeaderMode)item.GetValue(dp: HeaderModeProperty);
         }
 
         public static void SetHeaderMode(Page item, NavigationViewHeaderMode value)
         {
-            item.SetValue(HeaderModeProperty, value);
+            item.SetValue(dp: HeaderModeProperty, value: value);
         }
 
         public static readonly DependencyProperty HeaderModeProperty =
-            DependencyProperty.RegisterAttached("HeaderMode", typeof(bool), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(NavigationViewHeaderMode.Always, (d, e) => _current.UpdateHeader()));
+            DependencyProperty.RegisterAttached(name: "HeaderMode", propertyType: typeof(bool), ownerType: typeof(NavigationViewHeaderBehavior), defaultMetadata: new PropertyMetadata(defaultValue: NavigationViewHeaderMode.Always, propertyChangedCallback: (d, e) => _current.UpdateHeader()));
 
         public static object GetHeaderContext(Page item)
         {
-            return item.GetValue(HeaderContextProperty);
+            return item.GetValue(dp: HeaderContextProperty);
         }
 
         public static void SetHeaderContext(Page item, object value)
         {
-            item.SetValue(HeaderContextProperty, value);
+            item.SetValue(dp: HeaderContextProperty, value: value);
         }
 
         public static readonly DependencyProperty HeaderContextProperty =
-            DependencyProperty.RegisterAttached("HeaderContext", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current.UpdateHeader()));
+            DependencyProperty.RegisterAttached(name: "HeaderContext", propertyType: typeof(object), ownerType: typeof(NavigationViewHeaderBehavior), defaultMetadata: new PropertyMetadata(defaultValue: null, propertyChangedCallback: (d, e) => _current.UpdateHeader()));
 
         public static DataTemplate GetHeaderTemplate(Page item)
         {
-            return (DataTemplate)item.GetValue(HeaderTemplateProperty);
+            return (DataTemplate)item.GetValue(dp: HeaderTemplateProperty);
         }
 
         public static void SetHeaderTemplate(Page item, DataTemplate value)
         {
-            item.SetValue(HeaderTemplateProperty, value);
+            item.SetValue(dp: HeaderTemplateProperty, value: value);
         }
 
         public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current.UpdateHeaderTemplate()));
+            DependencyProperty.RegisterAttached(name: "HeaderTemplate", propertyType: typeof(DataTemplate), ownerType: typeof(NavigationViewHeaderBehavior), defaultMetadata: new PropertyMetadata(defaultValue: null, propertyChangedCallback: (d, e) => _current.UpdateHeaderTemplate()));
 
         public void Initialize(Frame frame)
         {
@@ -89,7 +89,7 @@ namespace ElkaUWP.Core.Behaviors
         {
             if (_currentPage != null)
             {
-                var headerMode = GetHeaderMode(_currentPage);
+                var headerMode = GetHeaderMode(item: _currentPage);
                 if (headerMode == NavigationViewHeaderMode.Never)
                 {
                     AssociatedObject.Header = null;
@@ -97,7 +97,7 @@ namespace ElkaUWP.Core.Behaviors
                 }
                 else
                 {
-                    var headerFromPage = GetHeaderContext(_currentPage);
+                    var headerFromPage = GetHeaderContext(item: _currentPage);
                     if (headerFromPage != null)
                     {
                         AssociatedObject.Header = headerFromPage;
@@ -123,7 +123,7 @@ namespace ElkaUWP.Core.Behaviors
         {
             if (_currentPage != null)
             {
-                var headerTemplate = GetHeaderTemplate(_currentPage);
+                var headerTemplate = GetHeaderTemplate(item: _currentPage);
                 AssociatedObject.HeaderTemplate = headerTemplate ?? DefaultHeaderTemplate;
             }
         }

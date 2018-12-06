@@ -23,15 +23,15 @@ namespace ElkaUWP.Core.Views
         public void SetRootFrame(Frame frame)
         {
             shellFrame.Content = frame;
-            navigationViewHeaderBehavior.Initialize(frame);
-            ViewModel.Initialize(frame, navigationView);
+            navigationViewHeaderBehavior.Initialize(frame: frame);
+            ViewModel.Initialize(frame: frame, navigationView: navigationView);
         }
 
         private void OnItemInvoked(WinUI.NavigationView sender, WinUI.NavigationViewItemInvokedEventArgs args)
         {
             // Workaround for Issue https://github.com/Microsoft/WindowsTemplateStudio/issues/2774
             // Using EventTriggerBehavior does not work on WinUI NavigationView ItemInvoked event in Release mode.
-            ViewModel.ItemInvokedCommand.Execute(args);
+            ViewModel.ItemInvokedCommand.Execute(parameter: args);
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿<prismUnity:PrismUnityApplication
+﻿<unity:PrismApplication
     x:Class="ElkaUWP.Core.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:prismUnity="using:Prism.Unity.Windows"
+    xmlns:unity="using:Prism.Unity"
     RequestedTheme="Light">
 
-    <prismUnity:PrismUnityApplication.Resources>
+    <unity:PrismApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources  xmlns="using:Microsoft.UI.Xaml.Controls"/>
@@ -17,5 +17,5 @@
                 <ResourceDictionary Source="/Styles/Page.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </prismUnity:PrismUnityApplication.Resources>
-</prismUnity:PrismUnityApplication>
+    </unity:PrismApplication.Resources>
+</unity:PrismApplication>
