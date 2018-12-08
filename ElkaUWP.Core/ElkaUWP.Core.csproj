@@ -103,7 +103,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.9</Version>
+      <Version>6.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.0</Version>
@@ -113,7 +113,7 @@
       <Version>2.0.181018003</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
-      <Version>7.2.0.703-ci</Version>
+      <Version>7.2.0.709-ci</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +191,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
+      <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
+      <Name>ElkaUWP.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElkaUWP.LoginModule\ElkaUWP.LoginModule.csproj">
       <Project>{9271b278-9c6b-45b4-95f2-a52643b26b9a}</Project>
       <Name>ElkaUWP.LoginModule</Name>

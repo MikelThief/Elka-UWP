@@ -126,24 +126,7 @@ namespace ElkaUWP.Core
         /// <param name="containerRegistry">Container against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
-            // don't forget there is no logger yet
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(RegisterRequiredTypes)}()");
-
-            // required for view-models
-
-            containerRegistry.Register<INavigationService, NavigationService>(name: NavigationServiceParameterName);
-
-            // register container itself
-            containerRegistry.RegisterInstance<IContainerExtension>(instance: (IContainerExtension) Container);
-
-            // standard prism services
-            containerRegistry.RegisterSingleton<ILoggerFacade, DebugLogger>();
-            containerRegistry.RegisterSingleton<IEventAggregator, EventAggregator>();
-            containerRegistry.RegisterSingleton<IModuleInitializer, ModuleInitializer>();
-            containerRegistry.RegisterSingleton<IModuleCatalog, ModuleCatalog>();
-            containerRegistry.RegisterSingleton<IModuleManager, ModuleManager>();
-
-
+            base.RegisterRequiredTypes(containerRegistry);
         }
 
         /*

@@ -47,7 +47,7 @@
                     <AcrylicBrush/>
                 </TextBlock.FocusVisualPrimaryBrush>
             </TextBlock>
-            <Button Margin="0,50,0,0" Content="Log in" HorizontalAlignment="Center" VerticalAlignment="Bottom" MinHeight="50"/>
+            <Button x:Uid="Sign_In" Content="Sign_In.Text" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" MinHeight="50"/>
         </StackPanel>
     </Grid>
 </Page>
