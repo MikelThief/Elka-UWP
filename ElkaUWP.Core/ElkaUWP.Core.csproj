@@ -113,7 +113,7 @@
       <Version>2.0.181018003</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
-      <Version>7.2.0.709-ci</Version>
+      <Version>7.2.0.757-ci</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

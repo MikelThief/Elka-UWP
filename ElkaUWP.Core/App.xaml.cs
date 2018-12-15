@@ -9,11 +9,13 @@ using ElkaUWP.Core.Views;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
+using ElkaUWP.Infrastructure;
 using ElkaUWP.LoginModule;
 using ElkaUWP.LoginModule.ViewModels;
 using ElkaUWP.LoginModule.Views;
@@ -33,7 +35,7 @@ namespace ElkaUWP.Core
     public sealed partial class App : PrismApplication
     {
         /// <summary>
-        /// <see cref="NavigationService"/> for navigating between main app views and login view
+        /// <see cref="NavigationService"/> for navigating between main app views and login views
         /// </summary>
         public static IPlatformNavigationService NavigationService { get; private set; }
 
@@ -53,7 +55,7 @@ namespace ElkaUWP.Core
                 var viewName = viewType.FullName;
                 viewName = viewName.Replace(oldValue: ".Views.", newValue: ".ViewModels.");
                 var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
-                var suffix = viewName.EndsWith(value: "View") ? "Model" : "ViewModel";
+                var suffix = (viewName.EndsWith(value: "View") || viewName.EndsWith(value: "Page")) ? "Model" : "ViewModel";
                 var viewModelName = string.Format(provider: CultureInfo.InvariantCulture, format: "{0}{1}, {2}", arg0: viewName, arg1: suffix, arg2: viewAssemblyName);
                 return viewModelName.GetType();
             });
@@ -88,6 +90,11 @@ namespace ElkaUWP.Core
                     Gesture.Forward, Gesture.Refresh);
             // set main window as a target for navigation service and then show window (activate)
             NavigationService.SetAsWindowContent(window: Window.Current, activate: true);
+
+            // set size for average 1920x1080 desktop. Note the size is in effective pixels
+            ApplicationView.PreferredLaunchViewSize = new Size(width: 500, height: 650);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(width: 400, height: 500));
         }
 
         /// <summary>
@@ -96,30 +103,51 @@ namespace ElkaUWP.Core
         /// <param name="container">Container registry used to register types</param>
         public override void RegisterTypes(IContainerRegistry container)
         {
-
+            container.Register<IPlatformNavigationService, NavigationService>();
         }
 
         /// <summary>
         /// Determines an action depending of the value of arguments passed while launching
+        /// Executed before <see cref="OnStartAsync"/>.
         /// </summary>
         /// <param name="args"></param>
         public override void OnStart(StartArgs args)
         {
-            if (args.StartKind == StartKinds.Launch)
-            {
-                NavigationService.NavigateAsync(name: nameof(LoginView));
-            }
-            else
-            {
-                // TODO
-            }
-
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
+        public override async Task OnStartAsync(StartArgs args)
+        {
+            switch (args.StartKind)
+            {
+                case StartKinds.Launch:
+                    await NavigationService.NavigateAsync(name: nameof(LoginView));
+                    break;
+                default:
+                {
+                    if (args.StartCause == StartCauses.Protocol)
+                    {
+                        if (args.Arguments is IProtocolActivatedEventArgs protocolArguments)
+                        {
+                            var navigationParameters = new NavigationParameters();
+
+                            navigationParameters.Add(Constants.USOSAPI_AUTHTOKEN, "");
+
+                            await NavigationService.NavigateAsync(name: nameof(LoginView), parameters: new NavigationParameters());
+                        }
+                    }
+                    else
+                    {
+                        // TODO
+                    }
+
+                    break;
+                }
+            }
+        }
         /// <summary>
         /// Register types without application cannot perform startup here.
         /// </summary>
@@ -128,73 +156,5 @@ namespace ElkaUWP.Core
         {
             base.RegisterRequiredTypes(containerRegistry);
         }
-
-        /*
-        [Windows.UI.Xaml.Data.Bindable]
-        
-        public sealed partial class App : PrismUnityApplication
-        {
-            public App()
-            {
-                InitializeComponent();
-            }
-    
-            protected override void ConfigureContainer()
-            {
-                // register a singleton using Container.RegisterType<IInterface, Type>(new ContainerControlledLifetimeManager());
-                base.ConfigureContainer();
-                Container.RegisterInstance<IResourceLoader>(new ResourceLoaderAdapter(new ResourceLoader()));
-            }
-    
-            protected override async Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
-            {
-                await LaunchApplicationAsync(PageTokens.LoginView, null);
-            }
-    
-            private async Task LaunchApplicationAsync(string page, object launchParam)
-            {
-                NavigationService.Navigate(page, launchParam);
-                Window.Current.Activate();
-                await Task.CompletedTask;
-            }
-    
-            protected override async Task OnActivateApplicationAsync(IActivatedEventArgs args)
-            {
-                await Task.CompletedTask;
-            }
-    
-            protected override async Task OnInitializeAsync(IActivatedEventArgs args)
-            {
-                // We are remapping the default ViewNamePage and ViewNamePageViewModel naming to ViewNamePage and ViewNameViewModel to
-                // gain better code reuse with other frameworks and pages within Windows Template Studio
-                ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
-                {
-                    var viewModelTypeName = string.Format(CultureInfo.InvariantCulture, "ElkaUWP.Core.ViewModels.{0}ViewModel, ElkaUWP.Core", viewType.Name.Substring(0, viewType.Name.Length - 4));
-                    return Type.GetType(viewModelTypeName);
-                });
-                await base.OnInitializeAsync(args);
-            }
-    
-            public void SetNavigationFrame(Frame frame)
-            {
-                var sessionStateService = Container.Resolve<ISessionStateService>();
-                CreateNavigationService(new FrameFacadeAdapter(frame), sessionStateService);
-            }
-    
-            protected override UIElement CreateShell(Frame rootFrame)
-            {
-                var shell = Container.Resolve<ShellPage>();
-                shell.SetRootFrame(rootFrame);
-                return shell;
-            }
-    
-            protected override IDeviceGestureService OnCreateDeviceGestureService()
-            {
-                var service = base.OnCreateDeviceGestureService();
-                service.UseTitleBarBackButton = false;
-                return service;
-            }
-        }
-        */
     }
 }

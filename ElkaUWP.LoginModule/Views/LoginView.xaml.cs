@@ -4,7 +4,7 @@ using ElkaUWP.LoginModule.ViewModels;
 
 namespace ElkaUWP.LoginModule.Views
 {
-    public sealed partial class LoginView : Page
+    public partial class LoginView : Page
     {
         private LoginViewModel ViewModel => DataContext as LoginViewModel;
 

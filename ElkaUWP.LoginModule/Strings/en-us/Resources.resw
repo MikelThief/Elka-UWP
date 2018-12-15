@@ -117,7 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Sign_In.Content" xml:space="preserve">
-    <value>Sign in</value>
+  <data name="App_Name_Title.Text" xml:space="preserve">
+    <value>Elka for Windows</value>
+    <comment>Displayed on the login screen</comment>
+  </data>
+  <data name="Login_Wizard_Message.Text" xml:space="preserve">
+    <value>This wizard will guide you through login process to USOS and Studia systems.</value>
+  </data>
+  <data name="Start_Wizard.Content" xml:space="preserve">
+    <value>Let's start!</value>
   </data>
 </root>

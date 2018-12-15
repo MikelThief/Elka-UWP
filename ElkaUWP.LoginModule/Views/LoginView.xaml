@@ -4,12 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:AppInfrastructure="using:ElkaUWP.Infrastructure"
     mc:Ignorable="d">
 
     <Page.Resources>
         <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.1">
             <ColorAnimationUsingKeyFrames
-                Storyboard.TargetName="contentArea"
+                Storyboard.TargetName="ContentArea"
                 Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
                 EnableDependentAnimation="True">
                 <!-- Left upper corner colors -->
@@ -18,7 +19,7 @@
                 <LinearColorKeyFrame KeyTime="0:0:2" Value="#963694"/>
             </ColorAnimationUsingKeyFrames>
             <ColorAnimationUsingKeyFrames
-                Storyboard.TargetName="contentArea"
+                Storyboard.TargetName="ContentArea"
                 Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
                 EnableDependentAnimation="True">
                 <!-- Right lower corner colors -->
@@ -27,27 +28,37 @@
                 <LinearColorKeyFrame KeyTime="0:0:2" Value="#22a7f0"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
-        <AcrylicBrush x:Key="contentAreaAcryllicBrush"
-                      BackgroundSource="HostBackdrop"
-                      TintColor="Black"
-                      TintOpacity="0.4"
-                      FallbackColor="{StaticResource SystemAccentColor}"/>
     </Page.Resources>
 
-    <Grid x:Name="contentArea">
+    <Grid x:Name="ContentArea">
         <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" ColorInterpolationMode="SRgbLinearInterpolation">
+            <LinearGradientBrush StartPoint="0.2,0.2" EndPoint="0.8,0.8" ColorInterpolationMode="SRgbLinearInterpolation">
                 <GradientStop Offset="0"/>
                 <GradientStop Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <StackPanel VerticalAlignment="Top" Margin="0,200,0,0" MinHeight="200">
-            <TextBlock Text="Lazarus" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" FontFamily="Segoe UI Light" VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" ManipulationMode="None">
-                <TextBlock.FocusVisualPrimaryBrush>
-                    <AcrylicBrush/>
-                </TextBlock.FocusVisualPrimaryBrush>
-            </TextBlock>
-            <Button x:Uid="Sign_In" Content="Sign_In.Text" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" MinHeight="50"/>
+        <StackPanel VerticalAlignment="Top" Margin="20,150,20,0" MinHeight="400" Spacing="10">
+            <TextBlock x:Uid="App_Name_Title" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
+            <TextBlock x:Uid="Login_Wizard_Message" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" />
+            <Button x:Uid="Start_Wizard" Command="{x:Bind ViewModel.StartWizardDelegateCommand}" Content="Sign_In" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonButtonBackgroundPointerOverBackground" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForeground" Color="FloralWhite"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Orchid"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="DarkOrchid"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrush" Color="FloralWhite"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Orchid"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="DarkOrchid"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

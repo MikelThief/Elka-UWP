@@ -14,7 +14,11 @@ namespace ElkaUWP.LoginModule
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<LoginView>();
+            containerRegistry.RegisterSingleton<UsosStepView>();
+
             containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>(key: nameof(LoginView));
+            containerRegistry.RegisterForNavigation<UsosStepView, UsosStepViewModel>(key: nameof(UsosStepView));
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
