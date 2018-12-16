@@ -50,13 +50,13 @@ namespace ElkaUWP.Core
         public override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewTypeToViewModelTypeResolver: viewType =>
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
             {
                 var viewName = viewType.FullName;
-                viewName = viewName.Replace(oldValue: ".Views.", newValue: ".ViewModels.");
+                viewName = viewName.Replace(".Views.", ".ViewModels.");
                 var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
-                var suffix = (viewName.EndsWith(value: "View") || viewName.EndsWith(value: "Page")) ? "Model" : "ViewModel";
-                var viewModelName = string.Format(provider: CultureInfo.InvariantCulture, format: "{0}{1}, {2}", arg0: viewName, arg1: suffix, arg2: viewAssemblyName);
+                var suffix = (viewName.EndsWith("View") || viewName.EndsWith("Page")) ? "Model" : "ViewModel";
+                var viewModelName = string.Format(CultureInfo.InvariantCulture, "{0}{1}, {2}", viewName, suffix, viewAssemblyName);
                 return viewModelName.GetType();
             });
         }
@@ -69,7 +69,7 @@ namespace ElkaUWP.Core
         {
             // Login module
             var loginModuleType = typeof(LoginModuleInitializer);
-            moduleCatalog.AddModule(new ModuleInfo()
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
                 ModuleName = loginModuleType.Name,
                 ModuleType = loginModuleType,
@@ -86,15 +86,15 @@ namespace ElkaUWP.Core
             var coreFrame = new Frame();
             // creating navigation service for this frame
             NavigationService =
-                (IPlatformNavigationService) Prism.Navigation.NavigationService.Create(frame: coreFrame, Gesture.Back,
+                (IPlatformNavigationService) Prism.Navigation.NavigationService.Create(coreFrame, Gesture.Back,
                     Gesture.Forward, Gesture.Refresh);
             // set main window as a target for navigation service and then show window (activate)
-            NavigationService.SetAsWindowContent(window: Window.Current, activate: true);
+            NavigationService.SetAsWindowContent(Window.Current, true);
 
             // set size for average 1920x1080 desktop. Note the size is in effective pixels
-            ApplicationView.PreferredLaunchViewSize = new Size(width: 500, height: 650);
+            ApplicationView.PreferredLaunchViewSize = new Size(500, 650);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(width: 400, height: 500));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(400, 500));
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace ElkaUWP.Core
         /// <param name="container">Container registry used to register types</param>
         public override void RegisterTypes(IContainerRegistry container)
         {
-            container.Register<IPlatformNavigationService, NavigationService>();
+
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace ElkaUWP.Core
                         {
                             var navigationParameters = new NavigationParameters();
 
-                            navigationParameters.Add(Constants.USOSAPI_AUTHTOKEN, "");
+                            navigationParameters.Add(Constants.USOS_API_AUTH_TOKEN, "");
 
                             await NavigationService.NavigateAsync(name: nameof(LoginView), parameters: new NavigationParameters());
                         }

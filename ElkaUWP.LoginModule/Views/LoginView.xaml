@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.1">
+        <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.12">
             <ColorAnimationUsingKeyFrames
                 Storyboard.TargetName="ContentArea"
                 Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
@@ -37,10 +37,10 @@
                 <GradientStop Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <StackPanel VerticalAlignment="Top" Margin="20,150,20,0" MinHeight="400" Spacing="10">
-            <TextBlock x:Uid="App_Name_Title" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
-            <TextBlock x:Uid="Login_Wizard_Message" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" />
-            <Button x:Uid="Start_Wizard" Command="{x:Bind ViewModel.StartWizardDelegateCommand}" Content="Sign_In" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
+        <StackPanel VerticalAlignment="Top" Margin="20,150,20,0" Spacing="10">
+            <TextBlock x:Uid="App_Name_Title_TextBlock" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
+            <TextBlock x:Uid="Login_Wizard_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" />
+            <Button x:Uid="Start_Wizard_Button" Command="{x:Bind ViewModel.StartWizardDelegateCommand}" Content="Sign_In" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
                 <Button.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>

@@ -10,15 +10,15 @@ namespace ElkaUWP.Core.Helpers
     {
         public static string GetNavigateTo(NavigationViewItem item)
         {
-            return (string)item.GetValue(dp: NavigateToProperty);
+            return (string)item.GetValue(NavigateToProperty);
         }
 
         public static void SetNavigateTo(NavigationViewItem item, string value)
         {
-            item.SetValue(dp: NavigateToProperty, value: value);
+            item.SetValue(NavigateToProperty, value);
         }
 
         public static readonly DependencyProperty NavigateToProperty =
-            DependencyProperty.RegisterAttached(name: "NavigateTo", propertyType: typeof(string), ownerType: typeof(NavHelper), defaultMetadata: new PropertyMetadata(defaultValue: null));
+            DependencyProperty.RegisterAttached("NavigateTo", propertyType: typeof(string), ownerType: typeof(NavHelper), defaultMetadata: new PropertyMetadata(null));
     }
 }

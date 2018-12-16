@@ -5,10 +5,62 @@
     xmlns:local="using:ElkaUWP.LoginModule.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid>
+    <Page.Resources>
+        <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.12">
+            <ColorAnimationUsingKeyFrames
+                Storyboard.TargetName="ContentArea"
+                Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                EnableDependentAnimation="True">
+                <!-- Left upper corner colors -->
+                <LinearColorKeyFrame KeyTime="0:0:0" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:1" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:2" Value="#963694"/>
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames
+                Storyboard.TargetName="ContentArea"
+                Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                EnableDependentAnimation="True">
+                <!-- Right lower corner colors -->
+                <LinearColorKeyFrame KeyTime="0:0:0" Value="#22a7f0"/>
+                <LinearColorKeyFrame KeyTime="0:0:1" Value="#963694"/>
+                <LinearColorKeyFrame KeyTime="0:0:2" Value="#22a7f0"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
 
+    <Grid x:Name="ContentArea">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.2,0.2" EndPoint="0.8,0.8" ColorInterpolationMode="SRgbLinearInterpolation">
+                <GradientStop Offset="0"/>
+                <GradientStop Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <StackPanel Grid.ColumnSpan="2"  VerticalAlignment="Stretch" Margin="20,150,20,0" Spacing="10">
+            <TextBlock x:Uid="Usos_Step_Title_TextBlock" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
+            <TextBlock x:Uid="Usos_Step_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="White" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" />
+            <Button x:Uid="Usos_Step_Log_In_Button" Command="{x:Bind ViewModel.StartUsosAuthorizationProcessCommand}" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonButtonBackgroundPointerOverBackground" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForeground" Color="FloralWhite"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Orchid"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="DarkOrchid"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrush" Color="FloralWhite"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Orchid"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="DarkOrchid"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+
+            <TextBlock x:Uid="Step_1_TextBlock" Padding="20" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -11,8 +11,10 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ElkaUWP.LoginModule.ViewModels;
+using Prism.Mvvm;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,6 +30,8 @@ namespace ElkaUWP.LoginModule.Views
         public UsosStepView()
         {
             this.InitializeComponent();
+            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
+            ((Storyboard)Resources["GradientAnimation"]).Begin();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ElkaUWP.Core.Helpers
 
         public static string GetLocalized(this string resourceKey)
         {
-            return _resLoader.GetString(resource: resourceKey);
+            return _resLoader.GetString(resourceKey);
         }
     }
 }

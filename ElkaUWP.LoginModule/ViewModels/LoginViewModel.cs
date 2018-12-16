@@ -1,5 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using ElkaUWP.LoginModule.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -13,19 +15,22 @@ namespace ElkaUWP.LoginModule.ViewModels
 
         private INavigationService _navigationService;
 
+        
+
         public LoginViewModel()
         {
-            StartWizardDelegateCommand = new DelegateCommand(executeMethod: NavigateToUsosStep);
+            StartWizardDelegateCommand = new DelegateCommand(NavigateToUsosStep);
         }
 
         private async void NavigateToUsosStep()
         {
-            await _navigationService.NavigateAsync(name: nameof(UsosStepView));
+            await _navigationService.NavigateAsync(path: nameof(UsosStepView), parameter: new NavigationParameters(), infoOverride: new SlideNavigationTransitionInfo()
+                { Effect = SlideNavigationTransitionEffect.FromRight }) ;
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
-            
+
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
