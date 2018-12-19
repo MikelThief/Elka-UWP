@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Web;
 using ElkaUWP.Core.Views;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -37,7 +39,7 @@ namespace ElkaUWP.Core
         /// <summary>
         /// <see cref="NavigationService"/> for navigating between main app views and login views
         /// </summary>
-        public static IPlatformNavigationService NavigationService { get; private set; }
+        public static INavigationService NavigationService { get; private set; }
 
         /// <summary>
         /// Entry point to the application
@@ -132,6 +134,10 @@ namespace ElkaUWP.Core
                     {
                         if (args.Arguments is IProtocolActivatedEventArgs protocolArguments)
                         {
+                            var callbackQuery = protocolArguments.Uri.Query;
+
+                            var responseParameters = HttpUtility.ParseQueryString(query: callbackQuery);
+
                             var navigationParameters = new NavigationParameters();
 
                             navigationParameters.Add(Constants.USOS_API_AUTH_TOKEN, "");

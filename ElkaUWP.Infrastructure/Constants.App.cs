@@ -8,6 +8,7 @@ namespace ElkaUWP.Infrastructure
 {
     public static partial class Constants
     {
-        public static string PROTOCOL_URI = "elka://";
+        public static string PROTOCOL_URI = "elka:";
+        public static string MASTER_NAVIGATION_SERVICE = "MasterNavigationService";
     }
 }
