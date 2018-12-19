@@ -5,14 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ElkaUWP.Infrastructure")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ElkaUWP.Infrastructure")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTitle(title: "ElkaUWP.Infrastructure")]
+[assembly: AssemblyDescription(description: "")]
+[assembly: AssemblyConfiguration(configuration: "")]
+[assembly: AssemblyCompany(company: "")]
+[assembly: AssemblyProduct(product: "ElkaUWP.Infrastructure")]
+[assembly: AssemblyCopyright(copyright: "Copyright ©  2018")]
+[assembly: AssemblyTrademark(trademark: "")]
+[assembly: AssemblyCulture(culture: "")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -24,6 +24,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: ComVisible(false)]
+[assembly: AssemblyVersion(version: "1.0.0.0")]
+[assembly: AssemblyFileVersion(version: "1.0.0.0")]
+[assembly: ComVisible(visibility: false)]

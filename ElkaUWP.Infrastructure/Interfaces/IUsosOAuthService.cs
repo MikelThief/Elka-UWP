@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ElkaUWP.Infrastructure.Interfaces
 {
-    public interface IUsosAuthService
+    public interface IUsosOAuthService
     {
         Task AuthorizeAsync();
+        Task GetAccessAsync(string oauthToken, string oauthVerifier);
     }
 }

@@ -25,15 +25,15 @@ namespace ElkaUWP.LoginModule.ViewModels
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader;
 
-        private readonly IUsosAuthService _usosAuthService;
+        private readonly IUsosOAuthService _usosOAuthService;
 
         public AsyncCommand StartUsosAuthorizationProcessCommand { get; private set; }
 
-        public UsosStepViewModel(IUsosAuthService usosAuthService)
+        public UsosStepViewModel(IUsosOAuthService usosOAuthService)
         {
-            StartUsosAuthorizationProcessCommand = new AsyncCommand(StartUsosAuthorizationProcessAsync);
+            StartUsosAuthorizationProcessCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
             _resourceLoader = ResourceLoader.GetForCurrentView(name: typeof(LoginModuleInitializer).Namespace + "/Resources");
-            _usosAuthService = usosAuthService;
+            _usosOAuthService = usosOAuthService;
         }
 
         private async Task StartUsosAuthorizationProcessAsync()
@@ -50,7 +50,7 @@ namespace ElkaUWP.LoginModule.ViewModels
                 return;
             }
 
-            await _usosAuthService.AuthorizeAsync();
+            await _usosOAuthService.AuthorizeAsync();
 
 
 

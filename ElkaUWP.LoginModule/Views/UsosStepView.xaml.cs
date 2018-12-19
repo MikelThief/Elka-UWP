@@ -31,7 +31,7 @@ namespace ElkaUWP.LoginModule.Views
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
-            ((Storyboard)Resources["GradientAnimation"]).Begin();
+            ((Storyboard)Resources[key: "GradientAnimation"]).Begin();
         }
     }
 }

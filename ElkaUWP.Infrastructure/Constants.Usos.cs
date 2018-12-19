@@ -8,6 +8,8 @@ namespace ElkaUWP.Infrastructure
 {
     public static partial class Constants
     {
+        public static string USOS_SYSTEM_TOKEN = "USOS";
+
         public static string USOSAPI_BASE_URL = "usos.pw.edu.pl/";
 
         public static string USOS_CONSUMER_KEY = "rG4x8AGxGAkZY7BTnuDv";

@@ -19,7 +19,7 @@ namespace ElkaUWP.LoginModule.ViewModels
 
         public LoginViewModel()
         {
-            StartWizardDelegateCommand = new DelegateCommand(NavigateToUsosStep);
+            StartWizardDelegateCommand = new DelegateCommand(executeMethod: NavigateToUsosStep);
         }
 
         private async void NavigateToUsosStep()

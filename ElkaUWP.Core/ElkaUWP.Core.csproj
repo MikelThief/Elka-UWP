@@ -178,9 +178,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ResourceExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Modules\" />
   </ItemGroup>
   <ItemGroup>

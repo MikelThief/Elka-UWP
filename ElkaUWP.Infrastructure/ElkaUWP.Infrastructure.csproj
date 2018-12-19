@@ -122,17 +122,25 @@
   <ItemGroup>
     <Compile Include="Constants.App.cs" />
     <Compile Include="Constants.Usos.cs" />
-    <Compile Include="Interfaces\IUsosAuthService.cs" />
+    <Compile Include="Extensions\SettingsStorageExtensions.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Interfaces\ICredentialsService.cs" />
+    <Compile Include="Interfaces\IUsosOAuthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\PasswordVaultExtensions.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.Infrastructure.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.2</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ControlsAddons\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ResourceDictionaries\Buttons.xaml">

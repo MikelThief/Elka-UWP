@@ -18,6 +18,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Interfaces;
 using ElkaUWP.LoginModule;
 using ElkaUWP.LoginModule.ViewModels;
 using ElkaUWP.LoginModule.Views;
@@ -52,13 +53,13 @@ namespace ElkaUWP.Core
         public override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewTypeToViewModelTypeResolver: viewType =>
             {
                 var viewName = viewType.FullName;
-                viewName = viewName.Replace(".Views.", ".ViewModels.");
+                viewName = viewName.Replace(oldValue: ".Views.", newValue: ".ViewModels.");
                 var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
-                var suffix = (viewName.EndsWith("View") || viewName.EndsWith("Page")) ? "Model" : "ViewModel";
-                var viewModelName = string.Format(CultureInfo.InvariantCulture, "{0}{1}, {2}", viewName, suffix, viewAssemblyName);
+                var suffix = (viewName.EndsWith(value: "View") || viewName.EndsWith(value: "Page")) ? "Model" : "ViewModel";
+                var viewModelName = string.Format(provider: CultureInfo.InvariantCulture, format: "{0}{1}, {2}", arg0: viewName, arg1: suffix, arg2: viewAssemblyName);
                 return viewModelName.GetType();
             });
         }
@@ -88,15 +89,15 @@ namespace ElkaUWP.Core
             var coreFrame = new Frame();
             // creating navigation service for this frame
             NavigationService =
-                (IPlatformNavigationService) Prism.Navigation.NavigationService.Create(coreFrame, Gesture.Back,
+                (IPlatformNavigationService) Prism.Navigation.NavigationService.Create(frame: coreFrame, Gesture.Back,
                     Gesture.Forward, Gesture.Refresh);
             // set main window as a target for navigation service and then show window (activate)
-            NavigationService.SetAsWindowContent(Window.Current, true);
+            NavigationService.SetAsWindowContent(window: Window.Current, activate: true);
 
             // set size for average 1920x1080 desktop. Note the size is in effective pixels
-            ApplicationView.PreferredLaunchViewSize = new Size(500, 650);
+            ApplicationView.PreferredLaunchViewSize = new Size(width: 500, height: 650);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(400, 500));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: 400, height: 500));
         }
 
         /// <summary>
@@ -128,30 +129,39 @@ namespace ElkaUWP.Core
                 case StartKinds.Launch:
                     await NavigationService.NavigateAsync(name: nameof(LoginView));
                     break;
-                default:
+                case StartKinds.Activate:
                 {
                     if (args.StartCause == StartCauses.Protocol)
                     {
                         if (args.Arguments is IProtocolActivatedEventArgs protocolArguments)
                         {
+                            var usosOAuthService = Container.Resolve<IUsosOAuthService>();
+
                             var callbackQuery = protocolArguments.Uri.Query;
 
                             var responseParameters = HttpUtility.ParseQueryString(query: callbackQuery);
 
+                            var oauthVerifier = responseParameters.Get(name: "oauth_verifier");
+                            var authorizedOauthToken = responseParameters.Get(name: "oauth_token");
+
+                            await usosOAuthService.GetAccessAsync(oauthToken: authorizedOauthToken, oauthVerifier: oauthVerifier);
+
                             var navigationParameters = new NavigationParameters();
 
-                            navigationParameters.Add(Constants.USOS_API_AUTH_TOKEN, "");
-
-                            await NavigationService.NavigateAsync(name: nameof(LoginView), parameters: new NavigationParameters());
+                            await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: new NavigationParameters());
                         }
-                    }
-                    else
-                    {
-                        // TODO
                     }
 
                     break;
                 }
+                case StartKinds.Prelaunch:
+                    break;
+                case StartKinds.Background:
+                    break;
+                case StartKinds.Resume:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         /// <summary>
@@ -160,7 +170,7 @@ namespace ElkaUWP.Core
         /// <param name="containerRegistry">Container against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
-            base.RegisterRequiredTypes(containerRegistry);
+            base.RegisterRequiredTypes(containerRegistry: containerRegistry);
         }
     }
 }
