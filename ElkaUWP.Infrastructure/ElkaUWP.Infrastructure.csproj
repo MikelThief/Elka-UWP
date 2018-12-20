@@ -124,7 +124,6 @@
     <Compile Include="Constants.Usos.cs" />
     <Compile Include="Extensions\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
-    <Compile Include="Interfaces\ICredentialsService.cs" />
     <Compile Include="Interfaces\IUsosOAuthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\PasswordVaultExtensions.cs" />

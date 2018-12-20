@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.Security.Credentials;
+using Windows.Storage;
 
 namespace ElkaUWP.Infrastructure.Extensions
 {
@@ -17,21 +19,47 @@ namespace ElkaUWP.Infrastructure.Extensions
             if (credential == null)
                 throw new ArgumentNullException(paramName: nameof(credential));
 
-            var credentials = vault.FindAllByResource(resource: credential.Resource);
+            var settings = ApplicationData.Current.RoamingSettings;
 
-            foreach (var credentialItem in credentials)
+            settings.SaveString(key: "oauth_token", value: credential.UserName);
+
+            IReadOnlyList <PasswordCredential> credentials = null;
+
+            try
             {
-                vault.Remove(credential: credentialItem);
+                credentials = vault.FindAllByResource(resource: credential.Resource);
+            }
+            catch (Exception)
+            {
+                // let it silently die
+                // i.e. no associated records were found
+            }
+
+            if (credentials != null)
+            {
+                foreach (var credentialItem in credentials)
+                {
+                    vault.Remove(credential: credentialItem);
+                }
             }
 
             vault.Add(credential);
         }
 
-        public static PasswordCredential GetUniversitySystemCredential(this Windows.Security.Credentials.PasswordVault vault, string systemResourceName)
+        public static PasswordCredential GetUniversitySystemCredential(this PasswordVault vault, string systemResourceName)
         {
-            var credentials = vault.FindAllByResource(resource: systemResourceName);
+            IReadOnlyList<PasswordCredential> credentials = null;
 
-            return credentials[0];
+            try
+            {
+                credentials = vault.FindAllByResource(resource: systemResourceName);
+            }
+            catch (Exception exc)
+            {
+                // TODO: Add exception handling
+            }
+
+            return vault.Retrieve(resource: systemResourceName, userName: credentials[0].UserName);
         }
     }
 }

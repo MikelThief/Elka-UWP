@@ -139,7 +139,7 @@ namespace ElkaUWP.LoginModule.Service
             var oauthAccessToken = responseParametersCollection.Get(name: "oauth_token");
             var oauthTokenSecret = responseParametersCollection.Get(name: "oauth_token_secret");
 
-            var credential = new PasswordCredential(resource: Constants.USOS_SYSTEM_TOKEN, userName: oauthAccessToken, password: oauthTokenSecret);
+            var credential = new PasswordCredential(resource: Constants.USOS_RESOURCE_TOKEN, userName: oauthAccessToken, password: oauthTokenSecret);
 
             new PasswordVault().AddUniversitySystemCredential(credential);
         }

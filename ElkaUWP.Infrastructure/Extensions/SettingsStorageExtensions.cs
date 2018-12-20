@@ -49,6 +49,7 @@ namespace ElkaUWP.Infrastructure.Extensions
         {
             settings.Values[key: key] = value;
         }
+        public static string ReadString(this ApplicationDataContainer settings, string key) => (string)settings.Values[key: key];
 
         public static async Task<T> ReadAsync<T>(this ApplicationDataContainer settings, string key)
         {
