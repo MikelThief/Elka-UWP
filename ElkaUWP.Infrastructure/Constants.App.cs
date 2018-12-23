@@ -8,8 +8,8 @@ namespace ElkaUWP.Infrastructure
 {
     public static partial class Constants
     {
-        public static string PROTOCOL_URI = "elka://";
-        public static string MASTER_NAVIGATION_SERVICE = "MasterNavigationService";
-        public static string APPLICATION_LOG_FILENAME = "ApplicationLog.txt";
+        public const string PROTOCOL_URI = "elka://";
+        public const string MASTER_NAVIGATION_SERVICE = "MasterNavigationService";
+        public const string APPLICATION_LOG_FILENAME = "ApplicationLog.txt";
     }
 }

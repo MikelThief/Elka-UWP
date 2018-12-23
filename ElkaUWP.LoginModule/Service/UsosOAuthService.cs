@@ -71,7 +71,7 @@ namespace ElkaUWP.LoginModule.Service
                 Type = OAuthRequestType.RequestToken,
             };
 
-            var scopes = String.Join("%7C", values: _usosScopes);
+            var scopes = string.Join("%7C", values: _usosScopes);
             var authString = tokenRequest.GetAuthorizationQuery(parameters: new NameValueCollection()
             {
                 {"scopes", scopes}
@@ -115,6 +115,7 @@ namespace ElkaUWP.LoginModule.Service
             }
 
             await Windows.System.Launcher.LaunchUriAsync(uri: new Uri(uriString: Constants.USOSAPI_AUTHORIZE_URL+ "?oauth_token=" + _requestToken));
+
         }
 
         /// <summary>
@@ -132,6 +133,12 @@ namespace ElkaUWP.LoginModule.Service
                 Logger.Fatal("Received token does not match expected one. The value of expected token is {expectedToken}, and the actual value is {actualValue}", argument1: _requestToken, argument2: authorizedRequestToken);
                 throw new FailedOAuthWorkflowException(expectedToken: _requestToken, actualToken: authorizedRequestToken);
             }
+            else if (_requestToken == string.Empty)
+            {
+                Logger.Warn(
+                    "Application's token is empty, so application's state is lost. It might took too long for a user to authorize token. It could expire anyway. Application will continue.");
+            }
+
 
             var tokenRequest = new OAuthRequest()
             {
@@ -155,7 +162,7 @@ namespace ElkaUWP.LoginModule.Service
 
             var webClient = new WebClient();
 
-            string response;
+            string response = default;
 
             try
             {

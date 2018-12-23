@@ -19,10 +19,6 @@ namespace ElkaUWP.Infrastructure.Extensions
             if (credential == null)
                 throw new ArgumentNullException(paramName: nameof(credential));
 
-            var settings = ApplicationData.Current.RoamingSettings;
-
-            settings.SaveString("oauth_token", value: credential.UserName);
-
             IReadOnlyList <PasswordCredential> credentials = null;
 
             try

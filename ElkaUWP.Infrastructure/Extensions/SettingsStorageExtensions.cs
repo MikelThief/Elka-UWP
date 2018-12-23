@@ -31,7 +31,7 @@ namespace ElkaUWP.Infrastructure.Extensions
         {
             if (!File.Exists(path: Path.Combine(path1: folder.Path, path2: GetFileName(name: name))))
             {
-                return default(T);
+                return default;
             }
 
             var file = await folder.GetFileAsync(name: $"{name}.json");
@@ -42,7 +42,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
         public static async Task SaveAsync<T>(this ApplicationDataContainer settings, string key, T value)
         {
-            settings.SaveString(key, value: await JsonHelper.Json.ToJsonAsync(value: value));
+            settings.SaveString(key: key, value: await JsonHelper.Json.ToJsonAsync(value: value));
         }
 
         public static void SaveString(this ApplicationDataContainer settings, string key, string value)
@@ -53,14 +53,10 @@ namespace ElkaUWP.Infrastructure.Extensions
 
         public static async Task<T> ReadAsync<T>(this ApplicationDataContainer settings, string key)
         {
-            object obj = null;
 
-            if (settings.Values.TryGetValue(key: key, value: out obj))
-            {
-                return await JsonHelper.Json.FromJsonAsync<T>(value: (string)obj);
-            }
-
-            return default(T);
+            return settings.Values.TryGetValue(key: key, value: out var obj)
+                ? await JsonHelper.Json.FromJsonAsync<T>(value: (string)obj)
+                : (default);
         }
 
         public static async Task<StorageFile> SaveFileAsync(this StorageFolder folder, byte[] content, string fileName, CreationCollisionOption options = CreationCollisionOption.ReplaceExisting)
@@ -88,7 +84,7 @@ namespace ElkaUWP.Infrastructure.Extensions
                 return null;
 
             var storageFile = await folder.GetFileAsync(name: fileName);
-            byte[] content = await storageFile.ReadBytesAsync();
+            var content = await storageFile.ReadBytesAsync();
             return content;
 
         }

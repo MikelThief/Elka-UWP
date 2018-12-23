@@ -138,8 +138,10 @@
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\ResourceLoaderHelper.cs" />
     <Compile Include="Interfaces\IUsosOAuthService.cs" />
+    <Compile Include="NavigationParameterKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\PasswordVaultExtensions.cs" />
+    <Compile Include="SettingsKeys.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.Infrastructure.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -169,11 +171,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Unity.Abstractions">
-      <HintPath>..\..\..\Users\mbato\.nuget\packages\unity.abstractions\3.3.1\lib\netstandard2.0\Unity.Abstractions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

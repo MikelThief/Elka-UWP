@@ -207,19 +207,14 @@ namespace ElkaUWP.Core
                         {
                             var usosOAuthService = Container.Resolve<IUsosOAuthService>();
 
-                            var callbackQuery = protocolArguments.Uri.Query;
+                            var responseParameters = HttpUtility.ParseQueryString(query: protocolArguments.Uri.Query);
 
-                            var responseParameters = HttpUtility.ParseQueryString(query: callbackQuery);
+                            await usosOAuthService.GetAccessAsync(authorizedRequestToken: responseParameters.Get(name: "oauth_token"), oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
 
-                            var oauthVerifier = responseParameters.Get(name: "oauth_verifier");
-                            var authorizedOauthToken = responseParameters.Get(name: "oauth_token");
-
-                            await usosOAuthService.GetAccessAsync(authorizedRequestToken: authorizedOauthToken, oauthVerifier: oauthVerifier);
-
-                                var navigationParameters = new NavigationParameters
-                                {
-                                    { "usos_authorized", true }
-                                };
+                            var navigationParameters = new NavigationParameters
+                            {
+                                { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }
+                            };
 
                                 await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: navigationParameters);
                         }

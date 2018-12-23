@@ -48,7 +48,7 @@ namespace ElkaUWP.LoginModule.ViewModels
         {
             StartUsosAuthorizationProcessCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
             _usosOAuthService = usosOAuthService;
-            IsSignInButtonEnabled = default(bool);
+            IsSignInButtonEnabled = default;
         }
 
         private async Task StartUsosAuthorizationProcessAsync()
@@ -77,9 +77,7 @@ namespace ElkaUWP.LoginModule.ViewModels
         {
             _navigationService = parameters.GetNavigationService();
 
-
-
-            if (parameters.ContainsKey(key: "usos_authorized") && parameters.GetValue<bool>(key: "usos_authorized"))
+            if (parameters.ContainsKey(key: NavigationParameterKeys.IS_USOS_AUTHORIZED) && parameters.GetValue<bool>(key: NavigationParameterKeys.IS_USOS_AUTHORIZED))
                 IsSignInButtonEnabled = false;
             else
                 IsSignInButtonEnabled = true;
