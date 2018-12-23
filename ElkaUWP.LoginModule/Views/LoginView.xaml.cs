@@ -12,8 +12,8 @@ namespace ElkaUWP.LoginModule.Views
         public LoginView()
         {
             InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
-            ((Storyboard)Resources[key: "GradientAnimation"]).Begin();
+            ViewModelLocator.SetAutowireViewModel(obj: this, true);
+            ((Storyboard)Resources["GradientAnimation"]).Begin();
         }
     }
 }

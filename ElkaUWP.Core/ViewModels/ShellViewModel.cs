@@ -53,9 +53,9 @@ namespace ElkaUWP.Core.ViewModels
         {
             var item = _navigationView.MenuItems
                             .OfType<WinUI.NavigationViewItem>()
-                            .First(predicate: menuItem => (string)menuItem.Content == (string)args.InvokedItem);
+                            .First(menuItem => (string)menuItem.Content == (string)args.InvokedItem);
             var pageKey = item.GetValue(dp: NavHelper.NavigateToProperty) as string;
-            await _navigationService.NavigateAsync(name: pageKey, parameters: null);
+            await _navigationService.NavigateAsync(name: pageKey, null);
         }
 
         private void Frame_Navigated(object sender, NavigationEventArgs e)
@@ -63,7 +63,7 @@ namespace ElkaUWP.Core.ViewModels
             IsBackEnabled = _navigationService.CanGoBack();
             Selected = _navigationView.MenuItems
                             .OfType<WinUI.NavigationViewItem>()
-                            .FirstOrDefault(predicate: menuItem => IsMenuItemForPageType(menuItem: menuItem, sourcePageType: e.SourcePageType));
+                            .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem: menuItem, sourcePageType: e.SourcePageType));
         }
 
         private async void OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)
@@ -74,7 +74,7 @@ namespace ElkaUWP.Core.ViewModels
         private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, Type sourcePageType)
         {
             var sourcePageKey = sourcePageType.Name;
-            sourcePageKey = sourcePageKey.Substring(startIndex: 0, length: sourcePageKey.Length - 4);
+            sourcePageKey = sourcePageKey.Substring(0, length: sourcePageKey.Length - 4);
             var pageKey = menuItem.GetValue(dp: NavHelper.NavigateToProperty) as string;
             return pageKey == sourcePageKey;
         }

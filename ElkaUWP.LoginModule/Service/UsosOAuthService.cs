@@ -12,13 +12,16 @@ using Windows.Security.Credentials;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Interfaces;
+using ElkaUWP.Infrastructure.Exceptions;
+using NLog;
 using OAuth;
+using NLog.Fluent;
 
 namespace ElkaUWP.LoginModule.Service
 {
-    public class UsosOOAuthService : IUsosOAuthService
+    public class UsosOAuthService : IUsosOAuthService
     {
-        private ICollection<string> usosScopes = new List<string>()
+        private readonly IReadOnlyCollection<string> _usosScopes = new List<string>()
         {
             "cards",
             "change_all_preferences",
@@ -43,11 +46,13 @@ namespace ElkaUWP.LoginModule.Service
             "surveys_reports",
         };
 
-        private string requestTokenSecret;
+        private string _requestToken = string.Empty;
+        private string _requestTokenSecret = string.Empty;
+        private ILogger Logger { get; }
 
-        public UsosOOAuthService()
+        public UsosOAuthService(ILogger logger)
         {
-
+            Logger = logger;
         }
 
         public async Task AuthorizeAsync()
@@ -66,7 +71,7 @@ namespace ElkaUWP.LoginModule.Service
                 Type = OAuthRequestType.RequestToken,
             };
 
-            var scopes = String.Join(separator: "%7C", values: usosScopes);
+            var scopes = String.Join("%7C", values: _usosScopes);
             var authString = tokenRequest.GetAuthorizationQuery(parameters: new NameValueCollection()
             {
                 {"scopes", scopes}
@@ -81,25 +86,53 @@ namespace ElkaUWP.LoginModule.Service
             {
                 response = await webClient.DownloadStringTaskAsync(address: requestUri);
             }
-            catch (WebException e)
+            catch (WebException exc)
             {
-                Console.WriteLine(e.Status + " " + e.Response + " " + e.Response);
+                Logger.Fatal(exception: exc, "Unable to start OAuth handshake");
                 throw;
             }
 
             var responseParametersCollection = HttpUtility.ParseQueryString(query: response);
 
-            var requestToken = responseParametersCollection.Get(name: "oauth_token");
-            requestTokenSecret = responseParametersCollection.Get(name: "oauth_token_secret");
-            var callbackIsAccepted = Convert.ToBoolean(value: responseParametersCollection.Get(name: "oauth_callback_confirmed"));
+            _requestToken = responseParametersCollection.Get(name: "oauth_token");
+            _requestTokenSecret = responseParametersCollection.Get(name: "oauth_token_secret");
+            var callbackIsAccepted = default(bool);
+            try
+            {
+                callbackIsAccepted = Convert.ToBoolean(value: responseParametersCollection.Get(name: "oauth_callback_confirmed"));
+            }
+            catch (FormatException exc)
+            {
+                Logger.Warn(exception: exc, message: "USOS API returned ambiguous oauth_callback_confirmed value. Returned value is {value}",
+                    args: (responseParametersCollection.Get(name: "oauth_callback_confirmed")));
+                throw;
+            }
 
-            if(!callbackIsAccepted)
-                throw new InvalidOperationException(message: "USOS API does not support callback.");
-            await Windows.System.Launcher.LaunchUriAsync(uri: new Uri(uriString: Constants.USOSAPI_AUTHORIZE_URL+ "?oauth_token=" + requestToken));
+            if (!callbackIsAccepted)
+            {
+                Logger.Warn(message: "USOS API does not support callback");
+                throw new InvalidOperationException(message: "USOS API does not support callback");
+            }
+
+            await Windows.System.Launcher.LaunchUriAsync(uri: new Uri(uriString: Constants.USOSAPI_AUTHORIZE_URL+ "?oauth_token=" + _requestToken));
         }
 
-        public async Task GetAccessAsync(string oauthToken, string oauthVerifier)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="authorizedRequestToken"></param>
+        /// <param name="oauthVerifier"></param>
+        /// <returns></returns>
+        /// <exception cref="FailedOAuthWorkflowException">Thrown when OAuth session was started multiple times
+        /// and application state doesn't match service provider callback</exception>
+        public async Task GetAccessAsync(string authorizedRequestToken, string oauthVerifier)
         {
+            if (authorizedRequestToken != _requestToken)
+            {
+                Logger.Fatal("Received token does not match expected one. The value of expected token is {expectedToken}, and the actual value is {actualValue}", argument1: _requestToken, argument2: authorizedRequestToken);
+                throw new FailedOAuthWorkflowException(expectedToken: _requestToken, actualToken: authorizedRequestToken);
+            }
+
             var tokenRequest = new OAuthRequest()
             {
                 Realm = Constants.USOSAPI_BASE_URL,
@@ -112,8 +145,8 @@ namespace ElkaUWP.LoginModule.Service
                 RequestUrl = Constants.USOSAPI_ACCESS_TOKEN_URL,
                 Type = OAuthRequestType.AccessToken,
                 Verifier = oauthVerifier,
-                Token = oauthToken,
-                TokenSecret = requestTokenSecret,
+                Token = authorizedRequestToken,
+                TokenSecret = _requestTokenSecret,
             };
 
             var accessString = tokenRequest.GetAuthorizationQuery();
@@ -128,20 +161,20 @@ namespace ElkaUWP.LoginModule.Service
             {
                 response = await webClient.DownloadStringTaskAsync(address: requestUri);
             }
-            catch (WebException e)
+            catch (WebException exc)
             {
-                Console.WriteLine(e.Status + " " + e.Response + " " + e.Response);
+                Logger.Fatal(exception: exc, "USOS API refused to perform a token exchange");
                 throw;
             }
 
             var responseParametersCollection = HttpUtility.ParseQueryString(query: response);
 
-            var oauthAccessToken = responseParametersCollection.Get(name: "oauth_token");
-            var oauthTokenSecret = responseParametersCollection.Get(name: "oauth_token_secret");
+            var oauthAccessToken = responseParametersCollection.Get("oauth_token");
+            var oauthTokenSecret = responseParametersCollection.Get("oauth_token_secret");
 
             var credential = new PasswordCredential(resource: Constants.USOS_RESOURCE_TOKEN, userName: oauthAccessToken, password: oauthTokenSecret);
 
-            new PasswordVault().AddUniversitySystemCredential(credential);
+            new PasswordVault().AddUniversitySystemCredential(credential: credential);
         }
     }
 }

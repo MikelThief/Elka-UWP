@@ -125,6 +125,9 @@
     <PackageReference Include="Nito.Mvvm.Async">
       <Version>1.0.0-pre-03</Version>
     </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>4.5.11</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.757-ci</Version>
     </PackageReference>

@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using ElkaUWP.LoginModule.Views;
+using NLog;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -13,13 +14,13 @@ namespace ElkaUWP.LoginModule.ViewModels
     {
         public DelegateCommand StartWizardDelegateCommand { get; private set; }
 
-        private INavigationService _navigationService;
+        protected INavigationService _navigationService;
+        protected ILogger Logger { get; }
 
-        
-
-        public LoginViewModel()
+        public LoginViewModel(ILogger logger)
         {
             StartWizardDelegateCommand = new DelegateCommand(executeMethod: NavigateToUsosStep);
+            Logger = logger;
         }
 
         private async void NavigateToUsosStep()

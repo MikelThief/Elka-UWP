@@ -3,25 +3,33 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Windows.ApplicationModel;
 using ElkaUWP.Core.Views;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
+using Windows.Security.Credentials;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Interfaces;
 using ElkaUWP.LoginModule;
 using ElkaUWP.LoginModule.ViewModels;
 using ElkaUWP.LoginModule.Views;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 using Prism;
 using Prism.Events;
 using Prism.Unity;
@@ -53,13 +61,13 @@ namespace ElkaUWP.Core
         public override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewTypeToViewModelTypeResolver: viewType =>
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
             {
                 var viewName = viewType.FullName;
-                viewName = viewName.Replace(oldValue: ".Views.", newValue: ".ViewModels.");
+                viewName = viewName.Replace(".Views.", ".ViewModels.");
                 var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
-                var suffix = (viewName.EndsWith(value: "View") || viewName.EndsWith(value: "Page")) ? "Model" : "ViewModel";
-                var viewModelName = string.Format(provider: CultureInfo.InvariantCulture, format: "{0}{1}, {2}", arg0: viewName, arg1: suffix, arg2: viewAssemblyName);
+                var suffix = (viewName.EndsWith("View") || viewName.EndsWith("Page")) ? "Model" : "ViewModel";
+                var viewModelName = string.Format(provider: CultureInfo.InvariantCulture, "{0}{1}, {2}", arg0: viewName, arg1: suffix, arg2: viewAssemblyName);
                 return viewModelName.GetType();
             });
         }
@@ -85,6 +93,8 @@ namespace ElkaUWP.Core
         /// </summary>
         public override void OnInitialized()
         {
+            SetUpLogger();
+
             // creating the initial frame
             var coreFrame = new Frame();
             // creating navigation service for this frame
@@ -92,12 +102,60 @@ namespace ElkaUWP.Core
                 (IPlatformNavigationService) Prism.Navigation.NavigationService.Create(frame: coreFrame, Gesture.Back,
                     Gesture.Forward, Gesture.Refresh);
             // set main window as a target for navigation service and then show window (activate)
-            NavigationService.SetAsWindowContent(window: Window.Current, activate: true);
+            NavigationService.SetAsWindowContent(window: Window.Current, true);
+
 
             // set size for average 1920x1080 desktop. Note the size is in effective pixels
-            ApplicationView.PreferredLaunchViewSize = new Size(width: 500, height: 650);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: 400, height: 500));
+
+            var DPI = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().LogicalDpi;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            var desiredSize = new Size(width: (420 * 96.0f / DPI), height: (550 * 96.0f / DPI));
+            ApplicationView.PreferredLaunchViewSize = desiredSize;
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (400 * 96.0f / DPI), height: (500 * 96.0f / DPI)));
+        }
+
+        /// <summary>
+        /// Sets up NLog instance for application
+        /// </summary>
+        private void SetUpLogger()
+        {
+            // Step 1: Create configuration object
+            var config = new LoggingConfiguration();
+
+            // Step 2: Create targets
+
+            var fileTarget = new FileTarget()
+            {
+                Name = "FileLog",
+                Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception}",
+                OptimizeBufferReuse = true,
+                Encoding = Encoding.UTF8,
+                WriteBom = false,
+                LineEnding = LineEndingMode.Default,
+                FileName = Path.Combine(path1: Windows.Storage.ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
+                OpenFileCacheTimeout = 2,
+                ArchiveNumbering = ArchiveNumberingMode.Rolling,
+                ArchiveAboveSize = 10240,
+                MaxArchiveFiles = 10
+            };
+
+            var bufferedTargetWrapper = new NLog.Targets.Wrappers.BufferingTargetWrapper()
+            {
+                Name = "BufferredFileLog",
+                WrappedTarget = fileTarget,
+            };
+
+            // Step 3: Add targets
+
+            // Step 4. Define rules
+            config.AddRule(minLevel: LogLevel.Info, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
+
+#if DEBUG
+            config.AddRule(minLevel: LogLevel.Trace, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
+#endif
+
+            // Step 5. Activate the configuration
+            LogManager.Configuration = config;
         }
 
         /// <summary>
@@ -127,7 +185,19 @@ namespace ElkaUWP.Core
             switch (args.StartKind)
             {
                 case StartKinds.Launch:
-                    await NavigationService.NavigateAsync(name: nameof(LoginView));
+
+                    var vault = new PasswordVault();
+
+                    try
+                    {
+                        var credential =
+                            vault.GetUniversitySystemCredential(systemResourceName: Constants.USOS_RESOURCE_TOKEN);
+                        // TODO: Naviagte to Main App Page
+                    }
+                    catch (Exception)
+                    {
+                        await NavigationService.NavigateAsync(name: nameof(LoginView));
+                    }
                     break;
                 case StartKinds.Activate:
                 {
@@ -144,11 +214,14 @@ namespace ElkaUWP.Core
                             var oauthVerifier = responseParameters.Get(name: "oauth_verifier");
                             var authorizedOauthToken = responseParameters.Get(name: "oauth_token");
 
-                            await usosOAuthService.GetAccessAsync(oauthToken: authorizedOauthToken, oauthVerifier: oauthVerifier);
+                            await usosOAuthService.GetAccessAsync(authorizedRequestToken: authorizedOauthToken, oauthVerifier: oauthVerifier);
 
-                            var navigationParameters = new NavigationParameters();
+                                var navigationParameters = new NavigationParameters
+                                {
+                                    { "usos_authorized", true }
+                                };
 
-                            await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: new NavigationParameters());
+                                await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: navigationParameters);
                         }
                     }
 
@@ -170,7 +243,21 @@ namespace ElkaUWP.Core
         /// <param name="containerRegistry">Container against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
+            var nLogExtension = new NLogExtension
+            {
+                GetName = (t, n) => t.Name
+            };
+            containerRegistry.GetContainer().AddExtension(extension: nLogExtension);
+
             base.RegisterRequiredTypes(containerRegistry: containerRegistry);
+        }
+        /// <summary>
+        /// Executes just before app is terminated
+        /// </summary>
+        public override void OnSuspending()
+        {
+            LogManager.Flush();
+            base.OnSuspending();
         }
     }
 }

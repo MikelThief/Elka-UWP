@@ -19,6 +19,6 @@ namespace ElkaUWP.Core.Helpers
         }
 
         public static readonly DependencyProperty NavigateToProperty =
-            DependencyProperty.RegisterAttached(name: "NavigateTo", propertyType: typeof(string), ownerType: typeof(NavHelper), defaultMetadata: new PropertyMetadata(defaultValue: null));
+            DependencyProperty.RegisterAttached("NavigateTo", propertyType: typeof(string), ownerType: typeof(NavHelper), defaultMetadata: new PropertyMetadata(null));
     }
 }

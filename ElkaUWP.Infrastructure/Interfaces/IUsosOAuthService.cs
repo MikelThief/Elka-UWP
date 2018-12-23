@@ -9,6 +9,6 @@ namespace ElkaUWP.Infrastructure.Interfaces
     public interface IUsosOAuthService
     {
         Task AuthorizeAsync();
-        Task GetAccessAsync(string oauthToken, string oauthVerifier);
+        Task GetAccessAsync(string authorizedRequestToken, string oauthVerifier);
     }
 }

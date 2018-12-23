@@ -10,5 +10,6 @@ namespace ElkaUWP.Infrastructure
     {
         public static string PROTOCOL_URI = "elka://";
         public static string MASTER_NAVIGATION_SERVICE = "MasterNavigationService";
+        public static string APPLICATION_LOG_FILENAME = "ApplicationLog.txt";
     }
 }

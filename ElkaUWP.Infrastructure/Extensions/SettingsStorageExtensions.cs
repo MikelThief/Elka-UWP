@@ -42,7 +42,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
         public static async Task SaveAsync<T>(this ApplicationDataContainer settings, string key, T value)
         {
-            settings.SaveString(key, await JsonHelper.Json.ToJsonAsync(value: value));
+            settings.SaveString(key, value: await JsonHelper.Json.ToJsonAsync(value: value));
         }
 
         public static void SaveString(this ApplicationDataContainer settings, string key, string value)
@@ -72,7 +72,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
             if (string.IsNullOrEmpty(value: fileName))
             {
-                throw new ArgumentException(message: "ExceptionSettingsStorageExtensionsFileNameIsNullOrEmpty", paramName: nameof(fileName));
+                throw new ArgumentException("ExceptionSettingsStorageExtensionsFileNameIsNullOrEmpty", paramName: nameof(fileName));
             }
 
             var storageFile = await folder.CreateFileAsync(desiredName: fileName, options: options);
@@ -82,7 +82,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
         public static async Task<byte[]> ReadFileAsync(this StorageFolder folder, string fileName)
         {
-            var item = await folder.TryGetItemAsync(name: fileName).AsTask().ConfigureAwait(continueOnCapturedContext: false);
+            var item = await folder.TryGetItemAsync(name: fileName).AsTask().ConfigureAwait(false);
 
             if ((item == null) || !item.IsOfType(type: StorageItemTypes.File))
                 return null;
@@ -100,7 +100,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
             using (IRandomAccessStream stream = await file.OpenReadAsync())
             {
-                using (var reader = new DataReader(inputStream: stream.GetInputStreamAt(position: 0)))
+                using (var reader = new DataReader(inputStream: stream.GetInputStreamAt(0)))
                 {
                     await reader.LoadAsync(count: (uint)stream.Size);
                     var bytes = new byte[stream.Size];

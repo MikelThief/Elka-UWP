@@ -8,9 +8,14 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
+using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Interfaces;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using Nito.Mvvm;
@@ -23,17 +28,27 @@ namespace ElkaUWP.LoginModule.ViewModels
     public class UsosStepViewModel : BindableBase, INavigatedAware
     {
         private INavigationService _navigationService;
-        private readonly ResourceLoader _resourceLoader;
+        private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
 
         private readonly IUsosOAuthService _usosOAuthService;
+
+        #region ControlsBindingVariables
+        private bool _isSignInButtonEnabled;
+        public bool IsSignInButtonEnabled
+        {
+            get => _isSignInButtonEnabled;
+            set => SetProperty(storage: ref _isSignInButtonEnabled, value: value);
+        }
+
+        #endregion
 
         public AsyncCommand StartUsosAuthorizationProcessCommand { get; private set; }
 
         public UsosStepViewModel(IUsosOAuthService usosOAuthService)
         {
             StartUsosAuthorizationProcessCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
-            _resourceLoader = ResourceLoader.GetForCurrentView(name: typeof(LoginModuleInitializer).Namespace + "/Resources");
             _usosOAuthService = usosOAuthService;
+            IsSignInButtonEnabled = default(bool);
         }
 
         private async Task StartUsosAuthorizationProcessAsync()
@@ -51,9 +66,6 @@ namespace ElkaUWP.LoginModule.ViewModels
             }
 
             await _usosOAuthService.AuthorizeAsync();
-
-
-
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -64,6 +76,13 @@ namespace ElkaUWP.LoginModule.ViewModels
         public void OnNavigatedTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
+
+
+
+            if (parameters.ContainsKey(key: "usos_authorized") && parameters.GetValue<bool>(key: "usos_authorized"))
+                IsSignInButtonEnabled = false;
+            else
+                IsSignInButtonEnabled = true;
         }
     }
 }

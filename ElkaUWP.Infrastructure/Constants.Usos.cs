@@ -21,7 +21,5 @@ namespace ElkaUWP.Infrastructure
         public static string USOSAPI_AUTHORIZE_URL = " https://apps.usos.pw.edu.pl/services/oauth/authorize";
 
         public static string USOSAPI_ACCESS_TOKEN_URL = "https://apps.usos.pw.edu.pl/services/oauth/access_token";
-
-        public static string USOS_API_AUTH_TOKEN = "";
     }
 }

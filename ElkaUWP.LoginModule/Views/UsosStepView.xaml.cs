@@ -30,8 +30,8 @@ namespace ElkaUWP.LoginModule.Views
         public UsosStepView()
         {
             this.InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
-            ((Storyboard)Resources[key: "GradientAnimation"]).Begin();
+            ViewModelLocator.SetAutowireViewModel(obj: this, true);
+            ((Storyboard)Resources["GradientAnimation"]).Begin();
         }
     }
 }

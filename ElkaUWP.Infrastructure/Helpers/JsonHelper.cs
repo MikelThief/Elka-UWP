@@ -13,12 +13,12 @@ namespace ElkaUWP.Infrastructure.Helpers
         {
             public static async Task<T> FromJsonAsync<T>(string value)
             {
-                return await Task.Run<T>(function: () => JsonConvert.DeserializeObject<T>(value: value));
+                return await Task.Run<T>(() => JsonConvert.DeserializeObject<T>(value: value));
             }
 
             public static async Task<string> ToJsonAsync(object value)
             {
-                return await Task.Run<string>(function: () => JsonConvert.SerializeObject(value: value));
+                return await Task.Run<string>(() => JsonConvert.SerializeObject(value: value));
             }
         }
     }

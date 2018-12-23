@@ -21,7 +21,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
             var settings = ApplicationData.Current.RoamingSettings;
 
-            settings.SaveString(key: "oauth_token", value: credential.UserName);
+            settings.SaveString("oauth_token", value: credential.UserName);
 
             IReadOnlyList <PasswordCredential> credentials = null;
 
@@ -43,7 +43,7 @@ namespace ElkaUWP.Infrastructure.Extensions
                 }
             }
 
-            vault.Add(credential);
+            vault.Add(credential: credential);
         }
 
         public static PasswordCredential GetUniversitySystemCredential(this PasswordVault vault, string systemResourceName)
@@ -54,9 +54,9 @@ namespace ElkaUWP.Infrastructure.Extensions
             {
                 credentials = vault.FindAllByResource(resource: systemResourceName);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
-                // TODO: Add exception handling
+                throw;
             }
 
             return vault.Retrieve(resource: systemResourceName, userName: credentials[0].UserName);

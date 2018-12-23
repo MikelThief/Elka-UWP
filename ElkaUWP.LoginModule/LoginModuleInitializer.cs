@@ -17,7 +17,7 @@ namespace ElkaUWP.LoginModule
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register services
-            containerRegistry.RegisterSingleton<IUsosOAuthService, UsosOOAuthService>();
+            containerRegistry.RegisterSingleton<IUsosOAuthService, UsosOAuthService>();
 
             // Register View-VieModel pairs for navigation
             containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>(key: nameof(LoginView));
