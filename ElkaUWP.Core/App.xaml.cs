@@ -164,7 +164,7 @@ namespace ElkaUWP.Core
         /// <param name="container">Container registry used to register types</param>
         public override void RegisterTypes(IContainerRegistry container)
         {
-
+            container.RegisterForNavigation<ShellView, ShellViewModel>(key: nameof(ShellView));
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace ElkaUWP.Core
                     {
                         var credential =
                             vault.GetUniversitySystemCredential(systemResourceName: Constants.USOS_RESOURCE_TOKEN);
-                        // TODO: Naviagte to Main App Page
+                        await NavigationService.NavigateAsync(name: nameof(ShellView));
                     }
                     catch (Exception)
                     {
@@ -216,7 +216,7 @@ namespace ElkaUWP.Core
                                 { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }
                             };
 
-                                await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: navigationParameters);
+                            await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: navigationParameters);
                         }
                     }
 

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.LoginModule", "Elka
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Infrastructure", "ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj", "{9F821561-3596-4949-99C4-A32EAA91EE6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Data", "ElkaUWP.Data\ElkaUWP.Data.csproj", "{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,18 @@ Global
 		{9F821561-3596-4949-99C4-A32EAA91EE6C}.Release|x64.Build.0 = Release|x64
 		{9F821561-3596-4949-99C4-A32EAA91EE6C}.Release|x86.ActiveCfg = Release|x86
 		{9F821561-3596-4949-99C4-A32EAA91EE6C}.Release|x86.Build.0 = Release|x86
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Debug|x64.Build.0 = Debug|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Debug|x86.Build.0 = Debug|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Release|x64.ActiveCfg = Release|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Release|x64.Build.0 = Release|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E3FDE34-2356-4CA3-854B-7AC2B47A0A2A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

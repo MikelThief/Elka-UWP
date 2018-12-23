@@ -8,14 +8,14 @@ using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace ElkaUWP.Core.Views
 {
-    // TODO WTS: Change the icons and titles for all NavigationViewItems in ShellPage.xaml.
-    public sealed partial class ShellPage : Page
+    // TODO WTS: Change the icons and titles for all NavigationViewItems in ShellView.xaml.
+    public sealed partial class ShellView : Page
     {
         private ShellViewModel ViewModel => DataContext as ShellViewModel;
 
         public Frame ShellFrame => shellFrame;
 
-        public ShellPage()
+        public ShellView()
         {
             InitializeComponent();
         }
