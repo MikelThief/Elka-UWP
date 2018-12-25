@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Interfaces;
 using ElkaUWP.LoginModule.Service;
 using ElkaUWP.LoginModule.ViewModels;
@@ -20,8 +21,8 @@ namespace ElkaUWP.LoginModule
             containerRegistry.RegisterSingleton<IUsosOAuthService, UsosOAuthService>();
 
             // Register View-VieModel pairs for navigation
-            containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>(key: nameof(LoginView));
-            containerRegistry.RegisterForNavigation<UsosStepView, UsosStepViewModel>(key: nameof(UsosStepView));
+            containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>(key: PageTokens.LoginViewToken);
+            containerRegistry.RegisterForNavigation<UsosStepView, UsosStepViewModel>(key: PageTokens.UsosStepViewToken);
         }
 
         public void OnInitialized(IContainerProvider containerProvider)

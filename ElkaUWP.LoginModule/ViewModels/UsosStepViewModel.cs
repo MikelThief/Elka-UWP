@@ -25,7 +25,7 @@ using Prism.Navigation;
 
 namespace ElkaUWP.LoginModule.ViewModels
 {
-    public class UsosStepViewModel : BindableBase, INavigatedAware
+    public class UsosStepViewModel : BindableBase, INavigatedAware, INavigatedAwareAsync
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
@@ -81,6 +81,17 @@ namespace ElkaUWP.LoginModule.ViewModels
                 IsSignInButtonEnabled = false;
             else
                 IsSignInButtonEnabled = true;
+        }
+
+        public async Task OnNavigatedToAsync(INavigationParameters parameters)
+        {
+            _navigationService = parameters.GetNavigationService();
+
+            if (parameters.ContainsKey(key: NavigationParameterKeys.IS_USOS_AUTHORIZED) && parameters.GetValue<bool>(key: NavigationParameterKeys.IS_USOS_AUTHORIZED))
+            {
+                await Task.Delay(millisecondsDelay: 300);
+                await _navigationService.NavigateAsync(name: PageTokens.ShellViewToken);
+            }
         }
     }
 }

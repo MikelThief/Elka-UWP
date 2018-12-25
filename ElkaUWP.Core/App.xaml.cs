@@ -164,7 +164,7 @@ namespace ElkaUWP.Core
         /// <param name="container">Container registry used to register types</param>
         public override void RegisterTypes(IContainerRegistry container)
         {
-            container.RegisterForNavigation<ShellView, ShellViewModel>(key: nameof(ShellView));
+            container.RegisterForNavigation<ShellView, ShellViewModel>(key: PageTokens.ShellViewToken);
         }
 
         /// <summary>
@@ -192,11 +192,11 @@ namespace ElkaUWP.Core
                     {
                         var credential =
                             vault.GetUniversitySystemCredential(systemResourceName: Constants.USOS_RESOURCE_TOKEN);
-                        await NavigationService.NavigateAsync(name: nameof(ShellView));
+                        await NavigationService.NavigateAsync(name: PageTokens.ShellViewToken);
                     }
                     catch (Exception)
                     {
-                        await NavigationService.NavigateAsync(name: nameof(LoginView));
+                        await NavigationService.NavigateAsync(name: PageTokens.LoginViewToken);
                     }
                     break;
                 case StartKinds.Activate:
@@ -216,7 +216,7 @@ namespace ElkaUWP.Core
                                 { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }
                             };
 
-                            await NavigationService.NavigateAsync(name: nameof(UsosStepView), parameters: navigationParameters);
+                            await NavigationService.NavigateAsync(name: PageTokens.UsosStepViewToken, parameters: navigationParameters);
                         }
                     }
 

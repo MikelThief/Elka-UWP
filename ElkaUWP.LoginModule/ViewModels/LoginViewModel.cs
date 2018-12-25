@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using ElkaUWP.Infrastructure;
 using ElkaUWP.LoginModule.Views;
 using NLog;
 using Prism.Commands;
@@ -25,7 +26,7 @@ namespace ElkaUWP.LoginModule.ViewModels
 
         private async void NavigateToUsosStep()
         {
-            await _navigationService.NavigateAsync(path: nameof(UsosStepView), parameter: new NavigationParameters(), infoOverride: new SlideNavigationTransitionInfo()
+            await _navigationService.NavigateAsync(path: PageTokens.UsosStepViewToken, infoOverride: new SlideNavigationTransitionInfo()
                 { Effect = SlideNavigationTransitionEffect.FromRight }) ;
         }
 
