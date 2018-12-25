@@ -23,6 +23,8 @@ namespace ElkaUWP.LoginModule
             // Register View-VieModel pairs for navigation
             containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>(key: PageTokens.LoginViewToken);
             containerRegistry.RegisterForNavigation<UsosStepView, UsosStepViewModel>(key: PageTokens.UsosStepViewToken);
+
+            // Register other types
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
