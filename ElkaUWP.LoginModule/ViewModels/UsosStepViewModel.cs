@@ -31,8 +31,6 @@ namespace ElkaUWP.LoginModule.ViewModels
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
 
-        public LocalNotificationManager localNotificationmanager { get; set; }
-
         private readonly IUsosOAuthService _usosOAuthService;
 
         #region ControlsBindingVariables

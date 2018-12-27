@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.LoginModule.ViewModels;
 using Prism.Mvvm;
+using RavinduL.LocalNotifications;
 using RavinduL.LocalNotifications.Notifications;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -33,6 +34,8 @@ namespace ElkaUWP.LoginModule.Views
     {
         private UsosStepViewModel ViewModel => DataContext as UsosStepViewModel;
 
+        private LocalNotificationManager localNotificationmanager;
+
         private readonly ResourceLoader _resourceLoader =
             ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
 
@@ -44,12 +47,11 @@ namespace ElkaUWP.LoginModule.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.localNotificationmanager =
-                new RavinduL.LocalNotifications.LocalNotificationManager(grid: NotificationGrid);
+            localNotificationmanager = new RavinduL.LocalNotifications.LocalNotificationManager(grid: NotificationGrid);
 
             if (ViewModel.IsContinueButtonVisible)
             {
-                ViewModel.localNotificationmanager.Show(new SimpleNotification
+                localNotificationmanager.Show(new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 30),
                         Text = _resourceLoader.GetString(resource: "Usos_Login_Success_InAppNotification"),
