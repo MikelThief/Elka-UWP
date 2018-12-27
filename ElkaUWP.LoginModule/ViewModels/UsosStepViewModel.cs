@@ -22,13 +22,16 @@ using Nito.Mvvm;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RavinduL.LocalNotifications;
 
 namespace ElkaUWP.LoginModule.ViewModels
 {
-    public class UsosStepViewModel : BindableBase, INavigatedAware, INavigatedAwareAsync
+    public class UsosStepViewModel : BindableBase, INavigatedAware
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
+
+        public LocalNotificationManager localNotificationmanager { get; set; }
 
         private readonly IUsosOAuthService _usosOAuthService;
 
@@ -40,15 +43,25 @@ namespace ElkaUWP.LoginModule.ViewModels
             set => SetProperty(storage: ref _isSignInButtonEnabled, value: value);
         }
 
+        private bool _isContinueButtonVisible;
+        public bool IsContinueButtonVisible
+        {
+            get => _isContinueButtonVisible;
+            set => SetProperty(storage: ref _isContinueButtonVisible, value: value);
+        }
+
         #endregion
 
         public AsyncCommand StartUsosAuthorizationProcessCommand { get; private set; }
+        public AsyncCommand ContinueCommand { get; private set; }
 
         public UsosStepViewModel(IUsosOAuthService usosOAuthService)
         {
             StartUsosAuthorizationProcessCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
+            ContinueCommand = new AsyncCommand(executeAsync: Continue);
             _usosOAuthService = usosOAuthService;
             IsSignInButtonEnabled = default;
+            IsContinueButtonVisible = default;
         }
 
         private async Task StartUsosAuthorizationProcessAsync()
@@ -65,7 +78,12 @@ namespace ElkaUWP.LoginModule.ViewModels
                 return;
             }
 
-            await _usosOAuthService.AuthorizeAsync();
+            await _usosOAuthService.StartAuthorizationAsync();
+        }
+
+        private async Task Continue()
+        {
+            await _navigationService.NavigateAsync(name: PageTokens.ShellViewToken);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -77,21 +95,18 @@ namespace ElkaUWP.LoginModule.ViewModels
         {
             _navigationService = parameters.GetNavigationService();
 
-            if (parameters.ContainsKey(key: NavigationParameterKeys.IS_USOS_AUTHORIZED) && parameters.GetValue<bool>(key: NavigationParameterKeys.IS_USOS_AUTHORIZED))
-                IsSignInButtonEnabled = false;
-            else
-                IsSignInButtonEnabled = true;
-        }
-
-        public async Task OnNavigatedToAsync(INavigationParameters parameters)
-        {
-            _navigationService = parameters.GetNavigationService();
-
-            if (parameters.ContainsKey(key: NavigationParameterKeys.IS_USOS_AUTHORIZED) && parameters.GetValue<bool>(key: NavigationParameterKeys.IS_USOS_AUTHORIZED))
+            if (parameters.ContainsKey(key: NavigationParameterKeys.IS_USOS_AUTHORIZED) &&
+                parameters.GetValue<bool>(key: NavigationParameterKeys.IS_USOS_AUTHORIZED))
             {
-                await Task.Delay(millisecondsDelay: 300);
-                await _navigationService.NavigateAsync(name: PageTokens.ShellViewToken);
+                IsSignInButtonEnabled = false;
+                IsContinueButtonVisible = true;
             }
+            else
+            {
+                IsSignInButtonEnabled = true;
+                IsContinueButtonVisible = false;
+            }
+
         }
     }
 }

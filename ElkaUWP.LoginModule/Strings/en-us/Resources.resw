@@ -139,6 +139,13 @@
   <data name="Step_2_TextBlock.Text" xml:space="preserve">
     <value>Step 2 of 2</value>
   </data>
+  <data name="Usos_Login_Success_InAppNotification" xml:space="preserve">
+    <value>Access to USOS was granted. Credentials were saved in a Windows Credential Locker.</value>
+    <comment>Displayed when login attemt was successfull</comment>
+  </data>
+  <data name="Usos_Step_Continue_Button.Content" xml:space="preserve">
+    <value>Continue</value>
+  </data>
   <data name="Usos_Step_Description_TextBlock.Text" xml:space="preserve">
     <value>Pressing the button will take you to CAS page, where you will be able to grant our app access to your account!</value>
   </data>

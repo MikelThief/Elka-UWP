@@ -55,7 +55,7 @@ namespace ElkaUWP.LoginModule.Service
             Logger = logger;
         }
 
-        public async Task AuthorizeAsync()
+        public async Task StartAuthorizationAsync()
         {
             var tokenRequest = new OAuthRequest()
             {
