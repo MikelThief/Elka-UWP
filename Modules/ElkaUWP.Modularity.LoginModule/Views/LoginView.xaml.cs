@@ -1,9 +1,8 @@
 ﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
-using ElkaUWP.LoginModule.ViewModels;
+using ElkaUWP.Modularity.LoginModule.ViewModels;
 using Prism.Mvvm;
 
-namespace ElkaUWP.LoginModule.Views
+namespace ElkaUWP.Modularity.LoginModule.Views
 {
     public partial class LoginView : Page
     {

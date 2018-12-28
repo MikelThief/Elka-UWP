@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Windows.Security.Credentials;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Exceptions;
 using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Interfaces;
-using ElkaUWP.Infrastructure.Exceptions;
 using NLog;
 using OAuth;
-using NLog.Fluent;
 
-namespace ElkaUWP.LoginModule.Service
+namespace ElkaUWP.Modularity.LoginModule.Service
 {
     public class UsosOAuthService : IUsosOAuthService
     {

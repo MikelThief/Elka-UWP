@@ -1,15 +1,11 @@
-﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
+﻿using Windows.UI.Xaml.Media.Animation;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.LoginModule.Views;
 using NLog;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 
-namespace ElkaUWP.LoginModule.ViewModels
+namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
     public class LoginViewModel : BindableBase, INavigatedAware
     {

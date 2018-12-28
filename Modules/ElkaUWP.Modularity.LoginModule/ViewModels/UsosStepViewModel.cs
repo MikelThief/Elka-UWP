@@ -1,30 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
-using Windows.Foundation;
-using Windows.UI;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Interfaces;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using Nito.Mvvm;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
-using RavinduL.LocalNotifications;
 
-namespace ElkaUWP.LoginModule.ViewModels
+namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
     public class UsosStepViewModel : BindableBase, INavigatedAware
     {

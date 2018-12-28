@@ -24,9 +24,6 @@ using ElkaUWP.Core.ViewModels;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Interfaces;
-using ElkaUWP.LoginModule;
-using ElkaUWP.LoginModule.ViewModels;
-using ElkaUWP.LoginModule.Views;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -39,6 +36,7 @@ using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
+using ElkaUWP.Modularity.LoginModule;
 
 namespace ElkaUWP.Core
 {

@@ -7,7 +7,7 @@
     <ProjectGuid>{9271B278-9C6B-45B4-95F2-A52643B26B9A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ElkaUWP.LoginModule</RootNamespace>
+    <RootNamespace>ElkaUWP.Modularity.LoginModule</RootNamespace>
     <AssemblyName>ElkaUWP.LoginModule</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>

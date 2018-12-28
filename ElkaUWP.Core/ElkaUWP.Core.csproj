@@ -207,7 +207,7 @@
       <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
       <Name>ElkaUWP.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\ElkaUWP.LoginModule\ElkaUWP.LoginModule.csproj">
+    <ProjectReference Include="..\Modules\ElkaUWP.Modularity.LoginModule\ElkaUWP.Modularity.LoginModule.csproj">
       <Project>{9271b278-9c6b-45b4-95f2-a52643b26b9a}</Project>
       <Name>ElkaUWP.LoginModule</Name>
     </ProjectReference>

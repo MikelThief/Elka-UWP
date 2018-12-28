@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ElkaUWP.Infrastructure;
+﻿using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Interfaces;
-using ElkaUWP.LoginModule.Service;
-using ElkaUWP.LoginModule.ViewModels;
-using ElkaUWP.LoginModule.Views;
+using ElkaUWP.Modularity.LoginModule.Service;
+using ElkaUWP.Modularity.LoginModule.ViewModels;
+using ElkaUWP.Modularity.LoginModule.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 
-namespace ElkaUWP.LoginModule
+namespace ElkaUWP.Modularity.LoginModule
 {
     public class LoginModuleInitializer : IModule
     {
