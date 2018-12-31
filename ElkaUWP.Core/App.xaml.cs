@@ -37,6 +37,8 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using ElkaUWP.Modularity.LoginModule;
+using Unity;
+using Unity.Lifetime;
 
 namespace ElkaUWP.Core
 {
@@ -46,7 +48,7 @@ namespace ElkaUWP.Core
         /// <summary>
         /// <see cref="NavigationService"/> for navigating between main app views and login views
         /// </summary>
-        public static INavigationService NavigationService { get; private set; }
+        public static IPlatformNavigationService NavigationService { get; private set; }
 
         /// <summary>
         /// Entry point to the application
@@ -95,11 +97,12 @@ namespace ElkaUWP.Core
 
             // creating the initial frame
             var coreFrame = new Frame();
+
             // creating navigation service for this frame
-            NavigationService =
-                (IPlatformNavigationService) Prism.Navigation.NavigationService.Create(frame: coreFrame, Gesture.Back,
-                    Gesture.Forward, Gesture.Refresh);
-            // set main window as a target for navigation service and then show window (activate)
+            NavigationService = (Prism.Navigation.NavigationService.Create(frame: coreFrame, Gesture.Back,
+                    Gesture.Forward, Gesture.Refresh) as IPlatformNavigationService);
+
+            //// set main window as a target for navigation service and then show window (activate)
             NavigationService.SetAsWindowContent(window: Window.Current, true);
 
 
@@ -163,6 +166,7 @@ namespace ElkaUWP.Core
         public override void RegisterTypes(IContainerRegistry container)
         {
             container.RegisterForNavigation<ShellView, ShellViewModel>(key: PageTokens.ShellViewToken);
+            container.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.TestViewToken);
         }
 
         /// <summary>
@@ -190,6 +194,7 @@ namespace ElkaUWP.Core
                     {
                         var credential =
                             vault.GetUniversitySystemCredential(systemResourceName: Constants.USOS_RESOURCE_TOKEN);
+
                         await NavigationService.NavigateAsync(name: PageTokens.ShellViewToken);
                     }
                     catch (Exception)
@@ -217,7 +222,6 @@ namespace ElkaUWP.Core
                             await NavigationService.NavigateAsync(name: PageTokens.UsosStepViewToken, parameters: navigationParameters);
                         }
                     }
-
                     break;
                 }
                 case StartKinds.Prelaunch:
@@ -228,6 +232,7 @@ namespace ElkaUWP.Core
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+
             }
         }
         /// <summary>

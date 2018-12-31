@@ -7,7 +7,7 @@ using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
-    public class LoginViewModel : BindableBase, INavigatedAware
+    public class LoginViewModel : BindableBase, INavigationAware
     {
         public DelegateCommand StartWizardDelegateCommand { get; private set; }
 
@@ -32,6 +32,11 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
+        {
+
+        }
+
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
         }

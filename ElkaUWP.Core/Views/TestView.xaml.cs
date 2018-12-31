@@ -1,5 +1,4 @@
-﻿using ElkaUWP.Modularity.UserModule.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,20 +12,20 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ElkaUWP.Core.ViewModels;
 using Prism.Mvvm;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace ElkaUWP.Modularity.UserModule.Views
+namespace ElkaUWP.Core.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UserSummaryView : Page
+    public sealed partial class TestView : Page
     {
-        private UserSummaryViewModel ViewModel => DataContext as UserSummaryViewModel;
-
-        public UserSummaryView()
+        private TestViewModel ViewModel => DataContext as TestViewModel;
+        public TestView()
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);

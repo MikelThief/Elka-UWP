@@ -11,5 +11,7 @@ namespace ElkaUWP.Infrastructure
         public const string LoginViewToken = "LoginViewToken";
         public const string UsosStepViewToken = "UsosStepViewToken";
         public const string ShellViewToken = "ShellViewToken";
+        public const string UserSummnaryView = "UserSummaryViewToken";
+        public const string TestViewToken = "TestViewToken";
     }
 }

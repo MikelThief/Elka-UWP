@@ -29,7 +29,7 @@ namespace ElkaUWP.Modularity.LoginModule.Views
         public UsosStepView()
         {
             this.InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, true);
+            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

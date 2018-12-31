@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Infrastructure;
@@ -12,7 +15,7 @@ using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
-    public class UsosStepViewModel : BindableBase, INavigatedAware
+    public class UsosStepViewModel : BindableBase, INavigationAware
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
@@ -91,6 +94,12 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 IsContinueButtonVisible = false;
             }
 
+        }
+
+        /// <inheritdoc />
+        public void OnNavigatingTo(INavigationParameters parameters)
+        {
+            
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ElkaUWP.Modularity.LoginModule.Views
         public LoginView()
         {
             InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, true);
+            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
     }
 }
