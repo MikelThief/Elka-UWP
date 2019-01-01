@@ -17,36 +17,34 @@ namespace ElkaUWP.Core.Views
     {
         private ShellViewModel ViewModel => DataContext as ShellViewModel;
 
-        public Frame ContentViewFrame => this.ContentFrame;
-
         public ShellView()
         {
             InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
-        private void nvSample_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void Nv_Loaded(object sender, RoutedEventArgs e)
         {
-            IEnumerable<NavigationViewItem> invokedItems = this.nvSample.MenuItems.Cast<NavigationViewItem>();
-            
-            NavigationViewItem invokedItem = invokedItems.FirstOrDefault(e => e.Content.Equals(args.InvokedItem));
+            // NavigationService for internal frame
+            ViewModel.Initialize(internalFrame: ContentFrame);
+        }
+
+        private async void Nv_ItemInvoked(NavigationView navigationView, NavigationViewItemInvokedEventArgs args)
+        {
+            // check if item belongs to Nv
+            var invokedItems = this.Nv.MenuItems.Cast<NavigationViewItem>();
+
+            var invokedItem = invokedItems.FirstOrDefault(e => e.Content.Equals(obj: args.InvokedItem));
 
             switch (invokedItem?.Tag)
             {
                 case "TestViewToken":
-                    (this.DataContext as ShellViewModel)._internalNavigationService.NavigateAsync(PageTokens.TestViewToken);
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.TestViewToken);
                     break;
                 case "LoginToken":
-                    (this.DataContext as ShellViewModel)._externalNavigationService.NavigateAsync(PageTokens.LoginViewToken);
+                    ViewModel.RequestExternalNavigation(navigationPath: PageTokens.TestViewToken);
                     break;
             }
-        }
-
-        private async void nvSample_Loaded(object sender, RoutedEventArgs e)
-        {
-            // NavigationService for internal frame
-            ViewModel._internalNavigationService = Prism.Navigation.NavigationService.Create(frame: ContentViewFrame, Gesture.Back,
-                Gesture.Forward, Gesture.Refresh);
         }
     }
 }
