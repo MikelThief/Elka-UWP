@@ -13,9 +13,9 @@
 
     <Grid>
         <NavigationView
-            x:Name="nvSample"
-            ItemInvoked="nvSample_ItemInvoked"
-            Loaded="nvSample_Loaded">
+            x:Name="Nv"
+            ItemInvoked="Nv_ItemInvoked"
+            Loaded="Nv_Loaded">
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     Content="TestView"
