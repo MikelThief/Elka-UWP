@@ -29,7 +29,7 @@ namespace ElkaUWP.Core.Views
             ViewModel.Initialize(internalFrame: ContentFrame);
         }
 
-        private async void Nv_ItemInvoked(NavigationView navigationView, NavigationViewItemInvokedEventArgs args)
+        private void Nv_ItemInvoked(NavigationView navigationView, NavigationViewItemInvokedEventArgs args)
         {
             // check if item belongs to Nv
             var invokedItems = this.Nv.MenuItems.Cast<NavigationViewItem>();
@@ -42,7 +42,7 @@ namespace ElkaUWP.Core.Views
                     ViewModel.RequestInternalNavigation(navigationPath: PageTokens.TestViewToken);
                     break;
                 case "LoginToken":
-                    ViewModel.RequestExternalNavigation(navigationPath: PageTokens.TestViewToken);
+                    ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken);
                     break;
             }
         }

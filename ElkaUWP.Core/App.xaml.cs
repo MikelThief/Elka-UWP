@@ -106,13 +106,9 @@ namespace ElkaUWP.Core
             NavigationService.SetAsWindowContent(window: Window.Current, true);
 
 
-            // set size for average 1920x1080 desktop. Note the size is in effective pixels
-
+            // Set up minimum window size
             var DPI = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().LogicalDpi;
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            var desiredSize = new Size(width: (420 * 96.0f / DPI), height: (550 * 96.0f / DPI));
-            ApplicationView.PreferredLaunchViewSize = desiredSize;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (400 * 96.0f / DPI), height: (500 * 96.0f / DPI)));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (360 * 96.0f / DPI), height: (640 * 96.0f / DPI)));
         }
 
         /// <summary>
