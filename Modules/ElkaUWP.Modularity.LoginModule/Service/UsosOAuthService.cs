@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Web;
 using Windows.Security.Credentials;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Exceptions;
 using ElkaUWP.Infrastructure.Extensions;
-using ElkaUWP.Infrastructure.Interfaces;
+using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuth;
 
@@ -45,9 +46,12 @@ namespace ElkaUWP.Modularity.LoginModule.Service
         private string _requestTokenSecret = string.Empty;
         private ILogger Logger { get; }
 
-        public UsosOAuthService(ILogger logger)
+        private readonly SecretService _secretService;
+
+        public UsosOAuthService(SecretService secretService, ILogger logger)
         {
             Logger = logger;
+            _secretService = secretService;
         }
 
         public async Task StartAuthorizationAsync()
@@ -121,7 +125,7 @@ namespace ElkaUWP.Modularity.LoginModule.Service
         /// <returns></returns>
         /// <exception cref="FailedOAuthWorkflowException">Thrown when OAuth session was started multiple times
         /// and application state doesn't match service provider callback</exception>
-        public async Task GetAccessAsync(string authorizedRequestToken, string oauthVerifier)
+        public async Task<PasswordCredential> GetAccessAsync(string authorizedRequestToken, string oauthVerifier)
         {
             if (authorizedRequestToken != _requestToken)
             {
@@ -133,7 +137,6 @@ namespace ElkaUWP.Modularity.LoginModule.Service
                 Logger.Warn(
                     "Application's token is empty, so application's state is lost. It might took too long for a user to authorize token. It could expire anyway. Application will continue.");
             }
-
 
             var tokenRequest = new OAuthRequest()
             {
@@ -174,9 +177,7 @@ namespace ElkaUWP.Modularity.LoginModule.Service
             var oauthAccessToken = responseParametersCollection.Get("oauth_token");
             var oauthTokenSecret = responseParametersCollection.Get("oauth_token_secret");
 
-            var credential = new PasswordCredential(resource: Constants.USOS_RESOURCE_TOKEN, userName: oauthAccessToken, password: oauthTokenSecret);
-
-            new PasswordVault().AddUniversitySystemCredential(credential: credential);
+            return new PasswordCredential(resource: Constants.USOS_CREDENTIAL_CONTAINER_NAME, userName: oauthAccessToken, password: oauthTokenSecret);
         }
     }
 }
