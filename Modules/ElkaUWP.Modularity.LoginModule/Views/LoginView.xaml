@@ -18,7 +18,7 @@
     <Grid x:Name="ContentArea" Background="{ThemeResource WizardAcrylicBackgroundBrush}">
         <StackPanel VerticalAlignment="Top" Margin="20,150,20,0" Spacing="10">
             <TextBlock x:Uid="App_Name_Title_TextBlock" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
-            <TextBlock x:Uid="Login_Wizard_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" />
+            <TextBlock x:Uid="Login_Wizard_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" TextWrapping="WrapWholeWords"/>
             <Button x:Uid="Start_Wizard_Button" Command="{x:Bind ViewModel.StartWizardDelegateCommand}" Content="Sign_In" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
                 <Button.Resources>
                     <ResourceDictionary>

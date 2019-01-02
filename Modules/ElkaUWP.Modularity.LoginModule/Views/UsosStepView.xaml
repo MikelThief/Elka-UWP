@@ -21,7 +21,7 @@
     <Grid x:Name="ContentArea" Background="{ThemeResource WizardAcrylicBackgroundBrush}">
         <StackPanel VerticalAlignment="Stretch" Margin="20,150,20,0" Spacing="10">
             <TextBlock x:Uid="Usos_Step_Title_TextBlock" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
-            <TextBlock x:Uid="Usos_Step_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" />
+            <TextBlock x:Uid="Usos_Step_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" TextWrapping="WrapWholeWords" />
             <Button x:Uid="Usos_Step_Log_In_Button" Command="{x:Bind ViewModel.StartUsosAuthorizationProcessCommand}" IsEnabled="{x:Bind ViewModel.IsSignInButtonEnabled}" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
                 <Button.Resources>
                     <ResourceDictionary>
