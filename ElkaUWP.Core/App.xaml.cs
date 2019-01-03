@@ -22,8 +22,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Extensions;
-using ElkaUWP.Infrastructure.Interfaces;
+using ElkaUWP.Infrastructure.Services;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -161,8 +162,12 @@ namespace ElkaUWP.Core
         /// <param name="container">Container registry used to register types</param>
         public override void RegisterTypes(IContainerRegistry container)
         {
+            // register types for navigation. SetAutoWireViewModel is still needed in View's code-behind.
             container.RegisterForNavigation<ShellView, ShellViewModel>(key: PageTokens.ShellViewToken);
             container.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.TestViewToken);
+
+            // Register services
+            container.RegisterSingleton<SecretService>();
         }
 
         /// <summary>
@@ -180,23 +185,17 @@ namespace ElkaUWP.Core
 
         public override async Task OnStartAsync(StartArgs args)
         {
+            var secretService = Container.Resolve<SecretService>();
             switch (args.StartKind)
             {
                 case StartKinds.Launch:
 
-                    var vault = new PasswordVault();
 
-                    try
-                    {
-                        var credential =
-                            vault.GetUniversitySystemCredential(systemResourceName: Constants.USOS_RESOURCE_TOKEN);
 
+                    if (secretService.IsContainerPresent(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME))
                         await NavigationService.NavigateAsync(name: PageTokens.ShellViewToken);
-                    }
-                    catch (Exception)
-                    {
+                    else
                         await NavigationService.NavigateAsync(name: PageTokens.LoginViewToken);
-                    }
                     break;
                 case StartKinds.Activate:
                 {
@@ -208,7 +207,9 @@ namespace ElkaUWP.Core
 
                             var responseParameters = HttpUtility.ParseQueryString(query: protocolArguments.Uri.Query);
 
-                            await usosOAuthService.GetAccessAsync(authorizedRequestToken: responseParameters.Get(name: "oauth_token"), oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
+                            var credential = await usosOAuthService.GetAccessAsync(authorizedRequestToken: responseParameters.Get(name: "oauth_token"), oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
+
+                            secretService.CreateOrUpdateSecret(providedCredential: credential);
 
                             var navigationParameters = new NavigationParameters
                             {

@@ -1,5 +1,5 @@
 ﻿using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Interfaces;
+using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Modularity.LoginModule.Service;
 using ElkaUWP.Modularity.LoginModule.ViewModels;
 using ElkaUWP.Modularity.LoginModule.Views;

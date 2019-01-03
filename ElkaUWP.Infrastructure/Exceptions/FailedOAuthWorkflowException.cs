@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElkaUWP.Infrastructure.Exceptions
 {
+    [Serializable]
     public class FailedOAuthWorkflowException : Exception
     {
         public string ExpectedToken { get; private set; }
