@@ -11,7 +11,7 @@ using ElkaUWP.Infrastructure.Exceptions;
 using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
-using OAuth;
+using OAuthClient;
 
 namespace ElkaUWP.Modularity.LoginModule.Service
 {
@@ -75,7 +75,7 @@ namespace ElkaUWP.Modularity.LoginModule.Service
             {
                 {"scopes", scopes}
             });
-            var requestUri = new Uri(uriString: tokenRequest.RequestUrl + "?" + authString + "&scopes=" + scopes);
+            var requestUri = new Uri(uriString: $"{tokenRequest.RequestUrl}?{authString}");
 
             var webClient = new WebClient();
 
@@ -156,7 +156,7 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
             var accessString = tokenRequest.GetAuthorizationQuery();
 
-            var requestUri = new Uri(uriString: tokenRequest.RequestUrl + "?" + accessString);
+            var requestUri = new Uri(uriString: $"{tokenRequest.RequestUrl}?{accessString}");
 
             var webClient = new WebClient();
 

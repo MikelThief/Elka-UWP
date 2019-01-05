@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 
 namespace OAuthClient
 {
@@ -208,7 +209,10 @@ namespace OAuthClient
                 parameter.Value = UrlEncodeStrict(value: parameter.Value);
             }
 
-            copy.Sort((x, y) => x.Name.Equals(value: y.Name) ? x.Value.CompareTo(strB: y.Value) : x.Name.CompareTo(strB: y.Name));
+            copy.Sort(comparison: (x, y) =>
+                x.Name.Equals(value: y.Name)
+                    ? string.Compare(strA: x.Value, strB: y.Value, comparisonType: StringComparison.Ordinal)
+                    : string.Compare(x.Name, y.Name, StringComparison.Ordinal));
             return copy;
         }
 
@@ -217,7 +221,7 @@ namespace OAuthClient
 #if WINRT || DOTNETCORE
             return CultureInfo.InvariantCulture.CompareInfo.Compare(left, right, CompareOptions.IgnoreCase) == 0;
 #else
-            return String.Compare(strA: left, strB: right, comparisonType: StringComparison.InvariantCultureIgnoreCase) == 0;
+            return string.Compare(strA: left, strB: right, comparisonType: StringComparison.InvariantCultureIgnoreCase) == 0;
 #endif
         }
 
@@ -233,7 +237,7 @@ namespace OAuthClient
         {
             if (url == null)
             {
-                throw new ArgumentNullException("url");
+                throw new ArgumentNullException(paramName: nameof(url));
             }
 
             var sb = new StringBuilder();
@@ -265,8 +269,12 @@ namespace OAuthClient
             var sb = new StringBuilder();
 
             // Separating &'s are not URL encoded
-            var requestMethod = string.Concat(str0: method.ToUpper(), str1: "&");
-            var requestUrl = string.Concat(str0: UrlEncodeRelaxed(value: ConstructRequestUrl(url: new Uri(uriString: url))), str1: "&");
+            var uri = new Uri(uriString: url);
+            var requestMethod = string.Concat(method.ToUpper(), "&");
+            var requestUrl = string.Concat(str0: UrlEncodeRelaxed(value: ConstructRequestUrl(url: uri)), str1: "&");
+
+            parameters.AddRange(collection: HttpUtility.ParseQueryString(query: uri.Query));
+
             var requestParameters = UrlEncodeRelaxed(value: NormalizeRequestParameters(parameters: parameters));
 
             sb.Append(value: requestMethod);
@@ -345,7 +353,7 @@ namespace OAuthClient
         {
             if (IsNullOrBlank(value: tokenSecret))
             {
-                tokenSecret = String.Empty;
+                tokenSecret = string.Empty;
             }
 
             string signature;
@@ -364,12 +372,10 @@ namespace OAuthClient
                         IBuffer signatureBuffer = CryptographicEngine.Sign(macKey, dataToBeSigned);
                         signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
 #else
-                        var crypto = new HMACSHA1();
+                        var crypto = new HMACSHA1 {Key = _encoding.GetBytes(s: key)};
 
-                        crypto.Key = _encoding.GetBytes(s: key);
                         signature = HashWith(input: signatureBase, algorithm: crypto);
 #endif
-
                         break;
                     }
                 default:
@@ -392,9 +398,6 @@ namespace OAuthClient
         }
 #endif
 
-        private static bool IsNullOrBlank(string value)
-        {
-            return String.IsNullOrEmpty(value: value) || (!String.IsNullOrEmpty(value: value) && value.Trim() == String.Empty);
-        }
+        private static bool IsNullOrBlank(string value) => string.IsNullOrEmpty(value: value) || (!string.IsNullOrEmpty(value: value) && value.Trim() == string.Empty);
     }
 }

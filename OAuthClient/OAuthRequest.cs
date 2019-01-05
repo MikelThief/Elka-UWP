@@ -84,15 +84,6 @@ namespace OAuthClient
             return WriteAuthorizationHeader(parameters: parameters);
         }
 
-        private string GetClientSignatureAuthorizationHeader(WebParameterCollection parameters)
-        {
-            var signature = GetNewSignatureXAuth(parameters: parameters);
-
-            parameters.Add("oauth_signature", value: signature);
-
-            return WriteAuthorizationHeader(parameters: parameters);
-        }
-
         private string WriteAuthorizationHeader(WebParameterCollection parameters)
         {
             var sb = new StringBuilder("OAuth ");
@@ -102,7 +93,7 @@ namespace OAuthClient
                 sb.AppendFormat("realm=\"{0}\",", arg0: OAuthTools.UrlEncodeRelaxed(value: Realm));
             }
 
-            parameters.Sort((l, r) => l.Name.CompareTo(strB: r.Name));
+            parameters.Sort((l, r) => string.Compare(strA: l.Name, strB: r.Name, comparisonType: StringComparison.Ordinal));
 
             foreach (var parameter in parameters.Where(parameter =>
                 !IsNullOrBlank(value: parameter.Name) &&
@@ -140,7 +131,7 @@ namespace OAuthClient
 
         public string GetAuthorizationQuery()
         {
-            var collection = new WebParameterCollection(0);
+            var collection = new WebParameterCollection(capacity: 0);
 
             return GetAuthorizationQuery(parameters: collection);
         }
@@ -172,27 +163,17 @@ namespace OAuthClient
             return WriteAuthorizationQuery(parameters: parameters);
         }
 
-        private string GetClientSignatureAuthorizationQuery(WebParameterCollection parameters)
-        {
-            var signature = GetNewSignatureXAuth(parameters: parameters);
-
-            parameters.Add("oauth_signature", value: signature);
-
-            return WriteAuthorizationQuery(parameters: parameters);
-        }
-
         private static string WriteAuthorizationQuery(WebParameterCollection parameters)
         {
             var sb = new StringBuilder();
 
-            parameters.Sort((l, r) => l.Name.CompareTo(strB: r.Name));
+            parameters.Sort(comparison: (l, r) => string.Compare(strA: l.Name, strB: r.Name, comparisonType: StringComparison.Ordinal));
 
             var count = 0;
 
             foreach (var parameter in parameters.Where(parameter =>
                 !IsNullOrBlank(value: parameter.Name) &&
-                !IsNullOrBlank(value: parameter.Value) &&
-                (parameter.Name.StartsWith("oauth_") || parameter.Name.StartsWith("x_auth_"))))
+                !IsNullOrBlank(value: parameter.Value)))
             {
                 count++;
                 var format = count < parameters.Count ? "{0}={1}&" : "{0}={1}";
@@ -212,23 +193,6 @@ namespace OAuthClient
             var nonce = OAuthTools.GetNonce();
 
             AddAuthParameters(parameters: parameters, timestamp: timestamp, nonce: nonce);
-
-            var signatureBase =
-                OAuthTools.ConcatenateRequestElements(method: Method.ToUpperInvariant(), url: RequestUrl, parameters: parameters);
-
-            var signature = OAuthTools.GetSignature(signatureMethod: SignatureMethod, signatureTreatment: SignatureTreatment, signatureBase: signatureBase, consumerSecret: ConsumerSecret,
-                tokenSecret: TokenSecret);
-
-            return signature;
-        }
-
-        private string GetNewSignatureXAuth(WebParameterCollection parameters)
-        {
-            var timestamp = OAuthTools.GetTimestamp();
-
-            var nonce = OAuthTools.GetNonce();
-
-            AddXAuthParameters(parameters: parameters, timestamp: timestamp, nonce: nonce);
 
             var signatureBase =
                 OAuthTools.ConcatenateRequestElements(method: Method.ToUpperInvariant(), url: RequestUrl, parameters: parameters);
@@ -327,7 +291,7 @@ namespace OAuthClient
         {
             if (IsNullOrBlank(value: Method))
             {
-                throw new ArgumentException("You must specify an HTTP method");
+                throw new ArgumentException("You must specify a HTTP method");
             }
 
             if (IsNullOrBlank(value: RequestUrl))
@@ -350,7 +314,7 @@ namespace OAuthClient
         {
             if (IsNullOrBlank(value: Method))
             {
-                throw new ArgumentException("You must specify an HTTP method");
+                throw new ArgumentException("You must specify a HTTP method");
             }
 
             if (IsNullOrBlank(value: RequestUrl))
@@ -371,34 +335,6 @@ namespace OAuthClient
             if (IsNullOrBlank(value: Token))
             {
                 throw new ArgumentException("You must specify a token");
-            }
-        }
-
-        private void ValidateClientAuthAccessRequestState()
-        {
-            if (IsNullOrBlank(value: Method))
-            {
-                throw new ArgumentException("You must specify an HTTP method");
-            }
-
-            if (IsNullOrBlank(value: RequestUrl))
-            {
-                throw new ArgumentException("You must specify an access token URL");
-            }
-
-            if (IsNullOrBlank(value: ConsumerKey))
-            {
-                throw new ArgumentException("You must specify a consumer key");
-            }
-
-            if (IsNullOrBlank(value: ConsumerSecret))
-            {
-                throw new ArgumentException("You must specify a consumer secret");
-            }
-
-            if (IsNullOrBlank(value: ClientUsername) || IsNullOrBlank(value: ClientPassword))
-            {
-                throw new ArgumentException("You must specify user credentials");
             }
         }
 
@@ -457,36 +393,13 @@ namespace OAuthClient
             }
         }
 
-        private void AddXAuthParameters(ICollection<WebParameter> parameters, string timestamp, string nonce)
-        {
-            var authParameters = new WebParameterCollection
-            {
-                new WebParameter("x_auth_username", value: ClientUsername),
-                new WebParameter("x_auth_password", value: ClientPassword),
-                new WebParameter("x_auth_mode", "client_auth"),
-                new WebParameter("oauth_consumer_key", value: ConsumerKey),
-                new WebParameter("oauth_signature_method", value: ToRequestValue(signatureMethod: SignatureMethod)),
-                new WebParameter("oauth_timestamp", value: timestamp),
-                new WebParameter("oauth_nonce", value: nonce),
-                new WebParameter("oauth_version", value: Version ?? "1.0")
-            };
-
-            foreach (var authParameter in authParameters)
-            {
-                parameters.Add(item: authParameter);
-            }
-        }
-
         public static string ToRequestValue(OAuthSignatureMethod signatureMethod)
         {
             var value = signatureMethod.ToString().ToUpper();
-            var shaIndex = value.IndexOf("SHA1");
+            var shaIndex = value.IndexOf("SHA1", comparisonType: StringComparison.Ordinal);
             return shaIndex > -1 ? value.Insert(startIndex: shaIndex, value: "-") : value;
         }
 
-        private static bool IsNullOrBlank(string value)
-        {
-            return String.IsNullOrEmpty(value: value) || (!String.IsNullOrEmpty(value: value) && value.Trim() == String.Empty);
-        }
+        private static bool IsNullOrBlank(string value) => string.IsNullOrEmpty(value: value) || (!string.IsNullOrEmpty(value: value) && value.Trim() == string.Empty);
     }
 }
