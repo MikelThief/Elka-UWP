@@ -8,7 +8,6 @@ using Windows.Security.Credentials;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Exceptions;
-using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuthClient;
@@ -58,7 +57,6 @@ namespace ElkaUWP.Modularity.LoginModule.Service
         {
             var tokenRequest = new OAuthRequest()
             {
-                Realm = Constants.USOSAPI_BASE_URL,
                 Method = "GET",
                 Version = "1.0",
                 ConsumerKey = Constants.USOS_CONSUMER_KEY,
@@ -140,7 +138,6 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
             var tokenRequest = new OAuthRequest()
             {
-                Realm = Constants.USOSAPI_BASE_URL,
                 Method = "GET",
                 Version = "1.0",
                 ConsumerKey = Constants.USOS_CONSUMER_KEY,

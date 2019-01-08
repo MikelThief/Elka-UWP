@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Security.Credentials;
 
 namespace ElkaUWP.Infrastructure.Services
@@ -56,7 +53,7 @@ namespace ElkaUWP.Infrastructure.Services
             }
         }
 
-        public PasswordCredential GetCredential(string container, string key)
+        public PasswordCredential GetSecret(string container, string key)
         {
             if (_vault.RetrieveAll().Any(predicate: x => x.Resource == container && x.UserName == key))
             {

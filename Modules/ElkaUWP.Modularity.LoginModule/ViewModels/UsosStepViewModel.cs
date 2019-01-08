@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Controls;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Helpers;
-using ElkaUWP.Infrastructure.Services;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using Nito.Mvvm;
 using Prism.Mvvm;

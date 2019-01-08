@@ -16,6 +16,7 @@ using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Security.Credentials;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -207,10 +208,17 @@ namespace ElkaUWP.Core
 
                             var responseParameters = HttpUtility.ParseQueryString(query: protocolArguments.Uri.Query);
 
-                            var credential = await usosOAuthService.GetAccessAsync(authorizedRequestToken: responseParameters.Get(name: "oauth_token"), oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
+                            var credential = await usosOAuthService.GetAccessAsync(
+                                authorizedRequestToken: responseParameters.Get(name: "oauth_token"),
+                                oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
 
                             secretService.CreateOrUpdateSecret(providedCredential: credential);
 
+                            var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY,
+                                responseParameters.Get(name: "oauth_token"));
+;
                             var navigationParameters = new NavigationParameters
                             {
                                 { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }

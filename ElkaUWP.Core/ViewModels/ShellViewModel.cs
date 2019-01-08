@@ -12,7 +12,6 @@ using Prism.Navigation;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ElkaUWP.Infrastructure;
 using Prism.Services;
 using WinUI = Microsoft.UI.Xaml.Controls;
 
