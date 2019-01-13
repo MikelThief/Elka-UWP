@@ -41,6 +41,7 @@ using Prism.Services;
 using ElkaUWP.Modularity.LoginModule;
 using Unity;
 using Unity.Lifetime;
+using ElkaUWP.DataLayer.Usos.Requests;
 
 namespace ElkaUWP.Core
 {
@@ -169,6 +170,9 @@ namespace ElkaUWP.Core
 
             // Register services
             container.RegisterSingleton<SecretService>();
+
+            // Register DataLayer elements
+            container.RegisterSingleton<BuildingIndexRequestWrapper>();
         }
 
         /// <summary>

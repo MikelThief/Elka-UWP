@@ -120,16 +120,20 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
+    <Compile Include="Abstractions\Interfaces\IOAuthProtectedResourceRequestWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usos\Entities\Building.cs" />
     <Compile Include="Usos\Entities\LangDict.cs" />
     <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
-    <Compile Include="Usos\Repositories\BuildingReadOnlyRepository.cs" />
-    <Compile Include="Usos\Requests\BuildingIndexRequest.cs" />
+    <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiteDB">
+      <Version>4.1.4</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
     </PackageReference>

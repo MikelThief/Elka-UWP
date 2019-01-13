@@ -211,6 +211,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElkaUWP.DataLayer\ElkaUWP.DataLayer.csproj">
+      <Project>{DC706B3B-7A4D-4B23-BE2A-ED8744A57250}</Project>
+      <Name>ElkaUWP.DataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
       <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
       <Name>ElkaUWP.Infrastructure</Name>

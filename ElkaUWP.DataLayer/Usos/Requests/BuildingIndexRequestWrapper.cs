@@ -8,8 +8,12 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
+    /// <summary>
+    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/geo/#building_index
+    /// </summary>
     public class BuildingIndexRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
+        private const string _destination = "geo/building_index";
         // Fields index to be received in response
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
@@ -22,7 +26,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "phone_numbers"
         };
 
-        private OAuthRequest UnderlyingOAuthRequest { get; set; }
+        private OAuthRequest UnderlyingOAuthRequest;
 
         public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
@@ -39,7 +43,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 ConsumerSecret = Constants.USOS_CONSUMER_SECRET,
                 Token = oAuthSecret.UserName,
                 TokenSecret = oAuthSecret.Password,
-                RequestUrl = Constants.USOSAPI_SECURE_BASE_URL + "geo/building_index",
+                RequestUrl = Constants.USOSAPI_SECURE_BASE_URL + _destination,
                 Method = "GET",
                 SignatureMethod = OAuthSignatureMethod.HmacSha1,
                 SignatureTreatment = OAuthSignatureTreatment.Escaped,
@@ -47,7 +51,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        public string GetRequestString()
+        public override string GetRequestString()
         {
             var additionalParameters = new NameValueCollection();
             var fieldsString = string.Join(separator: "%7C", values: _fields);
