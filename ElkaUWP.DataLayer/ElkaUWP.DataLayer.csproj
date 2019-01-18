@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F821561-3596-4949-99C4-A32EAA91EE6C}</ProjectGuid>
+    <ProjectGuid>{DC706B3B-7A4D-4B23-BE2A-ED8744A57250}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ElkaUWP.Infrastructure</RootNamespace>
-    <AssemblyName>ElkaUWP.Infrastructure</AssemblyName>
+    <RootNamespace>ElkaUWP.DataLayer</RootNamespace>
+    <AssemblyName>ElkaUWP.DataLayer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -26,7 +26,6 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,7 +35,6 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -47,7 +45,6 @@
     <DebugType>full</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -58,7 +55,6 @@
     <DebugType>pdbonly</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -69,7 +65,6 @@
     <DebugType>full</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -80,7 +75,6 @@
     <DebugType>pdbonly</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
     <PlatformTarget>ARM64</PlatformTarget>
@@ -91,7 +85,6 @@
     <DebugType>full</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
     <PlatformTarget>ARM64</PlatformTarget>
@@ -102,7 +95,6 @@
     <DebugType>pdbonly</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -113,7 +105,6 @@
     <DebugType>full</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -124,29 +115,25 @@
     <DebugType>pdbonly</DebugType>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\Interfaces\IUsosOAuthService.cs" />
-    <Compile Include="Constants.App.cs" />
-    <Compile Include="Constants.Usos.cs" />
-    <Compile Include="Exceptions\FailedOAuthWorkflowException.cs" />
-    <Compile Include="Extensions\NLogExtension.cs" />
-    <Compile Include="Extensions\SettingsStorageExtensions.cs" />
-    <Compile Include="Helpers\BrushFromColorHelper.cs" />
-    <Compile Include="Helpers\JsonHelper.cs" />
-    <Compile Include="Helpers\ResourceLoaderHelper.cs" />
-    <Compile Include="NavigationParameterKeys.cs" />
-    <Compile Include="PageTokens.cs" />
+    <Compile Include="Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
+    <Compile Include="Abstractions\Interfaces\IOAuthProtectedResourceRequestWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SecretService.cs" />
-    <Compile Include="SettingsKeys.cs" />
-    <EmbeddedResource Include="Properties\ElkaUWP.Infrastructure.rd.xml" />
+    <Compile Include="Usos\Entities\Building.cs" />
+    <Compile Include="Usos\Entities\LangDict.cs" />
+    <Compile Include="Usos\Entities\Location.cs" />
+    <Compile Include="Usos\Entities\MarkerStyle.cs" />
+    <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
+    <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiteDB">
+      <Version>4.1.4</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
     </PackageReference>
@@ -159,22 +146,16 @@
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.769-ci</Version>
     </PackageReference>
-    <PackageReference Include="RavinduL.LocalNotifications">
-      <Version>3.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Unity.Abstractions">
-      <Version>3.3.1</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ResourceDictionaries\Buttons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ResourceDictionaries\Resources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <ProjectReference Include="..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
+      <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
+      <Name>ElkaUWP.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OAuthClient\OAuthClient.csproj">
+      <Project>{e41fa7a8-dd6d-4465-9d4d-116931871c95}</Project>
+      <Name>OAuthClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

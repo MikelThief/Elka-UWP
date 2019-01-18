@@ -211,13 +211,17 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElkaUWP.DataLayer\ElkaUWP.DataLayer.csproj">
+      <Project>{DC706B3B-7A4D-4B23-BE2A-ED8744A57250}</Project>
+      <Name>ElkaUWP.DataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
       <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
       <Name>ElkaUWP.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\ElkaUWP.Modularity.LoginModule\ElkaUWP.Modularity.LoginModule.csproj">
       <Project>{9271b278-9c6b-45b4-95f2-a52643b26b9a}</Project>
-      <Name>ElkaUWP.LoginModule</Name>
+      <Name>ElkaUWP.Modularity.LoginModule</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

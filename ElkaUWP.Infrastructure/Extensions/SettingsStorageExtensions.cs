@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -61,7 +58,7 @@ namespace ElkaUWP.Infrastructure.Extensions
 
         public static async Task<StorageFile> SaveFileAsync(this StorageFolder folder, byte[] content, string fileName, CreationCollisionOption options = CreationCollisionOption.ReplaceExisting)
         {
-            if (content == null)
+            if (content is null)
             {
                 throw new ArgumentNullException(paramName: nameof(content));
             }
@@ -80,7 +77,7 @@ namespace ElkaUWP.Infrastructure.Extensions
         {
             var item = await folder.TryGetItemAsync(name: fileName).AsTask().ConfigureAwait(false);
 
-            if ((item == null) || !item.IsOfType(type: StorageItemTypes.File))
+            if ((item is null) || !item.IsOfType(type: StorageItemTypes.File))
                 return null;
 
             var storageFile = await folder.GetFileAsync(name: fileName);

@@ -8,10 +8,9 @@ using Windows.Security.Credentials;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Exceptions;
-using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
-using OAuth;
+using OAuthClient;
 
 namespace ElkaUWP.Modularity.LoginModule.Service
 {
@@ -58,7 +57,6 @@ namespace ElkaUWP.Modularity.LoginModule.Service
         {
             var tokenRequest = new OAuthRequest()
             {
-                Realm = Constants.USOSAPI_BASE_URL,
                 Method = "GET",
                 Version = "1.0",
                 ConsumerKey = Constants.USOS_CONSUMER_KEY,
@@ -75,7 +73,7 @@ namespace ElkaUWP.Modularity.LoginModule.Service
             {
                 {"scopes", scopes}
             });
-            var requestUri = new Uri(uriString: tokenRequest.RequestUrl + "?" + authString + "&scopes=" + scopes);
+            var requestUri = new Uri(uriString: $"{tokenRequest.RequestUrl}?{authString}");
 
             var webClient = new WebClient();
 
@@ -140,7 +138,6 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
             var tokenRequest = new OAuthRequest()
             {
-                Realm = Constants.USOSAPI_BASE_URL,
                 Method = "GET",
                 Version = "1.0",
                 ConsumerKey = Constants.USOS_CONSUMER_KEY,
@@ -156,7 +153,7 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
             var accessString = tokenRequest.GetAuthorizationQuery();
 
-            var requestUri = new Uri(uriString: tokenRequest.RequestUrl + "?" + accessString);
+            var requestUri = new Uri(uriString: $"{tokenRequest.RequestUrl}?{accessString}");
 
             var webClient = new WebClient();
 
