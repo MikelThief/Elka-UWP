@@ -127,7 +127,10 @@
     <Compile Include="Usos\Entities\LangDict.cs" />
     <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
+    <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
+    <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -9,24 +9,47 @@ using OAuthClient;
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
     /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/geo/#building_index
+    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/tt/#student
     /// </summary>
-    public class BuildingIndexRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class StudentTimeTableRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "geo/building_index";
+        private const string _destination = "services/tt/student";
+
         // Fields index to be received in response
+        // API may return more fields 
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id",
+            "start_time",
+            "end_time",
+            "type",
             "name",
-            "profile_url",
-            "campus_name",
-            "location",
-            "marker_style",
-            "phone_numbers"
+            "url",
+            "course_id",
+            "course_name",
+            "classtype_name",
+            "group_number",
+            "building_name",
+            "building_id",
+            "room_number",
+            "room_id",
+            "unit_id",
+            "classtype_id",
+            "cgwm_id"
         };
 
-        public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public override string GetRequestString()
+        {
+            var fieldsString = string.Join(separator: "%7C", values: _fields);
+            var additionalParameters = new NameValueCollection()
+            {
+                { "fields", fieldsString }
+            };
+
+            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+        }
+
+        /// <inheritdoc />
+        public StudentTimeTableRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             Logger = logger;
             secretService = secretServiceInstance;
@@ -48,17 +71,5 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 Type = OAuthRequestType.ProtectedResource
             };
         }
-
-        public override string GetRequestString()
-        {
-            var fieldsString = string.Join(separator: "%7C", values: _fields);
-            var additionalParameters = new NameValueCollection()
-            {
-                { "fields", fieldsString }
-            };
-
-            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
-        }
-
     }
 }
