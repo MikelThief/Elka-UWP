@@ -28,10 +28,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
         public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
-            Logger = logger;
-            secretService = secretServiceInstance;
-
-            var oAuthSecret = secretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
+            var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Constants.USOSAPI_ACCESS_TOKEN_KEY);
             oAuthSecret.RetrievePassword();
 

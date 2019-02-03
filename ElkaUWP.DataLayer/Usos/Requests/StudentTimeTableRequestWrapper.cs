@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Bases;
@@ -48,13 +49,25 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
 
+        public string GetRequestString(DateTime startDate)
+        {
+            var fieldsString = string.Join(separator: "%7C", values: _fields);
+            var additionalParameters = new NameValueCollection()
+            {
+                { "fields", fieldsString },
+                { "start", startDate.ToString(format: "yyyy-mm-dd") }
+            };
+
+            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+        }
+
         /// <inheritdoc />
         public StudentTimeTableRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             Logger = logger;
-            secretService = secretServiceInstance;
+            SecretService = secretServiceInstance;
 
-            var oAuthSecret = secretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
+            var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Constants.USOSAPI_ACCESS_TOKEN_KEY);
             oAuthSecret.RetrievePassword();
 

@@ -9,6 +9,6 @@ namespace ElkaUWP.Infrastructure.Converters
 {
     public class UsosDateTimeConverter : IsoDateTimeConverter
     {
-        public UsosDateTimeConverter() => DateTimeFormat = "yyyy-mm-dd hh:mm:ss";
+        public UsosDateTimeConverter() => DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
     }
 }

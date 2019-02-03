@@ -9,13 +9,13 @@ namespace ElkaUWP.Infrastructure.Abstractions.Bases
 
     {
         protected OAuthRequest UnderlyingOAuthRequest;
-        protected SecretService secretService { get; set; }
+        protected SecretService SecretService { get; set; }
         protected ILogger Logger { get; set; }
 
         protected OAuthProtectedResourceRequestWrapperBase(SecretService secretServiceInstance, ILogger logger)
         {
             Logger = logger;
-            secretService = secretServiceInstance;
+            SecretService = secretServiceInstance;
         }
 
         /// <inheritdoc />

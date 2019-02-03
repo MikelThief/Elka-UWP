@@ -170,9 +170,6 @@ namespace ElkaUWP.Core
 
             // Register services
             container.RegisterSingleton<SecretService>();
-
-            // Register DataLayer elements
-            container.RegisterSingleton<BuildingIndexRequestWrapper>();
         }
 
         /// <summary>
