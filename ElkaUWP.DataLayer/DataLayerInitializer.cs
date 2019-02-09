@@ -18,6 +18,8 @@ namespace ElkaUWP.DataLayer
             // Register USOS request wrappers
             containerRegistry.RegisterSingleton<StudentTimeTableRequestWrapper>();
             containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
+            containerRegistry.RegisterSingleton<UpcomingICalRequestWrapper>();
+            containerRegistry.RegisterSingleton<UpcomingWebCalFeedRequestWrapper>();
 
             // Register services
             containerRegistry.RegisterSingleton<TimeTableService>();
