@@ -7,5 +7,6 @@
         public const string ShellViewToken = "ShellViewToken";
         public const string UserSummnaryView = "UserSummaryViewToken";
         public const string TestViewToken = "TestViewToken";
+        public const string CalendarSummaryView = "CalendarSummaryViewToken";
     }
 }

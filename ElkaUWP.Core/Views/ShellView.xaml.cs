@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using ElkaUWP.Core.ViewModels;
 
@@ -21,6 +24,11 @@ namespace ElkaUWP.Core.Views
         {
             InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
+
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = null;
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = false;
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
@@ -43,6 +51,9 @@ namespace ElkaUWP.Core.Views
                     break;
                 case "LoginToken":
                     ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken);
+                    break;
+                case PageTokens.CalendarSummaryView:
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView);
                     break;
             }
         }
