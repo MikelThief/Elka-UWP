@@ -221,8 +221,7 @@ namespace ElkaUWP.Core
 
                             var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY,
-                                responseParameters.Get(name: "oauth_token"));
+                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY, value: credential.UserName);
 ;
                             var navigationParameters = new NavigationParameters
                             {

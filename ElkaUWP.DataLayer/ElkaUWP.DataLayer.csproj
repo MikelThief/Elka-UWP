@@ -136,6 +136,8 @@
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>

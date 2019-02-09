@@ -29,7 +29,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Constants.USOSAPI_ACCESS_TOKEN_KEY);
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -54,7 +54,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 { "fields", fieldsString }
             };
 
-            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
 
     }

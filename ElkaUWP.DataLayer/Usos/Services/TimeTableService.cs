@@ -22,7 +22,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
         /// Fetches activities for next two weeks for current student
         /// </summary>
         /// <returns>List with elements of type <see cref="ClassGroup2"/></returns>
-        public async Task<List<ClassGroup2>> GetTimeTableActivitiesForStudent()
+        public async Task<List<ClassGroup2>> GetTimeTableActivitiesForStudentAsync()
         {
             var request = (Container.Resolve<StudentTimeTableRequestWrapper>());
 
@@ -76,8 +76,18 @@ namespace ElkaUWP.DataLayer.Usos.Services
             return currentWeekListOfActivities;
         }
 
+        public string GetICalFileUri()
+        {
+            return Container.Resolve<UpcomingICalRequestWrapper>().GetRequestString();
+        }
+
+        public string GetWebCalFeedUri()
+        {
+            return Container.Resolve<UpcomingWebCalFeedRequestWrapper>().GetRequestString();
+        }
+
         /// <inheritdoc />
-        protected TimeTableService(ILogger logger, IContainerProvider container) : base(logger: logger, container: container)
+        public TimeTableService(ILogger logger, IContainerExtension containerExtension) : base(logger: logger, containerExtension: containerExtension)
         {
 
         }

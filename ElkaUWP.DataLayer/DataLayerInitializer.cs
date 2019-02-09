@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Requests;
+using ElkaUWP.DataLayer.Usos.Services;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -17,6 +18,9 @@ namespace ElkaUWP.DataLayer
             // Register USOS request wrappers
             containerRegistry.RegisterSingleton<StudentTimeTableRequestWrapper>();
             containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
+
+            // Register services
+            containerRegistry.RegisterSingleton<TimeTableService>();
         }
 
         /// <inheritdoc />

@@ -16,6 +16,7 @@ namespace ElkaUWP.Modularity.CalendarModule
         /// <inheritdoc />
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // Register View-Viewmodel pairs
             containerRegistry.RegisterForNavigation<SummaryView, SummaryViewModel>(key: PageTokens.CalendarSummaryView);
         }
 

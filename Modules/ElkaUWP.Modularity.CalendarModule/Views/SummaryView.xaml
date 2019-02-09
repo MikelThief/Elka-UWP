@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:infrastructure="using:ElkaUWP.Infrastructure"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -23,9 +24,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ScheduleGrid.Margin" Value="24 0 24 24"/>
+                        <Setter Target="ScheduleGrid.Margin" Value="24"/>
                         <Setter Target="ScheduleGrid.RowDefinitions[1].Height" Value="auto"/>
-                        <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="*"/>
+                        <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="200"/>
                         <Setter Target="FirstGrid.Margin" Value="0 0 6 0"/>
                         <Setter Target="SecondGrid.Margin" Value="6 0 0 0"/>
 
@@ -61,7 +62,7 @@
         <!-- Body -->
         <CommandBar Grid.Row="0"/>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
-            <Grid x:Name="ScheduleGrid">
+            <Grid x:Name="ScheduleGrid" MinHeight="800">
                 <!-- Head -->
 
                 <Grid.ColumnDefinitions>
@@ -74,9 +75,41 @@
                 </Grid.RowDefinitions>
 
                 <!-- Body -->
-                <CommandBar Height="100" />
-                <Grid x:Name="FirstGrid" Grid.Column="0" Grid.Row="0" Background="Red" />
-                <Grid x:Name="SecondGrid" Grid.Column="1" Grid.Row="0" Background="Bisque" />
+                <Grid x:Name="FirstGrid" Grid.Column="0" Grid.Row="0" Background="Turquoise"/>
+                <Grid x:Name="SecondGrid" Grid.Column="1" Grid.Row="0" Background="Bisque" MinWidth="100">
+
+                    <controls:HeaderedContentControl x:Uid="CalendarLinksHeader" Name="CalendarLinksHeader" FontSize="15">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Spacing="10">
+                            <HyperlinkButton Name="ICalHyperLinkButton" NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
+                                <HyperlinkButton.Content>
+                                    <TextBlock x:Uid="ICalHyperLink" FontSize="15"/>
+                                </HyperlinkButton.Content>
+                            </HyperlinkButton>
+                            <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalFeedHyperlink}" Click="WebCalHyperLinkButton_Click">
+                                <HyperlinkButton.Content>
+                                    <TextBlock x:Uid="WebCalHyperLink" FontSize="15"/>
+                                </HyperlinkButton.Content>
+                            </HyperlinkButton>
+                        </StackPanel>
+                    </controls:HeaderedContentControl>
+
+                    <controls:Carousel Name="EventsCarousel" Orientation="Vertical" ItemMargin="5">
+                        <!-- Head -->
+                        <controls:Carousel.EasingFunction>
+                            <CircleEase EasingMode="EaseInOut" />
+                        </controls:Carousel.EasingFunction>
+
+                        <controls:Carousel.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Carousel content template -->
+                            </DataTemplate>
+                        </controls:Carousel.ItemTemplate>
+
+
+                    </controls:Carousel>
+
+
+                </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>

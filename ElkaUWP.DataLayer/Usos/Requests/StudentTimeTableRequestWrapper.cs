@@ -58,7 +58,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 { "start", startDate.ToString(format: "yyyy-mm-dd") }
             };
 
-            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             SecretService = secretServiceInstance;
 
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Constants.USOSAPI_ACCESS_TOKEN_KEY);
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest

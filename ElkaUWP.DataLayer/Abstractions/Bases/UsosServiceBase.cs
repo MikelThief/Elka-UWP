@@ -12,12 +12,12 @@ namespace ElkaUWP.DataLayer.Abstractions.Bases
     public class UsosServiceBase
     {
         protected ILogger Logger { get; private set; }
-        protected IContainerProvider Container { get; private set; }
+        protected IContainerExtension Container { get; private set; }
 
-        protected UsosServiceBase(ILogger logger, IContainerProvider container)
+        public UsosServiceBase(ILogger logger, IContainerExtension containerExtension)
         { 
             Logger = logger;
-            Container = container;
+            Container = containerExtension;
         }
     }
 }
