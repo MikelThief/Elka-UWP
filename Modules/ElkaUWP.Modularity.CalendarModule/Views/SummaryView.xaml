@@ -7,18 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:infrastructure="using:ElkaUWP.Infrastructure"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:entities="using:ElkaUWP.DataLayer.Usos.Entities"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        </ResourceDictionary>
     </Page.Resources>
     <Grid Name="MainGrid">
         <!-- Head -->
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="LargeState">
+                <VisualState x:Name="MediumState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
                     </VisualState.StateTriggers>
@@ -26,12 +32,16 @@
                     <VisualState.Setters>
                         <Setter Target="ScheduleGrid.Margin" Value="24"/>
                         <Setter Target="ScheduleGrid.RowDefinitions[1].Height" Value="auto"/>
-                        <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="200"/>
-                        <Setter Target="FirstGrid.Margin" Value="0 0 6 0"/>
-                        <Setter Target="SecondGrid.Margin" Value="6 0 0 0"/>
+                        <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="240"/>
+                        <Setter Target="FirstGrid.Margin" Value="0 0 4 0"/>
+                        <Setter Target="SecondGrid.Margin" Value="4 0 0 0"/>
 
                         <Setter Target="SecondGrid.(Grid.Column)" Value="1"/>
                         <Setter Target="SecondGrid.(Grid.Row)" Value="0"/>
+
+                        <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Right" />
+
+                        <Setter Target="SummaryPageHeader.Padding" Value="24 2 0 0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -41,13 +51,17 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ScheduleGrid.Margin" Value="12"/>
-                        <Setter Target="FirstGrid.Margin" Value="0 0 0 6"/>
-                        <Setter Target="SecondGrid.Margin" Value="0 6 0 0"/>
+                        <Setter Target="FirstGrid.Margin" Value="0 0 0 4"/>
+                        <Setter Target="SecondGrid.Margin" Value="0 4 0 0"/>
                         <Setter Target="ScheduleGrid.RowDefinitions[1].Height" Value="*"/>
                         <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="auto"/>
 
                         <Setter Target="SecondGrid.(Grid.Column)" Value="0"/>
                         <Setter Target="SecondGrid.(Grid.Row)" Value="1"/>
+
+                        <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Bottom" />
+
+                        <Setter Target="SummaryPageHeader.Padding" Value="96 2 0 0"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -60,7 +74,31 @@
         </Grid.RowDefinitions>
 
         <!-- Body -->
-        <CommandBar Grid.Row="0"/>
+        <CommandBar x:Name="SummaryCommandBar" Grid.Row="0" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+            <AppBarButton Icon="Add" Name="SummaryAddButton" x:Uid="SummaryAddButton" AllowFocusOnInteraction="True">
+                <AppBarButton.Flyout>
+                    <Flyout x:Name="CreateEventFlyout">
+                        <StackPanel Orientation="Vertical" Spacing="15">
+                            <TextBlock Text="Create new event" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <StackPanel Orientation="Vertical" Spacing="10" HorizontalAlignment="Center">
+                                <DatePicker Name="CreateEventFlyoutDatePicker" x:Uid="CreateEventFlyoutDatePicker" HorizontalAlignment="Stretch" Date="{x:Bind ViewModel.CreateEventFlyoutDateTime, Mode=TwoWay}"/>
+                                <TextBox x:Name="CreateEventFlyoutTitle" x:Uid="CreateEventFlyoutTitle" Text="{x:Bind ViewModel.CreateEventFlyOutTitle, Mode=TwoWay}" HorizontalAlignment="Stretch" MaxWidth="300" MaxLength="40"/>
+                                <TextBox x:Name="CreateEventFlyoutDescription" x:Uid="CreateEventFlyoutDescription" Text="{x:Bind ViewModel.CreateEventFlyoutDescription, Mode=TwoWay}" Height="93" MaxWidth="300" HorizontalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="117"/>
+                                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                                    <Button MinWidth="120" MinHeight="35" Content="Create" Command="{x:Bind ViewModel.CreateEventCommand}" Click="CreateEventButton_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Refresh" Name="SummaryRefreshButton" x:Uid="SummaryRefreshButton"/>
+
+            <CommandBar.Content>
+                <TextBlock Name="SummaryPageHeader" Style="{StaticResource TitleTextBlockStyle}" x:Uid="SummaryPageHeader" />
+            </CommandBar.Content>
+
+        </CommandBar>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
             <Grid x:Name="ScheduleGrid" MinHeight="800">
                 <!-- Head -->
@@ -76,38 +114,48 @@
 
                 <!-- Body -->
                 <Grid x:Name="FirstGrid" Grid.Column="0" Grid.Row="0" Background="Turquoise"/>
-                <Grid x:Name="SecondGrid" Grid.Column="1" Grid.Row="0" Background="Bisque" MinWidth="100">
+                <Grid x:Name="SecondGrid" Grid.Column="1" Grid.Row="0" Background="Transparent">
 
-                    <controls:HeaderedContentControl x:Uid="CalendarLinksHeader" Name="CalendarLinksHeader" FontSize="15">
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Spacing="10">
-                            <HyperlinkButton Name="ICalHyperLinkButton" NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
-                                <HyperlinkButton.Content>
-                                    <TextBlock x:Uid="ICalHyperLink" FontSize="15"/>
-                                </HyperlinkButton.Content>
-                            </HyperlinkButton>
-                            <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalFeedHyperlink}" Click="WebCalHyperLinkButton_Click">
-                                <HyperlinkButton.Content>
-                                    <TextBlock x:Uid="WebCalHyperLink" FontSize="15"/>
-                                </HyperlinkButton.Content>
-                            </HyperlinkButton>
-                        </StackPanel>
-                    </controls:HeaderedContentControl>
+                    <StackPanel Orientation="Vertical" Spacing="30">
+                        <controls:HeaderedContentControl x:Uid="CalendarLinksHeader" Name="CalendarLinksHeader" FontSize="15">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Spacing="10">
+                                <HyperlinkButton Name="ICalHyperLinkButton" NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
+                                    <HyperlinkButton.Content>
+                                        <TextBlock x:Uid="ICalHyperLink" FontSize="15"/>
+                                    </HyperlinkButton.Content>
+                                </HyperlinkButton>
+                                <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalFeedHyperlink}">
+                                    <HyperlinkButton.Content>
+                                        <TextBlock x:Uid="WebCalHyperLink" FontSize="15"/>
+                                    </HyperlinkButton.Content>
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </controls:HeaderedContentControl>
 
-                    <controls:Carousel Name="EventsCarousel" Orientation="Vertical" ItemMargin="5">
-                        <!-- Head -->
-                        <controls:Carousel.EasingFunction>
-                            <CircleEase EasingMode="EaseInOut" />
-                        </controls:Carousel.EasingFunction>
+                        <controls:HeaderedContentControl Name="UpcomingEventsHeader" x:Uid="UpcomingEventsHeader" FontSize="15">
+                            <controls:AdaptiveGridView x:Name="OwnUpcomingEvents" ItemsSource="{x:Bind ViewModel.UserCustomEvents}" SelectionMode="None">
+                                <!-- Head -->
+                                <controls:AdaptiveGridView.ItemContainerStyle>
+                                    <Style TargetType="FrameworkElement">
+                                        <Setter Property="Margin" Value="0 5 5 5"/>
+                                    </Style>
+                                </controls:AdaptiveGridView.ItemContainerStyle>
+                                <!-- Body -->
+                                <controls:AdaptiveGridView.ItemTemplate>
+                                    <DataTemplate x:DataType="entities:UserCustomEvent">
+                                        <StackPanel Orientation="Vertical" Padding="4">
+                                            <StackPanel Orientation="Horizontal" Spacing="3">
+                                                <TextBlock Text="{x:Bind Header}" TextWrapping="WrapWholeWords"/>
+                                                <TextBlock Text="{x:Bind Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{} | {0:dd/MM/yyy (ddd)}'}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{x:Bind Description}" Foreground="DarkGray" TextWrapping="WrapWholeWords"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </controls:AdaptiveGridView.ItemTemplate>
+                            </controls:AdaptiveGridView>
+                        </controls:HeaderedContentControl>
 
-                        <controls:Carousel.ItemTemplate>
-                            <DataTemplate>
-                                <!-- Carousel content template -->
-                            </DataTemplate>
-                        </controls:Carousel.ItemTemplate>
-
-
-                    </controls:Carousel>
-
+                    </StackPanel>
 
                 </Grid>
             </Grid>

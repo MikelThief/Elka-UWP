@@ -118,10 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CalendarLinksHeader.Header" xml:space="preserve">
-    <value>Get upcoming events</value>
+    <value>Get upcoming events from USOS</value>
+  </data>
+  <data name="CreateEventFlyoutDatePicker.Header" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="CreateEventFlyoutDescription.Header" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CreateEventFlyoutTitle.Header" xml:space="preserve">
+    <value>Title</value>
   </data>
   <data name="ICalHyperLink.Text" xml:space="preserve">
     <value>Download iCal file</value>
+  </data>
+  <data name="SummaryAddButton.Label" xml:space="preserve">
+    <value>Add new event</value>
+  </data>
+  <data name="SummaryAddButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add new event to your private list</value>
+  </data>
+  <data name="SummaryPageHeader.Text" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="SummaryRefreshButton.Label" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SummaryRefreshButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Refresh timetable manually</value>
+  </data>
+  <data name="UpcomingEventsHeader.Header" xml:space="preserve">
+    <value>Your private upcoming events</value>
   </data>
   <data name="WebCalHyperLink.Text" xml:space="preserve">
     <value>Get WebCal feed</value>

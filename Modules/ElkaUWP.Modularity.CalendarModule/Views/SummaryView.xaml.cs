@@ -32,9 +32,9 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
-        private void WebCalHyperLinkButton_Click(object sender, RoutedEventArgs e)
+        private void CreateEventButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            CreateEventFlyout.Hide();
         }
     }
 }
