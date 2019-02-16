@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Modularity.CalendarModule.ViewModels;
 using ElkaUWP.Modularity.CalendarModule.Views;
+using MvvmDialogs;
+using MvvmDialogs.ContentDialogFactories;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -18,6 +20,10 @@ namespace ElkaUWP.Modularity.CalendarModule
         {
             // Register View-Viewmodel pairs
             containerRegistry.RegisterForNavigation<SummaryView, SummaryViewModel>(key: PageTokens.CalendarSummaryView);
+
+            var dialogservice = new DialogService();
+            // Register types
+            containerRegistry.RegisterInstance<IDialogService>(instance: dialogservice);
         }
 
         /// <inheritdoc />

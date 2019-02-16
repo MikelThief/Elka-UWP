@@ -4,11 +4,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
+using MvvmDialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Syncfusion.UI.Xaml.Schedule;
 
 namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 {
@@ -16,7 +20,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
     {
         private Uri _calFileHyperlink;
         private Uri _webCalFeedHyperlink;
-        private ObservableCollection<UserCustomEvent> _userCustomEvents;
+        private ObservableCollection<UserDeadline> _userDeadlines;
+        private readonly IDialogService _dialogService;
 
         private TimeTableService _timeTableService;
 
@@ -31,54 +36,60 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             get => _webCalFeedHyperlink;
             private set => SetProperty(storage: ref _webCalFeedHyperlink, value: value, propertyName: nameof(WebCalFeedHyperlink));
         }
-        public ObservableCollection<UserCustomEvent> UserCustomEvents
+        public ObservableCollection<UserDeadline> UserDeadlines
         {
-            get => _userCustomEvents;
-            private set => _userCustomEvents = value;
+            get => _userDeadlines;
+            private set => _userDeadlines = value;
         }
+
+        public ScheduleAppointmentCollection CalendarEvents { get; set; }
+
 
         #region CreateEventFlyout
-        private DateTime _createEventFlyoutDateTime;
-        private string _createEventFlyoutTitle;
-        private string _createEventFlyoutDescription;
+        private DateTime _createDeadlineFlyoutDateTime;
+        private string _createDeadlineFlyoutTitle;
+        private string _createDeadlineFlyoutDescription;
 
 
-        public DateTimeOffset CreateEventFlyoutDateTime
+        public DateTimeOffset CreateDeadlineFlyoutDateTime
         {
-            get => _createEventFlyoutDateTime;
-            set => SetProperty(storage: ref _createEventFlyoutDateTime, value: value.DateTime, propertyName: nameof(CreateEventFlyoutDateTime));
+            get => _createDeadlineFlyoutDateTime;
+            set => SetProperty(storage: ref _createDeadlineFlyoutDateTime, value: value.DateTime, propertyName: nameof(CreateDeadlineFlyoutDateTime));
         }
 
 
 
-        public string CreateEventFlyOutTitle
+        public string CreateDeadlineFlyOutTitle
         {
-            get => _createEventFlyoutTitle;
-            set => SetProperty(storage: ref _createEventFlyoutTitle, value: value, propertyName: nameof(CreateEventFlyOutTitle));
+            get => _createDeadlineFlyoutTitle;
+            set => SetProperty(storage: ref _createDeadlineFlyoutTitle, value: value, propertyName: nameof(CreateDeadlineFlyOutTitle));
         }
 
-        public string CreateEventFlyoutDescription
+        public string CreateDeadlineFlyoutDescription
         {
-            get => _createEventFlyoutDescription;
-            set => SetProperty(storage: ref _createEventFlyoutDescription, value: value, propertyName: nameof(CreateEventFlyoutDescription));
+            get => _createDeadlineFlyoutDescription;
+            set => SetProperty(storage: ref _createDeadlineFlyoutDescription, value: value,
+                propertyName: nameof(CreateDeadlineFlyoutDescription));
         }
 
         public DelegateCommand CreateEventCommand { get; private set; }
         #endregion
 
-        public SummaryViewModel(TimeTableService timeTableService)
+        public SummaryViewModel(TimeTableService timeTableService, IDialogService dialogService)
         {
+            _dialogService = dialogService;
             _timeTableService = timeTableService;
-            CreateEventCommand = new DelegateCommand(executeMethod: CreateNewEvent);
-            CreateEventFlyoutDateTime = DateTime.Now;
-            CreateEventFlyOutTitle = string.Empty;
-            CreateEventFlyoutDescription = string.Empty;
+            CreateEventCommand = new DelegateCommand(executeMethod: CreateNewDeadline);
+            CreateDeadlineFlyoutDateTime = DateTime.Now;
+            CreateDeadlineFlyOutTitle = string.Empty;
+            CreateDeadlineFlyoutDescription = string.Empty;
+            CalendarEvents = new ScheduleAppointmentCollection();
 
-            var someEvent = new UserCustomEvent(DateTime.Now, "ECRYP", "Project deadlline");
+            var someEvent = new UserDeadline(DateTime.Now, "ECRYP", "Project deadlline");
 
-            UserCustomEvents = new ObservableCollection<UserCustomEvent>();
-            UserCustomEvents.Add(someEvent);
-            UserCustomEvents.Add(someEvent);
+            UserDeadlines = new ObservableCollection<UserDeadline>();
+            UserDeadlines.Add(someEvent);
+            UserDeadlines.Add(someEvent);
 
         }
 
@@ -94,17 +105,61 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public void OnNavigatingTo(INavigationParameters parameters)
         {
-            // TODO: user_id has to be saved before acessing
-            //ICalFileHyperlink = new Uri(uriString: _timeTableService.GetICalFileUri());
-            WebCalFeedHyperlink = new Uri(uriString: _timeTableService.GetWebCalFeedUri());
+
+            try
+            {
+                ICalFileHyperlink = new Uri(uriString: _timeTableService.GetICalFileUri());
+            }
+            catch (UriFormatException ufexc)
+            {
+                LogTo.WarnException(message: "Bad Uri string!\nStackTrace: " + ufexc.StackTrace + "\nException: ", exception: ufexc);
+            }
+            catch (NullReferenceException nrexc)
+            {
+                LogTo.WarnException(message: "No USOS user id specified. It should be obtained earlier!\nStackTrace: " + nrexc.StackTrace + "\nException: ", exception: nrexc);
+            }
+
+            try
+            {
+                WebCalFeedHyperlink = new Uri(uriString: _timeTableService.GetWebCalFeedUri());
+            }
+            catch (UriFormatException ufexc)
+            {
+                LogTo.WarnException(message: "Bad Uri string!\nStackTrace: " + ufexc.StackTrace + "\nException: ", exception: ufexc);
+            }
+
         }
 
-        public void CreateNewEvent()
+        public void CreateNewDeadline()
         {
-            UserCustomEvents.Add(item: new UserCustomEvent(date: CreateEventFlyoutDateTime.DateTime, header: CreateEventFlyOutTitle, description: CreateEventFlyoutDescription));
-            CreateEventFlyoutDateTime = DateTime.Now;
-            CreateEventFlyOutTitle = string.Empty;
-            CreateEventFlyoutDescription = string.Empty;
+            UserDeadlines.Add(item: new UserDeadline(date: CreateDeadlineFlyoutDateTime.DateTime, header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription));
+            CreateDeadlineFlyoutDateTime = DateTime.Now;
+            CreateDeadlineFlyOutTitle = string.Empty;
+            CreateDeadlineFlyoutDescription = string.Empty;
+        }
+
+        public async void OpenCalendarEventDialog(DateTime startDateTime, ScheduleAppointment appointment)
+        {
+            CalendarEventDialogViewModel vm;
+
+            if (appointment is null)
+            {
+                vm = new CalendarEventDialogViewModel(proposedStartTime: startDateTime);
+            }
+            else
+            {
+                vm = new CalendarEventDialogViewModel(appointment: appointment);
+            }
+
+
+            var result = await _dialogService.ShowContentDialogAsync(viewModel: vm);
+
+            if (result == ContentDialogResult.Primary)
+            {
+                var item = vm.GetScheduleAppointment();
+                CalendarEvents.Add(item: item);
+            }
+
         }
     }
 }

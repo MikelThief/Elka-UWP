@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
     [Equals]
-    public class UserCustomEvent
+    public class UserDeadline
     {
         public DateTime Date { get; private set; }
 
@@ -18,7 +18,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [IgnoreDuringEquals]
         public Guid Id { get; private set; }
 
-        public UserCustomEvent(DateTime date, string header, string description)
+        public UserDeadline(DateTime date, string header, string description)
         {
             Date = date;
             Header = header;

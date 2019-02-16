@@ -1,0 +1,64 @@
+﻿<ContentDialog
+    x:Class="ElkaUWP.Modularity.CalendarModule.Views.CalendarEventDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ElkaUWP.Modularity.CalendarModule.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:input="using:Telerik.UI.Xaml.Controls.Input"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:primitives="using:Telerik.UI.Xaml.Controls.Primitives"
+    mc:Ignorable="d"
+    x:Name="CalendarEventContentDialog"
+    x:Uid="CalendarEventContentDialog"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.IsPrimaryButtonEnabled}"
+    IsSecondaryButtonEnabled="{x:Bind ViewModel.IsSecondaryButtonEnabled}"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <ContentDialog.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        </ResourceDictionary>
+    </ContentDialog.Resources>
+
+    <StackPanel Orientation="Vertical" Spacing="15" MaxWidth="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <controls:HeaderedContentControl x:Name="EventDialogTitleField" x:Uid="EventDialogTitleField" HorizontalContentAlignment="Stretch">
+            <TextBox Text="{x:Bind ViewModel.Title, Mode=TwoWay}" MaxLength="50"/>
+        </controls:HeaderedContentControl>
+        <controls:HeaderedContentControl x:Name="EventDialogLocationField" x:Uid="EventDialogLocationField" HorizontalContentAlignment="Stretch">
+            <TextBox Text="{x:Bind ViewModel.Location, Mode=TwoWay}" MaxLength="50"/>
+        </controls:HeaderedContentControl>
+        <controls:HeaderedContentControl x:Name="EventDialogTimeField" x:Uid="EventDialogTimeField" HorizontalContentAlignment="Stretch">
+            <primitives:RadExpanderControl Background="Transparent">
+                <primitives:RadExpanderControl.Content>
+                    <TextBlock Text="{x:Bind ViewModel.TimeRange}"/>
+                </primitives:RadExpanderControl.Content>
+                <primitives:RadExpanderControl.ExpandableContent>
+                    <StackPanel Orientation="Vertical" Spacing="5">
+                        <controls:HeaderedContentControl Name="EventDialogTimeStartField" x:Uid="EventDialogTimeStartField">
+                            <StackPanel Orientation="Vertical" Spacing="5">
+                                <input:RadDatePicker Value="{x:Bind ViewModel.EventStartDateTime, Mode=TwoWay}"/>
+                                <input:RadTimePicker  Value="{x:Bind ViewModel.EventStartDateTime, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </controls:HeaderedContentControl>
+                        <controls:HeaderedContentControl Name="EventDialogTimeEndField" x:Uid="EventDialogTimeEndField">
+                            <StackPanel Orientation="Vertical" Spacing="5">
+                                <input:RadDatePicker Value="{x:Bind ViewModel.EventEndDateTime, Mode=TwoWay}"/>
+                                <input:RadTimePicker Value="{x:Bind ViewModel.EventEndDateTime, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </controls:HeaderedContentControl>
+                    </StackPanel>
+                </primitives:RadExpanderControl.ExpandableContent>
+            </primitives:RadExpanderControl>
+        </controls:HeaderedContentControl>
+        <controls:HeaderedContentControl x:Name="EventDialogNotesField" x:Uid="EventDialogNotesField" HorizontalContentAlignment="Stretch">
+            <TextBox Text="{x:Bind ViewModel.Notes, Mode=TwoWay}" MaxLength="50"/>
+        </controls:HeaderedContentControl>
+    </StackPanel>
+
+</ContentDialog>

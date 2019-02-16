@@ -189,7 +189,7 @@ namespace ElkaUWP.Core
         /// <param name="args"></param>
         public override void OnStart(StartArgs args)
         {
-
+            RegisterLicences();
         }
 
         public override async Task OnStartAsync(StartArgs args)
@@ -265,6 +265,11 @@ namespace ElkaUWP.Core
         {
             LogManager.Flush();
             base.OnSuspending();
+        }
+
+        public void RegisterLicences()
+        {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_UWP_SECRET);
         }
     }
 }

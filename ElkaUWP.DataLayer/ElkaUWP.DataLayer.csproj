@@ -134,7 +134,8 @@
     <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
-    <Compile Include="Usos\Entities\UserCustomEvent.cs" />
+    <Compile Include="Usos\Entities\UserDeadline.cs" />
+    <Compile Include="Usos\Repositories\UserEventRepository.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
@@ -143,8 +144,16 @@
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Anotar.NLog.Fody">
+      <Version>4.6.7</Version>
+    </PackageReference>
     <PackageReference Include="Equals.Fody">
       <Version>1.9.3</Version>
+    </PackageReference>
+    <PackageReference Include="Fody">
+      <Version>4.0.2</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Janitor.Fody">
       <Version>1.6.5</Version>
@@ -178,9 +187,7 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Usos\Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

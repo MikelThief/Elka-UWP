@@ -143,6 +143,7 @@
     <Compile Include="NavigationParameterKeys.cs" />
     <Compile Include="PageTokens.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Secrets.cs" />
     <Compile Include="Services\SecretService.cs" />
     <Compile Include="SettingsKeys.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.Infrastructure.rd.xml" />
