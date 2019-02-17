@@ -194,9 +194,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             {
                 resultingAppointment.IsRecursive = false;
             }
-
-            appointment.AppointmentBackground =
-                CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
+            var brush = CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
+            resultingAppointment.AppointmentBackground = brush;
 
             return resultingAppointment;
         }
