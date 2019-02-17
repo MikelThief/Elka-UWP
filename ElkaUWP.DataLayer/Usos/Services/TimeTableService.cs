@@ -5,11 +5,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ElkaUWP.DataLayer.Abstractions.Bases;
+using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Infrastructure.Converters;
 using ElkaUWP.Infrastructure.Services;
+using ElkaUWP.Infrastructure.Exceptions;
+using ElkaUWP.Infrastructure.Helpers;
 using Newtonsoft.Json;
 using NLog;
 using Prism.Ioc;
@@ -26,10 +28,10 @@ namespace ElkaUWP.DataLayer.Usos.Services
         {
             var request = (Container.Resolve<StudentTimeTableRequestWrapper>());
 
-            var firstDayOfCurrentWeek =  DateTime.Now.AddDays(value: -((int)DateTime.Now.DayOfWeek - (int)DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek));
+            var firstDayOfCurrentWeekDateTime = DateTimeHelper.GetFirstDateOfWeek(DateTime.Now, DayOfWeek.Monday);
 
-            var currentWeekRequestUri = request.GetRequestString(startDate: firstDayOfCurrentWeek);
-            var nextWeekRequestUri = request.GetRequestString(startDate: firstDayOfCurrentWeek.AddDays(value: 7));
+            var currentWeekRequestUri = request.GetRequestString(startDate: firstDayOfCurrentWeekDateTime);
+            var nextWeekRequestUri = request.GetRequestString(startDate: firstDayOfCurrentWeekDateTime.AddDays(value: 7));
 
             var webClient = new WebClient();
 

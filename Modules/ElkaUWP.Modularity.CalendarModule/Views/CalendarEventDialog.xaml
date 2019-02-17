@@ -13,7 +13,6 @@
     x:Name="CalendarEventContentDialog"
     x:Uid="CalendarEventContentDialog"
     IsPrimaryButtonEnabled="{x:Bind ViewModel.IsPrimaryButtonEnabled}"
-    IsSecondaryButtonEnabled="{x:Bind ViewModel.IsSecondaryButtonEnabled}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
@@ -26,20 +25,17 @@
         </ResourceDictionary>
     </ContentDialog.Resources>
 
-    <StackPanel Orientation="Vertical" Spacing="15" MaxWidth="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <StackPanel Orientation="Vertical" Spacing="8" MaxWidth="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <controls:HeaderedContentControl x:Name="EventDialogTitleField" x:Uid="EventDialogTitleField" HorizontalContentAlignment="Stretch">
-            <TextBox Text="{x:Bind ViewModel.Title, Mode=TwoWay}" MaxLength="50"/>
-        </controls:HeaderedContentControl>
-        <controls:HeaderedContentControl x:Name="EventDialogLocationField" x:Uid="EventDialogLocationField" HorizontalContentAlignment="Stretch">
-            <TextBox Text="{x:Bind ViewModel.Location, Mode=TwoWay}" MaxLength="50"/>
+            <TextBox Text="{x:Bind ViewModel.Title, Mode=TwoWay}" MaxLength="12"/>
         </controls:HeaderedContentControl>
         <controls:HeaderedContentControl x:Name="EventDialogTimeField" x:Uid="EventDialogTimeField" HorizontalContentAlignment="Stretch">
             <primitives:RadExpanderControl Background="Transparent">
                 <primitives:RadExpanderControl.Content>
-                    <TextBlock Text="{x:Bind ViewModel.TimeRange}"/>
+                    <TextBlock Text="{x:Bind ViewModel.TimeRange, Mode=OneWay}"/>
                 </primitives:RadExpanderControl.Content>
                 <primitives:RadExpanderControl.ExpandableContent>
-                    <StackPanel Orientation="Vertical" Spacing="5">
+                    <StackPanel Orientation="Vertical" Spacing="4">
                         <controls:HeaderedContentControl Name="EventDialogTimeStartField" x:Uid="EventDialogTimeStartField">
                             <StackPanel Orientation="Vertical" Spacing="5">
                                 <input:RadDatePicker Value="{x:Bind ViewModel.EventStartDateTime, Mode=TwoWay}"/>
@@ -48,7 +44,7 @@
                         </controls:HeaderedContentControl>
                         <controls:HeaderedContentControl Name="EventDialogTimeEndField" x:Uid="EventDialogTimeEndField">
                             <StackPanel Orientation="Vertical" Spacing="5">
-                                <input:RadDatePicker Value="{x:Bind ViewModel.EventEndDateTime, Mode=TwoWay}"/>
+                                <input:RadDatePicker Value="{x:Bind ViewModel.EventEndDateTime, Mode=TwoWay}" MinValue="{x:Bind ViewModel.EventStartDateTime.Value}"/>
                                 <input:RadTimePicker Value="{x:Bind ViewModel.EventEndDateTime, Mode=TwoWay}"/>
                             </StackPanel>
                         </controls:HeaderedContentControl>
@@ -56,8 +52,10 @@
                 </primitives:RadExpanderControl.ExpandableContent>
             </primitives:RadExpanderControl>
         </controls:HeaderedContentControl>
-        <controls:HeaderedContentControl x:Name="EventDialogNotesField" x:Uid="EventDialogNotesField" HorizontalContentAlignment="Stretch">
-            <TextBox Text="{x:Bind ViewModel.Notes, Mode=TwoWay}" MaxLength="50"/>
+        <ComboBox x:Uid="EventDialogTypeField" x:Name="EventDialogTypeField" ItemsSource="{x:Bind ViewModel.CalendarEventTypeDictionary}" HorizontalAlignment="Stretch" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{x:Bind ViewModel.SelectedCalendarEventType, Mode=TwoWay}"/>
+        <ComboBox x:Uid="EventDialogRecursionField" x:Name="EventDialogRecursionField" ItemsSource="{x:Bind ViewModel.CalendarEventRecursionModeDictionary}" HorizontalAlignment="Stretch" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{x:Bind ViewModel.SelectedCalendarEventRecursionMode, Mode=TwoWay}"/>
+        <controls:HeaderedContentControl x:Name="EventDialogLocationField" x:Uid="EventDialogLocationField" HorizontalContentAlignment="Stretch">
+            <TextBox Text="{x:Bind ViewModel.Location, Mode=TwoWay}" MaxLength="20"/>
         </controls:HeaderedContentControl>
     </StackPanel>
 

@@ -6,9 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Anotar.NLog;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
+using ElkaUWP.DataLayer.Usos.Extensions;
 using ElkaUWP.DataLayer.Usos.Services;
 using MvvmDialogs;
+using Nito.Mvvm;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -46,15 +49,15 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
 
         #region CreateEventFlyout
-        private DateTime _createDeadlineFlyoutDateTime;
+        private DateTime? _createDeadlineFlyoutDateTime;
         private string _createDeadlineFlyoutTitle;
         private string _createDeadlineFlyoutDescription;
 
 
-        public DateTimeOffset CreateDeadlineFlyoutDateTime
+        public DateTime? CreateDeadlineFlyoutDateTime
         {
             get => _createDeadlineFlyoutDateTime;
-            set => SetProperty(storage: ref _createDeadlineFlyoutDateTime, value: value.DateTime, propertyName: nameof(CreateDeadlineFlyoutDateTime));
+            set => SetProperty(storage: ref _createDeadlineFlyoutDateTime, value: value, propertyName: nameof(CreateDeadlineFlyoutDateTime));
         }
 
 
@@ -73,6 +76,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
         }
 
         public DelegateCommand CreateEventCommand { get; private set; }
+        public DelegateCommand<UserDeadline> RemoveUserDeadlineCommand { get; private set; }
+        public AsyncCommand DownloadScheduleFromUsosCommand { get; private set; }
         #endregion
 
         public SummaryViewModel(TimeTableService timeTableService, IDialogService dialogService)
@@ -80,17 +85,38 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             _dialogService = dialogService;
             _timeTableService = timeTableService;
             CreateEventCommand = new DelegateCommand(executeMethod: CreateNewDeadline);
+            RemoveUserDeadlineCommand = new DelegateCommand<UserDeadline>(executeMethod: RemoveUserDeadline);
+            DownloadScheduleFromUsosCommand = new AsyncCommand(executeAsync: DownloadSechuleFromUsosAsync);
             CreateDeadlineFlyoutDateTime = DateTime.Now;
             CreateDeadlineFlyOutTitle = string.Empty;
             CreateDeadlineFlyoutDescription = string.Empty;
             CalendarEvents = new ScheduleAppointmentCollection();
-
-            var someEvent = new UserDeadline(DateTime.Now, "ECRYP", "Project deadlline");
-
             UserDeadlines = new ObservableCollection<UserDeadline>();
+
+            // TODO: Remove when ready for production use
+            var someEvent = new UserDeadline(DateTime.Now, "ECRYP", "Project deadlline");
             UserDeadlines.Add(someEvent);
             UserDeadlines.Add(someEvent);
 
+        }
+
+        private async Task DownloadSechuleFromUsosAsync()
+        {
+            // TODO: Change ScheduleAppointmentCollection to own collection + mapping
+            var result = await _timeTableService.GetTimeTableActivitiesForStudentAsync();
+
+            CalendarEvents = new ScheduleAppointmentCollection();
+
+            foreach (var item in result)
+            {
+                var tempapt = item.AsScheduleAppointment();
+                CalendarEvents.Add(tempapt);
+            }
+        }
+
+        private void RemoveUserDeadline(UserDeadline obj)
+        {
+            UserDeadlines.Remove(item: obj);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -132,34 +158,27 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public void CreateNewDeadline()
         {
-            UserDeadlines.Add(item: new UserDeadline(date: CreateDeadlineFlyoutDateTime.DateTime, header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription));
+            UserDeadlines.Add(item: new UserDeadline(date: CreateDeadlineFlyoutDateTime.Value, header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription));
             CreateDeadlineFlyoutDateTime = DateTime.Now;
             CreateDeadlineFlyOutTitle = string.Empty;
             CreateDeadlineFlyoutDescription = string.Empty;
         }
 
-        public async void OpenCalendarEventDialog(DateTime startDateTime, ScheduleAppointment appointment)
+        public async Task OpenCalendarEventDialog(DateTime startDateTime, ScheduleAppointment appointment)
         {
-            CalendarEventDialogViewModel vm;
-
-            if (appointment is null)
-            {
-                vm = new CalendarEventDialogViewModel(proposedStartTime: startDateTime);
-            }
-            else
-            {
-                vm = new CalendarEventDialogViewModel(appointment: appointment);
-            }
-
+            var vm = appointment is null ? new CalendarEventDialogViewModel(proposedStartTime: startDateTime) : new CalendarEventDialogViewModel(appointment: appointment);
 
             var result = await _dialogService.ShowContentDialogAsync(viewModel: vm);
 
-            if (result == ContentDialogResult.Primary)
+            if (result != ContentDialogResult.Primary) return;
+
+            if (!(appointment is null))
             {
-                var item = vm.GetScheduleAppointment();
-                CalendarEvents.Add(item: item);
+                CalendarEvents.Remove(item: appointment);
             }
 
+            var item = vm.GetScheduleAppointment();
+            CalendarEvents.Add(item: item);
         }
     }
 }

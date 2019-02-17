@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ElkaUWP.Infrastructure.Services;
-using NLog;
+﻿using NLog;
 using Prism.Ioc;
 
-namespace ElkaUWP.DataLayer.Abstractions.Bases
+namespace ElkaUWP.DataLayer.Usos.Abstractions.Bases
 {
     public class UsosServiceBase
     {

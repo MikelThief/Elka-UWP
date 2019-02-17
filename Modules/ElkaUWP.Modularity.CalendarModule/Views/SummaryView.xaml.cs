@@ -34,22 +34,6 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
 
             // Set up schedule
-            CurrentWeekSchedule.TimeInterval = TimeInterval.OneHour;
-
-            //CurrentWeekSchedule.CollapsedHours = new CollapsedHourCollection()
-            //{
-            //    new ScheduleCollapsedHour()
-            //    {
-            //        StartHour = 0,
-            //        EndHour = 8
-            //    },
-            //    new ScheduleCollapsedHour()
-            //    {
-            //        StartHour = 21,
-            //        EndHour = 24
-            //    }
-            //};
-
             CurrentWeekSchedule.ShowNonWorkingHours = false;
             CurrentWeekSchedule.WorkStartHour = 8;
             CurrentWeekSchedule.WorkEndHour = 20;
@@ -57,14 +41,14 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
 
         private void CreateEventButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateEventFlyout.Hide();
+            CreateDeadlineFlyout.Hide();
         }
 
-        private void CurrentWeekSchedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
+        private async void CurrentWeekSchedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
         {
             e.Cancel = true;
 
-            ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (ScheduleAppointment) e.Appointment);
+            await ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (ScheduleAppointment) e.Appointment);
         }
     }
 }

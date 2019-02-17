@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:infrastructure="using:ElkaUWP.Infrastructure"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:entities="using:ElkaUWP.DataLayer.Usos.Entities"
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:sfcontrols="using:Syncfusion.UI.Xaml.Schedule"
     xmlns:input="using:Telerik.UI.Xaml.Controls.Input"
+    xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -79,13 +79,13 @@
         <CommandBar x:Name="SummaryCommandBar" Grid.Row="0" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}">
             <AppBarButton Icon="Add" Name="SummaryAddButton" x:Uid="SummaryAddButton" AllowFocusOnInteraction="True">
                 <AppBarButton.Flyout>
-                    <Flyout x:Name="CreateEventFlyout">
+                    <Flyout x:Name="CreateDeadlineFlyout">
                         <StackPanel Orientation="Vertical" Spacing="15">
-                            <TextBlock Text="Create new event" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <StackPanel Orientation="Vertical" Spacing="10" HorizontalAlignment="Center">
-                                <DatePicker Name="CreateDeadlineFlyoutDatePicker" x:Uid="CreateDeadlineFlyoutDatePicker" HorizontalAlignment="Stretch" Date="{x:Bind ViewModel.CreateDeadlineFlyoutDateTime, Mode=TwoWay}"/>
-                                <TextBox x:Name="CreateDeadlineFlyoutTitle" x:Uid="CreateDeadlineFlyoutTitle" Text="{x:Bind ViewModel.CreateDeadlineFlyOutTitle, Mode=TwoWay}" HorizontalAlignment="Stretch" MaxWidth="300" MaxLength="40"/>
-                                <TextBox x:Name="CreateDeadlineFlyoutDescription" x:Uid="CreateDeadlineFlyoutDescription" Text="{x:Bind ViewModel.CreateDeadlineFlyoutDescription, Mode=TwoWay}" Height="93" MaxWidth="300" HorizontalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="117"/>
+                            <TextBlock Text="Create new deadline" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <StackPanel Orientation="Vertical" Spacing="8" HorizontalAlignment="Center">
+                                <input:RadDatePicker Name="CreateDeadlineFlyoutDatePicker" x:Uid="CreateDeadlineFlyoutDatePicker" HorizontalAlignment="Stretch" Value="{x:Bind ViewModel.CreateDeadlineFlyoutDateTime, Mode=TwoWay}"/>
+                                <TextBox x:Name="CreateDeadlineFlyoutTitle" x:Uid="CreateDeadlineFlyoutTitle" Text="{x:Bind ViewModel.CreateDeadlineFlyOutTitle, Mode=TwoWay}" HorizontalAlignment="Stretch" MaxLength="10"/>
+                                <TextBox x:Name="CreateDeadlineFlyoutDescription" x:Uid="CreateDeadlineFlyoutDescription" MaxLength="18" Text="{x:Bind ViewModel.CreateDeadlineFlyoutDescription, Mode=TwoWay}"/>
                                 <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
                                     <Button MinWidth="120" MinHeight="35" Content="Create" Command="{x:Bind ViewModel.CreateEventCommand}" Click="CreateEventButton_Click"/>
                                 </StackPanel>
@@ -94,7 +94,7 @@
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Refresh" Name="SummaryRefreshButton" x:Uid="SummaryRefreshButton"/>
+            <AppBarButton Icon="Download" Name="SummaryDownloadButton" x:Uid="SummaryDownloadButton" Command="{x:Bind ViewModel.DownloadScheduleFromUsosCommand}"/>
 
             <CommandBar.Content>
                 <TextBlock Name="SummaryPageHeader" Style="{StaticResource TitleTextBlockStyle}" x:Uid="SummaryPageHeader" />
@@ -117,7 +117,7 @@
                 <!-- Body -->
                 <Pivot Name="FirstElement" Grid.Column="0" Grid.Row="0">
                     <PivotItem Header="Current Week">
-                        <sfcontrols:SfSchedule x:Name="CurrentWeekSchedule" Appointments="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}" FirstDayOfWeek="Monday" ScheduleType="WorkWeek" VerticalAlignment="Top" IntervalHeight="44" ShowAllDay="False" Height="612" EnableAutoFormat="True" EnableNavigation="False" AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening">
+                        <sfcontrols:SfSchedule x:Name="CurrentWeekSchedule" Appointments="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}" FirstDayOfWeek="Monday" ScheduleType="WorkWeek" VerticalAlignment="Top" TimeInterval="OneHour" IntervalHeight="28" ShowAllDay="False" Height="376" EnableAutoFormat="True" EnableNavigation="False" AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening">
                             <!-- Head -->
                             <sfcontrols:SfSchedule.ScheduleHeaderStyle>
                                 <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />
@@ -126,25 +126,32 @@
                     </PivotItem>
                 </Pivot>
                 <Grid x:Name="SecondElement" Grid.Column="1" Grid.Row="0">
-                    <StackPanel Orientation="Vertical" Spacing="30">
-                        <controls:HeaderedContentControl Name="DeadlineListHeader" x:Uid="DeadlineListHeader" FontSize="15">
+                    <StackPanel Orientation="Vertical" Spacing="32">
+                        <controls:HeaderedContentControl Name="DeadlineListHeader" x:Uid="DeadlineListHeader" FontSize="15" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                             <controls:AdaptiveGridView x:Name="DeadlineListGrid" ItemsSource="{x:Bind ViewModel.UserDeadlines}" SelectionMode="None">
                                 <!-- Head -->
                                 <controls:AdaptiveGridView.ItemContainerStyle>
                                     <Style TargetType="FrameworkElement">
-                                        <Setter Property="Margin" Value="0 5 5 5"/>
+                                        <Setter Property="Margin" Value="0 2 4 2"/>
                                     </Style>
                                 </controls:AdaptiveGridView.ItemContainerStyle>
                                 <!-- Body -->
                                 <controls:AdaptiveGridView.ItemTemplate>
                                     <DataTemplate x:DataType="entities:UserDeadline">
-                                        <StackPanel Orientation="Vertical" Padding="4">
-                                            <StackPanel Orientation="Horizontal" Spacing="3">
+                                        <Grid Padding="4 2 4 2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="144"/>
+                                                <ColumnDefinition Width="40"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
                                                 <TextBlock Text="{x:Bind Header}" TextWrapping="WrapWholeWords"/>
-                                                <TextBlock Text="{x:Bind Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{} | {0:dd/MM/yyy (ddd)}'}" />
+                                                <TextBlock Text="{x:Bind Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyyy}'}" />
+                                                <TextBlock Text="{x:Bind Description}" Foreground="DarkGray" TextWrapping="WrapWholeWords"/>
                                             </StackPanel>
-                                            <TextBlock Text="{x:Bind Description}" Foreground="DarkGray" TextWrapping="WrapWholeWords"/>
-                                        </StackPanel>
+                                            <Button Grid.Column="1" HorizontalAlignment="Right" Background="Transparent" Command="{Binding ElementName=DeadlineListGrid, Path=DataContext.RemoveUserDeadlineCommand}" CommandParameter="{Binding}" >
+                                                <SymbolIcon Symbol="Delete" />
+                                            </Button>
+                                        </Grid>
                                     </DataTemplate>
                                 </controls:AdaptiveGridView.ItemTemplate>
                             </controls:AdaptiveGridView>

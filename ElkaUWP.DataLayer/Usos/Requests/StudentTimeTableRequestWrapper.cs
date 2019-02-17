@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Abstractions.Bases;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuthClient;
@@ -14,7 +14,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     /// </summary>
     public class StudentTimeTableRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "services/tt/student";
+        private const string _destination = "tt/student";
 
         // Fields index to be received in response
         // API may return more fields 
@@ -22,7 +22,6 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         {
             "start_time",
             "end_time",
-            "type",
             "name",
             "url",
             "course_id",
@@ -55,7 +54,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             var additionalParameters = new NameValueCollection()
             {
                 { "fields", fieldsString },
-                { "start", startDate.ToString(format: "yyyy-mm-dd") }
+                { "start", startDate.ToString(format: "yyyy-MM-dd") }
             };
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);

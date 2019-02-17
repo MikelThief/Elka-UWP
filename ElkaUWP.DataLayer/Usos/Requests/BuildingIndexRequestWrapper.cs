@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Abstractions.Bases;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuthClient;

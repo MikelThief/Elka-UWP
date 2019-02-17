@@ -1,9 +1,9 @@
-﻿using ElkaUWP.DataLayer.Abstractions.Interfaces;
+﻿using ElkaUWP.DataLayer.Usos.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuthClient;
 
-namespace ElkaUWP.Infrastructure.Abstractions.Bases
+namespace ElkaUWP.DataLayer.Usos.Abstractions.Bases
 {
     public abstract class OAuthProtectedResourceRequestWrapperBase : IOAuthProtectedResourceRequestWrapper
 

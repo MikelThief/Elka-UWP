@@ -10,9 +10,6 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class ClassGroup2
     {
-        [JsonProperty("type")]
-        public string Type { get; set; }
-
         [JsonProperty("group_number")]
         public int GroupNumber { get; set; }
 
@@ -31,10 +28,10 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty("classtype_id")]
         public string ClasstypeId { get; set; }
 
-        [JsonProperty("end_time"), JsonConverter(typeof(UsosDateTimeConverter))]
+        [JsonProperty("end_time"), JsonConverter(converterType: typeof(UsosDateTimeConverter))]
         public DateTime EndTime { get; set; }
 
-        [JsonProperty("end_time"), JsonConverter(typeof(UsosDateTimeConverter))]
+        [JsonProperty("start_time"), JsonConverter(converterType: typeof(UsosDateTimeConverter))]
         public DateTime StartTime { get; set; }
 
         [JsonProperty("classtype_name")]
