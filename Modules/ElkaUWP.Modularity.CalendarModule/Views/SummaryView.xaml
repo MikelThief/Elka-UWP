@@ -44,6 +44,8 @@
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Right" />
 
                         <Setter Target="SummaryPageHeader.Padding" Value="24 2 0 0"/>
+
+                        <Setter Target="CurrentWeekSchedule.MinWidth" Value="400" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -64,6 +66,8 @@
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Bottom" />
 
                         <Setter Target="SummaryPageHeader.Padding" Value="96 2 0 0"/>
+
+                        <Setter Target="CurrentWeekSchedule.MinWidth" Value="300" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -117,7 +121,22 @@
                 <!-- Body -->
                 <Pivot Name="FirstElement" Grid.Column="0" Grid.Row="0">
                     <PivotItem Header="Current Week">
-                        <sfcontrols:SfSchedule x:Name="CurrentWeekSchedule" Appointments="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}" FirstDayOfWeek="Monday" ScheduleType="WorkWeek" VerticalAlignment="Top" TimeInterval="OneHour" IntervalHeight="28" ShowAllDay="False" Height="376" EnableAutoFormat="True" EnableNavigation="False" AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening">
+                        <sfcontrols:SfSchedule x:Name="CurrentWeekSchedule" ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}" FirstDayOfWeek="Monday" ScheduleType="WorkWeek" VerticalAlignment="Top" TimeInterval="OneHour" IntervalHeight="28" ShowAllDay="False" Height="376" EnableAutoFormat="True" EnableNavigation="False" AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening">
+
+                            <sfcontrols:SfSchedule.AppointmentMapping>
+                                <sfcontrols:ScheduleAppointmentMapping 
+                                    SubjectMapping="Subject"
+                                    AppointmentBackgroundMapping="Background"
+                                    StartTimeMapping="StartTime"
+                                    EndTimeMapping="EndTime"
+                                    NotesMapping="Notes"
+                                    IsRecursiveMapping="IsRecursive"
+                                    RecurrenceProperitesMapping="RecurrenceProperties"
+                                    RecurrenceRuleMapping="RecurrenceRule"
+                                    LocationMapping="Location"
+
+                                    />
+                            </sfcontrols:SfSchedule.AppointmentMapping>
                             <!-- Head -->
                             <sfcontrols:SfSchedule.ScheduleHeaderStyle>
                                 <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />

@@ -7,6 +7,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Helpers;
 using ElkaUWP.Infrastructure.Helpers;
@@ -127,7 +128,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             SelectedCalendarEventRecursionMode = CalendarEventRecursionMode.None;
         }
 
-        public CalendarEventDialogViewModel(ScheduleAppointment appointment)
+        public CalendarEventDialogViewModel(CalendarEvent appointment)
         {
             Title = appointment.Subject;
             Notes = appointment.Notes;
@@ -157,9 +158,9 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             SelectedCalendarEventRecursionMode = CalendarEventRecursionMode.None;
         }
 
-        public ScheduleAppointment GetScheduleAppointment()
+        public CalendarEvent GetScheduleAppointment()
         {
-            var resultingAppointment = new ScheduleAppointment()
+            var resultingAppointment = new CalendarEvent()
             {
                 Subject = Title,
                 Notes = CalendarEventTypeDictionary[key: SelectedCalendarEventType],
@@ -195,7 +196,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 resultingAppointment.IsRecursive = false;
             }
             var brush = CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
-            resultingAppointment.AppointmentBackground = brush;
+            resultingAppointment.Background = brush;
 
             return resultingAppointment;
         }

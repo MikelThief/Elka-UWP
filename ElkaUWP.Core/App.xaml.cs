@@ -121,7 +121,7 @@ namespace ElkaUWP.Core
 
             // Set up minimum window size
             var DPI = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().LogicalDpi;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (500 * 96.0f / DPI), height: (300 * 96.0f / DPI)));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (360 * 96.0f / DPI), height: (640 * 96.0f / DPI)));
         }
 
         /// <summary>

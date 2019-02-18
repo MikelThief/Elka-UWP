@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.Modularity.CalendarModule.ViewModels;
 using Prism.Mvvm;
 using Syncfusion.UI.Xaml.Schedule;
@@ -48,7 +49,7 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
         {
             e.Cancel = true;
 
-            await ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (ScheduleAppointment) e.Appointment);
+            await ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (CalendarEvent) e.Appointment);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
     {
         private Uri _calFileHyperlink;
         private Uri _webCalFeedHyperlink;
-        private ObservableCollection<UserDeadline> _userDeadlines;
         private readonly IDialogService _dialogService;
 
         private TimeTableService _timeTableService;
@@ -39,13 +38,9 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             get => _webCalFeedHyperlink;
             private set => SetProperty(storage: ref _webCalFeedHyperlink, value: value, propertyName: nameof(WebCalFeedHyperlink));
         }
-        public ObservableCollection<UserDeadline> UserDeadlines
-        {
-            get => _userDeadlines;
-            private set => _userDeadlines = value;
-        }
+        public ObservableCollection<UserDeadline> UserDeadlines = new ObservableCollection<UserDeadline>();
 
-        public ScheduleAppointmentCollection CalendarEvents { get; set; }
+        public ObservableCollection<CalendarEvent> CalendarEvents = new ObservableCollection<CalendarEvent>();
 
 
         #region CreateEventFlyout
@@ -90,22 +85,12 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             CreateDeadlineFlyoutDateTime = DateTime.Now;
             CreateDeadlineFlyOutTitle = string.Empty;
             CreateDeadlineFlyoutDescription = string.Empty;
-            CalendarEvents = new ScheduleAppointmentCollection();
-            UserDeadlines = new ObservableCollection<UserDeadline>();
-
-            // TODO: Remove when ready for production use
-            var someEvent = new UserDeadline(DateTime.Now, "ECRYP", "Project deadlline");
-            UserDeadlines.Add(someEvent);
-            UserDeadlines.Add(someEvent);
-
         }
 
         private async Task DownloadSechuleFromUsosAsync()
         {
             // TODO: Change ScheduleAppointmentCollection to own collection + mapping
             var result = await _timeTableService.GetTimeTableActivitiesForStudentAsync();
-
-            CalendarEvents = new ScheduleAppointmentCollection();
 
             foreach (var item in result)
             {
@@ -164,7 +149,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             CreateDeadlineFlyoutDescription = string.Empty;
         }
 
-        public async Task OpenCalendarEventDialog(DateTime startDateTime, ScheduleAppointment appointment)
+        public async Task OpenCalendarEventDialog(DateTime startDateTime, CalendarEvent appointment)
         {
             var vm = appointment is null ? new CalendarEventDialogViewModel(proposedStartTime: startDateTime) : new CalendarEventDialogViewModel(appointment: appointment);
 

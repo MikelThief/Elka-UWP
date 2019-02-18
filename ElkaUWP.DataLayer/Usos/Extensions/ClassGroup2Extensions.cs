@@ -1,4 +1,5 @@
 ﻿using System;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Helpers;
 using ElkaUWP.Infrastructure.Extensions;
@@ -8,9 +9,9 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
 {
     public static class ClassGroup2Extensions
     {
-        public static ScheduleAppointment AsScheduleAppointment(this ClassGroup2 usosScheduleItem)
+        public static CalendarEvent AsScheduleAppointment(this ClassGroup2 usosScheduleItem)
         {
-            var appointment = new ScheduleAppointment()
+            var appointment = new CalendarEvent()
             {
                 Subject = usosScheduleItem.CourseId.Substring(startIndex: usosScheduleItem.CourseId.LastIndexOf('-') + 1),
                 StartTime = usosScheduleItem.StartTime,
@@ -24,7 +25,7 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
 
             appointment.Notes = eventTypeToParse.CapitalizeFirstCharacter();
 
-            appointment.AppointmentBackground =
+            appointment.Background =
                 CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: (CalendarEventType) Enum.Parse(enumType: typeof(CalendarEventType), value: eventTypeToParse, ignoreCase: true));
 
             appointment.IsRecursive = true;
