@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Abstractions.Bases;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuthClient;
@@ -26,15 +26,10 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "phone_numbers"
         };
 
-        private OAuthRequest UnderlyingOAuthRequest;
-
         public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
-            Logger = logger;
-            secretService = secretServiceInstance;
-
-            var oAuthSecret = secretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Constants.USOSAPI_ACCESS_TOKEN_KEY);
+            var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -53,11 +48,13 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
         public override string GetRequestString()
         {
-            var additionalParameters = new NameValueCollection();
             var fieldsString = string.Join(separator: "%7C", values: _fields);
-            additionalParameters.Add(name: "fields", value: fieldsString);
+            var additionalParameters = new NameValueCollection()
+            {
+                { "fields", fieldsString }
+            };
 
-            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
 
     }

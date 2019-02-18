@@ -42,6 +42,7 @@ using ElkaUWP.Modularity.LoginModule;
 using Unity;
 using Unity.Lifetime;
 using ElkaUWP.DataLayer.Usos.Requests;
+using ElkaUWP.Modularity.CalendarModule;
 
 namespace ElkaUWP.Core
 {
@@ -87,6 +88,15 @@ namespace ElkaUWP.Core
             {
                 ModuleName = loginModuleType.Name,
                 ModuleType = loginModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            // Login module
+            var calendarModuleType = typeof(CalendarModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = calendarModuleType.Name,
+                ModuleType = calendarModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
         }
@@ -170,9 +180,6 @@ namespace ElkaUWP.Core
 
             // Register services
             container.RegisterSingleton<SecretService>();
-
-            // Register DataLayer elements
-            container.RegisterSingleton<BuildingIndexRequestWrapper>();
         }
 
         /// <summary>
@@ -182,10 +189,7 @@ namespace ElkaUWP.Core
         /// <param name="args"></param>
         public override void OnStart(StartArgs args)
         {
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
+            RegisterLicences();
         }
 
         public override async Task OnStartAsync(StartArgs args)
@@ -194,9 +198,6 @@ namespace ElkaUWP.Core
             switch (args.StartKind)
             {
                 case StartKinds.Launch:
-
-
-
                     if (secretService.IsContainerPresent(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME))
                         await NavigationService.NavigateAsync(name: PageTokens.ShellViewToken);
                     else
@@ -220,8 +221,7 @@ namespace ElkaUWP.Core
 
                             var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY,
-                                responseParameters.Get(name: "oauth_token"));
+                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY, value: credential.UserName);
 ;
                             var navigationParameters = new NavigationParameters
                             {
@@ -265,6 +265,11 @@ namespace ElkaUWP.Core
         {
             LogManager.Flush();
             base.OnSuspending();
+        }
+
+        public void RegisterLicences()
+        {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_UWP_SECRET);
         }
     }
 }

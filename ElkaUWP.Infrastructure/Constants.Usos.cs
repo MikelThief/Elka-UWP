@@ -17,5 +17,7 @@
         public const string USOSAPI_ACCESS_TOKEN_URL = USOSAPI_SECURE_BASE_URL + "oauth/access_token";
 
         public const string USOSAPI_ACCESS_TOKEN_KEY = "UsosApiAccessTokenKey";
+
+        public const string USOSAPI_USER_ID_SETTING_NAME = "UsosApiUserIdSetting";
     }
 }

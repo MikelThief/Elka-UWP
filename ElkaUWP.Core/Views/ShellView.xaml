@@ -27,6 +27,11 @@
                     Icon="Play"
                     IsSelected="True"
                     Tag="LoginToken" />
+                <NavigationViewItem
+                    Content="Calendar"
+                    Icon="Play"
+                    IsSelected="True"
+                    Tag="CalendarSummaryViewToken" />
             </NavigationView.MenuItems>
 
             <Frame x:Name="ContentFrame" />
