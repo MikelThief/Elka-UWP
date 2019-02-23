@@ -164,7 +164,7 @@ namespace ElkaUWP.Core
                 Encoding = Encoding.UTF8,
                 WriteBom = false,
                 LineEnding = LineEndingMode.Default,
-                FileName = Path.Combine(path1: Windows.Storage.ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
+                FileName = Path.Combine(path1: ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
                 OpenFileCacheTimeout = 2,
                 ArchiveNumbering = ArchiveNumberingMode.Rolling,
                 ArchiveAboveSize = 10240,
