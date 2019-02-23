@@ -22,6 +22,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
+using ElkaUWP.DataLayer;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Extensions;
@@ -43,6 +44,7 @@ using Unity;
 using Unity.Lifetime;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Modularity.CalendarModule;
+using ElkaUWP.Modularity.GradesModule;
 
 namespace ElkaUWP.Core
 {
@@ -82,6 +84,7 @@ namespace ElkaUWP.Core
         /// <param name="moduleCatalog"></param>
         public override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            // TODO: Loading optimization: set loading to ondemand and load all if user is already authenticated or just login module if it is fresh start.
             // Login module
             var loginModuleType = typeof(LoginModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
@@ -91,7 +94,16 @@ namespace ElkaUWP.Core
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            // Login module
+            // DataLayer module
+            var dataLayerModuleType = typeof(DataLayerInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = dataLayerModuleType.Name,
+                ModuleType = dataLayerModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            // Calendar module
             var calendarModuleType = typeof(CalendarModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
@@ -99,6 +111,17 @@ namespace ElkaUWP.Core
                 ModuleType = calendarModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
+
+            // Grades module
+            var gradesModuleType = typeof(GradesModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = gradesModuleType.Name,
+                ModuleType = gradesModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+
         }
 
         /// <summary>
@@ -142,7 +165,7 @@ namespace ElkaUWP.Core
                 Encoding = Encoding.UTF8,
                 WriteBom = false,
                 LineEnding = LineEndingMode.Default,
-                FileName = Path.Combine(path1: Windows.Storage.ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
+                FileName = Path.Combine(path1: ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
                 OpenFileCacheTimeout = 2,
                 ArchiveNumbering = ArchiveNumberingMode.Rolling,
                 ArchiveAboveSize = 10240,
