@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.DataLayer", "ElkaUW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Modularity.CalendarModule", "Modules\ElkaUWP.Modularity.CalendarModule\ElkaUWP.Modularity.CalendarModule.csproj", "{33ABB40A-498B-4F91-9938-6C483523C162}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Modularity.GradesModule", "Modules\ElkaUWP.Modularity.GradesModule\ElkaUWP.Modularity.GradesModule.csproj", "{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -87,6 +89,14 @@ Global
 		{33ABB40A-498B-4F91-9938-6C483523C162}.Release|x64.Build.0 = Release|x64
 		{33ABB40A-498B-4F91-9938-6C483523C162}.Release|x86.ActiveCfg = Release|x86
 		{33ABB40A-498B-4F91-9938-6C483523C162}.Release|x86.Build.0 = Release|x86
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Debug|x64.ActiveCfg = Debug|x64
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Debug|x64.Build.0 = Debug|x64
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Debug|x86.ActiveCfg = Debug|x86
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Debug|x86.Build.0 = Debug|x86
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Release|x64.ActiveCfg = Release|x64
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Release|x64.Build.0 = Release|x64
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Release|x86.ActiveCfg = Release|x86
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +105,7 @@ Global
 		{9271B278-9C6B-45B4-95F2-A52643B26B9A} = {CA44567F-2E4C-4FC8-916A-E04A934C758B}
 		{E27A6981-2C9A-43BE-A465-D6B541FEE523} = {CA44567F-2E4C-4FC8-916A-E04A934C758B}
 		{33ABB40A-498B-4F91-9938-6C483523C162} = {CA44567F-2E4C-4FC8-916A-E04A934C758B}
+		{1BCBE45A-BB35-4ACD-97D0-2DB3AB50D09A} = {CA44567F-2E4C-4FC8-916A-E04A934C758B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBDC1F32-90A4-4BF3-95F3-9421949FA98E}
