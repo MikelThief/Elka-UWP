@@ -43,6 +43,8 @@ using Unity;
 using Unity.Lifetime;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Modularity.CalendarModule;
+using ElkaUWP.Modularity.UserModule;
+using ElkaUWP.DataLayer;
 
 namespace ElkaUWP.Core
 {
@@ -91,7 +93,7 @@ namespace ElkaUWP.Core
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            // Login module
+            // Calendar module
             var calendarModuleType = typeof(CalendarModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
@@ -99,6 +101,26 @@ namespace ElkaUWP.Core
                 ModuleType = calendarModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
+
+            // User Summary Module
+            var userModuleType = typeof(UserModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = userModuleType.Name,
+                ModuleType = userModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            //Data layer
+            var dataLayerModuleType = typeof(DataLayerInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = dataLayerModuleType.Name,
+                ModuleType = dataLayerModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+
         }
 
         /// <summary>
