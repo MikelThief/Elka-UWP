@@ -124,14 +124,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserModuleInitializer.cs" />
     <Compile Include="ViewModels\UserSummaryViewModel.cs" />
-    <Compile Include="Views\UserSummaryView.xaml.cs">
-      <DependentUpon>UserSummaryView.xaml</DependentUpon>
+    <Compile Include="Views\SummaryView.xaml.cs">
+      <DependentUpon>SummaryView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\ElkaUWP.Modularity.UserModule.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>5.0.0</Version>
     </PackageReference>
     <PackageReference Include="Nito.Mvvm.Async">
       <Version>1.0.0-pre-03</Version>
@@ -144,12 +147,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\UserSummaryView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\SummaryView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
+      <Project>{9F821561-3596-4949-99C4-A32EAA91EE6C}</Project>
+      <Name>ElkaUWP.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

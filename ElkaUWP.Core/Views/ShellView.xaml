@@ -28,6 +28,11 @@
                     IsSelected="True"
                     Tag="LoginToken" />
                 <NavigationViewItem
+                    Content="Profile"
+                    Icon="Play"
+                    IsSelected="True"
+                    Tag="Profile" />
+                <NavigationViewItem
                     Content="Calendar"
                     Icon="Play"
                     IsSelected="True"
