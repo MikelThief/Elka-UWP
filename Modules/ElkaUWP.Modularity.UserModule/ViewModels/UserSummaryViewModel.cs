@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 
 namespace ElkaUWP.Modularity.UserModule.ViewModels
 {

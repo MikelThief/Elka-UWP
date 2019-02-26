@@ -9,6 +9,7 @@ using ElkaUWP.Infrastructure;
 using ElkaUWP.Modularity.UserModule.ViewModels;
 using ElkaUWP.Modularity.UserModule.Views;
 
+
 namespace ElkaUWP.Modularity.UserModule
 {
     public class UserModuleInitializer : IModule
