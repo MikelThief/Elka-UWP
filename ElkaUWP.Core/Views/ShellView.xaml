@@ -18,6 +18,11 @@
             Loaded="Nv_Loaded">
             <NavigationView.MenuItems>
                 <NavigationViewItem
+                    Content="Grades"
+                    Icon="Play"
+                    IsSelected="True"
+                    Tag="GradesPerSemesterViewToken" />
+                <NavigationViewItem
                     Content="TestView"
                     Icon="Play"
                     IsSelected="True"
