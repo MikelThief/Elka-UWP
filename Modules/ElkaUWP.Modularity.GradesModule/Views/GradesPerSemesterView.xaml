@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.GradesModule.Views.GradesPerSemesterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ElkaUWP.Modularity.GradesModule.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <!-- Head -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="MediumState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="GradesPerSemesterCommandBar.DefaultLabelPosition" Value="Right" />
+
+                        <Setter Target="GradesPerSemesterPageHeader.Padding" Value="24 4 0 0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SmallState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="GradesPerSemesterCommandBar.DefaultLabelPosition" Value="Bottom" />
+
+                        <Setter Target="GradesPerSemesterPageHeader.Padding" Value="96 4 0 0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <!-- Body -->
+        <CommandBar x:Name="GradesPerSemesterCommandBar" Grid.Row="0" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+
+            <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
+
+            <CommandBar.Content>
+                <TextBlock Name="GradesPerSemesterPageHeader" Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="GradesPerSemesterPageHeader" />
+            </CommandBar.Content>
+
+        </CommandBar>
+
+        <tcontrols:AdaptiveGridView Grid.Row="1">
+            <tcontrols:AdaptiveGridView.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Margin" Value="4"/>
+                </Style>
+            </tcontrols:AdaptiveGridView.ItemContainerStyle>
+        </tcontrols:AdaptiveGridView>
+    </Grid>
+</Page>

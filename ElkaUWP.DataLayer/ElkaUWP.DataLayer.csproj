@@ -125,6 +125,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
+    <Compile Include="Usos\Converters\JsonSubjectPassTypeConverter.cs" />
+    <Compile Include="Usos\Converters\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Entities\GradedSemester.cs" />
+    <Compile Include="Usos\Entities\IssuerGrades.cs" />
+    <Compile Include="Usos\Entities\Session.cs" />
+    <Compile Include="Usos\Entities\SubjectPassType.cs" />
     <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
     <Compile Include="Usos\Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
     <Compile Include="Usos\Abstractions\Bases\UsosServiceBase.cs" />
