@@ -67,16 +67,16 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="NameAndSurname" Text="Imie i nazwisko" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource HeaderTextBlockStyle}"/>
-                        <TextBlock x:Name="IndexNo" Text="Numer indeksu" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <TextBlock x:Name="Email" Text="Email@pw.edu.pl" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" />
+                        <TextBlock x:Name="NameAndSurname" Text="{x:Bind ViewModel.NameAndSurname}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource HeaderTextBlockStyle}"/>
+                        <TextBlock x:Name="IndexNo" Text="{x:Bind ViewModel.StudentNumber}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                        <TextBlock x:Name="Email" Text="{x:Bind ViewModel.Email}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" />
                     </Grid>
                 </controls:WrapPanel>
                    
 
             </controls:ScrollHeader>
          </controls:AdaptiveGridView.Header>
-            
+            s
             <controls:AdaptiveGridView.ItemContainerStyle>
                 <Style TargetType="FrameworkElement">
                     <Setter Property="Margin" Value="40,0,0,40" />
@@ -86,11 +86,28 @@
             </controls:AdaptiveGridView.ItemContainerStyle>
 
 
-            <DataTemplate x:DataType="entities:UserInfoElement">
-                <controls:HeaderedContentControl Header="{x:Bind Header}" Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
-                <TextBlock Text="{x:Bind Description}" Style="{StaticResource BodyTextBlockStyle}" />
+           
+                <controls:HeaderedContentControl Header="Name: " Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
+                <TextBlock Text="{x:Bind ViewModel.FirstName}" Style="{StaticResource BodyTextBlockStyle}" />
                 </controls:HeaderedContentControl>
-            </DataTemplate>
+            
+                <controls:HeaderedContentControl Header="Surname: " Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
+                <TextBlock Text="{x:Bind ViewModel.LastName}" Style="{StaticResource BodyTextBlockStyle}" />
+                </controls:HeaderedContentControl>
+            
+            <controls:HeaderedContentControl Header="Email: " Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
+                <TextBlock Text="{x:Bind ViewModel.Email}" Style="{StaticResource BodyTextBlockStyle}" />
+            </controls:HeaderedContentControl>
+         
+            <controls:HeaderedContentControl Header="USOS ID: " Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
+                <TextBlock Text="{x:Bind ViewModel.ID}" Style="{StaticResource BodyTextBlockStyle}" />
+            </controls:HeaderedContentControl>
+            <controls:HeaderedContentControl Header="Student number: " Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
+                <TextBlock Text="{x:Bind ViewModel.StudentNumber}" Style="{StaticResource BodyTextBlockStyle}" />
+            </controls:HeaderedContentControl>
+            <controls:HeaderedContentControl Header="Sex: " Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
+                <TextBlock Text="{x:Bind ViewModel.Sex}" Style="{StaticResource BodyTextBlockStyle}" />
+            </controls:HeaderedContentControl>
 
 
 
