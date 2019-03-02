@@ -21,7 +21,7 @@ namespace ElkaUWP.DataLayer.Usos.Converters
                 case "N":
                     return false;
                 default:
-                    throw new JsonSerializationException(message: "Input was should be either T or N, but was " + value);
+                    throw new JsonSerializationException(message: "Converter" + nameof(JsonTOrNBoolConverter) + "could not handle the value: " + value);
             }
         }
 

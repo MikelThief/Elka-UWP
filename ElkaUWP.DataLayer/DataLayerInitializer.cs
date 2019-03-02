@@ -16,12 +16,14 @@ namespace ElkaUWP.DataLayer
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register USOS request wrappers
+            containerRegistry.RegisterSingleton<UserCoursesPerSemesterRequestWrapper>();
             containerRegistry.RegisterSingleton<StudentTimeTableRequestWrapper>();
             containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
             containerRegistry.RegisterSingleton<UpcomingICalRequestWrapper>();
             containerRegistry.RegisterSingleton<UpcomingWebCalFeedRequestWrapper>();
 
             // Register services
+            containerRegistry.RegisterSingleton<GradesService>();
             containerRegistry.RegisterSingleton<TimeTableService>();
         }
 
