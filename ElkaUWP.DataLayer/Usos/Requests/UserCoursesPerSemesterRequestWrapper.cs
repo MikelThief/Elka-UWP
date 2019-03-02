@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Services;
@@ -9,27 +13,22 @@ using OAuthClient;
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
     /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/geo/#building_index
+    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/examrep/exam
     /// </summary>
-    public class BuildingIndexRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class UserCoursesPerSemesterRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "geo/building_index";
-        // Fields index to be received in response
+        private const string _destination = "courses/user";
+
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id",
-            "name",
-            "profile_url",
-            "campus_name",
-            "location",
-            "marker_style",
-            "phone_numbers"
+            "course_editions[course_id|course_name|coordinators|lecturers|profile_url|term_id|passing_status]"
         };
 
-        public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        /// <inheritdoc />
+        public UserCoursesPerSemesterRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -46,16 +45,17 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
+        /// <inheritdoc />
         public override string GetRequestString()
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()
             {
-                { "fields", fieldsString }
+                { "fields", fieldsString },
+                { "active_terms_only", false.ToString().ToLower() }
             };
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
-
     }
 }

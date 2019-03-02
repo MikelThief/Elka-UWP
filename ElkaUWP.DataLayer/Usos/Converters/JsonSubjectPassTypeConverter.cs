@@ -19,16 +19,16 @@ namespace ElkaUWP.DataLayer.Usos.Converters
             switch (toSerialize)
             {
                 case SubjectPassType.Exam:
-                    serializer.Serialize(writer, "E");
+                    serializer.Serialize(jsonWriter: writer, "E");
                     return;
                 case SubjectPassType.Semester:
-                    serializer.Serialize(writer, "S");
+                    serializer.Serialize(jsonWriter: writer, "S");
                     return;
                 case SubjectPassType.PassOrFail:
-                    serializer.Serialize(writer, "Z");
+                    serializer.Serialize(jsonWriter: writer, "Z");
                     return;
                 default:
-                    throw new JsonSerializationException(message: "Cannot serialize: SubjectPassType does not contain value " + value);
+                    throw new JsonSerializationException(message: "Converter" + nameof(JsonSubjectPassTypeConverter) + "could not handle the value: " + value);
             }
         }
 
@@ -46,15 +46,12 @@ namespace ElkaUWP.DataLayer.Usos.Converters
                 case "Z":
                     return SubjectPassType.PassOrFail;
                 default:
-                    throw new JsonSerializationException(message: "Cannot deserialize: SubjectPassType does not contain value " + value);
+                    throw new JsonSerializationException(message: "Converter" + nameof(JsonSubjectPassTypeConverter) + "could not handle the value: " + value);
             }
 
         }
 
         /// <inheritdoc />
-        public override bool CanConvert(Type objectType)
-        {
-            throw new NotImplementedException();
-        }
+        public override bool CanConvert(Type objectType) => objectType == typeof(SubjectPassType) || objectType == typeof(SubjectPassType?);
     }
 }

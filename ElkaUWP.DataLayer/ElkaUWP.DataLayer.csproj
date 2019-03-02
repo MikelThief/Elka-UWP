@@ -135,8 +135,12 @@
     <Compile Include="Usos\Entities\UserInfoContainer.cs" />
     <Compile Include="Usos\Entities\USOSUserInfo.cs" />
     <Compile Include="Usos\Extensions\USOSUserInfoExtensions.cs" />
+    <Compile Include="Usos\Converters\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
+    <Compile Include="Usos\Entities\CourseEdition.cs" />
+    <Compile Include="Usos\Entities\UserCoursesPerSemester.cs" />
     <Compile Include="Usos\Entities\GradedSemester.cs" />
     <Compile Include="Usos\Entities\IssuerGrades.cs" />
     <Compile Include="Usos\Entities\Session.cs" />
@@ -159,10 +163,12 @@
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\PostalAddressesWrapper.cs" />
     <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UserCoursesPerSemesterRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
     <Compile Include="Usos\Services\UsersService.cs" />
+    <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>

@@ -17,6 +17,7 @@ namespace ElkaUWP.DataLayer
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register USOS request wrappers
+            containerRegistry.RegisterSingleton<UserCoursesPerSemesterRequestWrapper>();
             containerRegistry.RegisterSingleton<StudentTimeTableRequestWrapper>();
             containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
             containerRegistry.RegisterSingleton<UpcomingICalRequestWrapper>();
@@ -24,6 +25,7 @@ namespace ElkaUWP.DataLayer
             containerRegistry.RegisterSingleton<UserInfoRequestWrapper>();
 
             // Register services
+            containerRegistry.RegisterSingleton<GradesService>();
             containerRegistry.RegisterSingleton<TimeTableService>();
             containerRegistry.RegisterSingleton<UserService>();
         }
