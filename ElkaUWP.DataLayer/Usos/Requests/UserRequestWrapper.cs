@@ -23,14 +23,15 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "email",
             "photo_urls",
             "student_number",
-            "pesel",
-            "birth_date",
-            "citizenship"
+        
             
         };
 
         public UserRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
+            Logger = logger;
+            SecretService = secretServiceInstance;
+
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();

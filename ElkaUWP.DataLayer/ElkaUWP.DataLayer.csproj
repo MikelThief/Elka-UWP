@@ -125,7 +125,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
-    <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
+    <Compile Include="Usos\Entities\UserInfoElement.cs" />
     <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
     <Compile Include="Usos\Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
     <Compile Include="Usos\Abstractions\Bases\UsosServiceBase.cs" />
