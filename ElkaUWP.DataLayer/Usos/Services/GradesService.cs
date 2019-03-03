@@ -73,9 +73,6 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 return null;
             }
 
-
-
-
             return result;
         }
     }
