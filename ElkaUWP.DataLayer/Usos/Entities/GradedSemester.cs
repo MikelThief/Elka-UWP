@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElkaUWP.DataLayer.Usos.Converters;
 using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public partial class GradedSemester
+    public class GradedSemester
     {
         [JsonProperty("type_id")]
+        [JsonConverter(converterType: typeof(JsonSubjectPassTypeConverter))]
         public SubjectPassType TypeId { get; set; }
 
         [JsonProperty("id")]
