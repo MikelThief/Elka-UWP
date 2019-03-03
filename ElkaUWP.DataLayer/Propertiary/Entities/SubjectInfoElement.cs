@@ -10,7 +10,6 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
     {
         public string ShortName { get; set; }
         public string LongName { get; set; }
-
-
+        public string Grade { get; set; }
     }
 }

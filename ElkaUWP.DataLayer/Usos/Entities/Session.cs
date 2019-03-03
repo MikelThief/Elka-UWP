@@ -12,7 +12,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty("number")]
         public long Number { get; set; }
 
-        [JsonProperty("issuer_grades")]
+        [JsonProperty("issuer_grades", Required = Required.AllowNull)]
         public IssuerGrades IssuerGrades { get; set; }
     }
 }
