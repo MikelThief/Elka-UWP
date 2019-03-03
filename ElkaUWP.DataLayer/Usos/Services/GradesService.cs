@@ -22,7 +22,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         }
 
-        public async Task<UserCoursesPerSemester> GetUserCoursesPerSemesterAsync()
+        public async Task<Dictionary<string, List<CourseEdition>>> GetUserCoursesPerSemesterAsync()
         {
             var request = (Container.Resolve<UserCoursesPerSemesterRequestWrapper>());
             var requestString = request.GetRequestString();
@@ -38,19 +38,45 @@ namespace ElkaUWP.DataLayer.Usos.Services
             catch (WebException wexc)
             {
                 Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
-                throw new InvalidOperationException();
+                return null;
             }
             catch (JsonException jexc)
             {
                 Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
-                throw new InvalidOperationException();
+                return null;
+            }
+
+            return result.CourseEditions;
+        }
+
+        public async Task<Dictionary<string, Dictionary<string, List<GradedSemester>>>> GetUserGradedSemestersAsync()
+        {
+            var request = (Container.Resolve<GradedSubjectsPerSemesterRequestWrapper>());
+            var requestString = request.GetRequestString();
+            Dictionary<string, Dictionary<string, List<GradedSemester>>> result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<GradedSemester>>>>(value: json, converters: new JsonSubjectPassTypeConverter());
+            }
+            catch (WebException wexc)
+            {
+                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                return null;
             }
 
 
 
 
-
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

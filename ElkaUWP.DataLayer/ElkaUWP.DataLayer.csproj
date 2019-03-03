@@ -125,6 +125,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
+    <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Usos\Converters\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\JsonTOrNBoolConverter.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
     <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\GradedSubjectsPerSemesterRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserCoursesPerSemesterRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
