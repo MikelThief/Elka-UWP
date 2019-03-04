@@ -142,7 +142,7 @@
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
     <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
-    <Compile Include="Usos\Requests\UserRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />

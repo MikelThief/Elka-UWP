@@ -20,7 +20,7 @@ namespace ElkaUWP.DataLayer
             containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
             containerRegistry.RegisterSingleton<UpcomingICalRequestWrapper>();
             containerRegistry.RegisterSingleton<UpcomingWebCalFeedRequestWrapper>();
-            containerRegistry.RegisterSingleton<UserRequestWrapper>();
+            containerRegistry.RegisterSingleton<UserInfoRequestWrapper>();
 
             // Register services
             containerRegistry.RegisterSingleton<TimeTableService>();

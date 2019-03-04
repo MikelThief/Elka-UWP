@@ -28,9 +28,7 @@
                 <VisualState.StateTriggers>
                     <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="MainStackPanel.Margin" Value="12,0,12,0"/>
-                </VisualState.Setters>
+               
             </VisualState>
             
             
@@ -39,9 +37,6 @@
                     <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
                 
-                <VisualState.Setters>
-                    <Setter Target="MainStackPanel.Margin" Value="24,0,24,0"/>
-                </VisualState.Setters>
             </VisualState>
             
         </VisualStateGroup>
@@ -76,7 +71,7 @@
 
             </controls:ScrollHeader>
          </controls:AdaptiveGridView.Header>
-            s
+            
             <controls:AdaptiveGridView.ItemContainerStyle>
                 <Style TargetType="FrameworkElement">
                     <Setter Property="Margin" Value="40,0,0,40" />

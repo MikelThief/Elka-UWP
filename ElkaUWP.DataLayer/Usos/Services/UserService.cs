@@ -20,7 +20,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
         public async Task<UserInfoElement> GetUserInformation()
 
         {
-            var request = (Container.Resolve<UserRequestWrapper>());
+            var request = (Container.Resolve<UserInfoRequestWrapper>());
 
             var InfoUri = request.GetRequestString();
             string responseForInfo;
