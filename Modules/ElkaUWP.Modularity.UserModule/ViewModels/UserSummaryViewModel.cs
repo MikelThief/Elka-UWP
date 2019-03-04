@@ -10,10 +10,11 @@ using ElkaUWP.DataLayer.Propertiary.Entities;
 using System.Collections.ObjectModel;
 using ElkaUWP.DataLayer.Usos.Entities;
 using Nito.Mvvm;
+using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.UserModule.ViewModels
 {
-    public class UserSummaryViewModel : BindableBase
+    public class UserSummaryViewModel : BindableBase, INavigationAware
     {
         private Image _userImage;
         private UserService _userService;
@@ -31,11 +32,16 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         public UserSummaryViewModel(UserService userService)
         {
             _userService = userService;
-            GetUserInfo();
+            
            
         }
 
-        public async Task GetUserInfo()
+        public void OnNavigatingTo(INavigationParameters parameters)
+        {
+            GetUserInfo();
+        }
+
+            public async Task GetUserInfo()
         {
             var result = await _userService.GetUserInformation();
             FirstName = result.FirstName+ " " + result.MiddleName;
@@ -50,7 +56,15 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
                        
         }
 
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            
+        }
 
+        public void OnNavigatedTo(INavigationParameters parameters)
+        {
+          
+        }
     }
    
 

@@ -8,7 +8,7 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    class UserRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    class UserInfoRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
 
         private const string _destination = "users/user";
@@ -23,15 +23,12 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "email",
             "photo_urls",
             "student_number",
-        
-            
+                    
         };
 
-        public UserRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public UserInfoRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
-            Logger = logger;
-            SecretService = secretServiceInstance;
-
+           
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
