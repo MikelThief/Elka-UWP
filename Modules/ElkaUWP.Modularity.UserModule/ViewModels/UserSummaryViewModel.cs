@@ -18,7 +18,7 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
     {
         private Image _userImage;
         private UserService _userService;
-        public ObservableCollection<UserInfoElement> _userInfo = new ObservableCollection<UserInfoElement>();
+        public ObservableCollection<USOSUserInfo> _userInfo = new ObservableCollection<USOSUserInfo>();
         public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
         public string FirstName;
         public string LastName;
@@ -36,24 +36,19 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
            
         }
 
-        public void OnNavigatingTo(INavigationParameters parameters)
+        public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            GetUserInfo();
+            await GetUserInfo();
         }
 
             public async Task GetUserInfo()
         {
             var result = await _userService.GetUserInformation();
-            FirstName = result.FirstName+ " " + result.MiddleName;
-            LastName = result.LastName;
-            Email = result.Email;
-            ID = result.Id;
-            Sex = result.Sex;
-            StudentNumber = result.StudentNumber;
-            Photo = result.PhotoUrls;
-            NameAndSurname = result.FirstName + " " + result.MiddleName + " " + result.LastName;
             
-                       
+
+
+
+
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
