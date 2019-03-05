@@ -17,7 +17,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
     public class UserService : UsosServiceBase
     {
       // mrem
-        public async Task<UserInfoElement> GetUserInformation()
+        public async Task<IEnumerable<UserInfoElement>> GetUserInformation()
 
         {
             var request = (Container.Resolve<UserInfoRequestWrapper>());
@@ -26,12 +26,13 @@ namespace ElkaUWP.DataLayer.Usos.Services
             string responseForInfo;
             var webClient = new WebClient();
 
-            var InfoList = new UserInfoElement();
+            var infoList = new List<UserInfoElement>();
+            
 
             try
             {
                 responseForInfo = await webClient.DownloadStringTaskAsync(address: InfoUri);
-                InfoList = JsonConvert.DeserializeObject<UserInfoElement>(value: responseForInfo);
+                var result = JsonConvert.DeserializeObject<List<USOSUserInfo>>(value: responseForInfo);
 
 
             }
@@ -46,7 +47,9 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 throw new InvalidOperationException();
             }
 
-            return InfoList;
+            
+
+            return infoList;
 
         }
        

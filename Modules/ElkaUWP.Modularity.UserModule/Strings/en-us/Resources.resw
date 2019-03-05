@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Summary_Header.Text" xml:space="preserve">
-    <value>Summary</value>
+  <data name="EmailKey" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="FirstNameKey" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="LastNameKey" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="SexKey" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="SrudentNumberKey" xml:space="preserve">
+    <value>Student number </value>
+  </data>
+  <data name="USOSIdKey" xml:space="preserve">
+    <value>USOS id</value>
   </data>
 </root>

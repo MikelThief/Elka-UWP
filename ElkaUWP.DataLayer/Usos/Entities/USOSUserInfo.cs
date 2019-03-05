@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class UserInfoElement
+    public class USOSUserInfo
     {
 
         [JsonProperty("photo_urls")]
