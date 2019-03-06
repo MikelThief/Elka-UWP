@@ -17,7 +17,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         {
             "id",
             "first_name",
-            "middle_name",
+            "middle_names",
             "last_name",
             "sex",
             "email",

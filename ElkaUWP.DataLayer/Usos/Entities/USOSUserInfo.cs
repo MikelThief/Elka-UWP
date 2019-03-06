@@ -34,7 +34,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty("last_name")]
         public string LastName { get; set; }
 
-        [JsonProperty("middle_name")]
+        [JsonProperty("middle_names")]
         public string MiddleName { get; set; }
 
  
