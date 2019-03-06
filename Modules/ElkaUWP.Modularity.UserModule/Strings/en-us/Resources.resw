@@ -129,8 +129,8 @@
   <data name="SexKey" xml:space="preserve">
     <value>Sex</value>
   </data>
-  <data name="SrudentNumberKey" xml:space="preserve">
-    <value>Student number </value>
+  <data name="StudentNumberKey" xml:space="preserve">
+    <value>Student number</value>
   </data>
   <data name="USOSIdKey" xml:space="preserve">
     <value>USOS id</value>

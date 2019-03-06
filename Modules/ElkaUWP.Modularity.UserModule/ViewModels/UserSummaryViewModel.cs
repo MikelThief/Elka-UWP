@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using ElkaUWP.DataLayer.Usos.Entities;
 using Nito.Mvvm;
 using Prism.Navigation;
+using ElkaUWP.Infrastructure.Helpers;
+using Windows.ApplicationModel.Resources;
 
 namespace ElkaUWP.Modularity.UserModule.ViewModels
 {
@@ -18,16 +20,14 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
     {
         private Image _userImage;
         private UserService _userService;
-        public ObservableCollection<USOSUserInfo> _userInfo = new ObservableCollection<USOSUserInfo>();
+        private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(UserModuleInitializer));
+
+        public ObservableCollection<UserInfoElement> _userInfoElement = new ObservableCollection<UserInfoElement>();
+        
         public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
-        public string FirstName;
-        public string LastName;
-        public string Email;
-        public long ID;
-        public string Sex;
-        public string StudentNumber;
-        public PhotoUrls Photo;
-        public string NameAndSurname;
+        public string nameAndSurname;
+        public string indexNo;
+        public string email;
 
         public UserSummaryViewModel(UserService userService)
         {
@@ -38,17 +38,38 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            await GetUserInfo();
-        }
-
-            public async Task GetUserInfo()
-        {
-            var result = await _userService.GetUserInformation();
+            var result = await GetUserInfoAsync();
+            foreach(var item in result)
+            {
+                
+                item.Header = _resourceLoader.GetString(item.Header);
+                _userInfoElement.Add(item);
+                if(item.Header.Equals("First name"))
+                {
+                    nameAndSurname = item.Value;
+                }
+                if(item.Header.Equals("Last name"))
+                {
+                    nameAndSurname += " " +item.Value;
+                }
+                if(item.Header.Equals("Email"))
+                {
+                    email = item.Value;
+                }
+                if(item.Header.Equals("Student number"))
+                {
+                    indexNo = item.Value;
+                }
+            }
             
 
+        }
 
+        public Task<IEnumerable<UserInfoElement>> GetUserInfoAsync()
 
-
+        {
+            return _userService.GetUserInformation();
+            
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

@@ -10,7 +10,7 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
 {
     public static class USOSUserInfoExtensions
     {
-        public static IEnumerable<UserInfoElement> UserInfoElementList(this USOSUserInfo info)
+        public static List<UserInfoElement> UserInfoElementList(this USOSUserInfo info)
         {
             var list = new List<UserInfoElement>();
 

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ElkaUWP.DataLayer.Usos.Extensions;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
@@ -32,9 +33,8 @@ namespace ElkaUWP.DataLayer.Usos.Services
             try
             {
                 responseForInfo = await webClient.DownloadStringTaskAsync(address: InfoUri);
-                var result = JsonConvert.DeserializeObject<List<USOSUserInfo>>(value: responseForInfo);
-
-
+                var result = JsonConvert.DeserializeObject<USOSUserInfo>(value: responseForInfo);
+                infoList = USOSUserInfoExtensions.UserInfoElementList(result);
             }
             catch (WebException wexc)
             {
@@ -48,7 +48,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
 
             
-
+            
             return infoList;
 
         }
