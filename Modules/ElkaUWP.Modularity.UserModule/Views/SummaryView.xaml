@@ -62,8 +62,11 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-               
-                    </Grid>
+                            <TextBlock x:Name="NameAndSurname" Text="{x:Bind ViewModel.NameAndSurname}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource HeaderTextBlockStyle}"/>
+                            <TextBlock x:Name="IndexNo" Text="{x:Bind ViewModel.IndexNo}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            <TextBlock x:Name="Email" Text="{x:Bind ViewModel.Email}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" />
+
+                        </Grid>
                 </controls:WrapPanel>
                    
 
@@ -78,13 +81,13 @@
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>
 
-            <controls:AdaptiveGridView.ItemTemplate>
+            
             <DataTemplate x:DataType="entities:UserInfoElement" >
                 <controls:HeaderedContentControl Header="{x:Bind Header}" Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
                     <TextBlock Text="{x:Bind Value}" Style="{StaticResource BodyTextBlockStyle}" />
                 </controls:HeaderedContentControl>
             </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
+            
 
 
 

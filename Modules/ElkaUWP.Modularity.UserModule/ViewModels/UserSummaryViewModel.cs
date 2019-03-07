@@ -25,9 +25,12 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         public ObservableCollection<UserInfoElement> _userInfoElement = new ObservableCollection<UserInfoElement>();
         
         public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
-        public string nameAndSurname;
-        public string indexNo;
-        public string email;
+        private string _nameAndSurname;
+        public string NameAndSurname { get => _nameAndSurname; set => SetProperty(storage:ref _nameAndSurname, value: value, nameof(NameAndSurname)); }
+        public string _indexNo;
+        public string IndexNo { get => _indexNo; set => SetProperty(storage: ref _indexNo, value: value, nameof(IndexNo)); }
+        public string _email;
+        public string Email { get => _email; set => SetProperty(storage: ref _email, value: value, nameof(Email)); }
 
         public UserSummaryViewModel(UserService userService)
         {
@@ -39,27 +42,17 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
             var result = await GetUserInfoAsync();
+
+            _nameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value;
+            _indexNo = result.Single(x => x.Header == "StudentNumberKey").Value;
+            _email = result.Single(x => x.Header == "EmailKey").Value;
+
             foreach(var item in result)
             {
                 
                 item.Header = _resourceLoader.GetString(item.Header);
                 _userInfoElement.Add(item);
-                if(item.Header.Equals("First name"))
-                {
-                    nameAndSurname = item.Value;
-                }
-                if(item.Header.Equals("Last name"))
-                {
-                    nameAndSurname += " " +item.Value;
-                }
-                if(item.Header.Equals("Email"))
-                {
-                    email = item.Value;
-                }
-                if(item.Header.Equals("Student number"))
-                {
-                    indexNo = item.Value;
-                }
+        
             }
             
 
