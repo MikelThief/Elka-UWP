@@ -160,7 +160,7 @@ namespace ElkaUWP.Core
             var fileTarget = new FileTarget()
             {
                 Name = "FileLog",
-                Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception}",
+                Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception:format=@:innerFormat=@:maxInnerExceptionLevel=5}",
                 OptimizeBufferReuse = true,
                 Encoding = Encoding.UTF8,
                 WriteBom = false,

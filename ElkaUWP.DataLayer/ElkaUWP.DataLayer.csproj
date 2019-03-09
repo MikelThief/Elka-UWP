@@ -124,11 +124,13 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Propertiary\Converters\EntityToEntity\UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
-    <Compile Include="Usos\Converters\JsonPassTypeBoolConverter.cs" />
-    <Compile Include="Usos\Converters\JsonSubjectPassTypeConverter.cs" />
-    <Compile Include="Usos\Converters\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Propertiary\Entities\Subject.cs" />
+    <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
     <Compile Include="Usos\Entities\UserCoursesPerSemester.cs" />
@@ -173,9 +175,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Janitor.Fody">
-      <Version>1.6.5</Version>
-    </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>4.1.4</Version>
     </PackageReference>
@@ -207,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
+    <Folder Include="Usos\Converters\Entities\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
