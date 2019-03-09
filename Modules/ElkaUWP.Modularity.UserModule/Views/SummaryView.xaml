@@ -50,10 +50,9 @@
 
         <CommandBar Grid.Row="0"/>
 
-        <controls:AdaptiveGridView Grid.Row="1"  OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel._userInfoElement}">
+        <controls:AdaptiveGridView Grid.Row="1" OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
             <controls:AdaptiveGridView.Header>
                 <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20">
-                
                 <controls:WrapPanel x:Name="HeaderStackPanel" Orientation="Horizontal" HorizontalSpacing="30" MinHeight="300" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Rectangle Width="150" Height="200" Fill="Aqua"/>
                     <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
@@ -65,7 +64,6 @@
                             <TextBlock x:Name="NameAndSurname" Text="{x:Bind ViewModel.NameAndSurname}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource HeaderTextBlockStyle}"/>
                             <TextBlock x:Name="IndexNo" Text="{x:Bind ViewModel.IndexNo}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
                             <TextBlock x:Name="Email" Text="{x:Bind ViewModel.Email}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" />
-
                         </Grid>
                 </controls:WrapPanel>
                    
@@ -77,16 +75,16 @@
                 <Style TargetType="FrameworkElement">
                     <Setter Property="Margin" Value="40,0,0,40" />
                     <Setter Property="MinWidth" Value="200"/>
-
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>
 
             <controls:AdaptiveGridView.ItemTemplate>
-            <DataTemplate x:DataType="entities:UserInfoElement" >
-                <controls:HeaderedContentControl Header="{x:Bind Header}" Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
-                    <TextBlock Text="{x:Bind Value}" Style="{StaticResource BodyTextBlockStyle}" />
-                </controls:HeaderedContentControl>
-            </DataTemplate>
+                <DataTemplate x:DataType="entities:UserInfoElement" >
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{x:Bind Header}" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock Text="{x:Bind Value}" Style="{StaticResource BodyTextBlockStyle}" />
+                    </StackPanel>
+                </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
 
 

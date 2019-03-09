@@ -22,7 +22,7 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         private UserService _userService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(UserModuleInitializer));
 
-        public ObservableCollection<UserInfoElement> _userInfoElement = new ObservableCollection<UserInfoElement>();
+        public ObservableCollection<UserInfoElement> UserInfoElement = new ObservableCollection<UserInfoElement>();
         
         public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
         private string _nameAndSurname;
@@ -41,7 +41,7 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            var result = await GetUserInfoAsync();
+            var result = await _userService.GetUserInformation();
 
             NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value;
             IndexNo = result.Single(x => x.Header == "StudentNumberKey").Value;
@@ -51,18 +51,13 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
             {
                 
                 item.Header = _resourceLoader.GetString(item.Header);
-                _userInfoElement.Add(item);
+                if (string.IsNullOrEmpty(item.Header))
+                    item.Header = "test";
+                UserInfoElement.Add(item);
         
             }
             Console.WriteLine("mrem"); 
 
-        }
-
-        public Task<IEnumerable<UserInfoElement>> GetUserInfoAsync()
-
-        {
-            return _userService.GetUserInformation();
-            
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
