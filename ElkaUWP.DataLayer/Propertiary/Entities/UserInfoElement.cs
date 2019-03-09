@@ -8,9 +8,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
     public class UserInfoElement
     {
-        public string Header;
-        public string Value;
-
-      
+        public string Header { get; set; }
+        public string Value { get; set; }
     }
 }
