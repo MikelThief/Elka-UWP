@@ -43,9 +43,9 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         {
             var result = await GetUserInfoAsync();
 
-            _nameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value;
-            _indexNo = result.Single(x => x.Header == "StudentNumberKey").Value;
-            _email = result.Single(x => x.Header == "EmailKey").Value;
+            NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value;
+            IndexNo = result.Single(x => x.Header == "StudentNumberKey").Value;
+            Email = result.Single(x => x.Header == "EmailKey").Value;
 
             foreach(var item in result)
             {
@@ -54,7 +54,7 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
                 _userInfoElement.Add(item);
         
             }
-            
+            Console.WriteLine("mrem"); 
 
         }
 

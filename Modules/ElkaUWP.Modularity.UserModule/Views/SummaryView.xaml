@@ -81,13 +81,13 @@
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>
 
-            
+            <controls:AdaptiveGridView.ItemTemplate>
             <DataTemplate x:DataType="entities:UserInfoElement" >
                 <controls:HeaderedContentControl Header="{x:Bind Header}" Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}">
                     <TextBlock Text="{x:Bind Value}" Style="{StaticResource BodyTextBlockStyle}" />
                 </controls:HeaderedContentControl>
             </DataTemplate>
-            
+            </controls:AdaptiveGridView.ItemTemplate>
 
 
 
