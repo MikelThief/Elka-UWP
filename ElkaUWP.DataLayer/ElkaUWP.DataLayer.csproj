@@ -125,16 +125,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
-    <Compile Include="Propertiary\Entities\PostalAddressInfoElement.cs" />
-    <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
-    <Compile Include="Propertiary\Services\UserService.cs" />
-    <Compile Include="Usos\Converters\Json\JsonPostalAddressesConverter.cs" />
-    <Compile Include="Usos\Entities\PostalAddressType.cs" />
-    <Compile Include="Usos\Entities\PostalAddress.cs" />
-    <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
-    <Compile Include="Usos\Entities\UserInfoContainer.cs" />
-    <Compile Include="Usos\Entities\USOSUserInfo.cs" />
-    <Compile Include="Usos\Extensions\USOSUserInfoExtensions.cs" />
     <Compile Include="Usos\Converters\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\JsonTOrNBoolConverter.cs" />
@@ -161,8 +151,6 @@
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
     <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
-    <Compile Include="Usos\Requests\PostalAddressesWrapper.cs" />
-    <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserCoursesPerSemesterRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />

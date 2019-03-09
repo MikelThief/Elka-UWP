@@ -2,7 +2,7 @@
 using ElkaUWP.DataLayer.Usos.Entities;
 using Newtonsoft.Json;
 
-namespace ElkaUWP.DataLayer.Usos.Converters
+namespace ElkaUWP.DataLayer.Usos.Converters.Json
 {
     public class JsonSubjectPassTypeConverter : JsonConverter
     {

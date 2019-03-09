@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Converters;
+using ElkaUWP.DataLayer.Usos.Converters.Json;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
 using Newtonsoft.Json;
@@ -46,6 +47,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 return null;
             }
 
+            // intentional, as API returns a class with just a single element 'course_editions'
             return result.CourseEditions;
         }
 

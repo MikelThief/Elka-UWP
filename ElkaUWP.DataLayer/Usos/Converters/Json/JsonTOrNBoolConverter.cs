@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace ElkaUWP.DataLayer.Usos.Converters
+namespace ElkaUWP.DataLayer.Usos.Converters.Json
 {
     public class JsonTOrNBoolConverter : JsonConverter
     {

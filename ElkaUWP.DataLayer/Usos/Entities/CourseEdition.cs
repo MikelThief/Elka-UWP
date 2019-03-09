@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Converters;
+using ElkaUWP.DataLayer.Usos.Converters.Json;
 using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
