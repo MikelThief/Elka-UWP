@@ -12,7 +12,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
     {
         public string SemesterLiteral { get; set; }
 
-        public string ShortName { get; set; }
+        public string Id { get; set; }
+
+        public string Acronym => Id.Substring(startIndex: Id.LastIndexOf('-') + 1);
     }
 }
  

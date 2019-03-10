@@ -8,12 +8,12 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
     public class UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter
     {
         public List<InProgressSubjectApproach> InProgressSubjects { get; private set; }
-        public List<FinishedSubjectApproach> PassedOrFailedSubjects { get; private set; }
+        public List<FinishedSubjectApproach> FinishedSubjects { get; private set; }
 
         public UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter()
         {
             InProgressSubjects = new List<InProgressSubjectApproach>();
-            PassedOrFailedSubjects = new List<FinishedSubjectApproach>();
+            FinishedSubjects = new List<FinishedSubjectApproach>();
         }
 
         public void Convert(Dictionary<string, Dictionary<string, GradesGradedSubject>> gradedSubjectsPerSemesterDictionary,
@@ -31,7 +31,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
                 var tempSubject = new InProgressSubjectApproach()
                 {
                     SemesterLiteral = courseEdition.TermId,
-                    ShortName = courseEdition.CourseId,
+                    Id = courseEdition.CourseId,
                 };
                 InProgressSubjects.Add(item: tempSubject);
             }
@@ -56,9 +56,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
                             GradeLiteral = "2",
                             IsPassed = false,
                             SemesterLiteral = gradedSemesterKey,
-                            ShortName = gradedSubjectKey
+                            Id = gradedSubjectKey
                         };
-                        PassedOrFailedSubjects.Add(item: tempSubject);
+                        FinishedSubjects.Add(item: tempSubject);
                     }
                     else
                     {
@@ -67,9 +67,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
                             GradeLiteral = gradedElement.ValueSymbol,
                             IsPassed = gradedElement.Passes,
                             SemesterLiteral = gradedSemesterKey,
-                            ShortName = gradedSubjectKey
+                            Id = gradedSubjectKey
                         };
-                        PassedOrFailedSubjects.Add(item: tempSubject);
+                        FinishedSubjects.Add(item: tempSubject);
                     }
                 }
             }
@@ -92,7 +92,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
         public void Flush()
         {
             InProgressSubjects.Clear();
-            PassedOrFailedSubjects.Clear();
+            FinishedSubjects.Clear();
         }
     }
 }
