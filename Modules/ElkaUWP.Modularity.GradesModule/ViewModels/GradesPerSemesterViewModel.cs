@@ -38,10 +38,13 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         /// <inheritdoc />
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
+            var coursesPerSemesterTask = _gradesService.GetUserCoursesPerSemesterAsync();
+            var gradedSemestersTask = _gradesService.GetUserGradedSemestersAsync();
+
             var converter = new UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter();
 
-            converter.Convert(gradedSubjectsPerSemesterDictionary: await _gradesService.GetUserGradedSemestersAsync(),
-                coursesPerSemesterDictionary: await _gradesService.GetUserCoursesPerSemesterAsync());
+            converter.Convert(gradedSubjectsPerSemesterDictionary: await gradedSemestersTask,
+                coursesPerSemesterDictionary: await coursesPerSemesterTask);
 
             foreach (var inProgressSubjectApproach in converter.InProgressSubjects)
             {
@@ -49,7 +52,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             }
             foreach (var finishedSubjectApproach in converter.FinishedSubjects)
             {
-                InProgressSubjectApproaches.Add(item: finishedSubjectApproach);
+                FinishedSubjectApproaches.Add(item: finishedSubjectApproach);
             }
 
 

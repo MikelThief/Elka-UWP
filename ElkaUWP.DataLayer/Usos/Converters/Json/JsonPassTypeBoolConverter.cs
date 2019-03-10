@@ -24,6 +24,8 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
                 case "NotYetPassed":
                 case "NOTYETPASSED":
                 case "notyetpassed":
+                case "FAILED":
+                case "failed":
                     return false;
                 default:
                     throw new JsonSerializationException(message: "Converter" + nameof(JsonPassTypeBoolConverter) + "could not handle the value: " + value);
