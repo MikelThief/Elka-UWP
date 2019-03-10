@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class GradedSemester
+    public class ExamRepGradedSubject
     {
         [JsonProperty("type_id")]
         [JsonConverter(converterType: typeof(JsonSubjectPassTypeConverter))]
