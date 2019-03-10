@@ -135,20 +135,19 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
             return result;
         }
-
-
-        public async Task<Dictionary<string, Dictionary<string, GradesGradedSubjectValue>>> GetUserGradedSemestersAsync()
+        
+        public async Task<Dictionary<string, Dictionary<string, GradesGradedSubject>>> GetUserGradedSemestersAsync()
         {
             var request = (Container.Resolve<UserGradesPerSemesterRequestWrapper>());
             var requestString = request.GetRequestString();
-            Dictionary<string, Dictionary<string, GradesGradedSubjectValue>> result;
+            Dictionary<string, Dictionary<string, GradesGradedSubject>> result;
             var webClient = new WebClient();
 
             try
             {
                 var json = await webClient.DownloadStringTaskAsync(address: requestString);
 
-                result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, GradesGradedSubjectValue>>>(value: json, converters: new JsonTOrNBoolConverter());
+                result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, GradesGradedSubject>>>(value: json, converters: new JsonTOrNBoolConverter());
             }
             catch (WebException wexc)
             {
@@ -160,17 +159,17 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
                 return null;
             }
-            var filteredResult = new Dictionary<string, Dictionary<string, GradesGradedSubjectValue>>();
+            var filteredResult = new Dictionary<string, Dictionary<string, GradesGradedSubject>>();
 
             foreach (var semester in result.Keys)
             {
-                if (result[key: semester] == null)
+                // filtering removes null semesters (undefined) and empty semesters (student didn't take part)
+                if (result[key: semester] == null || result[key: semester]?.Values.Count < 1)
                     continue;
-                else if (result[key: semester].Values.Count < 1)
-                    continue;
-                else filteredResult.Add(key: semester, result[key: semester]);
+                // ArgumentException is never thrown as student cannot enroll more than once for same subject in the semester
+                else filteredResult.Add(key: semester, value: result[key: semester]);
             }
-
+            
             return filteredResult;
         }
     }
