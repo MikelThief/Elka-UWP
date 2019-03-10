@@ -125,16 +125,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Propertiary\Converters\EntityToEntity\UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter.cs" />
+    <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Propertiary\Entities\Subject.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Entities\CourseGrade.cs" />
+    <Compile Include="Usos\Entities\CourseGradeSub1.cs" />
+    <Compile Include="Usos\Entities\CourseUnitsGrades.cs" />
+    <Compile Include="Usos\Entities\GradesGradedSubjectValue.cs" />
+    <Compile Include="Usos\Entities\Semester.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
     <Compile Include="Usos\Entities\UserCoursesPerSemester.cs" />
-    <Compile Include="Usos\Entities\GradedSemester.cs" />
+    <Compile Include="Usos\Entities\ExamRepGradedSubject.cs" />
     <Compile Include="Usos\Entities\IssuerGrades.cs" />
     <Compile Include="Usos\Entities\Session.cs" />
     <Compile Include="Usos\Entities\SubjectPassType.cs" />
@@ -155,10 +161,12 @@
     <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\GradedSubjectsPerSemesterRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\SemestersHistoryRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserCoursesPerSemesterRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UserGradesPerSemesterRequestWrapper.cs" />
     <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />

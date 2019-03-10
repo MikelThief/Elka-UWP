@@ -32,8 +32,11 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         /// <inheritdoc />
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            var coursesPerSemesterTask = _gradesService.GetUserGradedSemestersAsync();
-            var gradedCoursesPerSemesterTask = _gradesService.GetUserCoursesPerSemesterAsync();
+
+
+
+            var temp = _gradesService.GetUserGradedSemestersAsync();
+
 
 
         }

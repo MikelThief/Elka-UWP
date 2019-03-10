@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Converters;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
+using ElkaUWP.Infrastructure.Converters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using NLog;
 using Prism.Ioc;
 
@@ -51,18 +55,18 @@ namespace ElkaUWP.DataLayer.Usos.Services
             return result.CourseEditions;
         }
 
-        public async Task<Dictionary<string, Dictionary<string, List<GradedSemester>>>> GetUserGradedSemestersAsync()
+        public async Task<Dictionary<string, Dictionary<string, List<ExamRepGradedSubject>>>> GetUserGradesPerSemesterAsync()
         {
             var request = (Container.Resolve<GradedSubjectsPerSemesterRequestWrapper>());
             var requestString = request.GetRequestString();
-            Dictionary<string, Dictionary<string, List<GradedSemester>>> result;
+            Dictionary<string, Dictionary<string, List<ExamRepGradedSubject>>> result;
             var webClient = new WebClient();
 
             try
             {
                 var json = await webClient.DownloadStringTaskAsync(address: requestString);
 
-                result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<GradedSemester>>>>(value: json, converters: new JsonSubjectPassTypeConverter());
+                result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<ExamRepGradedSubject>>>>(value: json, converters: new JsonSubjectPassTypeConverter());
             }
             catch (WebException wexc)
             {
@@ -76,6 +80,98 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
 
             return result;
+        }
+
+        public async Task<List<Semester>> GetSemestersHistoryAsync()
+        {
+            var request = (Container.Resolve<SemestersHistoryRequestWrapper>());
+            var requestString = request.GetRequestString();
+            List<Semester> result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<List<Semester>>(value: json, converters: new UsosDateTimeConverter());
+            }
+            catch (WebException wexc)
+            {
+                LogTo.FatalException(message: "Unable to start OAuth handshake", exception: wexc);
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                LogTo.FatalException(message: "Unable to deserialize incoming data", exception: jexc);
+                return null;
+            }
+
+            return result;
+        }
+
+        public async Task<List<Semester>> GetSemestersHistoryAsync(DateTime maximumStartDate)
+        {
+            var request = (Container.Resolve<SemestersHistoryRequestWrapper>());
+            var requestString = request.GetRequestString(maximumStartDate: maximumStartDate);
+            List<Semester> result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<List<Semester>>(value: json, converters: new IsoDateTimeConverter());
+            }
+            catch (WebException wexc)
+            {
+                LogTo.FatalException(message: "Unable to start OAuth handshake", exception: wexc);
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                LogTo.FatalException(message: "Unable to deserialize incoming data", exception: jexc);
+                return null;
+            }
+
+            return result;
+        }
+
+
+        public async Task<Dictionary<string, Dictionary<string, GradesGradedSubjectValue>>> GetUserGradedSemestersAsync()
+        {
+            var request = (Container.Resolve<UserGradesPerSemesterRequestWrapper>());
+            var requestString = request.GetRequestString();
+            Dictionary<string, Dictionary<string, GradesGradedSubjectValue>> result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, GradesGradedSubjectValue>>>(value: json, converters: new JsonTOrNBoolConverter());
+            }
+            catch (WebException wexc)
+            {
+                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                return null;
+            }
+            var filteredResult = new Dictionary<string, Dictionary<string, GradesGradedSubjectValue>>();
+
+            foreach (var semester in result.Keys)
+            {
+                if (result[key: semester] == null)
+                    continue;
+                else if (result[key: semester].Values.Count < 1)
+                    continue;
+                else filteredResult.Add(key: semester, result[key: semester]);
+            }
+
+            return filteredResult;
         }
     }
 }

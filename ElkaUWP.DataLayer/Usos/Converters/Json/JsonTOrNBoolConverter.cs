@@ -17,8 +17,10 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
             switch (value)
             {
                 case "T":
+                case "TRUE":
                     return true;
                 case "N":
+                case "FALSE":
                     return false;
                 default:
                     throw new JsonSerializationException(message: "Converter" + nameof(JsonTOrNBoolConverter) + "could not handle the value: " + value);
