@@ -23,9 +23,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters
             try
             {
                 if (stringified.EndsWith('0'))
-                    return stringified.Substring(startIndex: 0, length: 4) + "Z";
-                else if(stringified.EndsWith('1'))
                     return stringified.Substring(startIndex: 0, length: 4) + "L";
+                else if(stringified.EndsWith('1'))
+                    return stringified.Substring(startIndex: 0, length: 4) + "Z";
                 else throw new ArgumentOutOfRangeException(paramName: nameof(semesterShort), message: nameof(semesterShort) + " doesn't end with either 0 or 1");
             }
             catch (ArgumentOutOfRangeException aoorexc)

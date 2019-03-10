@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Windows.UI;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 
@@ -6,11 +7,16 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
 {
     public class UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter
     {
-        public List<Subject> InProgressSubjects { get; private set; }
-        public List<Subject> FailedSubjects { get; private set; }
-        public List<Subject> PassedSubjects { get; private set; }
+        public List<InProgressSubjectApproach> InProgressSubjects { get; private set; }
+        public List<FinishedSubjectApproach> PassedOrFailedSubjects { get; private set; }
 
-        public void Convert(Dictionary<string, Dictionary<string, List<ExamRepGradedSubject>>> gradedSubjectsPerSemesterDictionary,
+        public UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter()
+        {
+            InProgressSubjects = new List<InProgressSubjectApproach>();
+            PassedOrFailedSubjects = new List<FinishedSubjectApproach>();
+        }
+
+        public void Convert(Dictionary<string, Dictionary<string, GradesGradedSubject>> gradedSubjectsPerSemesterDictionary,
             Dictionary<string, List<CourseEdition>> coursesPerSemesterDictionary)
         {
             var semesterLiteralAndShortConverter = new SemesterLiteralAndShortConverter();
@@ -19,51 +25,52 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
             var highestSemesterAsString =
                 semesterLiteralAndShortConverter.ShortToString(semesterShort: highestSemester);
 
-            foreach (var semester in coursesPerSemesterDictionary.Keys)
+            // Process currently studied subjects
+            foreach (var courseEdition in coursesPerSemesterDictionary[key: highestSemesterAsString])
             {
-                var coursesInSemester = coursesPerSemesterDictionary[key: semester];
-
-                foreach (var course in coursesInSemester)
+                var tempSubject = new InProgressSubjectApproach()
                 {
-                    foreach (var gradedSemesterKey in gradedSubjectsPerSemesterDictionary.Keys)
+                    SemesterLiteral = courseEdition.TermId,
+                    ShortName = courseEdition.CourseId,
+                };
+                InProgressSubjects.Add(item: tempSubject);
+            }
+            
+            // Process rest of subjects
+            foreach (var gradedSemesterKey in gradedSubjectsPerSemesterDictionary.Keys)
+            {
+                var gradedSemester = gradedSubjectsPerSemesterDictionary[key: gradedSemesterKey];
+
+                foreach (var gradedSubjectKey in gradedSemester.Keys)
+                {
+                    var gradedSubject = gradedSemester[key: gradedSubjectKey];
+
+                    var gradedElement = gradedSubject.CourseGrades[0].Sub1;
+
+                    // sometimes failed subject appears as the subject without grade.
+                    // USOS allows for that and treats it internally as failed... I think
+                    if (gradedElement is null)
                     {
-                        var gradedSemester = gradedSubjectsPerSemesterDictionary[key: gradedSemesterKey];
-
-                        if(gradedSemester.ContainsKey(key: course.CourseId))
+                        var tempSubject = new FinishedSubjectApproach
                         {
-                            // path taken when subject was approached more than once or is failed/passed
-                            var pastSubjectTrial = gradedSemester[course.CourseId];
-
-                            // EiTI has list of passing sections defined as a single element
-                            // This must be revised if EiTI decidec to follow. for instance, WAT implementation - multiple passing sections
-                            // Serio USOS, nie dało się tej organizacji dnaych bardziej spierdolić?
-                            var pastSessions = pastSubjectTrial[0].Sessions;
-
-                            foreach (var pastSession in pastSessions)
-                            {
-
-                            }
-
-
-                        }
-                        else
-                        {
-                            // path taken when subject was approached once
-                            var subject = new Subject
-                            {
-                                FullName = course.CourseName.Pl,
-                                ShortName = course.CourseId,
-                                SemesterLiteral = course.TermId,
-                                GradeLiteral = ""
-                            };
-
-                            // Subject is currently being studied
-                            if(subject.SemesterLiteral == highestSemesterAsString)
-                                InProgressSubjects.Add(item: subject);
-                        }
+                            GradeLiteral = "2",
+                            IsPassed = false,
+                            SemesterLiteral = gradedSemesterKey,
+                            ShortName = gradedSubjectKey
+                        };
+                        PassedOrFailedSubjects.Add(item: tempSubject);
                     }
-
-
+                    else
+                    {
+                        var tempSubject = new FinishedSubjectApproach
+                        {
+                            GradeLiteral = gradedElement.ValueSymbol,
+                            IsPassed = gradedElement.Passes,
+                            SemesterLiteral = gradedSemesterKey,
+                            ShortName = gradedSubjectKey
+                        };
+                        PassedOrFailedSubjects.Add(item: tempSubject);
+                    }
                 }
             }
         }
@@ -84,9 +91,8 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
 
         public void Flush()
         {
-            InProgressSubjects = null;
-            FailedSubjects = null;
-            PassedSubjects = null;
+            InProgressSubjects.Clear();
+            PassedOrFailedSubjects.Clear();
         }
     }
 }
