@@ -10,8 +10,8 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters
     /// <summary>
     /// Convertes between string representation of the semester id and integer value
     /// <example>
-    /// 2019Z -> 20190
-    /// 20191 -> 2019L
+    /// 2019L -> 20190
+    /// 20191 -> 2019Z
     /// </example>  
     /// </summary>
     public class SemesterLiteralAndShortConverter
