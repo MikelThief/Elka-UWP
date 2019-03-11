@@ -48,14 +48,18 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
 
             foreach (var inProgressSubjectApproach in converter.InProgressSubjects)
             {
+                // discarding subjects which acronyms are below 3 letters or consists of numbers only (unnecessary *ghost* subjects)
+                if (inProgressSubjectApproach.Id.All(c => c >= '0' && c <= '9') || inProgressSubjectApproach.Id.Length < 3)
+                    continue;
                 InProgressSubjectApproaches.Add(item: inProgressSubjectApproach);
             }
             foreach (var finishedSubjectApproach in converter.FinishedSubjects)
             {
+                // discarding subjects which acronyms are below 3 letters or consists of numbers only (unnecessary *ghost* subjects)
+                if (finishedSubjectApproach.Acronym.All(c => c >= '0' && c <= '9') || finishedSubjectApproach.Id.Length < 3)
+                    continue;
                 FinishedSubjectApproaches.Add(item: finishedSubjectApproach);
             }
-
-
             converter.Flush();
         }
     }
