@@ -127,9 +127,8 @@
     <Compile Include="Propertiary\Converters\EntityToEntity\UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter.cs" />
     <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
-    <Compile Include="Propertiary\Entities\FinishedSubjectApproach.cs" />
+    <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
-    <Compile Include="Propertiary\Entities\InProgressSubjectApproach.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />

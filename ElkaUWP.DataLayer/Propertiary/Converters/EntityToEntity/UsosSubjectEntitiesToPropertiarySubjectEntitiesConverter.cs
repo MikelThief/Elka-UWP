@@ -7,13 +7,13 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
 {
     public class UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter
     {
-        public List<InProgressSubjectApproach> InProgressSubjects { get; private set; }
-        public List<FinishedSubjectApproach> FinishedSubjects { get; private set; }
+        public List<SubjectApproach> InProgressSubjects { get; private set; }
+        public List<SubjectApproach> FinishedSubjects { get; private set; }
 
         public UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter()
         {
-            InProgressSubjects = new List<InProgressSubjectApproach>();
-            FinishedSubjects = new List<FinishedSubjectApproach>();
+            InProgressSubjects = new List<SubjectApproach>();
+            FinishedSubjects = new List<SubjectApproach>();
         }
 
         public void Convert(Dictionary<string, Dictionary<string, GradesGradedSubject>> gradedSubjectsPerSemesterDictionary,
@@ -25,54 +25,64 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
             var highestSemesterAsString =
                 semesterLiteralAndShortConverter.ShortToString(semesterShort: highestSemester);
 
-            // Process currently studied subjects
-            foreach (var courseEdition in coursesPerSemesterDictionary[key: highestSemesterAsString])
+            foreach (var coursesPerSemesterDictionaryKey in coursesPerSemesterDictionary.Keys)
             {
-                var tempSubject = new InProgressSubjectApproach()
+                var coursesPerSemester = coursesPerSemesterDictionary[key: coursesPerSemesterDictionaryKey];
+
+                foreach (var courseEdition in coursesPerSemester)
                 {
-                    SemesterLiteral = courseEdition.TermId,
-                    Id = courseEdition.CourseId,
-                };
-                InProgressSubjects.Add(item: tempSubject);
-            }
-            
-            // Process rest of subjects
-            foreach (var gradedSemesterKey in gradedSubjectsPerSemesterDictionary.Keys)
-            {
-                var gradedSemester = gradedSubjectsPerSemesterDictionary[key: gradedSemesterKey];
+                    string gradeLiteral = default;
+                    bool isPassed = false;
 
-                foreach (var gradedSubjectKey in gradedSemester.Keys)
-                {
-                    var gradedSubject = gradedSemester[key: gradedSubjectKey];
-
-                    var gradedElement = gradedSubject.CourseGrades[0].Sub1;
-
-                    // sometimes failed subject appears as the subject without grade.
-                    // USOS allows for that and treats it internally as failed... I think
-                    if (gradedElement is null)
+                    if (gradedSubjectsPerSemesterDictionary.ContainsKey(key: coursesPerSemesterDictionaryKey))
                     {
-                        var tempSubject = new FinishedSubjectApproach
+                        var gradedSemester = gradedSubjectsPerSemesterDictionary[key: coursesPerSemesterDictionaryKey];
+
+                        if (gradedSemester.ContainsKey(key: courseEdition.CourseId))
                         {
-                            GradeLiteral = "2",
-                            IsPassed = false,
-                            SemesterLiteral = gradedSemesterKey,
-                            Id = gradedSubjectKey
-                        };
-                        FinishedSubjects.Add(item: tempSubject);
+                            gradeLiteral = gradedSubjectsPerSemesterDictionary[key: coursesPerSemesterDictionaryKey]
+                                [key: courseEdition.CourseId]
+                                .CourseGrades[0].Sub1?.ValueSymbol;
+
+                            if (gradedSubjectsPerSemesterDictionary[key: coursesPerSemesterDictionaryKey]
+                                    [key: courseEdition.CourseId].CourseGrades[0].Sub1?.Passes != null)
+                                isPassed =
+                                    gradedSubjectsPerSemesterDictionary[key: coursesPerSemesterDictionaryKey]
+                                        [key: courseEdition.CourseId].CourseGrades[0].Sub1.Passes;
+                        }
                     }
-                    else
+
+                    var staffHashSet = new HashSet<string>();
+
+                    foreach (var coordinator in courseEdition.Coordinators)
                     {
-                        var tempSubject = new FinishedSubjectApproach
-                        {
-                            GradeLiteral = gradedElement.ValueSymbol,
-                            IsPassed = gradedElement.Passes,
-                            SemesterLiteral = gradedSemesterKey,
-                            Id = gradedSubjectKey
-                        };
-                        FinishedSubjects.Add(item: tempSubject);
+                        staffHashSet.Add(item: coordinator.FirstName + " " + coordinator.LastName); 
                     }
+
+                    foreach (var lecturer in courseEdition.Lecturers)
+                    {
+                        staffHashSet.Add(item: lecturer.FirstName + " " + lecturer.LastName);
+                    }
+
+                    var tempSubject = new SubjectApproach()
+                    {
+                        SemesterLiteral = courseEdition.TermId,
+                        Id = courseEdition.CourseId,
+                        GradeLiteral = gradeLiteral,
+                        IsPassed = isPassed,
+                        // English subject's doesn't have polish translation (so far...) so Polish is fine...
+                        Name = courseEdition.CourseName.Pl,
+                        StaffHashSet = staffHashSet
+                    };
+
+                    if(courseEdition.TermId == highestSemesterAsString)
+                        InProgressSubjects.Add(item: tempSubject);
+                    else 
+                        FinishedSubjects.Add(item: tempSubject);
+
                 }
             }
+            
         }
 
         private short FindHighestSemester(Dictionary<string, List<CourseEdition>> coursesPerSemesterDictionary)
