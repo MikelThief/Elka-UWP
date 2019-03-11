@@ -16,8 +16,8 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
     {
         private GradesService _gradesService;
 
-        public ObservableCollection<InProgressSubjectApproach> InProgressSubjectApproaches = new ObservableCollection<InProgressSubjectApproach>();
-        public ObservableCollection<FinishedSubjectApproach> FinishedSubjectApproaches = new ObservableCollection<FinishedSubjectApproach>();
+        public ObservableCollection<SubjectApproach> InProgressSubjectApproaches = new ObservableCollection<SubjectApproach>();
+        public ObservableCollection<SubjectApproach> FinishedSubjectApproaches = new ObservableCollection<SubjectApproach>();
 
         public GradesPerSemesterViewModel(GradesService gradesService)
         {
@@ -56,7 +56,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             foreach (var finishedSubjectApproach in converter.FinishedSubjects)
             {
                 // discarding subjects which acronyms are below 3 letters or consists of numbers only (unnecessary *ghost* subjects)
-                if (finishedSubjectApproach.Acronym.All(c => c >= '0' && c <= '9') || finishedSubjectApproach.Id.Length < 3)
+                if (finishedSubjectApproach.Acronym.All(c => c >= '0' && c <= '9') || finishedSubjectApproach.Acronym.Length < 3)
                     continue;
                 FinishedSubjectApproaches.Add(item: finishedSubjectApproach);
             }

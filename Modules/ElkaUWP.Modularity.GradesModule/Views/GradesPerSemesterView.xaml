@@ -13,13 +13,13 @@
     <Page.Resources>
         <ResourceDictionary>
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter"/>
-            <DataTemplate x:DataType="entities:FinishedSubjectApproach" x:Key="FinishedSubjectDataTemplate">
+            <DataTemplate x:DataType="entities:SubjectApproach" x:Key="FinishedSubjectDataTemplate">
                 <Grid CornerRadius="3" MinWidth="130" Padding="8" Background="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}">
                     <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:DataType="entities:InProgressSubjectApproach" x:Key="InProgressSubjectDataTemplate">
+            <DataTemplate x:DataType="entities:SubjectApproach" x:Key="InProgressSubjectDataTemplate">
                 <Grid CornerRadius="3" MinWidth="130" Background="LightBlue">
                     <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
