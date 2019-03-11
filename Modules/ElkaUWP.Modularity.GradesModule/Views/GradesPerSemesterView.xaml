@@ -7,18 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
+    xmlns:converters="using:ElkaUWP.Modularity.GradesModule.Models.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <ResourceDictionary>
+            <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter"/>
             <DataTemplate x:DataType="entities:FinishedSubjectApproach" x:Key="FinishedSubjectDataTemplate">
-                <Grid MinWidth="100" Margin="8">
-                    <TextBlock Text="{x:Bind GradeLiteral}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
+                <Grid CornerRadius="3" MinWidth="130" Padding="8" Background="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}">
+                    <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
                 </Grid>
             </DataTemplate>
             <DataTemplate x:DataType="entities:InProgressSubjectApproach" x:Key="InProgressSubjectDataTemplate">
-                <Grid MinWidth="200">
+                <Grid CornerRadius="3" MinWidth="130" Background="LightBlue">
                     <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
                 </Grid>
@@ -79,29 +81,24 @@
         </CommandBar>
 
         <ScrollViewer Grid.Row="1" x:Name="ContentArea" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
-            <Grid>
-                <!-- Head -->
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <!-- Body -->
-                <tcontrols:AdaptiveGridView Grid.Row="0" ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" ItemTemplate="{StaticResource InProgressSubjectDataTemplate}">
+            <StackPanel>
+                <TextBlock x:Uid="SubjectsGradesViewInProgressHeader" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                    <tcontrols:AdaptiveGridView ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" ItemTemplate="{StaticResource InProgressSubjectDataTemplate}">
+                        <tcontrols:AdaptiveGridView.ItemContainerStyle>
+                            <Style TargetType="FrameworkElement">
+                                <Setter Property="Margin" Value="8"/>
+                            </Style>
+                        </tcontrols:AdaptiveGridView.ItemContainerStyle>
+                    </tcontrols:AdaptiveGridView>
+                <TextBlock x:Uid="SubjectsGradesViewFinishedHeader" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                <tcontrols:AdaptiveGridView ItemsSource="{x:Bind ViewModel.FinishedSubjectApproaches}" ItemTemplate="{StaticResource FinishedSubjectDataTemplate}">
                     <tcontrols:AdaptiveGridView.ItemContainerStyle>
                         <Style TargetType="FrameworkElement">
                             <Setter Property="Margin" Value="8"/>
                         </Style>
                     </tcontrols:AdaptiveGridView.ItemContainerStyle>
                 </tcontrols:AdaptiveGridView>
-                <tcontrols:AdaptiveGridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.FinishedSubjectApproaches}" ItemTemplate="{StaticResource FinishedSubjectDataTemplate}">
-                    <tcontrols:AdaptiveGridView.ItemContainerStyle>
-                        <Style TargetType="FrameworkElement">
-                            <Setter Property="Margin" Value="8"/>
-                        </Style>
-                    </tcontrols:AdaptiveGridView.ItemContainerStyle>
-                </tcontrols:AdaptiveGridView>
-
-            </Grid>
+            </StackPanel>
 
 
 

@@ -118,12 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GradesPerSemesterPageHeader.Text" xml:space="preserve">
-    <value>Grades per semester</value>
+    <value>Grades</value>
   </data>
   <data name="GradesPerSemesterRefreshButton.Label" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="GradesPerSemesterRefreshButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Refresh final grades for all subjects</value>
+  </data>
+  <data name="SubjectsGradesViewFinishedHeader.Text" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="SubjectsGradesViewInProgressHeader.Text" xml:space="preserve">
+    <value>Pursuing</value>
   </data>
 </root>
