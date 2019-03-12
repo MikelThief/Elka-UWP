@@ -8,19 +8,35 @@
     xmlns:tcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
     xmlns:converters="using:ElkaUWP.Modularity.GradesModule.Models.Converters"
+    xmlns:convertersInf="using:ElkaUWP.Infrastructure.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <ResourceDictionary>
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter"/>
+            <convertersInf:HashSetToStringConverter x:Key="HashSetToStringConverter"/>
             <DataTemplate x:DataType="entities:SubjectApproach" x:Key="FinishedSubjectDataTemplate">
-                <Grid CornerRadius="3" MinWidth="130" Padding="8" Background="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}">
-                    <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
+                <Grid Padding="8" BorderBrush="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}" BorderThickness="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="78" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0" Spacing="5">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
+                            <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <TextBlock Text="-" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" Style="{StaticResource TitleTextBlockStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="{x:Bind Name}" VerticalAlignment="Bottom" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"/>
+                        <TextBlock MinHeight="35" HorizontalAlignment="Center" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Bottom" Style="{StaticResource CaptionTextBlockStyle}" Foreground="DarkGray"  />
+
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Text="{x:Bind GradeLiteral}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+
                 </Grid>
             </DataTemplate>
             <DataTemplate x:DataType="entities:SubjectApproach" x:Key="InProgressSubjectDataTemplate">
-                <Grid CornerRadius="3" MinWidth="130" Background="LightBlue">
+                <Grid CornerRadius="3" Background="LightBlue">
                     <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
                 </Grid>
@@ -46,7 +62,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="GradesPerSemesterCommandBar.DefaultLabelPosition" Value="Right" />
-                        
+
                         <Setter Target="GradesPerSemesterPageHeader.Padding" Value="24 4 0 0"/>
 
                         <Setter Target="ContentArea.Margin" Value="24"/>
@@ -87,6 +103,7 @@
                         <tcontrols:AdaptiveGridView.ItemContainerStyle>
                             <Style TargetType="FrameworkElement">
                                 <Setter Property="Margin" Value="8"/>
+                                <Setter Property="MinWidth" Value="300"/>
                             </Style>
                         </tcontrols:AdaptiveGridView.ItemContainerStyle>
                     </tcontrols:AdaptiveGridView>
@@ -95,6 +112,8 @@
                     <tcontrols:AdaptiveGridView.ItemContainerStyle>
                         <Style TargetType="FrameworkElement">
                             <Setter Property="Margin" Value="8"/>
+                            <Setter Property="MinWidth" Value="350"/>
+                            <Setter Property="MinHeight" Value="100"/>
                         </Style>
                     </tcontrols:AdaptiveGridView.ItemContainerStyle>
                 </tcontrols:AdaptiveGridView>

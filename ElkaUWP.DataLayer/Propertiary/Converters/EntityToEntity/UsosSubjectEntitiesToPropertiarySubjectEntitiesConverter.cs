@@ -49,6 +49,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
                                 isPassed =
                                     gradedSubjectsPerSemesterDictionary[key: coursesPerSemesterDictionaryKey]
                                         [key: courseEdition.CourseId].CourseGrades[0].Sub1.Passes;
+
+                            if (string.IsNullOrEmpty(value: gradeLiteral))
+                                gradeLiteral = "2";
                         }
                     }
 

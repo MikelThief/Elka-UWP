@@ -133,6 +133,7 @@
     <Compile Include="Abstractions\Interfaces\IUsosOAuthService.cs" />
     <Compile Include="Constants.App.cs" />
     <Compile Include="Constants.Usos.cs" />
+    <Compile Include="Converters\HashSetToStringConverter.cs" />
     <Compile Include="Converters\UsosDateTimeConverter.cs" />
     <Compile Include="Exceptions\FailedOAuthWorkflowException.cs" />
     <Compile Include="Extensions\NLogExtension.cs" />
