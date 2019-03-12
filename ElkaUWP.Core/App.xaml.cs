@@ -271,7 +271,7 @@ namespace ElkaUWP.Core
         /// </summary>
         /// <param name="containerRegistry">Container against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
-        {
+        { 
             var nLogExtension = new NLogExtension
             {
                 GetName = (t, n) => t.Name
