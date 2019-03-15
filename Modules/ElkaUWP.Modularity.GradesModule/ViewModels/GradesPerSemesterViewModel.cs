@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ColorCode.Common;
+using ElkaUWP.DataLayer.Propertiary.Converters;
 using ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
@@ -61,6 +63,23 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
                 FinishedSubjectApproaches.Add(item: finishedSubjectApproach);
             }
             converter.Flush();
+
+            FinishedSubjectApproaches.SortStable(comparison: SubjectTimeOfFinishComparison);
+        }
+
+        private int SubjectTimeOfFinishComparison(SubjectApproach x, SubjectApproach y)
+        {
+            var semesterLiteralConverter = new SemesterLiteralAndShortConverter();
+
+            var semesterX = semesterLiteralConverter.LiteralToShort(x.SemesterLiteral);
+
+            var semesterY = semesterLiteralConverter.LiteralToShort(y.SemesterLiteral);
+
+            if (semesterX > semesterY)
+                return -1;
+            if (semesterX == semesterY)
+                return 0;
+            return 1;
         }
     }
 }

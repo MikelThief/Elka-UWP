@@ -16,29 +16,86 @@
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter"/>
             <convertersInf:HashSetToStringConverter x:Key="HashSetToStringConverter"/>
             <DataTemplate x:DataType="entities:SubjectApproach" x:Key="FinishedSubjectDataTemplate">
-                <Grid Padding="8" BorderBrush="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}" BorderThickness="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="78" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Column="0" Spacing="5">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
-                            <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
-                            <TextBlock Text="-" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
-                            <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" Style="{StaticResource TitleTextBlockStyle}"/>
-                        </StackPanel>
-                        <TextBlock Text="{x:Bind Name}" VerticalAlignment="Bottom" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"/>
-                        <TextBlock MinHeight="35" HorizontalAlignment="Center" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Bottom" Style="{StaticResource CaptionTextBlockStyle}" Foreground="DarkGray"  />
-
-                    </StackPanel>
-                    <TextBlock Grid.Column="1" Text="{x:Bind GradeLiteral}" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
-
+                <Grid x:Name="FinishedApproachGrid" MaxWidth="376">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="48"/>
+                    </Grid.RowDefinitions>
+                    <Grid Background="#68768A">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="88"/>
+                        </Grid.ColumnDefinitions>
+                        <tcontrols:UniformGrid Grid.Column="0" Rows="2" Columns="1" Margin="8">
+                            <StackPanel Margin="4,4,4,2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                <TextBlock Text="{x:Bind Acronym}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                                <TextBlock Text="-" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                                <TextBlock Text="{x:Bind SemesterLiteral}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Padding="12,2,12,8" Grid.Row="1" Text="{x:Bind Name}" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Foreground="White"/>
+                         </tcontrols:UniformGrid>
+                        <Grid Grid.Column="1" Background="White" Width="1" Margin="0,8,0,8" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind GradeLiteral}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Background="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}" />
+                    <Grid Grid.Row="2" Background="#4A5459">
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Padding="4" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" Foreground="White" />
+                    </Grid>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:DataType="entities:SubjectApproach" x:Key="InProgressSubjectDataTemplate">
-                <Grid CornerRadius="3" Background="LightBlue">
-                    <TextBlock Text="{x:Bind Acronym}" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind SemesterLiteral}" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" />
+
+                <Grid MaxWidth="376" x:Name="InProgressApproachGrid">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup>
+                            <VisualState x:Name="ApproachMediumState">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
+                                </VisualState.StateTriggers>
+
+                                <VisualState.Setters>
+                                    <Setter Target="InProgressApproachGrid.HorizontalAlignment" Value="Left"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="SmallState">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="InProgressApproachGrid.HorizontalAlignment" Value="Left"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="68"/>
+                    </Grid.RowDefinitions>
+                    <Grid Background="#68768A">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="88"/>
+                        </Grid.ColumnDefinitions>
+                        <tcontrols:UniformGrid Grid.Column="0" Rows="2" Columns="1" Margin="8">
+                            <StackPanel Margin="4,4,4,2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4">
+                                <TextBlock Text="{x:Bind Acronym}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                                <TextBlock Text="-" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                                <TextBlock Text="{x:Bind SemesterLiteral}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White"/>
+                            </StackPanel>
+                            <TextBlock Padding="12,2,12,8" Grid.Row="1" Text="{x:Bind Name}" VerticalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Foreground="White"/>
+                        </tcontrols:UniformGrid>
+                        <Grid Grid.Column="1" Background="White" Width="1" Margin="0,8,0,8" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind GradeLiteral}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentBrush}" />
+                    <Grid Grid.Row="2" Background="#4A5459">
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Padding="4" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" Foreground="White" />
+                    </Grid>
                 </Grid>
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
@@ -48,10 +105,6 @@
     </Page.Resources>
     <Grid x:Name="PageGrid">
         <!-- Head -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -65,7 +118,11 @@
 
                         <Setter Target="GradesPerSemesterPageHeader.Padding" Value="24 4 0 0"/>
 
-                        <Setter Target="ContentArea.Margin" Value="24"/>
+                        <Setter Target="ScrollContentArea.Margin" Value="24,0,24,0"/>
+
+
+                        <Setter Target="InProgressSubjectsGridView.HorizontalAlignment" Value="Left"/>
+                        <Setter Target="FinishedSubjectsGridView.HorizontalAlignment" Value="Left"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -79,14 +136,18 @@
 
                         <Setter Target="GradesPerSemesterPageHeader.Padding" Value="96 4 0 0"/>
 
-                        <Setter Target="ContentArea.Margin" Value="12"/>
+                        <Setter Target="ScrollContentArea.Margin" Value="12,0,12,0"/>
+
+                        <Setter Target="InProgressSubjectsGridView.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="FinishedSubjectsGridView.HorizontalAlignment" Value="Center"/>
+
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <!-- Body -->
-        <CommandBar x:Name="GradesPerSemesterCommandBar" Grid.Row="0" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+        <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}" Canvas.ZIndex="100">
 
             <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
 
@@ -96,28 +157,31 @@
 
         </CommandBar>
 
-        <ScrollViewer Grid.Row="1" x:Name="ContentArea" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
-            <StackPanel>
-                <TextBlock x:Uid="SubjectsGradesViewInProgressHeader" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                    <tcontrols:AdaptiveGridView ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" ItemTemplate="{StaticResource InProgressSubjectDataTemplate}">
+        <ScrollViewer x:Name="ContentArea" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
+            <Grid x:Name="ScrollContentArea" >
+                <StackPanel Padding="0,44,0,0">
+                    <TextBlock x:Uid="SubjectsGradesViewInProgressHeader" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left"/>
+                    <tcontrols:AdaptiveGridView x:Name="InProgressSubjectsGridView" ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" ItemTemplate="{StaticResource InProgressSubjectDataTemplate}">
                         <tcontrols:AdaptiveGridView.ItemContainerStyle>
                             <Style TargetType="FrameworkElement">
-                                <Setter Property="Margin" Value="8"/>
-                                <Setter Property="MinWidth" Value="300"/>
+                                <Setter Property="Margin" Value="4"/>
+
                             </Style>
                         </tcontrols:AdaptiveGridView.ItemContainerStyle>
                     </tcontrols:AdaptiveGridView>
-                <TextBlock x:Uid="SubjectsGradesViewFinishedHeader" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                <tcontrols:AdaptiveGridView ItemsSource="{x:Bind ViewModel.FinishedSubjectApproaches}" ItemTemplate="{StaticResource FinishedSubjectDataTemplate}">
-                    <tcontrols:AdaptiveGridView.ItemContainerStyle>
-                        <Style TargetType="FrameworkElement">
-                            <Setter Property="Margin" Value="8"/>
-                            <Setter Property="MinWidth" Value="350"/>
-                            <Setter Property="MinHeight" Value="100"/>
-                        </Style>
-                    </tcontrols:AdaptiveGridView.ItemContainerStyle>
-                </tcontrols:AdaptiveGridView>
-            </StackPanel>
+                    <TextBlock x:Uid="SubjectsGradesViewFinishedHeader" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left"/>
+
+                    <tcontrols:AdaptiveGridView x:Name="FinishedSubjectsGridView" ItemsSource="{x:Bind ViewModel.FinishedSubjectApproaches}" ItemTemplate="{StaticResource FinishedSubjectDataTemplate}">
+                        <tcontrols:AdaptiveGridView.ItemContainerStyle>
+                            <Style TargetType="FrameworkElement">
+                                <Setter Property="Margin" Value="4"/>
+
+                            </Style>
+                        </tcontrols:AdaptiveGridView.ItemContainerStyle>
+                    </tcontrols:AdaptiveGridView>
+                </StackPanel>
+            </Grid>
+
 
 
 

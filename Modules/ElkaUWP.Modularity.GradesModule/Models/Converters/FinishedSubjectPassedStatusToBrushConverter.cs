@@ -16,8 +16,7 @@ namespace ElkaUWP.Modularity.GradesModule.Models.Converters
             if (value is bool castedValue)
             {
                 SolidColorBrush returnedBrush;
-
-                return castedValue ? new SolidColorBrush(Color.FromArgb(100, 0, 204, 106)) : new SolidColorBrush(Color.FromArgb(100, 232, 17, 35));
+                return castedValue ? new SolidColorBrush(Color.FromArgb(100, 0, 204, 106)) : new SolidColorBrush(Color.FromArgb(100, 209, 52, 56));
             }
             else throw new ArgumentException(message: nameof(FinishedSubjectPassedStatusToBrushConverter) +
                                                       "doesn't support type" + targetType.ToString());

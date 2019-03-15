@@ -50,10 +50,16 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
                                     gradedSubjectsPerSemesterDictionary[key: coursesPerSemesterDictionaryKey]
                                         [key: courseEdition.CourseId].CourseGrades[0].Sub1.Passes;
 
-                            if (string.IsNullOrEmpty(value: gradeLiteral))
+                            if (string.IsNullOrEmpty(value: gradeLiteral) &&
+                                coursesPerSemesterDictionaryKey != highestSemesterAsString)
                                 gradeLiteral = "2";
+
                         }
                     }
+
+                    if (string.IsNullOrEmpty(value: gradeLiteral) &&
+                             coursesPerSemesterDictionaryKey == highestSemesterAsString)
+                        gradeLiteral = "⏳";
 
                     var staffHashSet = new HashSet<string>();
 
@@ -80,7 +86,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity
 
                     if(courseEdition.TermId == highestSemesterAsString)
                         InProgressSubjects.Add(item: tempSubject);
-                    else 
+                    else
                         FinishedSubjects.Add(item: tempSubject);
 
                 }
