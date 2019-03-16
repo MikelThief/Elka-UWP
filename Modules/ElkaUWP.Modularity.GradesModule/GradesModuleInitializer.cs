@@ -16,7 +16,8 @@ namespace ElkaUWP.Modularity.GradesModule
         /// <inheritdoc />
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<GradesPerSemesterView, GradesPerSemesterViewModel>(key: PageTokens.GradesPerSemesterView);
+            containerRegistry.RegisterForNavigation<GradesView, GradesViewModel>(key: PageTokens.GradesModuleGradesView);
+            containerRegistry.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.GradesModuleTestViewToken);
         }
 
         /// <inheritdoc />
