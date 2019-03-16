@@ -6,8 +6,9 @@
         public const string UsosStepViewToken = "UsosStepViewToken";
         public const string ShellViewToken = "ShellViewToken";
         public const string UserSummnaryView = "UserSummaryViewToken";
-        public const string TestViewToken = "TestViewToken";
+        public const string SampleViewToken = "SampleViewToken";
         public const string CalendarSummaryView = "CalendarSummaryViewToken";
-        public const string GradesPerSemesterView = "GradesPerSemesterViewToken";
+        public const string GradesModuleGradesView = "GradesModuleGradesViewToken";
+        public const string GradesModuleTestViewToken = "GradesModuleTestViewToken";
     }
 }

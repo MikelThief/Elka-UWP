@@ -22,12 +22,12 @@
                     Content="Grades"
                     Icon="Play"
                     IsSelected="True"
-                    Tag="GradesPerSemesterViewToken" />
+                    Tag="GradesModuleGradesViewToken" />
                 <NavigationViewItem
                     Content="TestView"
                     Icon="Play"
                     IsSelected="True"
-                    Tag="TestViewToken" />
+                    Tag="SampleViewToken" />
                 <NavigationViewItem
                     Content="LoginView"
                     Icon="Play"

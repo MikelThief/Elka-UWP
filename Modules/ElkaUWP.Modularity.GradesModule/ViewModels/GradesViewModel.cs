@@ -9,24 +9,28 @@ using ElkaUWP.DataLayer.Propertiary.Converters;
 using ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Nito.Mvvm;
 using Prism.Mvvm;
 using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.GradesModule.ViewModels
 {
-    public class GradesPerSemesterViewModel : BindableBase, INavigationAware
+    public class GradesViewModel : BindableBase, INavigationAware
     {
         private GradesService _gradesService;
 
         public ObservableCollection<SubjectApproach> InProgressSubjectApproaches = new ObservableCollection<SubjectApproach>();
         public ObservableCollection<SubjectApproach> FinishedSubjectApproaches = new ObservableCollection<SubjectApproach>();
 
-        public GradesPerSemesterViewModel(GradesService gradesService)
+        public AsyncCommand ViewTestsCommand { get; private set; }
+
+        public GradesViewModel(GradesService gradesService)
         {
             _gradesService = gradesService;
         }
         /// <inheritdoc />
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public async void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
@@ -64,22 +68,8 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             }
             converter.Flush();
 
-            FinishedSubjectApproaches.SortStable(comparison: SubjectTimeOfFinishComparison);
-        }
-
-        private int SubjectTimeOfFinishComparison(SubjectApproach x, SubjectApproach y)
-        {
-            var semesterLiteralConverter = new SemesterLiteralAndShortConverter();
-
-            var semesterX = semesterLiteralConverter.LiteralToShort(x.SemesterLiteral);
-
-            var semesterY = semesterLiteralConverter.LiteralToShort(y.SemesterLiteral);
-
-            if (semesterX > semesterY)
-                return -1;
-            if (semesterX == semesterY)
-                return 0;
-            return 1;
+            FinishedSubjectApproaches.SortStable(comparison: (x, y) => string.Compare(strA: x.Acronym, strB: y.Acronym,
+                comparisonType: StringComparison.CurrentCultureIgnoreCase));
         }
     }
 }

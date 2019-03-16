@@ -51,7 +51,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 return null;
             }
 
-            // intentional, as API returns a class with just a single element 'course_editions'
+            // intentional, as API returns a json with just a single element 'course_editions'
             return result.CourseEditions;
         }
 

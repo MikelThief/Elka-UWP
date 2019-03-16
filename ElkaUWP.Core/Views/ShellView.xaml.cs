@@ -46,11 +46,11 @@ namespace ElkaUWP.Core.Views
 
             switch (invokedItem?.Tag)
             {
-                case PageTokens.GradesPerSemesterView:
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesPerSemesterView);
+                case PageTokens.GradesModuleGradesView:
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesModuleGradesView);
                     break;
-                case "TestViewToken":
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.TestViewToken);
+                case "SampleViewToken":
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken);
                     break;
                 case "LoginToken":
                     ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken);
