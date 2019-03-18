@@ -12,6 +12,15 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
     public class TestViewModel : BindableBase, INavigationAware
     {
         private TestsService _testsService;
+        private INavigationService _navigationService;
+
+        private string _pageHeader;
+
+        public string PageHeader
+        {
+            get => _pageHeader;
+            set => SetProperty(storage: ref _pageHeader, value: value, nameof(PageHeader));
+        }
 
         public TestViewModel(TestsService testsService)
         {
@@ -32,7 +41,8 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         /// <inheritdoc />
         public void OnNavigatingTo(INavigationParameters parameters)
         {
-            
+            _navigationService = parameters.GetNavigationService();
+            PageHeader = (string) parameters["SubjectAcronym"];
         }
     }
 }
