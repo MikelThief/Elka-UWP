@@ -7,9 +7,13 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class UserTests
+    public class Group
     {
-        [JsonProperty("tests")]
-        public Dictionary<string, Dictionary<int, Node>> RootNodesPerSemester;
+        [JsonProperty("group_number")]
+        public int GroupNumber { get; set; }
+
+        [JsonProperty("course_unit_id")]
+        public int CourseUnitId { get; set; }
+
     }
 }

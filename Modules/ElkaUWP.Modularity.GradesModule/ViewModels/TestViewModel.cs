@@ -39,9 +39,19 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         }
 
         /// <inheritdoc />
-        public void OnNavigatingTo(INavigationParameters parameters)
+        public async void OnNavigatingTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
+
+            //await _testsService.GetUserTestsPerSemester();
+
+            //await _testsService.GetSubjectTestTree(nodeId: 61078);
+
+            await _testsService.GetUserPoints(new List<int>()
+            {
+                61091, 61092, 61093
+            });
+
             PageHeader = (string) parameters["SubjectAcronym"];
         }
     }

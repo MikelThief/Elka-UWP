@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Windows.Storage.Search;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class UserTests
+    public enum NodeType
     {
-        [JsonProperty("tests")]
-        public Dictionary<string, Dictionary<int, Node>> RootNodesPerSemester;
+        Root,
+        Folder,
+        Grade,
+        Task
     }
 }
