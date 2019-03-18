@@ -19,7 +19,6 @@ namespace ElkaUWP.Core.Views
     public sealed partial class ShellView : Page
     {
         private ShellViewModel ViewModel => DataContext as ShellViewModel;
-
         public ShellView()
         {
             InitializeComponent();
@@ -62,6 +61,11 @@ namespace ElkaUWP.Core.Views
                     ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView);
                     break;
             }
+        }
+
+        private void Nv_OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            ViewModel.RequestInternalNavigation("../");
         }
     }
 }

@@ -39,15 +39,21 @@ namespace ElkaUWP.Core.ViewModels
         public async void RequestExternalNavigation(string navigationPath, INavigationParameters parameters = null)
         {
             if(parameters is null)
-                await _externalNavigationService.NavigateAsync(name: navigationPath);
-            else await _externalNavigationService.NavigateAsync(name: navigationPath, parameters: parameters);
+                await _externalNavigationService.NavigateAsync(name: "/" + navigationPath);
+            else await _externalNavigationService.NavigateAsync(name: "/" + navigationPath, parameters: parameters);
         }
 
         public async void RequestInternalNavigation(string navigationPath, INavigationParameters parameters = null)
         {
+            if (navigationPath == "../" && _internalNavigationService.CanGoBack())
+            {
+                await _internalNavigationService.GoBackAsync();
+                return;
+            }
+
             if (parameters is null)
-                await _internalNavigationService.NavigateAsync(name: navigationPath);
-            else await _internalNavigationService.NavigateAsync(name: navigationPath, parameters: parameters);
+                await _internalNavigationService.NavigateAsync(name: "/" + navigationPath);
+            else await _internalNavigationService.NavigateAsync(name: "/" + navigationPath, parameters: parameters);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

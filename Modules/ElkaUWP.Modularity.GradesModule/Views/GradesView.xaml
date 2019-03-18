@@ -161,7 +161,7 @@
             <Grid x:Name="ScrollContentArea" >
                 <StackPanel Padding="0,44,0,0">
                     <TextBlock x:Uid="SubjectsGradesViewInProgressHeader" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left"/>
-                    <tcontrols:AdaptiveGridView x:Name="InProgressSubjectsGridView" ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" ItemTemplate="{StaticResource InProgressSubjectDataTemplate}">
+                    <tcontrols:AdaptiveGridView x:Name="InProgressSubjectsGridView" SelectionMode="Single" ItemClickCommand="{x:Bind ViewModel.ShowTestsCommand}" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" ItemTemplate="{StaticResource InProgressSubjectDataTemplate}">
                         <tcontrols:AdaptiveGridView.ItemContainerStyle>
                             <Style TargetType="FrameworkElement">
                                 <Setter Property="Margin" Value="4"/>
