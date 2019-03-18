@@ -21,7 +21,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         }
 
-        public async Task<Dictionary<string, Dictionary<int, TestNode>>> GetUserTestsPerSemester()
+        public async Task<Dictionary<string, Dictionary<int, Node>>> GetUserTestsPerSemester()
         {
             var request = (Container.Resolve<CrtestsParticipantRequestWrapper>());
             var requestString = request.GetRequestString();
@@ -48,5 +48,89 @@ namespace ElkaUWP.DataLayer.Usos.Services
             // intentional, as API returns a json with just a single element 'tests'
             return result.RootNodesPerSemester;
         }
+
+        public async Task<Node> GetSubjectTestTree(int nodeId)
+        {
+            var request = (Container.Resolve<CrtestsNodeRequestWrapper>());
+            var requestString = request.GetRequestString(nodeId: nodeId);
+            Node result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<Node>(value: json);
+            }
+            catch (WebException wexc)
+            {
+                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                return null;
+            }
+
+            return result;
+        }
+
+        public async Task<List<UserPoint>> GetUserPoints(params int[] nodeIds)
+        {
+            var request = (Container.Resolve<CrtestsUserPointsRequestWrapper>());
+            var requestString = request.GetRequestString(nodeIds: nodeIds);
+            List<UserPoint> result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<List<UserPoint>>(value: json);
+            }
+            catch (WebException wexc)
+            {
+                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                return null;
+            }
+
+            return result;
+        }
+
+
+        public async Task<List<UserPoint>> GetUserPoints(List<int> nodeIds)
+        {
+            var request = (Container.Resolve<CrtestsUserPointsRequestWrapper>());
+            var requestString = request.GetRequestString(nodeIds: nodeIds);
+            List<UserPoint> result;
+            var webClient = new WebClient();
+
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+
+                result = JsonConvert.DeserializeObject<List<UserPoint>>(value: json);
+            }
+            catch (WebException wexc)
+            {
+                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                return null;
+            }
+
+            return result;
+        }
+
+
     }
 }
