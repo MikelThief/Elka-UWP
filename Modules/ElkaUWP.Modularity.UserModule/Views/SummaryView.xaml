@@ -23,22 +23,22 @@
 
     <VisualStateManager.VisualStateGroups>
         <VisualStateGroup>
-            
+
             <VisualState x:Name="LargeState">
                 <VisualState.StateTriggers>
                     <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
-               
+
             </VisualState>
-            
-            
+
+
             <VisualState x:Name="SmallState">
                 <VisualState.StateTriggers>
                     <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
-                
+
             </VisualState>
-            
+
         </VisualStateGroup>
     </VisualStateManager.VisualStateGroups>
 
@@ -51,38 +51,39 @@
         <CommandBar Grid.Row="0"/>
 
         <controls:AdaptiveGridView Grid.Row="1" OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
-            <controls:AdaptiveGridView.Header>
-                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20">
-                <controls:WrapPanel x:Name="HeaderStackPanel" Orientation="Horizontal" HorizontalSpacing="30" MinHeight="300" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Rectangle Width="150" Height="200" Fill="Aqua"/>
-                    <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                            <TextBlock x:Name="NameAndSurname" Text="{x:Bind ViewModel.NameAndSurname}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource HeaderTextBlockStyle}"/>
-                            <TextBlock x:Name="IndexNo" Text="{x:Bind ViewModel.IndexNo}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                            <TextBlock x:Name="Email" Text="{x:Bind ViewModel.Email}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" />
+            <controls:AdaptiveGridView.Header >
+                <controls:ScrollHeader Mode="Sticky" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="#FF1B90F7">
+                    <controls:WrapPanel x:Name="HeaderStackPanel"  Orientation="Horizontal" HorizontalSpacing="30" MinHeight="220" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Transparent">
+                        <controls:ImageEx Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}" CacheMode="BitmapCache" Width="180" Height="200"/>
+                        <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="NameAndSurname" Text="{x:Bind ViewModel.NameAndSurname,Mode=OneWay}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            <TextBlock x:Name="IndexNo" Text="{x:Bind ViewModel.IndexNo, Mode=OneWay}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock x:Name="Email" Text="{x:Bind ViewModel.Email, Mode=OneWay}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubtitleTextBlockStyle}" />
                         </Grid>
-                </controls:WrapPanel>
-                   
+                    </controls:WrapPanel>
 
-            </controls:ScrollHeader>
-         </controls:AdaptiveGridView.Header>
-            
+
+                </controls:ScrollHeader>
+            </controls:AdaptiveGridView.Header>
+
             <controls:AdaptiveGridView.ItemContainerStyle>
                 <Style TargetType="FrameworkElement">
-                    <Setter Property="Margin" Value="40,0,0,40" />
+                    <Setter Property="Margin" Value="10,0,10,0" />
                     <Setter Property="MinWidth" Value="200"/>
+
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>
 
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="entities:UserInfoElement" >
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{x:Bind Header}" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <TextBlock Text="{x:Bind Value}" Style="{StaticResource BodyTextBlockStyle}" />
+                        <TextBlock Text="{x:Bind Header}" Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,0,10,0" />
+                        <TextBlock Text="{x:Bind Value}" Style="{StaticResource BodyTextBlockStyle}" Padding="10,0,10,0"/>
                     </StackPanel>
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
@@ -94,5 +95,5 @@
     </Grid>
 
 
-    
+
 </Page>

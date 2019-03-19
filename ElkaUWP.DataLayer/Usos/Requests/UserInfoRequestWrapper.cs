@@ -21,7 +21,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "last_name",
             "sex",
             "email",
-            "photo_urls",
+            "photo_urls[200x250]",
             "student_number",
                     
         };

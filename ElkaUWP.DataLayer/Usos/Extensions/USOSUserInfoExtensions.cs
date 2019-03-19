@@ -32,12 +32,13 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
                 Value = info.Email
             };
             list.Add(email);
-            var sex = new UserInfoElement
+          /*  var sex = new UserInfoElement
             {
                 Header = nameof(info.Sex) + "Key",
                 Value = info.Sex
             };
             list.Add(sex);
+            */
             var studentNubmer = new UserInfoElement
             {
                 Header = nameof(info.StudentNumber) + "Key",
@@ -56,6 +57,12 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
                 Value = info.MiddleName
             };
             list.Add(middleName);
+            var photoUri = new UserInfoElement
+            {
+                Header = nameof(info.PhotoUrls) + "Key",
+                Value = info.PhotoUrls.PhotoUri.ToString()
+            };
+            list.Add(photoUri);
 
 
             return list;
