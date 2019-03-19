@@ -34,7 +34,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
             {
                 responseForInfo = await webClient.DownloadStringTaskAsync(address: InfoUri);
                 var result = JsonConvert.DeserializeObject<USOSUserInfo>(value: responseForInfo);
-                infoList = USOSUserInfoExtensions.UserInfoElementList(result);
+                infoList = result.UserInfoElementList();
             }
             catch (WebException wexc)
             {

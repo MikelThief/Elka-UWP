@@ -41,8 +41,8 @@ namespace ElkaUWP.DataLayer.Usos.Entities
     }
     public partial class PhotoUrls
     {
-        [JsonProperty("100x100")]
-        public Uri The100X100 { get; set; }
+        [JsonProperty("200x250")]
+        public Uri PhotoUri { get; set; }
     }
 
     

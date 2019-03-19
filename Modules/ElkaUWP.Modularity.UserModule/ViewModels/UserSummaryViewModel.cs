@@ -26,12 +26,14 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         
         public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
         private string _nameAndSurname;
-        public string NameAndSurname { get => _nameAndSurname; set => SetProperty(storage:ref _nameAndSurname, value: value, nameof(NameAndSurname)); }
+        public string NameAndSurname { get => _nameAndSurname;
+            set => SetProperty(storage:ref _nameAndSurname, value: value, nameof(NameAndSurname)); }
         public string _indexNo;
         public string IndexNo { get => _indexNo; set => SetProperty(storage: ref _indexNo, value: value, nameof(IndexNo)); }
         public string _email;
         public string Email { get => _email; set => SetProperty(storage: ref _email, value: value, nameof(Email)); }
-
+        public Uri PhotoUri { get => _photoUri; set => SetProperty(storage: ref _photoUri, value: value, nameof(PhotoUri)); }
+        private Uri _photoUri;
         public UserSummaryViewModel(UserService userService)
         {
             _userService = userService;
@@ -42,21 +44,21 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
             var result = await _userService.GetUserInformation();
-
-            NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value;
-            IndexNo = result.Single(x => x.Header == "StudentNumberKey").Value;
-            Email = result.Single(x => x.Header == "EmailKey").Value;
+            
+            NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "MiddleNameKey").Value+ " " + result.Single(x => x.Header == "LastNameKey").Value;
+            IndexNo = "Index no:" + result.Single(x => x.Header == "StudentNumberKey").Value;
+            Email = "Email: " + result.Single(x => x.Header == "EmailKey").Value;
+            PhotoUri = new Uri(result.Single(x => x.Header == "PhotoUrlsKey")?.Value);
 
             foreach(var item in result)
             {
                 
                 item.Header = _resourceLoader.GetString(item.Header);
-                if (string.IsNullOrEmpty(item.Header))
-                    item.Header = "test";
+                
                 UserInfoElement.Add(item);
         
             }
-            Console.WriteLine("mrem"); 
+            
 
         }
 
