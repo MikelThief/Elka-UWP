@@ -52,9 +52,9 @@
 
         <controls:AdaptiveGridView Grid.Row="1" OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
             <controls:AdaptiveGridView.Header >
-                <controls:ScrollHeader Mode="Sticky" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="#FF1B90F7">
+                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="#FF1B90F7">
                     <controls:WrapPanel x:Name="HeaderStackPanel"  Orientation="Horizontal" HorizontalSpacing="30" MinHeight="220" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Transparent">
-                        <controls:ImageEx Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}" CacheMode="BitmapCache" Width="180" Height="200"/>
+                       <controls:ImageEx Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}" CacheMode="BitmapCache" Width="180" Height="200" />
                         <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -74,7 +74,7 @@
             <controls:AdaptiveGridView.ItemContainerStyle>
                 <Style TargetType="FrameworkElement">
                     <Setter Property="Margin" Value="10,0,10,0" />
-                    <Setter Property="MinWidth" Value="200"/>
+                    <Setter Property="MinWidth" Value="250"/>
 
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>

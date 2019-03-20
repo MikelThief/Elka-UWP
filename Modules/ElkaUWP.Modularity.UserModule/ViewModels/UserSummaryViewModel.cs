@@ -44,19 +44,23 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
             var result = await _userService.GetUserInformation();
-            
+
+            var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
+            localSettingsContainer.Values["USOSid"] = result.Single(x => x.Header == "IdKey").Value.ToString();
+
             NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "MiddleNameKey").Value+ " " + result.Single(x => x.Header == "LastNameKey").Value;
-            IndexNo = "Index no:" + result.Single(x => x.Header == "StudentNumberKey").Value;
+            IndexNo = "Index no: " + result.Single(x => x.Header == "StudentNumberKey").Value;
             Email = "Email: " + result.Single(x => x.Header == "EmailKey").Value;
             PhotoUri = new Uri(result.Single(x => x.Header == "PhotoUrlsKey")?.Value);
 
-            foreach(var item in result)
+         
+
+            foreach (var item in result.Where(x => x.Header!="PhotoUrlsKey" && x.Value!=null && x.Value!=""))
             {
+                   
+                    item.Header = _resourceLoader.GetString(item.Header);
+                    UserInfoElement.Add(item);
                 
-                item.Header = _resourceLoader.GetString(item.Header);
-                
-                UserInfoElement.Add(item);
-        
             }
             
 
