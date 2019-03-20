@@ -35,7 +35,7 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
                     serializer.Serialize(jsonWriter: writer, "fld");
                     return;
                 default:
-                    throw new JsonSerializationException(message: "Converter" + nameof(JsonSubjectPassTypeConverter) + "could not handle the value: " + value);
+                    throw new JsonSerializationException(message: "Converter" + nameof(JsonNodeTypeConverter) + "could not handle the value: " + value);
             }
         }
 
