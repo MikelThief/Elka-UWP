@@ -8,6 +8,14 @@
     <unity:PrismApplication.Resources>
         <ResourceDictionary>
 
+            <!-- Fix for NavigationView Expanded Pane Background 1809 SDK -->
+            <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                          BackgroundSource="Backdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity=".5"/>
+            <AcrylicBrush x:Key="NavigationViewTopPaneBackground"
+                          BackgroundSource="Backdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity=".5"/>
+            <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+                          BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemChromeMediumColor}" TintOpacity=".7"/>
+
             <!--  window width adaptive snap points  -->
             <x:Double x:Key="MinWindowSnapPoint">0</x:Double>
             <x:Double x:Key="MediumWindowSnapPoint">641</x:Double>
