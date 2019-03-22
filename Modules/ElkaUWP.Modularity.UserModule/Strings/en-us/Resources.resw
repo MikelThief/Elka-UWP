@@ -132,6 +132,9 @@
   <data name="MiddleNameKey" xml:space="preserve">
     <value>Middle Name</value>
   </data>
+  <data name="PeselKey" xml:space="preserve">
+    <value>Pesel</value>
+  </data>
   <data name="PhotoUriKey" xml:space="preserve">
     <value>Photo Uri</value>
   </data>
@@ -140,5 +143,8 @@
   </data>
   <data name="StudentNumberKey" xml:space="preserve">
     <value>Student number</value>
+  </data>
+  <data name="StudentStatusKey" xml:space="preserve">
+    <value>Student status</value>
   </data>
 </root>

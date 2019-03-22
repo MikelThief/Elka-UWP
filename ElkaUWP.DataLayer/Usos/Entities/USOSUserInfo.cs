@@ -37,7 +37,13 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty("middle_names")]
         public string MiddleName { get; set; }
 
- 
+        [JsonProperty("student_status")]
+        public int StudentStatus { get; set; }
+
+        [JsonProperty("pesel")]
+        public string Pesel { get; set; }
+
+        
     }
     public partial class PhotoUrls
     {

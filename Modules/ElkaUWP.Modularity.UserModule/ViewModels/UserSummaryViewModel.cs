@@ -53,9 +53,34 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
             Email = "Email: " + result.Single(x => x.Header == "EmailKey").Value;
             PhotoUri = new Uri(result.Single(x => x.Header == "PhotoUrlsKey")?.Value);
 
-         
+            //Sex
+            if(result.Single(x => x.Header=="SexKey").Value=="F")
+            {
+                result.Single(x => x.Header == "SexKey").Value = "Female";
+            }
+            if (result.Single(x => x.Header == "SexKey").Value == "M")
+            {
+                result.Single(x => x.Header == "SexKey").Value = "Male";
+            }
 
-            foreach (var item in result.Where(x => x.Header!="PhotoUrlsKey" && x.Value!=null && x.Value!=""))
+            //Student_status
+
+            if (result.Single(x => x.Header == "StudentStatusKey").Value == "0")
+            {
+                result.Single(x => x.Header == "StudentStatusKey").Value = "Not a student";
+            }
+            if (result.Single(x => x.Header == "StudentStatusKey").Value == "1")
+            {
+                result.Single(x => x.Header == "StudentStatusKey").Value = "Inactive student";
+            }
+            if (result.Single(x => x.Header == "StudentStatusKey").Value == "2")
+            {
+                result.Single(x => x.Header == "StudentStatusKey").Value = "Active student";
+            }
+
+
+
+            foreach (var item in result.Where(x => x.Header!="PhotoUrlsKey" && x.Value!=null && x.Value!="" && x.Header!="FirstNameKey" && x.Header!="LastNameKey" && x.Header!="EmailKey" && x.Header!="StudentNumberKey"))
             {
                    
                     item.Header = _resourceLoader.GetString(item.Header);
