@@ -129,6 +129,7 @@
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
+    <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
