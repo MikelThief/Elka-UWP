@@ -7,10 +7,10 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class UserPoint
+    public class TestPoint
     {
         [JsonProperty("node_id")]
-        public long NodeId { get; set; }
+        public int NodeId { get; set; }
 
         [JsonProperty("last_changed")]
         public DateTime LastChanged { get; set; }
@@ -22,7 +22,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         public string Comment { get; set; }
 
         [JsonProperty("points")]
-        public double Points { get; set; }
+        public float Points { get; set; }
 
         [JsonProperty("student_id")]
         public int StudentId { get; set; }

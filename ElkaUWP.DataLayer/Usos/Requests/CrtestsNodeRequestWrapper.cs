@@ -25,6 +25,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "type",
             "visible_for_students",
             "subnodes",
+            "order"
         };
 
         /// <inheritdoc />
