@@ -17,7 +17,6 @@
             IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
             IsBackButtonVisible="Auto"
             BackRequested="Nv_OnBackRequested"
-            PaneDisplayMode="Auto"
             ItemInvoked="Nv_ItemInvoked"
             Loaded="Nv_Loaded">
             <NavigationView.MenuItems>
