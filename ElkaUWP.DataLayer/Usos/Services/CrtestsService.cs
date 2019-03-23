@@ -13,10 +13,10 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class TestsService : UsosServiceBase
+    public class CrtestsService : UsosServiceBase
     {
         /// <inheritdoc />
-        public TestsService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
+        public CrtestsService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
         {
 
         }
@@ -27,7 +27,6 @@ namespace ElkaUWP.DataLayer.Usos.Services
             var requestString = request.GetRequestString();
             UserTests result;
             var webClient = new WebClient();
-
             try
             {
                 var json = await webClient.DownloadStringTaskAsync(address: requestString);
