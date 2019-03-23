@@ -76,18 +76,18 @@ namespace ElkaUWP.DataLayer.Usos.Services
             return result;
         }
 
-        public async Task<List<UserPoint>> UserPointsAsync(params int[] nodeIds)
+        public async Task<List<TestPoint>> UserPointsAsync(params int[] nodeIds)
         {
             var request = (Container.Resolve<CrtestsUserPointsRequestWrapper>());
             var requestString = request.GetRequestString(nodeIds: nodeIds);
-            List<UserPoint> result;
+            List<TestPoint> result;
             var webClient = new WebClient();
 
             try
             {
                 var json = await webClient.DownloadStringTaskAsync(address: requestString);
 
-                result = JsonConvert.DeserializeObject<List<UserPoint>>(value: json);
+                result = JsonConvert.DeserializeObject<List<TestPoint>>(value: json);
             }
             catch (WebException wexc)
             {
@@ -104,18 +104,18 @@ namespace ElkaUWP.DataLayer.Usos.Services
         }
 
 
-        public async Task<List<UserPoint>> UserPointsAsync(List<int> nodeIds)
+        public async Task<List<TestPoint>> UserPointsAsync(IEnumerable<int> nodeIds)
         {
             var request = (Container.Resolve<CrtestsUserPointsRequestWrapper>());
-            var requestString = request.GetRequestString(nodeIds: nodeIds);
-            List<UserPoint> result;
+            var requestString = request.GetRequestString(nodeIds: nodeIds.ToList());
+            List<TestPoint> result;
             var webClient = new WebClient();
 
             try
             {
                 var json = await webClient.DownloadStringTaskAsync(address: requestString);
 
-                result = JsonConvert.DeserializeObject<List<UserPoint>>(value: json);
+                result = JsonConvert.DeserializeObject<List<TestPoint>>(value: json);
             }
             catch (WebException wexc)
             {

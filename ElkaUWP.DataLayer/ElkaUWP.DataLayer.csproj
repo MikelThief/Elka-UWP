@@ -127,6 +127,8 @@
     <Compile Include="Propertiary\Converters\EntityToEntity\UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter.cs" />
     <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
+    <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
+    <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
@@ -149,7 +151,7 @@
     <Compile Include="Usos\Entities\IssuerGrades.cs" />
     <Compile Include="Usos\Entities\Session.cs" />
     <Compile Include="Usos\Entities\SubjectPassType.cs" />
-    <Compile Include="Usos\Entities\UserPoint.cs" />
+    <Compile Include="Usos\Entities\TestPoint.cs" />
     <Compile Include="Usos\Entities\UserTests.cs" />
     <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
     <Compile Include="Usos\Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />

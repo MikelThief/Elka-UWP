@@ -140,6 +140,7 @@
     <Compile Include="Extensions\SettingsStorageExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\BrushFromColorHelper.cs" />
+    <Compile Include="Helpers\CultureInfoHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\ResourceLoaderHelper.cs" />
