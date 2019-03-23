@@ -11,7 +11,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
 {
     public class TestViewModel : BindableBase, INavigationAware
     {
-        private TestsService _testsService;
+        private CrstestsService CrstestsService;
         private INavigationService _navigationService;
 
         private string _pageHeader;
@@ -22,9 +22,9 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             set => SetProperty(storage: ref _pageHeader, value: value, nameof(PageHeader));
         }
 
-        public TestViewModel(TestsService testsService)
+        public TestViewModel(CrstestsService crstestsService)
         {
-            _testsService = testsService;
+            CrstestsService = crstestsService;
         }
         /// <inheritdoc />
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -43,11 +43,11 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         {
             _navigationService = parameters.GetNavigationService();
 
-            //await _testsService.GetUserTestsPerSemester();
+            //await CrstestsService.GetUserTestsPerSemester();
 
-            //await _testsService.GetSubjectTestTree(nodeId: 61078);
+            //await CrstestsService.GetSubjectTestTree(nodeId: 61078);
 
-            await _testsService.GetUserPoints(new List<int>()
+            await CrstestsService.UserPointsAsync(new List<int>()
             {
                 61091, 61092, 61093
             });
