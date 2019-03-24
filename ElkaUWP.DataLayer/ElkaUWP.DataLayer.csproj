@@ -124,7 +124,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Propertiary\Converters\EntityToEntity\UsosSubjectEntitiesToPropertiarySubjectEntitiesConverter.cs" />
     <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
