@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography.Core;
 using ColorCode.Common;
 using ElkaUWP.DataLayer.Propertiary.Converters;
-using ElkaUWP.DataLayer.Propertiary.Converters.EntityToEntity;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
 using ElkaUWP.DataLayer.Usos.Entities;
