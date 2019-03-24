@@ -12,17 +12,20 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    public class GradedSubjectsPerSemesterRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    /// <summary>
+    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/examrep/exam
+    /// </summary>
+    public class CoursesUserRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "examrep/user2";
+        private const string _destination = "courses/user";
 
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id|type_id|type_description|sessions[number|issuer_grades[value_symbol|counts_into_average|passes]]|grades_distribution"
+            "course_editions[course_id|course_name|coordinators|lecturers|profile_url|term_id|passing_status]"
         };
 
         /// <inheritdoc />
-        public GradedSubjectsPerSemesterRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CoursesUserRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
@@ -48,7 +51,8 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()
             {
-                { "fields", fieldsString }
+                { "fields", fieldsString },
+                { "active_terms_only", false.ToString().ToLower() }
             };
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);

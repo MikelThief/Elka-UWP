@@ -19,11 +19,11 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
         // keeps ids of nodes collected while running Get()
         private HashSet<int> CollectedNodeIds = new HashSet<int>();
 
-        private CrstestsService UsosService;
+        private CrstestsService _crstestsService;
 
-        public PartialGradesService(CrstestsService usosService)
+        public PartialGradesService(CrstestsService crstestsService)
         {
-            UsosService = usosService;
+            _crstestsService = crstestsService;
         }
 
         public async Task<PartialGradesTree> GetAsync(string semesterLiteral, string subjectId)
@@ -32,7 +32,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             CollectedNodeIds.Clear();
 
             // Step 1 - get all user's tests
-            var testStubs = await UsosService.ParticipantAsync().ConfigureAwait(continueOnCapturedContext: false);
+            var testStubs = await _crstestsService.ParticipantAsync().ConfigureAwait(continueOnCapturedContext: false);
 
             var partialGradesTree = new PartialGradesTree();
             partialGradesTree.Nodes = new List<PartialGradeNode>();
@@ -54,7 +54,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             // Step 2 - download and convert data to proprietary structures
             foreach (var subjectRootNode in subjectRootNodes)
             {
-                var subTreeTask = UsosService.NodeAsync(nodeId: subjectRootNode.NodeId);
+                var subTreeTask = _crstestsService.NodeAsync(nodeId: subjectRootNode.NodeId);
 
                 var partialGradeRootNode = new PartialGradeNode();
 
@@ -64,7 +64,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             }
 
             // Step 3 - download points for collected nodes points to nodes
-            var pointsList = await UsosService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(continueOnCapturedContext: false);
+            var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(continueOnCapturedContext: false);
 
             foreach (var partialGradeNode in partialGradesTree.Nodes)
                 AssignPointsToPartialGradeNodeRecursive(partialGradeNode, points: pointsList);

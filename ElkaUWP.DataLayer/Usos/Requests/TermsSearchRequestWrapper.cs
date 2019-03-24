@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,16 @@ using OAuthClient;
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
     /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/crstests/#participant
+    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/terms/#search
     /// </summary>
-    public class CrtestsParticipantRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class TermsSearchRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "crstests/participant";
-
+        private const string _destination = "terms/search";
         /// <inheritdoc />
-        public CrtestsParticipantRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public TermsSearchRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -42,7 +42,22 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         /// <inheritdoc />
         public override string GetRequestString()
         {
-            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery();
+            var additionalParameters = new NameValueCollection()
+            {
+                { "min_finish_date", "2000-01-01" },
+            };
+
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+        }
+        public string GetRequestString(DateTime maximumStartDate)
+        {
+            var additionalParameters = new NameValueCollection()
+            {
+                { "min_finish_date", "2000-01-01" },
+                { "max_start_date", maximumStartDate.ToString("yyyy-MM-dd") }
+            };
+
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
     }
 }
