@@ -23,7 +23,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<Dictionary<string, Dictionary<int, Node>>> ParticipantAsync()
         {
-            var request = (Container.Resolve<CrtestsParticipantRequestWrapper>());
+            var request = (Container.Resolve<CrstestsParticipantRequestWrapper>());
             var requestString = request.GetRequestString();
             UserTests result;
             var webClient = new WebClient();
@@ -51,7 +51,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<Node> NodeAsync(int nodeId)
         {
-            var request = (Container.Resolve<CrtestsNodeRequestWrapper>());
+            var request = (Container.Resolve<CrstestsNodeRequestWrapper>());
             var requestString = request.GetRequestString(nodeId: nodeId);
             Node result;
             var webClient = new WebClient();
@@ -78,7 +78,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<List<TestPoint>> UserPointsAsync(params int[] nodeIds)
         {
-            var request = (Container.Resolve<CrtestsUserPointsRequestWrapper>());
+            var request = (Container.Resolve<CrstestsUserPointsRequestWrapper>());
             var requestString = request.GetRequestString(nodeIds: nodeIds);
             List<TestPoint> result;
             var webClient = new WebClient();
@@ -106,7 +106,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<List<TestPoint>> UserPointsAsync(IEnumerable<int> nodeIds)
         {
-            var request = (Container.Resolve<CrtestsUserPointsRequestWrapper>());
+            var request = (Container.Resolve<CrstestsUserPointsRequestWrapper>());
             var requestString = request.GetRequestString(nodeIds: nodeIds.ToList());
             List<TestPoint> result;
             var webClient = new WebClient();

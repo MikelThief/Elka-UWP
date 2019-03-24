@@ -12,7 +12,7 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    public class UserGradesPerSemesterRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class GradesTerms2RequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "grades/terms2";
 
@@ -68,7 +68,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "2030Z",
         };
 
-        public UserGradesPerSemesterRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public GradesTerms2RequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());

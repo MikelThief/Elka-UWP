@@ -12,27 +12,20 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    public class CrtestsNodeRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class ExamrepUser2RequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "crstests/node";
+        private const string _destination = "examrep/user2";
 
-        // Fields index to be received in response
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "node_id",
-            "parent_id",
-            "name",
-            "type",
-            "visible_for_students",
-            "subnodes",
-            "order"
+            "id|type_id|type_description|sessions[number|issuer_grades[value_symbol|counts_into_average|passes]]|grades_distribution"
         };
 
         /// <inheritdoc />
-        public CrtestsNodeRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public ExamrepUser2RequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -52,21 +45,13 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         /// <inheritdoc />
         public override string GetRequestString()
         {
-            throw new InvalidOperationException("Not supported by USOS API. Call requires at least one node id.");
-        }
-
-        public string GetRequestString(int nodeId)
-        {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()
             {
-                { "fields", fieldsString },
-                { "recursive", true.ToString().ToLower() },
-                { "node_id", nodeId.ToString() }
+                { "fields", fieldsString }
             };
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
     }
-   
 }

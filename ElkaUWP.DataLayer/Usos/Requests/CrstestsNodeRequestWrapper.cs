@@ -12,17 +12,27 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/terms/#search
-    /// </summary>
-    public class SemestersHistoryRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class CrstestsNodeRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "terms/search";
+        private const string _destination = "crstests/node";
+
+        // Fields index to be received in response
+        private readonly IReadOnlyCollection<string> _fields = new List<string>()
+        {
+            "node_id",
+            "parent_id",
+            "name",
+            "type",
+            "visible_for_students",
+            "subnodes",
+            "order"
+        };
+
         /// <inheritdoc />
-        public SemestersHistoryRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CrstestsNodeRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -42,22 +52,21 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         /// <inheritdoc />
         public override string GetRequestString()
         {
-            var additionalParameters = new NameValueCollection()
-            {
-                { "min_finish_date", "2000-01-01" },
-            };
-
-            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+            throw new InvalidOperationException("Not supported by USOS API. Call requires at least one node id.");
         }
-        public string GetRequestString(DateTime maximumStartDate)
+
+        public string GetRequestString(int nodeId)
         {
+            var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()
             {
-                { "min_finish_date", "2000-01-01" },
-                { "max_start_date", maximumStartDate.ToString("yyyy-MM-dd") }
+                { "fields", fieldsString },
+                { "recursive", true.ToString().ToLower() },
+                { "node_id", nodeId.ToString() }
             };
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
     }
+   
 }

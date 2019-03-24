@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,22 +12,17 @@ using OAuthClient;
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
     /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/examrep/exam
+    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/crstests/#participant
     /// </summary>
-    public class UserCoursesPerSemesterRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class CrstestsParticipantRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "courses/user";
-
-        private readonly IReadOnlyCollection<string> _fields = new List<string>()
-        {
-            "course_editions[course_id|course_name|coordinators|lecturers|profile_url|term_id|passing_status]"
-        };
+        private const string _destination = "crstests/participant";
 
         /// <inheritdoc />
-        public UserCoursesPerSemesterRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CrstestsParticipantRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
+                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
@@ -48,14 +42,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         /// <inheritdoc />
         public override string GetRequestString()
         {
-            var fieldsString = string.Join(separator: "%7C", values: _fields);
-            var additionalParameters = new NameValueCollection()
-            {
-                { "fields", fieldsString },
-                { "active_terms_only", false.ToString().ToLower() }
-            };
-
-            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery();
         }
     }
 }

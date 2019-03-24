@@ -22,11 +22,11 @@ namespace ElkaUWP.Modularity.GradesModule.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GradesView : Page
+    public sealed partial class FinalGradesView : Page
     {
-        private GradesViewModel ViewModel => DataContext as GradesViewModel;
+        private FinalGradesViewModel ViewModel => DataContext as FinalGradesViewModel;
 
-        public GradesView()
+        public FinalGradesView()
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
