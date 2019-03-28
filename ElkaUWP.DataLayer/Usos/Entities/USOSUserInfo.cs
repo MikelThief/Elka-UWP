@@ -62,7 +62,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         public string BirthDate { get; set; }
 
         [JsonProperty("postal_addresses")]
-        public List<PostalAdresses> {get;set;}
+        public List<PostalAdresses> PostalAddresses {get;set;}
         
     }
     public partial class PhotoUrls
