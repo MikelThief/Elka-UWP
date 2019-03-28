@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ElkaUWP.DataLayer.Usos.Converters.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,8 +62,8 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty("birth_date")]
         public string BirthDate { get; set; }
 
-        [JsonProperty("postal_addresses")]
-        public List<PostalAdresses> PostalAddresses {get;set;}
+        [JsonProperty("postal_addresses"), JsonConverter(converterType:typeof(JsonPostalAddressesConverter)) ]
+        public PostalAddressesContainer PostalAddressesList {get;set;}
         
     }
     public partial class PhotoUrls
