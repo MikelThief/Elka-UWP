@@ -10,7 +10,7 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
 {
     class JsonPostalAddressesConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType) => objectType == typeof(PostalAddresses) || objectType == typeof(PostalAddresses?);
+        public override bool CanConvert(Type objectType) => objectType == typeof(PostalAddressesType) || objectType == typeof(PostalAddressesType?);
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
@@ -20,11 +20,11 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
             switch(value)
             {
                 case "type":
-                    return PostalAddresses
+                    return PostalAddressesType.type;
                 case "address":
-                    return PostalAddresses.addresses;
+                    return PostalAddressesType.address;
                 case "type_name":
-                    return PostalAddresses.type_name;
+                    return PostalAddressesType.type_name;
                 default:
                     return new JsonSerializationException(message: "Converter" + nameof(JsonPostalAddressesConverter) + "could not handle the value" + value);
             }
