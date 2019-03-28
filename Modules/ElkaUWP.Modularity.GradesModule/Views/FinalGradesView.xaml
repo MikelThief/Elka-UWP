@@ -147,7 +147,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <!-- Body -->
-        <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}" Canvas.ZIndex="100">
+        <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Canvas.ZIndex="100">
 
             <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
 
