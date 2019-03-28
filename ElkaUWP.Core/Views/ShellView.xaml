@@ -9,28 +9,28 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
     xmlns:helpers="using:ElkaUWP.Core.Helpers"
-    mc:Ignorable="d">
-
-    <Grid>
-        <NavigationView
-            x:Name="Nv"
-            IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
-            IsBackButtonVisible="Auto"
-            BackRequested="Nv_OnBackRequested"
-            ItemInvoked="Nv_ItemInvoked"
-            Loaded="Nv_Loaded">
-            <NavigationView.MenuItems>
-                <NavigationViewItem
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <NavigationView
+                        x:Name="Nv"
+                        IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
+                        IsBackButtonVisible="Auto"
+                        BackRequested="Nv_OnBackRequested"
+                        ItemInvoked="Nv_ItemInvoked"
+                        Loaded="Nv_Loaded"
+                        OpenPaneLength="170">
+        <NavigationView.MenuItems>
+            <NavigationViewItem
                     Content="Grades"
                     Icon="Play"
                     IsSelected="True"
                     Tag="GradesModuleGradesViewToken" />
-                <NavigationViewItem
+            <NavigationViewItem
                     Content="TestView"
                     Icon="Play"
                     IsSelected="True"
                     Tag="SampleViewToken" />
-                <NavigationViewItem
+            <NavigationViewItem
                     Content="LoginView"
                     Icon="Play"
                     IsSelected="True"
@@ -45,9 +45,7 @@
                     Icon="Play"
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
-            </NavigationView.MenuItems>
-
-            <Frame x:Name="ContentFrame" />
-        </NavigationView>
-    </Grid>
+        </NavigationView.MenuItems>
+        <Frame x:Name="ContentFrame" Margin="0,32,0,0"/>
+    </NavigationView>
 </Page>

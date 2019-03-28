@@ -22,12 +22,16 @@ namespace ElkaUWP.Core.Views
         public ShellView()
         {
             InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
+
 
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = null;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = false;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.InactiveBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+
+            // Hide default title bar.
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
