@@ -1,6 +1,6 @@
 ﻿namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    internal enum PostalAdresses
+    public enum PostalAdresses
     {
         type,
         addresses,

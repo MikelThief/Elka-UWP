@@ -74,6 +74,12 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
                 Value = info.Pesel
             };
             list.Add(pesel);
+            var addressType = new UserInfoElement
+            {
+                Header = "Address type" + "Key",
+                Value = info.PostalAddresses.
+            };
+            list.Add(addressType);
          
             return list;
 
