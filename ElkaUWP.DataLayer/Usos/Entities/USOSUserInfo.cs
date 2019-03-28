@@ -24,7 +24,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 
         [JsonProperty("email")]
         public string Email { get; set; }
-        
+
         [JsonProperty("staff_status")]
         public long StaffStatus { get; set; }
 
@@ -43,6 +43,26 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty("pesel")]
         public string Pesel { get; set; }
 
+        [JsonProperty("titles")]
+        public string Titles { get; set; }
+
+        [JsonProperty("has_email")]
+        public bool HasEmail { get; set; }
+
+        [JsonProperty("phone_numbers")]
+        public List<String> PhoneNumbers { get; set; }
+
+        [JsonProperty("office_hours")]
+        public LangDict OfficeHours { get; set; }
+
+        [JsonProperty("has_photo")]
+        public bool HasPhoto { get; set; }
+
+        [JsonProperty("birth_date")]
+        public string BirthDate { get; set; }
+
+        [JsonProperty("postal_addresses")]
+        public List<PostalAdresses> {get;set;}
         
     }
     public partial class PhotoUrls

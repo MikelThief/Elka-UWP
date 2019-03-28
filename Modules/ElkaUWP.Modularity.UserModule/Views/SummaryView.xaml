@@ -26,7 +26,7 @@
 
             <VisualState x:Name="LargeState">
                 <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}"/>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
 
             </VisualState>
@@ -36,7 +36,9 @@
                 <VisualState.StateTriggers>
                     <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
-
+                <VisualState.Setters>
+                    <Setter Target="MainAdaptiveGrid.HorizontalAlignment" Value="Center"/>
+                </VisualState.Setters>
             </VisualState>
 
         </VisualStateGroup>
@@ -50,9 +52,9 @@
 
         <CommandBar Grid.Row="0"/>
 
-        <controls:AdaptiveGridView Grid.Row="1" OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
+        <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
             <controls:AdaptiveGridView.Header >
-                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="#FF1B90F7">
+                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="Transparent">
                     <controls:WrapPanel x:Name="HeaderStackPanel"  Orientation="Horizontal" HorizontalSpacing="30" MinHeight="220" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Transparent">
                        <controls:ImageEx Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}" CacheMode="BitmapCache" Width="180" Height="200" />
                         <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
@@ -75,6 +77,7 @@
                 <Style TargetType="FrameworkElement">
                     <Setter Property="Margin" Value="10,0,10,0" />
                     <Setter Property="MinWidth" Value="250"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
 
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>

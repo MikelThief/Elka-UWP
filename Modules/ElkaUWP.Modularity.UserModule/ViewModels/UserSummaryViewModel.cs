@@ -47,8 +47,15 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
 
             var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
             localSettingsContainer.Values["USOSid"] = result.Single(x => x.Header == "IdKey").Value.ToString();
-
-            NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "MiddleNameKey").Value+ " " + result.Single(x => x.Header == "LastNameKey").Value;
+            if (result.Single(x => x.Header == "MiddleNameKey").Value == null || result.Single(x => x.Header == "MiddleNameKey").Value == "")
+            {
+                NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "LastNameKey").Value;
+            }
+            else
+            {
+                NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "MiddleNameKey").Value + " " + result.Single(x => x.Header == "LastNameKey").Value;
+            }
+           
             IndexNo = "Index no: " + result.Single(x => x.Header == "StudentNumberKey").Value;
             Email = "Email: " + result.Single(x => x.Header == "EmailKey").Value;
             PhotoUri = new Uri(result.Single(x => x.Header == "PhotoUrlsKey")?.Value);
