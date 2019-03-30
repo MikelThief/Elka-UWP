@@ -127,6 +127,7 @@
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressesConverter.cs" />
+    <Compile Include="Usos\Entities\PostalAddresses.cs" />
     <Compile Include="Usos\Entities\PostalAddressesType.cs" />
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
     <Compile Include="Usos\Entities\USOSUserInfo.cs" />
