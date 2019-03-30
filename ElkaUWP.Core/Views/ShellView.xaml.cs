@@ -40,10 +40,10 @@ namespace ElkaUWP.Core.Views
             ViewModel.Initialize(internalFrame: ContentFrame);
         }
 
-        private void Nv_ItemInvoked(NavigationView navigationView, NavigationViewItemInvokedEventArgs args)
+        private void Nv_ItemInvoked(WinUI.NavigationView navigationView, WinUI.NavigationViewItemInvokedEventArgs args)
         {
             // check if item belongs to Nv
-            var invokedItems = this.Nv.MenuItems.Cast<NavigationViewItem>();
+            var invokedItems = this.NavigationViewControl.MenuItems.Cast<WinUI.NavigationViewItem>();
 
             var invokedItem = invokedItems.FirstOrDefault(e => e.Content.Equals(obj: args.InvokedItem));
 
@@ -64,7 +64,7 @@ namespace ElkaUWP.Core.Views
             }
         }
 
-        private void Nv_OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        private void Nv_OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)
         {
             ViewModel.RequestInternalNavigation("../");
         }
