@@ -108,6 +108,15 @@
                         TextAlignment="Center"/>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="MasterHeaderTemplate">
+                <Grid Height="40">
+                    <TextBlock
+                        x:Name="GradesMasterDetailsHeaderText"
+                        x:Uid="GradesMasterDetailsHeaderText"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SubheaderTextBlockStyle}" />
+                </Grid>
+            </DataTemplate>
 
 
 
@@ -116,6 +125,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
+
+
     <Grid x:Name="PageGrid">
         <!-- Head -->
 
@@ -127,15 +138,9 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="GradesMasterDetailsView.Margin" Value="0"/>
+
                         <Setter Target="GradesPerSemesterCommandBar.DefaultLabelPosition" Value="Right" />
-
-                        <Setter Target="GradesPerSemesterPageHeader.Padding" Value="24 4 0 0"/>
-
-                        <Setter Target="ScrollContentArea.Margin" Value="24,0,24,0"/>
-
-
-                        <Setter Target="InProgressSubjectsGridView.HorizontalAlignment" Value="Left"/>
-                        <Setter Target="FinishedSubjectsGridView.HorizontalAlignment" Value="Left"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -144,16 +149,9 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="GradesMasterDetailsView.Margin" Value="0,40,0,0" />
 
                         <Setter Target="GradesPerSemesterCommandBar.DefaultLabelPosition" Value="Bottom" />
-
-                        <Setter Target="GradesPerSemesterPageHeader.Padding" Value="96 4 0 0"/>
-
-                        <Setter Target="ScrollContentArea.Margin" Value="12,0,12,0"/>
-
-                        <Setter Target="InProgressSubjectsGridView.HorizontalAlignment" Value="Center"/>
-                        <Setter Target="FinishedSubjectsGridView.HorizontalAlignment" Value="Center"/>
-
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -191,20 +189,16 @@
 
         </ScrollViewer>
 -->
-        <tcontrols:MasterDetailsView 
+        <tcontrols:MasterDetailsView
+            x:Name="GradesMasterDetailsView"
             ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" 
             ItemTemplate="{StaticResource FinishedSubjectDataTemplate}"
             BackButtonBehavior="Automatic"
+            MasterHeaderTemplate="{StaticResource MasterHeaderTemplate}"
             NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}">
             <tcontrols:MasterDetailsView.MasterCommandBar>
                 <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Canvas.ZIndex="100">
-
                     <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
-
-                    <CommandBar.Content>
-                        <TextBlock Name="GradesPerSemesterPageHeader" Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="GradesPerSemesterPageHeader" />
-                    </CommandBar.Content>
-
                 </CommandBar>
 
             </tcontrols:MasterDetailsView.MasterCommandBar>

@@ -20,8 +20,18 @@ namespace ElkaUWP.Core.ViewModels
 {
     public class ShellViewModel : BindableBase, INavigatedAware
     {
+        private bool isGradesViewSelected = default;
+
         private INavigationService _internalNavigationService;
         private INavigationService _externalNavigationService;
+
+        private bool _canGoBack;
+
+        public bool CanGoBack
+        {
+            get => _canGoBack;
+            set => SetProperty(ref _canGoBack, value: value, nameof(CanGoBack));
+        }
 
         public ShellViewModel()
         {
@@ -46,21 +56,33 @@ namespace ElkaUWP.Core.ViewModels
 
         public async void RequestInternalNavigation(string navigationPath, INavigationParameters parameters = null)
         {
-            if (navigationPath == "../" && !_internalNavigationService.CanGoBack())
+            switch (navigationPath)
             {
-                await _internalNavigationService.NavigateAsync(name:"/" + PageTokens.SampleViewToken);
-                return;
+                // TODO: Very dirty fix for an issue: https://github.com/windows-toolkit/WindowsCommunityToolkit/issues/2638
+                case "../":
+                    if (isGradesViewSelected)
+                    {
+                        isGradesViewSelected = false;
+                        await _internalNavigationService.NavigateAsync(name: "/" + PageTokens.GradesModuleGradesView);
+                        CanGoBack = false;
+                    }
+                    else
+                    {
+                        await _internalNavigationService.GoBackAsync();
+                        CanGoBack = _internalNavigationService.CanGoBack();
+                    }
+                    break;
+                default:
+                    if (navigationPath == PageTokens.GradesModuleGradesView)
+                        isGradesViewSelected = true;
+
+                    await _internalNavigationService.NavigateAsync(name:"/" + navigationPath, parameters: parameters);
+                    CanGoBack = false;
+                    break;
             }
 
-            if (navigationPath == "../")
-            {
-                await _internalNavigationService.GoBackAsync();
-                return;
-            }
 
-            if (parameters is null)
-                await _internalNavigationService.NavigateAsync(name: navigationPath);
-            else await _internalNavigationService.NavigateAsync(name: navigationPath, parameters: parameters);
+            
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
