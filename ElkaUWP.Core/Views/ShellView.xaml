@@ -16,9 +16,8 @@
 
     <winui:NavigationView
                         x:Name="NavigationViewControl"
-                        IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
+                        IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=TwoWay}"
                         IsBackButtonVisible="Auto"
-
                         BackRequested="Nv_OnBackRequested"
                         ItemInvoked="Nv_ItemInvoked"
                         SelectedItem=""
@@ -53,6 +52,16 @@
         </winui:NavigationView.MenuItems>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
+
+                <VisualState x:Name="LargeState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Left"/>
+                    </VisualState.Setters>
+                </VisualState>
+
                 <VisualState x:Name="MediumState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
@@ -60,7 +69,6 @@
 
                     <VisualState.Setters>
                         <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftCompact"/>
-                        <Setter Target="ContentFrame.Margin" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -70,9 +78,9 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal"/>
-                        <Setter Target="ContentFrame.Margin" Value="0,40,0,0" />
                     </VisualState.Setters>
                 </VisualState>
+               
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Frame x:Name="ContentFrame"/>
