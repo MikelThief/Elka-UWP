@@ -12,6 +12,7 @@ using Prism.Navigation;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using ElkaUWP.Infrastructure;
 using Prism.Services;
 using WinUI = Microsoft.UI.Xaml.Controls;
 
@@ -45,15 +46,21 @@ namespace ElkaUWP.Core.ViewModels
 
         public async void RequestInternalNavigation(string navigationPath, INavigationParameters parameters = null)
         {
-            if (navigationPath == "../" && _internalNavigationService.CanGoBack())
+            if (navigationPath == "../" && !_internalNavigationService.CanGoBack())
+            {
+                await _internalNavigationService.NavigateAsync(name:"/" + PageTokens.SampleViewToken);
+                return;
+            }
+
+            if (navigationPath == "../")
             {
                 await _internalNavigationService.GoBackAsync();
                 return;
             }
 
             if (parameters is null)
-                await _internalNavigationService.NavigateAsync(name: "/" + navigationPath);
-            else await _internalNavigationService.NavigateAsync(name: "/" + navigationPath, parameters: parameters);
+                await _internalNavigationService.NavigateAsync(name: navigationPath);
+            else await _internalNavigationService.NavigateAsync(name: navigationPath, parameters: parameters);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

@@ -11,26 +11,31 @@
     xmlns:helpers="using:ElkaUWP.Core.Helpers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <NavigationView
-                        x:Name="Nv"
+
+
+
+    <winui:NavigationView
+                        x:Name="NavigationViewControl"
                         IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
                         IsBackButtonVisible="Auto"
+
                         BackRequested="Nv_OnBackRequested"
                         ItemInvoked="Nv_ItemInvoked"
+                        SelectedItem=""
                         Loaded="Nv_Loaded"
                         OpenPaneLength="170">
-        <NavigationView.MenuItems>
-            <NavigationViewItem
+        <winui:NavigationView.MenuItems>
+            <winui:NavigationViewItem
                     Content="Grades"
                     Icon="Play"
                     IsSelected="True"
                     Tag="GradesModuleGradesViewToken" />
-            <NavigationViewItem
+            <winui:NavigationViewItem
                     Content="TestView"
                     Icon="Play"
                     IsSelected="True"
                     Tag="SampleViewToken" />
-            <NavigationViewItem
+            <winui:NavigationViewItem
                     Content="LoginView"
                     Icon="Play"
                     IsSelected="True"
@@ -45,7 +50,31 @@
                     Icon="Play"
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
-        </NavigationView.MenuItems>
-        <Frame x:Name="ContentFrame" Margin="0,32,0,0"/>
-    </NavigationView>
+        </winui:NavigationView.MenuItems>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="MediumState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftCompact"/>
+                        <Setter Target="ContentFrame.Margin" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SmallState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal"/>
+                        <Setter Target="ContentFrame.Margin" Value="0,40,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Frame x:Name="ContentFrame"/>
+    </winui:NavigationView>
 </Page>

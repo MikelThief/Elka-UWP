@@ -98,6 +98,19 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="NoSelectionContentTemplate">
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <TextBlock
+                        Text="NO SELECTION"
+                        Style="{StaticResource SubtitleTextBlockStyle}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        TextAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+
+
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -147,16 +160,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <!-- Body -->
-        <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Canvas.ZIndex="100">
-
-            <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
-
-            <CommandBar.Content>
-                <TextBlock Name="GradesPerSemesterPageHeader" Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="GradesPerSemesterPageHeader" />
-            </CommandBar.Content>
-
-        </CommandBar>
-
+<!--
         <ScrollViewer x:Name="ContentArea" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
             <Grid x:Name="ScrollContentArea" >
                 <StackPanel Padding="0,44,0,0">
@@ -186,7 +190,25 @@
 
 
         </ScrollViewer>
+-->
+        <tcontrols:MasterDetailsView 
+            ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" 
+            ItemTemplate="{StaticResource FinishedSubjectDataTemplate}"
+            BackButtonBehavior="Automatic"
+            NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}">
+            <tcontrols:MasterDetailsView.MasterCommandBar>
+                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Canvas.ZIndex="100">
 
+                    <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
+
+                    <CommandBar.Content>
+                        <TextBlock Name="GradesPerSemesterPageHeader" Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="GradesPerSemesterPageHeader" />
+                    </CommandBar.Content>
+
+                </CommandBar>
+
+            </tcontrols:MasterDetailsView.MasterCommandBar>
+        </tcontrols:MasterDetailsView>
 
     </Grid>
 </Page>
