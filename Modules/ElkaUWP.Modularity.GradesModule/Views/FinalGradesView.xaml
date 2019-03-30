@@ -41,7 +41,7 @@
                     </Grid>
                     <Grid Grid.Row="1" Background="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}" />
                     <Grid Grid.Row="2" Background="#4A5459">
-                        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Padding="4" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" Foreground="White" />
+                        
                     </Grid>
                 </Grid>
             </DataTemplate>
@@ -98,6 +98,33 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
+
+            <DataTemplate x:DataType="entities:SubjectApproach" x:Name="MasterDetailsMasterPaneElement">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Bind Acronym}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="|" Style="{StaticResource SubtitleTextBlockStyle}" Margin="6,0,6,0"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" Text="{x:Bind SemesterLiteral}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="|" Style="{StaticResource SubtitleTextBlockStyle}" Margin="6,0,6,0"/>
+                    <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Bind GradeLiteral}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    <TextBlock Grid.Column="0"  Margin="0" Grid.Row="1" Grid.ColumnSpan="6" Text="{x:Bind Name}" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}"/>
+                    <TextBlock Grid.Column="0"  Margin="0,2,0,8" Grid.Row="2" Grid.ColumnSpan="6" TextWrapping="WrapWholeWords" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}"/>
+                </Grid>
+            </DataTemplate>
+
             <DataTemplate x:Key="NoSelectionContentTemplate">
                 <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <TextBlock
@@ -111,10 +138,11 @@
             <DataTemplate x:Key="MasterHeaderTemplate">
                 <Grid Height="40">
                     <TextBlock
+                        Margin="0,0,0,8"
                         x:Name="GradesMasterDetailsHeaderText"
-                        x:Uid="GradesMasterDetailsHeaderText"
+                        Text="{Binding}"
                         VerticalAlignment="Center"
-                        Style="{StaticResource SubheaderTextBlockStyle}" />
+                        Style="{StaticResource TitleTextBlockStyle}" />
                 </Grid>
             </DataTemplate>
 
@@ -191,16 +219,19 @@
 -->
         <tcontrols:MasterDetailsView
             x:Name="GradesMasterDetailsView"
-            ItemsSource="{x:Bind ViewModel.InProgressSubjectApproaches}" 
-            ItemTemplate="{StaticResource FinishedSubjectDataTemplate}"
+            x:Uid="GradesMasterDetailsView"
+            ItemsSource="{x:Bind ViewModel.SubjectApproaches}" 
+            BorderThickness="4"
+            BorderBrush="Transparent"
+            ItemTemplate="{StaticResource MasterDetailsMasterPaneElement}"
             BackButtonBehavior="Automatic"
             MasterHeaderTemplate="{StaticResource MasterHeaderTemplate}"
+            CompactModeThresholdWidth="600"
             NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}">
             <tcontrols:MasterDetailsView.MasterCommandBar>
                 <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Canvas.ZIndex="100">
                     <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
                 </CommandBar>
-
             </tcontrols:MasterDetailsView.MasterCommandBar>
         </tcontrols:MasterDetailsView>
 

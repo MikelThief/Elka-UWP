@@ -25,8 +25,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         private FinalGradesService _finalGradesService;
         private INavigationService _navigationService;
 
-        public ObservableCollection<SubjectApproach> InProgressSubjectApproaches = new ObservableCollection<SubjectApproach>();
-        public ObservableCollection<SubjectApproach> FinishedSubjectApproaches = new ObservableCollection<SubjectApproach>();
+        public ObservableCollection<SubjectApproach> SubjectApproaches = new ObservableCollection<SubjectApproach>();
 
         public DelegateCommand<SubjectApproach> ShowTestsCommand { get; private set; }
 
@@ -54,9 +53,6 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             _navigationService = parameters.GetNavigationService();
 
             await LoadDataAsync();
-
-            FinishedSubjectApproaches.SortStable(comparison: (x, y) => string.Compare(strA: x.Acronym, strB: y.Acronym,
-                comparisonType: StringComparison.CurrentCultureIgnoreCase));
         }
 
         private async Task LoadDataAsync()
@@ -64,19 +60,27 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             var subjectApproaches = await _finalGradesService.GetAllAsync();
 
             // remove artificial, useless subjects
-            var filteredSubjectApproaches = 
+            var filteredSubjectApproaches =
                 subjectApproaches.Where(subjectApproach =>
                     !subjectApproach.Acronym.All(c => c >= '0' && c <= '9') 
                     && subjectApproach.Acronym.Length >= 3).ToList();
 
-            var highestSemesterLiteral = FindHighestSemesterLiteral(approachesList: filteredSubjectApproaches);
 
-            foreach (var subjectApproach in filteredSubjectApproaches)
+            var inProgressApproaches =
+                filteredSubjectApproaches.Where(predicate: x => x.SemesterLiteral == FindHighestSemesterLiteral(approachesList: filteredSubjectApproaches)).ToList();
+
+            var finishedApproaches = filteredSubjectApproaches.Where(predicate: x => x.SemesterLiteral != FindHighestSemesterLiteral(approachesList: filteredSubjectApproaches)).ToList();
+            finishedApproaches.SortStable(comparison: (x, y) => string.Compare(strA: x.Acronym, strB: y.Acronym,
+                comparisonType: StringComparison.CurrentCultureIgnoreCase));
+
+            foreach (var inProgressApproach in inProgressApproaches)
             {
-                if (subjectApproach.SemesterLiteral == highestSemesterLiteral)
-                    InProgressSubjectApproaches.Add(item: subjectApproach);
-                else
-                    FinishedSubjectApproaches.Add(item: subjectApproach);
+                SubjectApproaches.Add(item: inProgressApproach);
+            }
+
+            foreach (var finishedApproach in finishedApproaches)
+            {
+                SubjectApproaches.Add(item: finishedApproach);
             }
         }
 
