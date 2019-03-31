@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Core;
+using Windows.Storage;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using ColorCode.Common;
 using ElkaUWP.DataLayer.Propertiary.Converters;
 using ElkaUWP.DataLayer.Propertiary.Entities;
@@ -22,6 +25,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
 {
     public class FinalGradesViewModel : BindableBase, INavigationAware
     {
+
         private FinalGradesService _finalGradesService;
         private INavigationService _navigationService;
 
