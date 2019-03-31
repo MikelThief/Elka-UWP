@@ -120,14 +120,14 @@
   <data name="GradesMasterDetailsView.MasterHeader" xml:space="preserve">
     <value>Subjects</value>
   </data>
-  <data name="GradesPerSemesterPageHeader.Text" xml:space="preserve">
-    <value>Grades</value>
-  </data>
   <data name="GradesPerSemesterRefreshButton.Label" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="GradesPerSemesterRefreshButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Refresh final grades for all subjects</value>
+  </data>
+  <data name="NoSelectionText.Text" xml:space="preserve">
+    <value>"Hmm... that list on the left must be important..."</value>
   </data>
   <data name="SubjectsGradesViewFinishedHeader.Text" xml:space="preserve">
     <value>Finished</value>

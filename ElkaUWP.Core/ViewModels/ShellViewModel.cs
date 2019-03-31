@@ -62,7 +62,6 @@ namespace ElkaUWP.Core.ViewModels
                 case "../":
                     if (isGradesViewSelected)
                     {
-                        isGradesViewSelected = false;
                         await _internalNavigationService.NavigateAsync(name: "/" + PageTokens.GradesModuleGradesView);
                         CanGoBack = false;
                     }
@@ -75,7 +74,8 @@ namespace ElkaUWP.Core.ViewModels
                 default:
                     if (navigationPath == PageTokens.GradesModuleGradesView)
                         isGradesViewSelected = true;
-
+                    else
+                        isGradesViewSelected = false;
                     await _internalNavigationService.NavigateAsync(name:"/" + navigationPath, parameters: parameters);
                     CanGoBack = false;
                     break;
