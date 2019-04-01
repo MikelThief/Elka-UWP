@@ -131,7 +131,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GradesModuleInitializer.cs" />
+    <Compile Include="Helpers\SemesterHelper.cs" />
     <Compile Include="Models\Converters\FinishedSubjectPassedStatusToBrushConverter.cs" />
+    <Compile Include="Models\DataTemplateSelectors\SubjectApproachDataTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\FinalGradesViewModel.cs" />
     <Compile Include="Views\FinalGradesView.xaml.cs">
@@ -197,8 +199,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\GradesNoSelection.jpg" />
-    <EmbeddedResource Include="Images\GradesNoSelection.png" />
+    <Content Include="Images\common\GradesNoSelection.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\en-us\" />
