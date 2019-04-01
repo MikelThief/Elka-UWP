@@ -131,16 +131,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GradesModuleInitializer.cs" />
-    <Compile Include="Helpers\SemesterHelper.cs" />
     <Compile Include="Models\Converters\FinishedSubjectPassedStatusToBrushConverter.cs" />
     <Compile Include="Models\DataTemplateSelectors\SubjectApproachDataTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\FinalGradesViewModel.cs" />
     <Compile Include="Views\FinalGradesView.xaml.cs">
       <DependentUpon>FinalGradesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PartialGradesView.xaml.cs">
-      <DependentUpon>PartialGradesView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\ElkaUWP.Modularity.GradesModule.rd.xml" />
   </ItemGroup>
@@ -190,10 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\FinalGradesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PartialGradesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

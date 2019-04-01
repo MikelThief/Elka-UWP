@@ -21,7 +21,7 @@
 
             <DataTemplate x:Key="FinishedSubjectApproachDataTemplate"
                       x:DataType="entities:SubjectApproach">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,8,0,8">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6">
                     <Grid.Background>
                         <SolidColorBrush Color="{StaticResource SystemChromeLowColor}"/>
                     </Grid.Background>
@@ -75,7 +75,7 @@
             </DataTemplate>
             <DataTemplate x:Key="InProgressSubjectApproachDataTemplate"
                       x:DataType="entities:SubjectApproach">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,8,0,8">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6">
                     <Grid.Background>
                         <SolidColorBrush Color="{StaticResource SystemChromeLowColor}"/>
                     </Grid.Background>
@@ -148,13 +148,31 @@
             <DataTemplate x:Key="MasterHeaderTemplate">
                 <Grid Margin="0,0,0,6" Height="40" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}">
                     <TextBlock
-                        Margin="0,0,0,8"
+                        Margin="0,0,0,6"
                         x:Name="GradesMasterDetailsHeaderText"
                         Text="{Binding}"
                         VerticalAlignment="Center"
                         Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
                         Style="{StaticResource TitleTextBlockStyle}" />
                 </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="DetailHeaderTemplate">
+                <StackPanel Spacing="6" Orientation="Horizontal" Margin="0,0,0,6" Height="40" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}">
+                    <TextBlock
+                         Margin="0,0,0,6"
+                         x:Name="GradesMasterDetailsStaticDetailHeaderText"
+                         x:Uid="GradesMasterDetailsStaticDetailHeaderText"
+                         VerticalAlignment="Center"
+                         Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                         Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock
+                        Margin="0,0,0,8"
+                        x:Name="GradesMasterDetailsSubjectDetailHeaderText"
+                        Text="{Binding}"
+                        VerticalAlignment="Center"
+                        Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                        Style="{StaticResource TitleTextBlockStyle}" />
+                </StackPanel>
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
@@ -198,6 +216,11 @@
             MasterHeaderTemplate="{StaticResource MasterHeaderTemplate}"
             CompactModeThresholdWidth="600"
             Background="Transparent"
+            DetailsHeader="{x:Bind ViewModel.SelectedSubjectApproach.Acronym, Mode=OneWay}"
+            DetailsHeaderTemplate="{StaticResource DetailHeaderTemplate}"
+            SelectedItem="{x:Bind ViewModel.SelectedSubjectApproach, Mode=TwoWay}"
+            SelectionChanged="GradesMasterDetailsView_OnSelectionChanged"
+            
             >
             <tcontrols:MasterDetailsView.ItemTemplateSelector>
                 <dataTemplateSelectors:SubjectApproachDataTemplateSelector InProgressSubjectApproachDataTemplate="{StaticResource InProgressSubjectApproachDataTemplate}" FinishedSubjectApproachDataTemplate="{StaticResource FinishedSubjectApproachDataTemplate}" />

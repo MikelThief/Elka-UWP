@@ -32,5 +32,10 @@ namespace ElkaUWP.Modularity.GradesModule.Views
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
+
+        private async void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            await ViewModel.LoadPartialGrades();
+        }
     }
 }
