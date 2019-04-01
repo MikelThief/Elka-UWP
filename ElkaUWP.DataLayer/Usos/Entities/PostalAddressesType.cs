@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
     enum PostalAddressesType
     {
         type,
-        address,
+        addresses,
         type_name
     }
 }

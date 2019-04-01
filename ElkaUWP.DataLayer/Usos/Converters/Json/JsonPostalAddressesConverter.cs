@@ -22,7 +22,7 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
                 case "type":
                     return PostalAddressesType.type;
                 case "address":
-                    return PostalAddressesType.address;
+                    return PostalAddressesType.addresses;
                 case "type_name":
                     return PostalAddressesType.type_name;
                 default:
