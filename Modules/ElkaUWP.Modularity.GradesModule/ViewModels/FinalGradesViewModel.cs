@@ -27,15 +27,33 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
     {
 
         private FinalGradesService _finalGradesService;
+        private PartialGradesService _partialGradesService;
         private INavigationService _navigationService;
 
         public ObservableCollection<SubjectApproach> SubjectApproaches = new ObservableCollection<SubjectApproach>();
 
+        private PartialGradesTree _partialGradesTree;
+
+        public PartialGradesTree PartialGradesTree
+        {
+            get => _partialGradesTree;
+            set => SetProperty(storage: ref _partialGradesTree, value: value, propertyName: nameof(PartialGradesTree));
+        }
+
+        private SubjectApproach _selectedSubjectApproach;
+
+        public SubjectApproach SelectedSubjectApproach
+        {
+            get => _selectedSubjectApproach;
+            set => SetProperty(storage: ref _selectedSubjectApproach, value: value, propertyName: nameof(SelectedSubjectApproach));
+        }
+
         public DelegateCommand<SubjectApproach> ShowTestsCommand { get; private set; }
 
-        public FinalGradesViewModel(FinalGradesService finalGradesService)
+        public FinalGradesViewModel(FinalGradesService finalGradesService, PartialGradesService partialGradesService)
         {
             _finalGradesService = finalGradesService;
+            _partialGradesService = partialGradesService;
 
             ShowTestsCommand = new DelegateCommand<SubjectApproach>(executeMethod: ShowTests);
         }
@@ -112,6 +130,12 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             }
 
             return semesterLiteralAndShortConverter.ShortToString(semesterShort: highestSemester);
+        }
+
+        public async Task LoadPartialGrades()
+        {
+            PartialGradesTree = await _partialGradesService.GetAsync(semesterLiteral: SelectedSubjectApproach.SemesterLiteral,
+                subjectId: SelectedSubjectApproach.Id);
         }
     }
 }
