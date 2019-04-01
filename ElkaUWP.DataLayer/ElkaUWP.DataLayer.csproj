@@ -127,8 +127,8 @@
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressesConverter.cs" />
-    <Compile Include="Usos\Entities\PostalAddresses.cs" />
     <Compile Include="Usos\Entities\PostalAddressesType.cs" />
+    <Compile Include="Usos\Entities\PostalAddresses.cs" />
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
     <Compile Include="Usos\Entities\USOSUserInfo.cs" />
     <Compile Include="Usos\Extensions\USOSUserInfoExtensions.cs" />
@@ -148,10 +148,12 @@
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
     <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\PostalAddressesWrapper.cs" />
     <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
+    <Compile Include="Usos\Services\PostalAddressesService.cs" />
     <Compile Include="Usos\Services\UserService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />

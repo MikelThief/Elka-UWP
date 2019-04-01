@@ -8,31 +8,20 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    class UserInfoRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    class PostalAddressesWrapper : OAuthProtectedResourceRequestWrapperBase
     {
 
         private const string _destination = "users/user";
 
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id",
-            "first_name",
-            "middle_names",
-            "last_name",
-            "sex",
-            "email",
-            "photo_urls[200x250]",
-            "student_number",
-            "pesel",
-            "student_status",
-          
-
-                    
+            "postal_addresses"
+                       
         };
 
-        public UserInfoRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public PostalAddressesWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
-           
+
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
@@ -62,5 +51,4 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
     }
-  
 }

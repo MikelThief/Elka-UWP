@@ -12,29 +12,30 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Extensions;
+using ElkaUWP.DataLayer.Usos.Converters.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class UserService : UsosServiceBase
+    class PostalAddressesService: UsosServiceBase
     {
-     
+
         public async Task<IEnumerable<UserInfoElement>> GetUserInformation()
 
         {
-            var request = (Container.Resolve<UserInfoRequestWrapper>());
+            var request = (Container.Resolve<PostalAddressesWrapper>());
 
             var InfoUri = request.GetRequestString();
             string responseForInfo;
             var webClient = new WebClient();
 
-            var infoList = new List<UserInfoElement>();
-            
+            var addressList = new List<PostalAddressesType>();
+
 
             try
             {
                 responseForInfo = await webClient.DownloadStringTaskAsync(address: InfoUri);
-                var result = JsonConvert.DeserializeObject<USOSUserInfo>(value: responseForInfo);
-                infoList = result.UserInfoElementList();
+                var result = JsonConvert.DeserializeObject<PostalAddressesContainer>(value: responseForInfo, converters: JsonPostalAddressesConverter);
+                
             }
             catch (WebException wexc)
             {
@@ -47,16 +48,14 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 throw new InvalidOperationException();
             }
 
-            
-            
+
+
             return infoList;
 
         }
-       
+
         public UserService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
         {
         }
-
-
     }
 }
