@@ -19,22 +19,23 @@ namespace ElkaUWP.DataLayer.Usos.Services
     class PostalAddressesService: UsosServiceBase
     {
 
-        public async Task<IEnumerable<UserInfoElement>> GetUserInformation()
+        public async Task<List<PostalAddresses>> GetUserInformation()
 
         {
             var request = (Container.Resolve<PostalAddressesWrapper>());
 
             var InfoUri = request.GetRequestString();
             string responseForInfo;
-            var webClient = new WebClient();
 
-            var addressList = new List<PostalAddressesType>();
+            var webClient = new WebClient();
+            PostalAddressesContainer result;
+            
 
 
             try
             {
                 responseForInfo = await webClient.DownloadStringTaskAsync(address: InfoUri);
-                var result = JsonConvert.DeserializeObject<PostalAddressesContainer>(value: responseForInfo, converters: JsonPostalAddressesConverter);
+                result = JsonConvert.DeserializeObject<PostalAddressesContainer>(value: responseForInfo, converters: new JsonPostalAddressesConverter());
                 
             }
             catch (WebException wexc)
@@ -50,11 +51,11 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
 
 
-            return infoList;
+            return result.PostalAddresses;
 
         }
 
-        public UserService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
+        public PostalAddressesService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
         {
         }
     }
