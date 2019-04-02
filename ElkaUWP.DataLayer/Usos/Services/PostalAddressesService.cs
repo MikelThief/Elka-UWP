@@ -16,10 +16,10 @@ using ElkaUWP.DataLayer.Usos.Converters.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    class PostalAddressesService: UsosServiceBase
+    public class PostalAddressesService: UsosServiceBase
     {
 
-        public async Task<List<PostalAddresses>> GetUserInformation()
+        public async Task<IEnumerable<PostalAddresses>> GetUserAddresses()
 
         {
             var request = (Container.Resolve<PostalAddressesWrapper>());
@@ -29,6 +29,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
             var webClient = new WebClient();
             PostalAddressesContainer result;
+
             
 
 

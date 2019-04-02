@@ -20,9 +20,12 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
     {
         private Image _userImage;
         private UserService _userService;
+        private PostalAddressesService _postalAddressesService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(UserModuleInitializer));
 
         public ObservableCollection<UserInfoElement> UserInfoElement = new ObservableCollection<UserInfoElement>();
+        public ObservableCollection<PostalAddressInfoElement> PostalAddressInfoElement = new ObservableCollection<PostalAddressInfoElement>();
+
         
         public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
         private string _nameAndSurname;
@@ -34,10 +37,10 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
         public string Email { get => _email; set => SetProperty(storage: ref _email, value: value, nameof(Email)); }
         public Uri PhotoUri { get => _photoUri; set => SetProperty(storage: ref _photoUri, value: value, nameof(PhotoUri)); }
         private Uri _photoUri;
-        public UserSummaryViewModel(UserService userService)
+        public UserSummaryViewModel(UserService userService, PostalAddressesService postalAddressesService)
         {
             _userService = userService;
-            
+            _postalAddressesService = postalAddressesService;
            
         }
 
@@ -94,7 +97,17 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
                     UserInfoElement.Add(item);
                 
             }
-            
+
+            var addresses = await  _postalAddressesService.GetUserAddresses();
+            //adding postal addresses
+            foreach(var item in addresses)
+            {
+                item.Type = _resourceLoader.GetString(item.Type);
+                UserInfoElement ui = new UserInfoElement();
+                ui.Header = item.Type;
+                ui.Value = item.Address;
+                UserInfoElement.Add(ui);
+            }
 
         }
 
