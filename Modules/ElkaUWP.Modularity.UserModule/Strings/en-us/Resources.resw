@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="correspondence" xml:space="preserve">
+    <value>Correspondence address</value>
+  </data>
   <data name="EmailKey" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -124,7 +127,7 @@
     <value>First name</value>
   </data>
   <data name="IdKey" xml:space="preserve">
-    <value>USOS id</value>
+    <value>USOS ID</value>
   </data>
   <data name="LastNameKey" xml:space="preserve">
     <value>Last name</value>
@@ -133,10 +136,13 @@
     <value>Middle Name</value>
   </data>
   <data name="PeselKey" xml:space="preserve">
-    <value>Pesel</value>
+    <value>PESEL</value>
   </data>
   <data name="PhotoUriKey" xml:space="preserve">
     <value>Photo Uri</value>
+  </data>
+  <data name="primary" xml:space="preserve">
+    <value>Primary address</value>
   </data>
   <data name="SexKey" xml:space="preserve">
     <value>Sex</value>

@@ -125,6 +125,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
+    <Compile Include="Propertiary\Entities\PostalAddressInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressesConverter.cs" />
     <Compile Include="Usos\Entities\PostalAddressesType.cs" />

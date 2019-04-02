@@ -34,10 +34,11 @@
 
             <VisualState x:Name="SmallState">
                 <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
+                    <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}"/>
                 </VisualState.StateTriggers>
                 <VisualState.Setters>
                     <Setter Target="MainAdaptiveGrid.HorizontalAlignment" Value="Center"/>
+                    <Setter Target="HeaderStackPanel.Padding" Value="30"/>
                 </VisualState.Setters>
             </VisualState>
 
@@ -52,11 +53,11 @@
 
         <CommandBar Grid.Row="0"/>
 
-        <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="40,0,40,0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
-            <controls:AdaptiveGridView.Header >
-                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="20" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="Transparent">
-                    <controls:WrapPanel x:Name="HeaderStackPanel"  Orientation="Horizontal" HorizontalSpacing="30" MinHeight="220" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Transparent">
-                       <controls:ImageEx Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}" CacheMode="BitmapCache" Width="180" Height="200" />
+        <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
+            <controls:AdaptiveGridView.Header>
+                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,0,30" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="Transparent">
+                    <controls:WrapPanel x:Name="HeaderStackPanel"  Orientation="Horizontal" HorizontalSpacing="30" MinHeight="220" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource SystemControlAltHighAcrylicElementBrush}">
+                       <controls:ImageEx x:Name="ProfileImage"  Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}"  CacheMode="BitmapCache" Width="180" Height="200" />
                         <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -77,8 +78,6 @@
                 <Style TargetType="FrameworkElement">
                     <Setter Property="Margin" Value="10,0,10,0" />
                     <Setter Property="MinWidth" Value="250"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>
 
