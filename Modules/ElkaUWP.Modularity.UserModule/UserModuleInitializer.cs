@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElkaUWP.Infrastructure;
+using ElkaUWP.Modularity.UserModule.ViewModels;
+using ElkaUWP.Modularity.UserModule.Views;
+
 
 namespace ElkaUWP.Modularity.UserModule
 {
@@ -12,12 +16,12 @@ namespace ElkaUWP.Modularity.UserModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            throw new NotImplementedException();
+
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            throw new NotImplementedException();
+            containerRegistry.RegisterForNavigation<SummaryView, UserSummaryViewModel>(key: PageTokens.UserSummaryViewToken);
         }
     }
 }

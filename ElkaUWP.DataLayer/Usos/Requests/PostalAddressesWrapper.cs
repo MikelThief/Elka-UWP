@@ -8,26 +8,20 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/geo/#building_index
-    /// </summary>
-    public class BuildingIndexRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    class PostalAddressesWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "geo/building_index";
-        // Fields index to be received in response
+
+        private const string _destination = "users/user";
+
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id",
-            "name",
-            "profile_url",
-            "campus_name",
-            "location",
-            "marker_style",
-            "phone_numbers"
+            "postal_addresses"
+                       
         };
 
-        public BuildingIndexRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public PostalAddressesWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
+
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
                 key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
             oAuthSecret.RetrievePassword();
@@ -56,6 +50,5 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
-
     }
 }

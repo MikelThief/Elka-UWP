@@ -45,6 +45,7 @@ using Unity.Lifetime;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Modularity.CalendarModule;
 using ElkaUWP.Modularity.GradesModule;
+using ElkaUWP.Modularity.UserModule;
 
 namespace ElkaUWP.Core
 {
@@ -118,6 +119,14 @@ namespace ElkaUWP.Core
             {
                 ModuleName = gradesModuleType.Name,
                 ModuleType = gradesModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+            // User Module
+            var userModuleType = typeof(UserModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = userModuleType.Name,
+                ModuleType = userModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 

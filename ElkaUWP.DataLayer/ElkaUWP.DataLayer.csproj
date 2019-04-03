@@ -131,10 +131,13 @@
     <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
+    <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
+    <Compile Include="Propertiary\Services\UserService.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
     <Compile Include="Usos\Entities\CourseGrade.cs" />
@@ -143,6 +146,10 @@
     <Compile Include="Usos\Entities\GradesGradedSubject.cs" />
     <Compile Include="Usos\Entities\Group.cs" />
     <Compile Include="Usos\Entities\NodeType.cs" />
+    <Compile Include="Usos\Entities\PhotoUrls.cs" />
+    <Compile Include="Usos\Entities\PostalAddress.cs" />
+    <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
+    <Compile Include="Usos\Entities\PostalAddressType.cs" />
     <Compile Include="Usos\Entities\Semester.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
@@ -153,6 +160,7 @@
     <Compile Include="Usos\Entities\Session.cs" />
     <Compile Include="Usos\Entities\SubjectPassType.cs" />
     <Compile Include="Usos\Entities\TestPoint.cs" />
+    <Compile Include="Usos\Entities\UserInfoContainer.cs" />
     <Compile Include="Usos\Entities\UserTests.cs" />
     <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
     <Compile Include="Usos\Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
@@ -180,12 +188,14 @@
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
     <Compile Include="Usos\Requests\GradesTerms2RequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Services\CoursesService.cs" />
     <Compile Include="Usos\Services\ExamrepService.cs" />
     <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\CrstestsService.cs" />
     <Compile Include="Usos\Services\TermsService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
+    <Compile Include="Usos\Services\UsersService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>

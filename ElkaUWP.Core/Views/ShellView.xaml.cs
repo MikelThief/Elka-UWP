@@ -61,6 +61,9 @@ namespace ElkaUWP.Core.Views
                 case PageTokens.CalendarSummaryView:
                     ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView);
                     break;
+                case PageTokens.UserSummaryViewToken:
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken);
+                    break;
             }
         }
 
