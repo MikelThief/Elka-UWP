@@ -18,26 +18,19 @@ namespace ElkaUWP.DataLayer.Usos.Services
 {
     public class UsersService: UsosServiceBase
     {
-
-        public async Task<IEnumerable<PostalAddresses>> PostalAddresses()
+        public async Task<UserInfoContainer> User()
 
         {
-            var request = (Container.Resolve<PostalAddressesWrapper>());
+            var request = (Container.Resolve<UserInfoRequestWrapper>());
 
-            var InfoUri = request.GetRequestString();
-            string responseForInfo;
-
+            var requestString = request.GetRequestString();
             var webClient = new WebClient();
-            PostalAddressesContainer result;
-
-            
-
+            UserInfoContainer result;
 
             try
             {
-                responseForInfo = await webClient.DownloadStringTaskAsync(address: InfoUri);
-                result = JsonConvert.DeserializeObject<PostalAddressesContainer>(value: responseForInfo, converters: new JsonPostalAddressesConverter());
-                
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+                result = JsonConvert.DeserializeObject<UserInfoContainer>(value: json);
             }
             catch (WebException wexc)
             {
@@ -50,9 +43,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 throw new InvalidOperationException();
             }
 
-
-
-            return result.PostalAddresses;
+            return result;
 
         }
 

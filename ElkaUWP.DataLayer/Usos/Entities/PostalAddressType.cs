@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    enum PostalAddressesType
+    public enum PostalAddressType
     {
-        type,
-        addresses,
-        type_name
+        Primary,
+        Correspondence,
+        Residence,
+        Other
     }
 }

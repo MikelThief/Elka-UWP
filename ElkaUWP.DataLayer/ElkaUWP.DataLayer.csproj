@@ -127,10 +127,12 @@
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\PostalAddressInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
+    <Compile Include="Propertiary\Services\UserService.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressesConverter.cs" />
-    <Compile Include="Usos\Entities\PostalAddressesType.cs" />
-    <Compile Include="Usos\Entities\PostalAddresses.cs" />
+    <Compile Include="Usos\Entities\PostalAddressType.cs" />
+    <Compile Include="Usos\Entities\PostalAddress.cs" />
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
+    <Compile Include="Usos\Entities\UserInfoContainer.cs" />
     <Compile Include="Usos\Entities\USOSUserInfo.cs" />
     <Compile Include="Usos\Extensions\USOSUserInfoExtensions.cs" />
     <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
@@ -155,7 +157,6 @@
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
     <Compile Include="Usos\Services\UsersService.cs" />
-    <Compile Include="Usos\Services\UserService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>

@@ -25,9 +25,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "student_number",
             "pesel",
             "student_status",
-          
-
-                    
+            "postal_addresses"
         };
 
         public UserInfoRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)

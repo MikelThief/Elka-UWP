@@ -13,100 +13,141 @@ using Nito.Mvvm;
 using Prism.Navigation;
 using ElkaUWP.Infrastructure.Helpers;
 using Windows.ApplicationModel.Resources;
+using ElkaUWP.DataLayer.Propertiary;
 
 namespace ElkaUWP.Modularity.UserModule.ViewModels
 {
     public class UserSummaryViewModel : BindableBase, INavigationAware
     {
-        private Image _userImage;
         private UserService _userService;
-        private UsersService _postalAddressesService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(UserModuleInitializer));
 
-        public ObservableCollection<UserInfoElement> UserInfoElement = new ObservableCollection<UserInfoElement>();
-        public ObservableCollection<PostalAddressInfoElement> PostalAddressInfoElement = new ObservableCollection<PostalAddressInfoElement>();
-
-        
-        public Image UserImage { get => _userImage; private set => SetProperty(storage: ref _userImage, value: value); }
-        private string _nameAndSurname;
-        public string NameAndSurname { get => _nameAndSurname;
-            set => SetProperty(storage:ref _nameAndSurname, value: value, nameof(NameAndSurname)); }
-        public string _indexNo;
-        public string IndexNo { get => _indexNo; set => SetProperty(storage: ref _indexNo, value: value, nameof(IndexNo)); }
-        public string _email;
-        public string Email { get => _email; set => SetProperty(storage: ref _email, value: value, nameof(Email)); }
-        public Uri PhotoUri { get => _photoUri; set => SetProperty(storage: ref _photoUri, value: value, nameof(PhotoUri)); }
         private Uri _photoUri;
-        public UserSummaryViewModel(UserService userService, UsersService postalAddressesService)
+        public Uri PhotoUri { get => _photoUri; private set => SetProperty(storage: ref _photoUri, value: value, propertyName: nameof(PhotoUri)); }
+
+        public string FullName => FirstName + " " + LastName;
+
+        private string _firstName;
+
+        public string FirstName
+        {
+            get => _firstName;
+            set
+            {
+                SetProperty(storage: ref _firstName, value: value, propertyName: nameof(FirstName));
+                RaisePropertyChanged(propertyName: nameof(FullName));
+            }
+        }
+
+        private string _lastName;
+
+        public string LastName
+        {
+            get => _lastName;
+            set
+            {
+                SetProperty(storage: ref _lastName, value: value, propertyName: nameof(LastName));
+                RaisePropertyChanged(propertyName: nameof(FullName));
+            }
+        }
+
+        private string _indexNumber;
+
+        public string IndexNumber
+        {
+            get => _indexNumber;
+            set => SetProperty(storage: ref _indexNumber, value: value, propertyName: nameof(IndexNumber));
+        }
+
+        private string _email;
+
+        public string Email
+        {
+            get => _email;
+            set => SetProperty(storage: ref _email, value: value, propertyName: nameof(Email));
+        }
+
+        public ObservableCollection<UserInfoElement> UserAttributes = new ObservableCollection<UserInfoElement>();
+
+
+        public UserSummaryViewModel(UserService userService)
         {
             _userService = userService;
-            _postalAddressesService = postalAddressesService;
-           
         }
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            var result = await _userService.GetUserInformation();
+            var result = await _userService.GetAsync();
 
-            var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
-            localSettingsContainer.Values["USOSid"] = result.Single(x => x.Header == "IdKey").Value.ToString();
-            if (result.Single(x => x.Header == "MiddleNameKey").Value == null || result.Single(x => x.Header == "MiddleNameKey").Value == "")
+            foreach (var element in result)
             {
-                NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "LastNameKey").Value;
-            }
-            else
-            {
-                NameAndSurname = result.Single(x => x.Header == "FirstNameKey").Value + " " + result.Single(x => x.Header == "MiddleNameKey").Value + " " + result.Single(x => x.Header == "LastNameKey").Value;
-            }
-           
-            IndexNo = "Index no: " + result.Single(x => x.Header == "StudentNumberKey").Value;
-            Email = "Email: " + result.Single(x => x.Header == "EmailKey").Value;
-            PhotoUri = new Uri(result.Single(x => x.Header == "PhotoUrlsKey")?.Value);
+                var tempElement = new UserInfoElement();
 
-            //Sex
-            if(result.Single(x => x.Header=="SexKey").Value=="F")
-            {
-                result.Single(x => x.Header == "SexKey").Value = "Female";
-            }
-            if (result.Single(x => x.Header == "SexKey").Value == "M")
-            {
-                result.Single(x => x.Header == "SexKey").Value = "Male";
-            }
-
-            //Student_status
-
-            if (result.Single(x => x.Header == "StudentStatusKey").Value == "0")
-            {
-                result.Single(x => x.Header == "StudentStatusKey").Value = "Not a student";
-            }
-            if (result.Single(x => x.Header == "StudentStatusKey").Value == "1")
-            {
-                result.Single(x => x.Header == "StudentStatusKey").Value = "Inactive student";
-            }
-            if (result.Single(x => x.Header == "StudentStatusKey").Value == "2")
-            {
-                result.Single(x => x.Header == "StudentStatusKey").Value = "Active student";
-            }
-
-
-
-            foreach (var item in result.Where(x => x.Header!="PhotoUrlsKey" && x.Value!=null && x.Value!="" && x.Header!="FirstNameKey" && x.Header!="LastNameKey" && x.Header!="EmailKey" && x.Header!="StudentNumberKey"))
-            {
-                   
-                    item.Header = _resourceLoader.GetString(item.Header);
-                    UserInfoElement.Add(item);
-                
-            }
-
-            var addresses = await  _postalAddressesService.PostalAddresses();
-            //adding postal addresses
-            foreach(var item in addresses)
-            {
-                item.Type = _resourceLoader.GetString(item.Type);
-                UserInfoElement ui = new UserInfoElement();
-                ui.Header = item.Type;
-                ui.Value = item.Address;
-                UserInfoElement.Add(ui);
+                switch (element.Header)
+                {
+                    case "EmailKey":
+                        Email = element.Value;
+                        break;
+                    case "FirstNameKey":
+                        FirstName = element.Value;
+                        break;
+                    case "IdKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "IdKey");
+                        tempElement.Value = element.Value;
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "LastNameKey":
+                        LastName = element.Value;
+                        break;
+                    case "MiddleNamesKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "MiddleNamesKey");
+                        tempElement.Value = element.Value;
+                        if (!string.IsNullOrEmpty(value: element.Value))
+                            UserAttributes.Add(item: tempElement);
+                        break;
+                    case "PeselKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "PeselKey");
+                        tempElement.Value = element.Value;
+                        if(!string.IsNullOrEmpty(value: element.Value))
+                            UserAttributes.Add(item: tempElement);
+                        break;
+                    case "IndexNumberKey":
+                        IndexNumber = element.Value;
+                        break;
+                    case "SexKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "SexKey");
+                        tempElement.Value = element.Value;
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "PrimaryAddressKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "PrimaryAddressKey");
+                        tempElement.Value = element.Value;
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "CorrespondenceAddressKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "CorrespondenceAddressKey");
+                        tempElement.Value = element.Value;
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "ResidenceAddressKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "ResidenceAddressKey");
+                        tempElement.Value = element.Value;
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "OtherAddressKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "OtherAddressKey");
+                        tempElement.Value = element.Value;
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "StudentStatusKey":
+                        tempElement.Header = _resourceLoader.GetString(resource: "StudentStatusKey");
+                        tempElement.Value = _resourceLoader.GetString(resource: element.Value);
+                        UserAttributes.Add(item: tempElement);
+                        break;
+                    case "PhotoUriKey":
+                        PhotoUri = new Uri(uriString: element.Value);
+                        break;
+                }
             }
 
         }

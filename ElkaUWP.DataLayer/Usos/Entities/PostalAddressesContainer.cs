@@ -10,7 +10,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
     public class PostalAddressesContainer
     {
         [JsonProperty ("postal_addresses")]
-        public List<PostalAddresses> PostalAddresses { get; set; }
+        public List<PostalAddress> PostalAddresses { get; set; }
 
     }
 
