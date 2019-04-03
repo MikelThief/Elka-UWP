@@ -22,6 +22,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.Core.ViewModels;
+using ElkaUWP.DataLayer;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Extensions;
@@ -43,8 +44,8 @@ using Unity;
 using Unity.Lifetime;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Modularity.CalendarModule;
+using ElkaUWP.Modularity.GradesModule;
 using ElkaUWP.Modularity.UserModule;
-using ElkaUWP.DataLayer;
 
 namespace ElkaUWP.Core
 {

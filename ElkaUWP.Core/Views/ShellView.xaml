@@ -49,6 +49,11 @@
                     Icon="Play"
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
+            <winui:NavigationViewItem
+                Content="Profile"
+                Icon="Play"
+                IsSelected="True"
+                Tag="UserSummaryViewToken" />
         </winui:NavigationView.MenuItems>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

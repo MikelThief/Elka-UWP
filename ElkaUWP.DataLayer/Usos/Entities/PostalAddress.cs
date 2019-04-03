@@ -11,7 +11,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
     public class PostalAddress
     {
         [JsonProperty(propertyName: "type")]
-        [JsonConverter(converterType: typeof(JsonPostalAddressesConverter))]
+        [JsonConverter(converterType: typeof(JsonPostalAddressTypeConverter))]
         public PostalAddressType Type { get; set; }
 
         [JsonProperty(propertyName: "address")]
