@@ -32,14 +32,13 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                
-                                    <TextBlock
+                                <TextBlock
                                         Grid.Row="0"
                                         Text="{x:Bind SemesterLiteral, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0}'}"
                                         TextWrapping="NoWrap"
                                         HorizontalAlignment="Left"
                                         Style="{StaticResource CaptionTextBlockStyle}" />
-                                    <TextBlock
+                                <TextBlock
                                         Grid.Row="0"
                                         HorizontalAlignment="Right"
                                         Text="{x:Bind Acronym, Converter={StaticResource StringFormatConverter}, ConverterParameter='[{0}]'}"
@@ -219,9 +218,7 @@
             DetailsHeader="{x:Bind ViewModel.SelectedSubjectApproach.Acronym, Mode=OneWay}"
             DetailsHeaderTemplate="{StaticResource DetailHeaderTemplate}"
             SelectedItem="{x:Bind ViewModel.SelectedSubjectApproach, Mode=TwoWay}"
-            SelectionChanged="GradesMasterDetailsView_OnSelectionChanged"
-            
-            >
+            SelectionChanged="GradesMasterDetailsView_OnSelectionChanged">
             <tcontrols:MasterDetailsView.ItemTemplateSelector>
                 <dataTemplateSelectors:SubjectApproachDataTemplateSelector InProgressSubjectApproachDataTemplate="{StaticResource InProgressSubjectApproachDataTemplate}" FinishedSubjectApproachDataTemplate="{StaticResource FinishedSubjectApproachDataTemplate}" />
             </tcontrols:MasterDetailsView.ItemTemplateSelector>

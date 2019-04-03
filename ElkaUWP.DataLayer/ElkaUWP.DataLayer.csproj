@@ -127,6 +127,7 @@
     <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
+    <Compile Include="Propertiary\Entities\PartialGradesContainer.cs" />
     <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />

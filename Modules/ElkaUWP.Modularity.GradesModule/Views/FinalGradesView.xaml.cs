@@ -35,7 +35,7 @@ namespace ElkaUWP.Modularity.GradesModule.Views
 
         private async void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await ViewModel.LoadPartialGrades();
+            
         }
     }
 }
