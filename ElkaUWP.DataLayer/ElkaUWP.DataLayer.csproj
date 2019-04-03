@@ -154,7 +154,7 @@
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
-    <Compile Include="Usos\Services\PostalAddressesService.cs" />
+    <Compile Include="Usos\Services\UsersService.cs" />
     <Compile Include="Usos\Services\UserService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
