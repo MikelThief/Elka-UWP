@@ -21,54 +21,60 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <VisualStateManager.VisualStateGroups>
-        <VisualStateGroup>
-
-            <VisualState x:Name="LargeState">
-                <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
-                </VisualState.StateTriggers>
-
-            </VisualState>
-
-
-            <VisualState x:Name="SmallState">
-                <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}"/>
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="MainAdaptiveGrid.HorizontalAlignment" Value="Center"/>
-                    <Setter Target="HeaderStackPanel.Padding" Value="30"/>
-                </VisualState.Setters>
-            </VisualState>
-
-        </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>
 
     <Grid x:Name="MainGrid">
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <VisualState x:Name="LargeState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}"/>
+
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HeaderStackPanel.Orientation" Value="Horizontal" />
+                    </VisualState.Setters>
+                </VisualState>
+
+
+                <VisualState x:Name="SmallState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
+
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HeaderStackPanel.Orientation" Value="Horizontal" />
+                        <Setter Target="ProfileImage.HorizontalAlignment" Value="Center"/>
+                        
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <CommandBar Grid.Row="0"/>
-
-        <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
+              <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
             <controls:AdaptiveGridView.Header>
-                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,0,30" Foreground="{StaticResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Background="Transparent">
-                    <controls:WrapPanel x:Name="HeaderStackPanel"  Orientation="Horizontal" HorizontalSpacing="30" MinHeight="220" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource SystemControlAltHighAcrylicElementBrush}">
-                       <controls:ImageEx x:Name="ProfileImage"  Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}"  CacheMode="BitmapCache" Width="180" Height="200" />
-                        <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center">
+                <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch"   HorizontalAlignment="Stretch" Margin="0,0,0,20" Foreground="{ThemeResource SystemColorWindowTextBrush}" >
+                    <StackPanel  x:Name="HeaderStackPanel"   Orientation="Vertical"  MinHeight="240" HorizontalAlignment="Stretch"  Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+                       <controls:ImageEx x:Name="ProfileImage"  Margin="0,20,0,0" Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}"  CacheMode="BitmapCache" Width="180" Height="200" />
+                        <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="NameAndSurname" Text="{x:Bind ViewModel.NameAndSurname,Mode=OneWay}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                            <TextBlock x:Name="IndexNo" Text="{x:Bind ViewModel.IndexNo, Mode=OneWay}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <TextBlock x:Name="Email" Text="{x:Bind ViewModel.Email, Mode=OneWay}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubtitleTextBlockStyle}" />
+                            <TextBlock x:Name="NameAndSurname" Margin="10"  Text="{x:Bind ViewModel.NameAndSurname,Mode=OneWay}" Grid.Row="0"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            <TextBlock x:Name="IndexNo" Margin="10" Text="{x:Bind ViewModel.IndexNo, Mode=OneWay}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock x:Name="Email" Margin="10" Text="{x:Bind ViewModel.Email, Mode=OneWay}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubtitleTextBlockStyle}" />
                         </Grid>
-                    </controls:WrapPanel>
+                    </StackPanel>
 
 
                 </controls:ScrollHeader>
