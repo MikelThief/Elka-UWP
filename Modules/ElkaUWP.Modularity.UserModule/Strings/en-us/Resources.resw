@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="correspondence" xml:space="preserve">
+  <data name="CorrespondenceAddressKey" xml:space="preserve">
     <value>Correspondence address</value>
   </data>
   <data name="EmailKey" xml:space="preserve">
@@ -132,7 +132,7 @@
   <data name="LastNameKey" xml:space="preserve">
     <value>Last name</value>
   </data>
-  <data name="MiddleNameKey" xml:space="preserve">
+  <data name="MiddleNamesKey" xml:space="preserve">
     <value>Middle Name</value>
   </data>
   <data name="PeselKey" xml:space="preserve">
@@ -141,16 +141,34 @@
   <data name="PhotoUriKey" xml:space="preserve">
     <value>Photo Uri</value>
   </data>
-  <data name="primary" xml:space="preserve">
+  <data name="PrimaryAddressKey" xml:space="preserve">
     <value>Primary address</value>
   </data>
   <data name="SexKey" xml:space="preserve">
     <value>Sex</value>
   </data>
-  <data name="StudentNumberKey" xml:space="preserve">
+  <data name="IndexNumberKey" xml:space="preserve">
     <value>Student number</value>
   </data>
   <data name="StudentStatusKey" xml:space="preserve">
     <value>Student status</value>
+  </data>
+  <data name="OtherAddressKey" xml:space="preserve">
+    <value>Other address</value>
+  </data>
+  <data name="ResidenceAddressKey" xml:space="preserve">
+    <value>Residence address</value>
+  </data>
+  <data name="StudentStatusValue0" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="StudentStatusValue1" xml:space="preserve">
+    <value>Inactive student</value>
+  </data>
+  <data name="StudentStatusValue2" xml:space="preserve">
+    <value>Active student</value>
+  </data>
+  <data name="StudentStatusValueNull" xml:space="preserve">
+    <value>Unknown</value>
   </data>
 </root>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElkaUWP.DataLayer.Propertiary;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.DataLayer.Usos.Services;
 using Prism.Ioc;

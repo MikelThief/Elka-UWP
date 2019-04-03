@@ -59,23 +59,22 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-              <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserInfoElement}">
+        <controls:AdaptiveGridView x:Name="MainAdaptiveGrid" Grid.Row="1" OneRowModeEnabled="False" Margin="0" ItemHeight="80" ItemsSource="{x:Bind ViewModel.UserAttributes}">
             <controls:AdaptiveGridView.Header>
                 <controls:ScrollHeader Mode="Fade" VerticalAlignment="Stretch"   HorizontalAlignment="Stretch" Margin="0,0,0,20" Foreground="{ThemeResource SystemColorWindowTextBrush}" >
-                    <StackPanel  x:Name="HeaderStackPanel"   Orientation="Vertical"  MinHeight="240" HorizontalAlignment="Stretch"  Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
-                       <controls:ImageEx x:Name="ProfileImage"  Margin="0,20,0,0" Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}"  CacheMode="BitmapCache" Width="180" Height="200" />
+                    <StackPanel  x:Name="HeaderStackPanel" Orientation="Vertical" MinHeight="240" HorizontalAlignment="Stretch" Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+                       <controls:ImageEx x:Name="ProfileImage"  Margin="0,20,0,0" Source="{x:Bind ViewModel.PhotoUri,Mode=OneWay}" CacheMode="BitmapCache" Width="180" Height="200" />
                         <Grid x:Name="TopGrid"  RowSpacing="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="NameAndSurname" Margin="10"  Text="{x:Bind ViewModel.NameAndSurname,Mode=OneWay}" Grid.Row="0"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                            <TextBlock x:Name="IndexNo" Margin="10" Text="{x:Bind ViewModel.IndexNo, Mode=OneWay}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock x:Name="NameAndSurname" Margin="10"  Text="{x:Bind ViewModel.FullName,Mode=OneWay}" Grid.Row="0"  TextWrapping="Wrap" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            <TextBlock x:Name="IndexNo" Margin="10" Text="{x:Bind ViewModel.IndexNumber, Mode=OneWay}" Grid.Row="1"  TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <TextBlock x:Name="Email" Margin="10" Text="{x:Bind ViewModel.Email, Mode=OneWay}" Grid.Row="2" TextWrapping="WrapWholeWords" Style="{StaticResource SubtitleTextBlockStyle}" />
                         </Grid>
                     </StackPanel>
-
 
                 </controls:ScrollHeader>
             </controls:AdaptiveGridView.Header>
