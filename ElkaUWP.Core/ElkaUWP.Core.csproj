@@ -234,10 +234,6 @@
       <Project>{9271b278-9c6b-45b4-95f2-a52643b26b9a}</Project>
       <Name>ElkaUWP.Modularity.LoginModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\ElkaUWP.Modularity.UserModule\ElkaUWP.Modularity.UserModule.csproj">
-      <Project>{E27A6981-2C9A-43BE-A465-D6B541FEE523}</Project>
-      <Name>ElkaUWP.Modularity.UserModule</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
