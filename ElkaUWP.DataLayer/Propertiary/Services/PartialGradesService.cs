@@ -26,7 +26,20 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             _crstestsService = crstestsService;
         }
 
-        public async Task<PartialGradesTree> GetAsync(string semesterLiteral, string subjectId)
+        public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
+        {
+            var container = new PartialGradesContainer()
+            {
+                SemesterLiteral = semesterLiteral,
+                SubjectId = subjectId
+            };
+
+            container.UsosTree = await GetUsosTreeAsync(semesterLiteral, subjectId);
+
+            return container;
+        }
+
+        private async Task<PartialGradesTree> GetUsosTreeAsync(string semesterLiteral, string subjectId)
         {
             // pseudo state-less behaviour to achieve greater processing speed
             CollectedNodeIds.Clear();
@@ -36,11 +49,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             var partialGradesTree = new PartialGradesTree();
             partialGradesTree.Nodes = new List<PartialGradeNode>();
-            partialGradesTree.SemesterLiteral = semesterLiteral;
-            partialGradesTree.SubjectId = subjectId;
 
             var subjectRootNodes = new List<Node>();
-            
+
             // Step 1a - add tests if there are any for given pair <semester, subject>
             if(testStubs.ContainsKey(key: semesterLiteral))
             {
@@ -67,7 +78,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(continueOnCapturedContext: false);
 
             foreach (var partialGradeNode in partialGradesTree.Nodes)
-                AssignPointsToPartialGradeNodeRecursive(partialGradeNode, points: pointsList);
+                AssignPointsToPartialGradeNodeRecursive(partialRootGradeNode: partialGradeNode, points: pointsList);
 
             // Step 4 - remove redundant nodes
             var nodesToRemove = new List<PartialGradeNode>();
@@ -89,10 +100,10 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             // for all of that above - USOS: FUCK YOU!
             return partialGradesTree;
-        }     
+        }
         private void CopyUsosNodeToPartialGradeNodeRecursive(Node usosNode, PartialGradeNode partialGradeNode)
         {
-            CollectedNodeIds.Add(usosNode.NodeId);
+            CollectedNodeIds.Add(item: usosNode.NodeId);
 
             partialGradeNode.Type = usosNode.Type;
             partialGradeNode.Order = usosNode.Order;
@@ -127,7 +138,6 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                     CopyUsosNodeToPartialGradeNodeRecursive(usosNode: node, partialGradeNode: partialGradeSubNode);
                 }
             }
-
         }
 
         private void AssignPointsToPartialGradeNodeRecursive(PartialGradeNode partialRootGradeNode, List<TestPoint> points)
