@@ -158,7 +158,7 @@
       <Name>ElkaUWP.DataLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
-      <Project>{9F821561-3596-4949-99C4-A32EAA91EE6C}</Project>
+      <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
       <Name>ElkaUWP.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

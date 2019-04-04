@@ -151,6 +151,7 @@
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
     <Compile Include="Usos\Entities\PostalAddressType.cs" />
     <Compile Include="Usos\Entities\Semester.cs" />
+    <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
     <Compile Include="Usos\Entities\Node.cs" />
@@ -172,7 +173,6 @@
     <Compile Include="Usos\Entities\CalendarEventType.cs" />
     <Compile Include="Usos\Entities\CalendarEventRecursionMode.cs" />
     <Compile Include="Usos\Entities\LangDict.cs" />
-    <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
@@ -194,7 +194,6 @@
     <Compile Include="Usos\Services\CrstestsService.cs" />
     <Compile Include="Usos\Services\ExamrepService.cs" />
     <Compile Include="Usos\Services\TermsService.cs" />
-    <Compile Include="Usos\Services\UsersService.cs" />
     <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <Compile Include="Usos\Services\UsersService.cs" />
