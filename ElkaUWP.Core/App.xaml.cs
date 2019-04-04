@@ -121,6 +121,15 @@ namespace ElkaUWP.Core
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
+            //Data layer
+            var gradesModuleType = typeof(GradesModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = gradesModuleType.Name,
+                ModuleType = gradesModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
 
         }
 

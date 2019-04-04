@@ -58,9 +58,6 @@ namespace ElkaUWP.Core.Views
                 case "LoginToken":
                     ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken);
                     break;
-                case "Profile":
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken);
-                    break;
                 case PageTokens.CalendarSummaryView:
                     ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView);
                     break;
