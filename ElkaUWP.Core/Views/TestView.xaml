@@ -5,10 +5,12 @@
     xmlns:local="using:ElkaUWP.Core.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock Text="TEST"  FontSize="700"/>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="TEST"  FontSize="120"/>
+        <controls:ImageEx Height="200" Width="200" Name="NoSelectionImage" Source="https://i.imgur.com/HhYV33H.png"/>
+    </StackPanel>
 </Page>

@@ -25,11 +25,6 @@
                         OpenPaneLength="170">
         <winui:NavigationView.MenuItems>
             <winui:NavigationViewItem
-                    Content="Calendar"
-                    Icon="Play"
-                    IsSelected="True"
-                    Tag="CalendarSummaryViewToken" />
-            <winui:NavigationViewItem
                     Content="Grades"
                     Icon="Play"
                     IsSelected="True"
@@ -44,6 +39,11 @@
                     Icon="Play"
                     IsSelected="True"
                     Tag="LoginToken" />
+            <winui:NavigationViewItem
+                    Content="Calendar"
+                    Icon="Play"
+                    IsSelected="True"
+                    Tag="CalendarSummaryViewToken" />
             <winui:NavigationViewItem
                 Content="Profile"
                 Icon="Play"

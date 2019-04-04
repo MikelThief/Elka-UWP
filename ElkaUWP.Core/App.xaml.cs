@@ -85,12 +85,22 @@ namespace ElkaUWP.Core
         /// <param name="moduleCatalog"></param>
         public override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            // TODO: Loading optimization: set loading to ondemand and load all if user is already authenticated or just login module if it is fresh start.
             // Login module
             var loginModuleType = typeof(LoginModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
                 ModuleName = loginModuleType.Name,
                 ModuleType = loginModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            // DataLayer module
+            var dataLayerModuleType = typeof(DataLayerInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = dataLayerModuleType.Name,
+                ModuleType = dataLayerModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
@@ -103,30 +113,20 @@ namespace ElkaUWP.Core
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            // User Summary Module
-            var userModuleType = typeof(UserModuleInitializer);
-            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
-            {
-                ModuleName = userModuleType.Name,
-                ModuleType = userModuleType,
-                InitializationMode = InitializationMode.WhenAvailable
-            });
-
-            //Data layer
-            var dataLayerModuleType = typeof(DataLayerInitializer);
-            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
-            {
-                ModuleName = dataLayerModuleType.Name,
-                ModuleType = dataLayerModuleType,
-                InitializationMode = InitializationMode.WhenAvailable
-            });
-
-            //Data layer
+            // Grades module
             var gradesModuleType = typeof(GradesModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
                 ModuleName = gradesModuleType.Name,
                 ModuleType = gradesModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+            // User Module
+            var userModuleType = typeof(UserModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = userModuleType.Name,
+                ModuleType = userModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
