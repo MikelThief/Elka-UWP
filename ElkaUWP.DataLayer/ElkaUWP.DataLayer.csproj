@@ -201,13 +201,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Anotar.NLog.Fody">
-      <Version>4.6.7</Version>
+      <Version>4.8.1</Version>
     </PackageReference>
     <PackageReference Include="Equals.Fody">
       <Version>1.9.3</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>4.0.2</Version>
+      <Version>4.2.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -228,6 +228,9 @@
     </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.853-ci</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.SfSchedule.UWP">
+      <Version>17.1.0.41</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

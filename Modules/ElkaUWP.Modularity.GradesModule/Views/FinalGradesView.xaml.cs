@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.Modularity.GradesModule.ViewModels;
 using Prism.Mvvm;
 
@@ -35,7 +37,19 @@ namespace ElkaUWP.Modularity.GradesModule.Views
 
         private async void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            ViewModel.SelectedSubjectApproach = e.AddedItems[0] as SubjectApproach;
+            ViewModel.GetPartialGradesContainer(ViewModel.SelectedSubjectApproach.Id, ViewModel.SelectedSubjectApproach.SemesterLiteral);
+        }
+
+        private void GradesMasterDetailsView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            GradesMasterDetailsView.MapDetails = MapDetails;
+        }
+
+        private object MapDetails(object arg)
+        {
+            //ViewModel.DetailPaneInitilizationTaskNotifier
+            return ViewModel.DetailPaneInitilizationTaskNotifier;
         }
     }
 }

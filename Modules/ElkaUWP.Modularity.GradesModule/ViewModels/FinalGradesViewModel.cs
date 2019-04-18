@@ -25,23 +25,32 @@ using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.GradesModule.ViewModels
 {
-    public class FinalGradesViewModel : BindableBase, INavigationAware
+    public class FinalGradesViewModel : BindableBase, INavigatedAware
     {
         private FinalGradesService _finalGradesService;
         private PartialGradesService _partialGradesService;
         private INavigationService _navigationService;
 
         public ObservableCollection<SubjectApproach> SubjectApproaches = new ObservableCollection<SubjectApproach>();
-        public ObservableCollection<PartialGradesContainer> PartialGradesContainers { get; set; }
+        public ObservableCollection<PartialGradeNode> UsosPartialGradesSource = new ObservableCollection<PartialGradeNode>();
 
         private SubjectApproach _selectedSubjectApproach;
+        private PartialGradesContainer _partialGrades;
 
         public SubjectApproach SelectedSubjectApproach
         {
             get => _selectedSubjectApproach;
-            set => SetProperty(storage: ref _selectedSubjectApproach, value: value,
-                propertyName: nameof(SelectedSubjectApproach));
+            set => SetProperty(storage: ref _selectedSubjectApproach, value: value, propertyName: nameof(SelectedSubjectApproach));
         }
+
+        public PartialGradesContainer PartialGrades
+        {
+            get => _partialGrades;
+            set => SetProperty(storage: ref _partialGrades, value: value, propertyName: nameof(PartialGrades));
+        }
+
+        public NotifyTask MasterPaneInitilizationTaskNotifier { get; private set; }
+        public NotifyTask<PartialGradesContainer> DetailPaneInitilizationTaskNotifier { get; private set; }
 
         public FinalGradesViewModel(FinalGradesService finalGradesService, PartialGradesService partialGradesService)
         {
@@ -50,7 +59,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         }
 
         /// <inheritdoc />
-        public async void OnNavigatedFrom(INavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
@@ -58,18 +67,11 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         /// <inheritdoc />
         public void OnNavigatedTo(INavigationParameters parameters)
         {
-
-        }
-
-        /// <inheritdoc />
-        public async void OnNavigatingTo(INavigationParameters parameters)
-        {
             _navigationService = parameters.GetNavigationService();
-
-            await LoadDataAsync();
+            MasterPaneInitilizationTaskNotifier = NotifyTask.Create(asyncAction: LoadMasterElementsAsync);
         }
 
-        private async Task LoadDataAsync()
+        private async Task LoadMasterElementsAsync()
         {
             var subjectApproaches = await _finalGradesService.GetAllAsync();
 
@@ -79,6 +81,20 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
                     !subjectApproach.Acronym.All(c => c >= '0' && c <= '9')
                     && subjectApproach.Acronym.Length >= 3).ToList();
 
+            string FindHighestSemesterLiteral(IEnumerable<SubjectApproach> approachesList)
+            {
+                var semesterLiteralAndShortConverter = new SemesterLiteralAndShortConverter();
+                short highestSemester = default;
+                foreach (var approach in approachesList)
+                {
+                    var literalAsShort =
+                        semesterLiteralAndShortConverter.LiteralToShort(semesterLiteral: approach.SemesterLiteral);
+                    if (literalAsShort > highestSemester)
+                        highestSemester = literalAsShort;
+                }
+
+                return semesterLiteralAndShortConverter.ShortToString(semesterShort: highestSemester);
+            }
 
             var inProgressApproaches =
                 filteredSubjectApproaches.Where(predicate: x =>
@@ -99,20 +115,11 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
 
         }
 
-        private string FindHighestSemesterLiteral(IEnumerable<SubjectApproach> approachesList)
+        public void GetPartialGradesContainer(string subjectId, string semesterLiteral)
         {
-            var semesterLiteralAndShortConverter = new SemesterLiteralAndShortConverter();
-            short highestSemester = default;
-            foreach (var approach in approachesList)
-            {
-                var literalAsShort =
-                    semesterLiteralAndShortConverter.LiteralToShort(semesterLiteral: approach.SemesterLiteral);
-                if (literalAsShort > highestSemester)
-                    highestSemester = literalAsShort;
-            }
+            DetailPaneInitilizationTaskNotifier = NotifyTask.Create<PartialGradesContainer>(task:
+                _partialGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId));
 
-            return semesterLiteralAndShortConverter.ShortToString(semesterShort: highestSemester);
         }
-
     }
 }

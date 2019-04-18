@@ -28,27 +28,29 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
+            var nodes = GetUsosTreeAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
+
             var container = new PartialGradesContainer()
             {
                 SemesterLiteral = semesterLiteral,
-                SubjectId = subjectId
+                SubjectId = subjectId,
+                Nodes = await nodes
             };
 
-            container.UsosTree = await GetUsosTreeAsync(semesterLiteral, subjectId);
+
 
             return container;
         }
 
-        private async Task<PartialGradesTree> GetUsosTreeAsync(string semesterLiteral, string subjectId)
+        private async Task<List<PartialGradeNode>> GetUsosTreeAsync(string semesterLiteral, string subjectId)
         {
             // pseudo state-less behaviour to achieve greater processing speed
             CollectedNodeIds.Clear();
 
-            // Step 1 - get all user's tests
-            var testStubs = await _crstestsService.ParticipantAsync().ConfigureAwait(continueOnCapturedContext: false);
+            var nodes = new List<PartialGradeNode>();
 
-            var partialGradesTree = new PartialGradesTree();
-            partialGradesTree.Nodes = new List<PartialGradeNode>();
+            // Step 1 - get all user's tests
+            var testStubs = await _crstestsService.ParticipantAsync().ConfigureAwait(false);
 
             var subjectRootNodes = new List<Node>();
 
@@ -69,21 +71,76 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
                 var partialGradeRootNode = new PartialGradeNode();
 
-                CopyUsosNodeToPartialGradeNodeRecursive(usosNode: await subTreeTask.ConfigureAwait(continueOnCapturedContext: false), partialGradeNode: partialGradeRootNode);
+                void CopyUsosNodeToPartialGradeNodeRecursive(Node usosNode, PartialGradeNode partialGradeNode)
+                {
+                    CollectedNodeIds.Add(item: usosNode.NodeId);
 
-                partialGradesTree.Nodes.Add(item: partialGradeRootNode);
+                    partialGradeNode.Type = usosNode.Type;
+                    partialGradeNode.Order = usosNode.Order;
+                    partialGradeNode.Id = usosNode.NodeId;
+                    partialGradeNode.Points = null;
+
+
+                    if (usosNode.Type == NodeType.Root)
+                    {
+                        partialGradeNode.Desciption = usosNode.Description?.En;
+
+
+                        if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "pl",
+                                comparisonType: StringComparison.OrdinalIgnoreCase) == 0
+                            || string.IsNullOrEmpty(value: partialGradeNode.Desciption))
+                            partialGradeNode.Desciption = usosNode.Description?.Pl;
+                    }
+
+                    partialGradeNode.Name = usosNode.Name?.En;
+                    if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "pl",
+                            comparisonType: StringComparison.OrdinalIgnoreCase) == 0
+                        || string.IsNullOrEmpty(value: partialGradeNode.Name))
+                        partialGradeNode.Desciption = usosNode.Name?.Pl;
+
+                    if (usosNode.SubNodes != null || usosNode.SubNodes.Count == 0)
+                    {
+                        if (partialGradeNode.Nodes == null)
+                            partialGradeNode.Nodes = new List<PartialGradeNode>();
+
+                        foreach (var node in usosNode.SubNodes)
+                        {
+                            var partialGradeSubNode = new PartialGradeNode();
+                            partialGradeNode.Nodes.Add(item: partialGradeSubNode);
+                            CopyUsosNodeToPartialGradeNodeRecursive(usosNode: node,
+                                partialGradeNode: partialGradeSubNode);
+                        }
+                    }
+                }
+
+                CopyUsosNodeToPartialGradeNodeRecursive(usosNode: await subTreeTask.ConfigureAwait(false), partialGradeNode: partialGradeRootNode);
+
+                nodes.Add(item: partialGradeRootNode);
             }
 
             // Step 3 - download points for collected nodes points to nodes
-            var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(continueOnCapturedContext: false);
+            var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(false);
 
-            foreach (var partialGradeNode in partialGradesTree.Nodes)
+            void AssignPointsToPartialGradeNodeRecursive(PartialGradeNode partialRootGradeNode,
+                List<TestPoint> points)
+            {
+                if (points.Exists(point => point.NodeId == partialRootGradeNode.Id))
+                    partialRootGradeNode.Points =
+                        points.Single(point => point.NodeId == partialRootGradeNode.Id).Points;
+
+
+                if (partialRootGradeNode.Nodes != null && partialRootGradeNode.Nodes.Count > 0)
+                    foreach (var node in partialRootGradeNode.Nodes)
+                        AssignPointsToPartialGradeNodeRecursive(partialRootGradeNode: node, points: points);
+            }
+
+            foreach (var partialGradeNode in nodes)
                 AssignPointsToPartialGradeNodeRecursive(partialRootGradeNode: partialGradeNode, points: pointsList);
 
             // Step 4 - remove redundant nodes
             var nodesToRemove = new List<PartialGradeNode>();
 
-            foreach (var rootNode in partialGradesTree.Nodes)
+            foreach (var rootNode in nodes)
                 if(rootNode.Nodes != null)
                     foreach (var node in rootNode.Nodes)
                         if (!node.Points.HasValue && (node.Nodes == null || node.Nodes.Capacity == 0))
@@ -91,7 +148,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             foreach (var node in nodesToRemove)
             {
-                foreach (var partialGradeNode in partialGradesTree.Nodes)
+                foreach (var partialGradeNode in nodes)
                 {
                     if (partialGradeNode.Nodes.Contains(item: node))
                         partialGradeNode.Nodes.Remove(item: node);
@@ -99,59 +156,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             }
 
             // for all of that above - USOS: FUCK YOU!
-            return partialGradesTree;
+            return nodes;
         }
-        private void CopyUsosNodeToPartialGradeNodeRecursive(Node usosNode, PartialGradeNode partialGradeNode)
-        {
-            CollectedNodeIds.Add(item: usosNode.NodeId);
-
-            partialGradeNode.Type = usosNode.Type;
-            partialGradeNode.Order = usosNode.Order;
-            partialGradeNode.Id = usosNode.NodeId;
-            partialGradeNode.Points = null;
-
-
-            if (usosNode.Type == NodeType.Root)
-            {
-                partialGradeNode.Desciption = usosNode.Description?.En;
-
-
-                if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, strB: "pl", comparisonType: StringComparison.OrdinalIgnoreCase) == 0
-                    || string.IsNullOrEmpty(value: partialGradeNode.Desciption))
-                    partialGradeNode.Desciption = usosNode.Description?.Pl;
-            }
-
-            partialGradeNode.Name = usosNode.Name?.En;
-            if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, strB: "pl", comparisonType: StringComparison.OrdinalIgnoreCase) == 0
-                || string.IsNullOrEmpty(value: partialGradeNode.Name))
-                partialGradeNode.Desciption = usosNode.Name?.Pl;
-
-            if (usosNode.SubNodes != null || usosNode.SubNodes.Count == 0)
-            {
-                if (partialGradeNode.Nodes == null)
-                    partialGradeNode.Nodes = new List<PartialGradeNode>();
-
-                foreach (var node in usosNode.SubNodes)
-                {
-                    var partialGradeSubNode = new PartialGradeNode();
-                    partialGradeNode.Nodes.Add(item: partialGradeSubNode);
-                    CopyUsosNodeToPartialGradeNodeRecursive(usosNode: node, partialGradeNode: partialGradeSubNode);
-                }
-            }
-        }
-
-        private void AssignPointsToPartialGradeNodeRecursive(PartialGradeNode partialRootGradeNode, List<TestPoint> points)
-        {
-            if (points.Exists(point => point.NodeId == partialRootGradeNode.Id))
-                partialRootGradeNode.Points = points.Single(point => point.NodeId == partialRootGradeNode.Id).Points;
-
-
-            if (partialRootGradeNode.Nodes != null && partialRootGradeNode.Nodes.Count > 0)
-                foreach (var node in partialRootGradeNode.Nodes)
-                    AssignPointsToPartialGradeNodeRecursive(partialRootGradeNode: node, points: points);
-        }
-
-
-
     }
 }

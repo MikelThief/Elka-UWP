@@ -11,6 +11,8 @@
     xmlns:convertersFromToolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:viewModels="using:ElkaUWP.Modularity.GradesModule.ViewModels"
     xmlns:dataTemplateSelectors="using:ElkaUWP.Modularity.GradesModule.Models.DataTemplateSelectors"
+    xmlns:syncfusion="using:Syncfusion.UI.Xaml.TreeGrid"
+    xmlns:views="using:ElkaUWP.Modularity.GradesModule.Views"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -144,6 +146,13 @@
                     <TextBlock Grid.Column="0"  Margin="0,2,0,8" Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="WrapWholeWords" Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}"/>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Name="MasterDetailsDetailsPaneElement">
+                <Grid>
+                    <syncfusion:SfTreeGrid ItemsSource="{Binding PartialGradesContainer.Nodes}" ChildPropertyName="Nodes">
+
+                    </syncfusion:SfTreeGrid>
+                </Grid>
+            </DataTemplate>
             <DataTemplate x:Key="MasterHeaderTemplate">
                 <Grid Margin="0,0,0,6" Height="40" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}">
                     <TextBlock
@@ -208,6 +217,7 @@
         <tcontrols:MasterDetailsView 
             x:Name="GradesMasterDetailsView"
             x:Uid="GradesMasterDetailsView"
+            Loaded="GradesMasterDetailsView_OnLoaded"
             ItemsSource="{x:Bind ViewModel.SubjectApproaches}" 
             BorderThickness="4"
             BorderBrush="Transparent"
@@ -217,7 +227,7 @@
             Background="Transparent"
             DetailsHeader="{x:Bind ViewModel.SelectedSubjectApproach.Acronym, Mode=OneWay}"
             DetailsHeaderTemplate="{StaticResource DetailHeaderTemplate}"
-            SelectedItem="{x:Bind ViewModel.SelectedSubjectApproach, Mode=TwoWay}"
+            
             SelectionChanged="GradesMasterDetailsView_OnSelectionChanged">
             <tcontrols:MasterDetailsView.ItemTemplateSelector>
                 <dataTemplateSelectors:SubjectApproachDataTemplateSelector InProgressSubjectApproachDataTemplate="{StaticResource InProgressSubjectApproachDataTemplate}" FinishedSubjectApproachDataTemplate="{StaticResource FinishedSubjectApproachDataTemplate}" />
@@ -244,6 +254,15 @@
                     <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
                 </CommandBar>
             </tcontrols:MasterDetailsView.MasterCommandBar>
+            <tcontrols:MasterDetailsView.DetailsTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <syncfusion:SfTreeGrid ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ChildPropertyName="Nodes">
+
+                        </syncfusion:SfTreeGrid>
+                    </Grid>
+                </DataTemplate>
+            </tcontrols:MasterDetailsView.DetailsTemplate>
         </tcontrols:MasterDetailsView>
 
     </Grid>
