@@ -12,7 +12,6 @@
     xmlns:viewModels="using:ElkaUWP.Modularity.GradesModule.ViewModels"
     xmlns:dataTemplateSelectors="using:ElkaUWP.Modularity.GradesModule.Models.DataTemplateSelectors"
     xmlns:syncfusion="using:Syncfusion.UI.Xaml.TreeGrid"
-    xmlns:views="using:ElkaUWP.Modularity.GradesModule.Views"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -250,15 +249,19 @@
                 </Style>
             </tcontrols:MasterDetailsView.ItemContainerStyle>
             <tcontrols:MasterDetailsView.MasterCommandBar>
-                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Bottom" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
                 </CommandBar>
             </tcontrols:MasterDetailsView.MasterCommandBar>
             <tcontrols:MasterDetailsView.DetailsTemplate>
                 <DataTemplate>
                     <Grid>
-                        <syncfusion:SfTreeGrid ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ChildPropertyName="Nodes">
-
+                        <syncfusion:SfTreeGrid ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                               AutoExpandMode="AllNodesExpanded" ChildPropertyName="Nodes" AutoGenerateColumns="False">
+                            <syncfusion:SfTreeGrid.Columns>
+                                <syncfusion:TreeGridTextColumn x:Uid="UsosPartialGradesTreeDescriptionColumn" MappingName="Description" />
+                                <syncfusion:TreeGridNumericColumn x:Uid="UsosPartialGradesTreePointsColumn" MappingName="Points" />
+                            </syncfusion:SfTreeGrid.Columns>
                         </syncfusion:SfTreeGrid>
                     </Grid>
                 </DataTemplate>

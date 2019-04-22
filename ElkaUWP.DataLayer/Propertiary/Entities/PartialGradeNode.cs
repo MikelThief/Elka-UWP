@@ -8,12 +8,12 @@ using ElkaUWP.DataLayer.Usos.Entities;
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
-    [DebuggerDisplay("PartialGradeNode: Name={Name}, Type={Type}, Description={Desciption}, Points={Points}")]
+    [DebuggerDisplay("PartialGradeNode: Name={Name}, Type={Type}, Description={Description}, Points={Points}")]
     public class PartialGradeNode
     {
         public List<PartialGradeNode> Nodes { get; set; }
 
-        public string Desciption { get; set; }
+        public string Description { get; set; }
 
         public float? Points { get; set; }
 
@@ -22,7 +22,5 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
         public int Id { get; set; }
 
         public short Order { get; set; }
-
-        public string Name { get; set; }
     }
 }

@@ -32,13 +32,16 @@ namespace ElkaUWP.Modularity.GradesModule.Views
         public FinalGradesView()
         {
             this.InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
+            ViewModelLocator.SetAutowireViewModel(obj: this, true);
         }
 
         private async void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectedSubjectApproach = e.AddedItems[0] as SubjectApproach;
-            ViewModel.GetPartialGradesContainer(ViewModel.SelectedSubjectApproach.Id, ViewModel.SelectedSubjectApproach.SemesterLiteral);
+
+            if(ViewModel.SelectedSubjectApproach != null)
+                ViewModel.GetPartialGradesContainer(subjectId: ViewModel.SelectedSubjectApproach.Id,
+                    semesterLiteral: ViewModel.SelectedSubjectApproach.SemesterLiteral);
         }
 
         private void GradesMasterDetailsView_OnLoaded(object sender, RoutedEventArgs e)

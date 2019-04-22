@@ -138,4 +138,13 @@
   <data name="SubjectsGradesViewInProgressHeader.Text" xml:space="preserve">
     <value>Pursuing</value>
   </data>
+  <data name="UsosPartialGradesTreeDescriptionColumn.HeaderText" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="UsosPartialGradesTreeNameColumn.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UsosPartialGradesTreePointsColumn.HeaderText" xml:space="preserve">
+    <value>Points</value>
+  </data>
 </root>

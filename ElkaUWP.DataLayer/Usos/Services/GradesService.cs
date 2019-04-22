@@ -26,7 +26,6 @@ namespace ElkaUWP.DataLayer.Usos.Services
         {
 
         }
-        
         public async Task<Dictionary<string, Dictionary<string, GradesGradedSubject>>> Terms2Async()
         {
             var request = (Container.Resolve<GradesTerms2RequestWrapper>());

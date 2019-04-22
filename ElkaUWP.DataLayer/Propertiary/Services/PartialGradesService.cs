@@ -30,16 +30,12 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
         {
             var nodes = GetUsosTreeAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 
-            var container = new PartialGradesContainer()
+            return new PartialGradesContainer()
             {
                 SemesterLiteral = semesterLiteral,
                 SubjectId = subjectId,
                 Nodes = await nodes
             };
-
-
-
-            return container;
         }
 
         private async Task<List<PartialGradeNode>> GetUsosTreeAsync(string semesterLiteral, string subjectId)
@@ -50,7 +46,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             var nodes = new List<PartialGradeNode>();
 
             // Step 1 - get all user's tests
-            var testStubs = await _crstestsService.ParticipantAsync().ConfigureAwait(false);
+            var testStubs = await _crstestsService.ParticipantAsync().ConfigureAwait(continueOnCapturedContext: false);
 
             var subjectRootNodes = new List<Node>();
 
@@ -80,23 +76,43 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                     partialGradeNode.Id = usosNode.NodeId;
                     partialGradeNode.Points = null;
 
+                    string name = default;
+                    string desciption = default;
 
                     if (usosNode.Type == NodeType.Root)
                     {
-                        partialGradeNode.Desciption = usosNode.Description?.En;
+                        desciption = usosNode.Description?.En;
 
 
                         if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "pl",
                                 comparisonType: StringComparison.OrdinalIgnoreCase) == 0
-                            || string.IsNullOrEmpty(value: partialGradeNode.Desciption))
-                            partialGradeNode.Desciption = usosNode.Description?.Pl;
+                            || string.IsNullOrEmpty(value: desciption))
+                            desciption = usosNode.Description?.Pl;
                     }
 
-                    partialGradeNode.Name = usosNode.Name?.En;
+                    name = usosNode.Name?.En;
                     if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "pl",
                             comparisonType: StringComparison.OrdinalIgnoreCase) == 0
-                        || string.IsNullOrEmpty(value: partialGradeNode.Name))
-                        partialGradeNode.Desciption = usosNode.Name?.Pl;
+                        || string.IsNullOrEmpty(value: name))
+                        name = usosNode.Name?.Pl;
+
+                    // Merge description and name
+                    if (string.IsNullOrEmpty(value: name) && !string.IsNullOrEmpty(value: desciption))
+                    {
+                        partialGradeNode.Description = desciption;
+                    }
+                    else if (!string.IsNullOrEmpty(value: name) && string.IsNullOrEmpty(value: desciption))
+                    {
+                        partialGradeNode.Description = name;
+                    }
+                    else if(string.IsNullOrEmpty(value: name) && string.IsNullOrEmpty(value: desciption))
+                    {
+                        partialGradeNode.Description = "";
+                    }
+                    else
+                    {
+                        partialGradeNode.Description = string.Join(separator: " | ", name, desciption);
+                    }
 
                     if (usosNode.SubNodes != null || usosNode.SubNodes.Count == 0)
                     {
@@ -113,13 +129,13 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                     }
                 }
 
-                CopyUsosNodeToPartialGradeNodeRecursive(usosNode: await subTreeTask.ConfigureAwait(false), partialGradeNode: partialGradeRootNode);
+                CopyUsosNodeToPartialGradeNodeRecursive(usosNode: await subTreeTask.ConfigureAwait(continueOnCapturedContext: false), partialGradeNode: partialGradeRootNode);
 
                 nodes.Add(item: partialGradeRootNode);
             }
 
             // Step 3 - download points for collected nodes points to nodes
-            var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(false);
+            var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(continueOnCapturedContext: false);
 
             void AssignPointsToPartialGradeNodeRecursive(PartialGradeNode partialRootGradeNode,
                 List<TestPoint> points)

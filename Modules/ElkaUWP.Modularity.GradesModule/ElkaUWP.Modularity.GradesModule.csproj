@@ -138,9 +138,6 @@
     <Compile Include="Views\FinalGradesView.xaml.cs">
       <DependentUpon>FinalGradesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PartialGradesView.xaml.cs">
-      <DependentUpon>PartialGradesView.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\ElkaUWP.Modularity.GradesModule.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -195,10 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\FinalGradesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PartialGradesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
