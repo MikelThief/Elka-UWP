@@ -17,6 +17,9 @@ using Windows.UI.Xaml.Navigation;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.Modularity.GradesModule.ViewModels;
 using Prism.Mvvm;
+using Syncfusion.UI.Xaml.Grid;
+using Syncfusion.UI.Xaml.TreeGrid;
+using SelectionChangedEventArgs = Windows.UI.Xaml.Controls.SelectionChangedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,7 +35,7 @@ namespace ElkaUWP.Modularity.GradesModule.Views
         public FinalGradesView()
         {
             this.InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, true);
+            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
         private async void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,8 +54,9 @@ namespace ElkaUWP.Modularity.GradesModule.Views
 
         private object MapDetails(object arg)
         {
-            //ViewModel.DetailPaneInitilizationTaskNotifier
             return ViewModel.DetailPaneInitilizationTaskNotifier;
         }
+
+
     }
 }

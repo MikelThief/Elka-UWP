@@ -19,7 +19,11 @@
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter"/>
             <convertersInf:HashSetToStringConverter x:Key="HashSetToStringConverter"/>
             <convertersFromToolkit:StringFormatConverter x:Key="StringFormatConverter" />
-
+            <Style TargetType="syncfusion:TreeGridHeaderCell" x:Key="headerStyle">
+                <Setter Property="Background" Value="#4286f4" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
             <DataTemplate x:Key="FinishedSubjectApproachDataTemplate"
                       x:DataType="entities:SubjectApproach">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6">
@@ -257,10 +261,11 @@
                 <DataTemplate>
                     <Grid>
                         <syncfusion:SfTreeGrid ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                               AutoExpandMode="AllNodesExpanded" ChildPropertyName="Nodes" AutoGenerateColumns="False">
+                                               AutoExpandMode="AllNodesExpanded" ChildPropertyName="Nodes" AutoGenerateColumns="False"
+                                               HeaderStyle="{StaticResource headerStyle}" ColumnSizer="Auto">
                             <syncfusion:SfTreeGrid.Columns>
-                                <syncfusion:TreeGridTextColumn x:Uid="UsosPartialGradesTreeDescriptionColumn" MappingName="Description" />
-                                <syncfusion:TreeGridNumericColumn x:Uid="UsosPartialGradesTreePointsColumn" MappingName="Points" />
+                                <syncfusion:TreeGridTextColumn x:Uid="UsosPartialGradesTreeDescriptionColumn" MappingName="Description"/>
+                                <syncfusion:TreeGridNumericColumn x:Uid="UsosPartialGradesTreePointsColumn" MappingName="Points"/>
                             </syncfusion:SfTreeGrid.Columns>
                         </syncfusion:SfTreeGrid>
                     </Grid>
