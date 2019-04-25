@@ -19,16 +19,19 @@ namespace ElkaUWP.Core.Views
     public sealed partial class ShellView : Page
     {
         private ShellViewModel ViewModel => DataContext as ShellViewModel;
-
         public ShellView()
         {
             InitializeComponent();
-            ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
+
 
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = null;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = false;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.InactiveBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+
+            // Hide default title bar.
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
@@ -37,28 +40,36 @@ namespace ElkaUWP.Core.Views
             ViewModel.Initialize(internalFrame: ContentFrame);
         }
 
-        private void Nv_ItemInvoked(NavigationView navigationView, NavigationViewItemInvokedEventArgs args)
+        private void Nv_ItemInvoked(WinUI.NavigationView navigationView, WinUI.NavigationViewItemInvokedEventArgs args)
         {
             // check if item belongs to Nv
-            var invokedItems = this.Nv.MenuItems.Cast<NavigationViewItem>();
+            var invokedItems = this.NavigationViewControl.MenuItems.Cast<WinUI.NavigationViewItem>();
 
             var invokedItem = invokedItems.FirstOrDefault(e => e.Content.Equals(obj: args.InvokedItem));
 
             switch (invokedItem?.Tag)
             {
-                case "TestViewToken":
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.TestViewToken);
+                case PageTokens.GradesModuleGradesView:
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesModuleGradesView);
+                    break;
+                case "SampleViewToken":
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken);
                     break;
                 case "LoginToken":
                     ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken);
                     break;
-                case "Profile":
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken);
-                    break;
                 case PageTokens.CalendarSummaryView:
                     ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView);
                     break;
+                case PageTokens.UserSummaryViewToken:
+                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken);
+                    break;
             }
+        }
+
+        private void Nv_OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)
+        {
+            ViewModel.RequestInternalNavigation("../");
         }
     }
 }

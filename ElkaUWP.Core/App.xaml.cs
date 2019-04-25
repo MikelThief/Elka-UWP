@@ -41,8 +41,8 @@ using Prism.Services;
 using ElkaUWP.Modularity.LoginModule;
 using Unity;
 using Unity.Lifetime;
-using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Modularity.CalendarModule;
+using ElkaUWP.Modularity.GradesModule;
 using ElkaUWP.Modularity.UserModule;
 using ElkaUWP.DataLayer;
 
@@ -84,12 +84,22 @@ namespace ElkaUWP.Core
         /// <param name="moduleCatalog"></param>
         public override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            // TODO: Loading optimization: set loading to ondemand and load all if user is already authenticated or just login module if it is fresh start.
             // Login module
             var loginModuleType = typeof(LoginModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
                 ModuleName = loginModuleType.Name,
                 ModuleType = loginModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            // DataLayer module
+            var dataLayerModuleType = typeof(DataLayerInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = dataLayerModuleType.Name,
+                ModuleType = dataLayerModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
@@ -102,21 +112,20 @@ namespace ElkaUWP.Core
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            // User Summary Module
+            // Grades module
+            var gradesModuleType = typeof(GradesModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = gradesModuleType.Name,
+                ModuleType = gradesModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+            // User Module
             var userModuleType = typeof(UserModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
                 ModuleName = userModuleType.Name,
                 ModuleType = userModuleType,
-                InitializationMode = InitializationMode.WhenAvailable
-            });
-
-            //Data layer
-            var dataLayerModuleType = typeof(DataLayerInitializer);
-            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
-            {
-                ModuleName = dataLayerModuleType.Name,
-                ModuleType = dataLayerModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
@@ -143,7 +152,7 @@ namespace ElkaUWP.Core
 
             // Set up minimum window size
             var DPI = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().LogicalDpi;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (360 * 96.0f / DPI), height: (640 * 96.0f / DPI)));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(minSize: new Size(width: (400 * 96.0f / DPI), height: (640 * 96.0f / DPI)));
         }
 
         /// <summary>
@@ -159,12 +168,12 @@ namespace ElkaUWP.Core
             var fileTarget = new FileTarget()
             {
                 Name = "FileLog",
-                Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception}",
+                Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception:format=@:innerFormat=@:maxInnerExceptionLevel=5}",
                 OptimizeBufferReuse = true,
                 Encoding = Encoding.UTF8,
                 WriteBom = false,
                 LineEnding = LineEndingMode.Default,
-                FileName = Path.Combine(path1: Windows.Storage.ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
+                FileName = Path.Combine(path1: ApplicationData.Current.LocalFolder.Path, path2: Constants.APPLICATION_LOG_FILENAME),
                 OpenFileCacheTimeout = 2,
                 ArchiveNumbering = ArchiveNumberingMode.Rolling,
                 ArchiveAboveSize = 10240,
@@ -198,7 +207,7 @@ namespace ElkaUWP.Core
         {
             // register types for navigation. SetAutoWireViewModel is still needed in View's code-behind.
             container.RegisterForNavigation<ShellView, ShellViewModel>(key: PageTokens.ShellViewToken);
-            container.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.TestViewToken);
+            container.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.SampleViewToken);
 
             // Register services
             container.RegisterSingleton<SecretService>();
@@ -271,7 +280,7 @@ namespace ElkaUWP.Core
         /// </summary>
         /// <param name="containerRegistry">Container against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
-        {
+        { 
             var nLogExtension = new NLogExtension
             {
                 GetName = (t, n) => t.Name

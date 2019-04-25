@@ -9,37 +9,80 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
     xmlns:helpers="using:ElkaUWP.Core.Helpers"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <NavigationView
-            x:Name="Nv"
-            ItemInvoked="Nv_ItemInvoked"
-            Loaded="Nv_Loaded">
-            <NavigationView.MenuItems>
-                <NavigationViewItem
+
+
+    <winui:NavigationView
+                        x:Name="NavigationViewControl"
+                        IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=TwoWay}"
+                        IsBackButtonVisible="Auto"
+                        BackRequested="Nv_OnBackRequested"
+                        ItemInvoked="Nv_ItemInvoked"
+                        SelectedItem=""
+                        Loaded="Nv_Loaded"
+                        OpenPaneLength="170">
+        <winui:NavigationView.MenuItems>
+            <winui:NavigationViewItem
+                    Content="Grades"
+                    Icon="Play"
+                    IsSelected="True"
+                    Tag="GradesModuleGradesViewToken" />
+            <winui:NavigationViewItem
                     Content="TestView"
                     Icon="Play"
                     IsSelected="True"
-                    Tag="TestViewToken" />
-                <NavigationViewItem
+                    Tag="SampleViewToken" />
+            <winui:NavigationViewItem
                     Content="LoginView"
                     Icon="Play"
                     IsSelected="True"
                     Tag="LoginToken" />
-                <NavigationViewItem
-                    Content="Profile"
-                    Icon="Play"
-                    IsSelected="True"
-                    Tag="Profile" />
-                <NavigationViewItem
+            <winui:NavigationViewItem
                     Content="Calendar"
                     Icon="Play"
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
-            </NavigationView.MenuItems>
+            <winui:NavigationViewItem
+                Content="Profile"
+                Icon="Play"
+                IsSelected="True"
+                Tag="UserSummaryViewToken" />
+        </winui:NavigationView.MenuItems>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
 
-            <Frame x:Name="ContentFrame" />
-        </NavigationView>
-    </Grid>
+                <VisualState x:Name="LargeState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Left"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="MediumState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftCompact"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SmallState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal"/>
+                    </VisualState.Setters>
+                </VisualState>
+               
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Frame x:Name="ContentFrame"/>
+    </winui:NavigationView>
 </Page>

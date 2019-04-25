@@ -14,6 +14,7 @@ using Prism.Navigation;
 using ElkaUWP.Infrastructure.Helpers;
 using Windows.ApplicationModel.Resources;
 using ElkaUWP.DataLayer.Propertiary;
+using ElkaUWP.DataLayer.Propertiary.Services;
 
 namespace ElkaUWP.Modularity.UserModule.ViewModels
 {

@@ -124,17 +124,45 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
-    <Compile Include="Propertiary\Entities\PostalAddressInfoElement.cs" />
+    <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
+    <Compile Include="Propertiary\Entities\PartialGradesContainer.cs" />
+    <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
+    <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
+    <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
+    <Compile Include="Propertiary\Services\FinalGradesService.cs" />
+    <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
-    <Compile Include="Usos\Converters\Json\JsonPostalAddressesConverter.cs" />
-    <Compile Include="Usos\Entities\PostalAddressType.cs" />
+    <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
+    <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Entities\CourseGrade.cs" />
+    <Compile Include="Usos\Entities\CourseGradeSub1.cs" />
+    <Compile Include="Usos\Entities\CourseUnitsGrades.cs" />
+    <Compile Include="Usos\Entities\GradesGradedSubject.cs" />
+    <Compile Include="Usos\Entities\Group.cs" />
+    <Compile Include="Usos\Entities\NodeType.cs" />
+    <Compile Include="Usos\Entities\PhotoUrls.cs" />
     <Compile Include="Usos\Entities\PostalAddress.cs" />
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
+    <Compile Include="Usos\Entities\PostalAddressType.cs" />
+    <Compile Include="Usos\Entities\Semester.cs" />
+    <Compile Include="Usos\Entities\Location.cs" />
+    <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
+    <Compile Include="Usos\Entities\CourseEdition.cs" />
+    <Compile Include="Usos\Entities\Node.cs" />
+    <Compile Include="Usos\Entities\UserCoursesPerSemester.cs" />
+    <Compile Include="Usos\Entities\ExamRepGradedSubject.cs" />
+    <Compile Include="Usos\Entities\IssuerGrades.cs" />
+    <Compile Include="Usos\Entities\Session.cs" />
+    <Compile Include="Usos\Entities\SubjectPassType.cs" />
+    <Compile Include="Usos\Entities\TestPoint.cs" />
     <Compile Include="Usos\Entities\UserInfoContainer.cs" />
-    <Compile Include="Usos\Entities\USOSUserInfo.cs" />
-    <Compile Include="Usos\Extensions\USOSUserInfoExtensions.cs" />
+    <Compile Include="Usos\Entities\UserTests.cs" />
     <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
     <Compile Include="Usos\Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
     <Compile Include="Usos\Abstractions\Bases\UsosServiceBase.cs" />
@@ -145,38 +173,49 @@
     <Compile Include="Usos\Entities\CalendarEventType.cs" />
     <Compile Include="Usos\Entities\CalendarEventRecursionMode.cs" />
     <Compile Include="Usos\Entities\LangDict.cs" />
-    <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
     <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\CoursesUserRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\CrstestsNodeRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\CrstestsParticipantRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\CrstestsUserPointsRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\ExamrepUser2RequestWrapper.cs" />
+    <Compile Include="Usos\Requests\GradesTerms2RequestWrapper.cs" />
     <Compile Include="Usos\Requests\PostalAddressesWrapper.cs" />
-    <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\TermsSearchRequestWrapper.cs" />
     <Compile Include="Usos\Requests\StudentTimeTableRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UpcomingWebCalFeedRequestWrapper.cs" />
-    <Compile Include="Usos\Services\UsersService.cs" />
+    <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
+    <Compile Include="Usos\Services\CoursesService.cs" />
+    <Compile Include="Usos\Services\CrstestsService.cs" />
+    <Compile Include="Usos\Services\ExamrepService.cs" />
+    <Compile Include="Usos\Services\TermsService.cs" />
+    <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
+    <Compile Include="Usos\Services\UsersService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Anotar.NLog.Fody">
-      <Version>4.6.7</Version>
+      <Version>4.8.1</Version>
     </PackageReference>
     <PackageReference Include="Equals.Fody">
       <Version>1.9.3</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>4.0.2</Version>
+      <Version>4.2.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Janitor.Fody">
-      <Version>1.6.5</Version>
-    </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>4.1.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.DependencyValidation.Analyzers">
+      <Version>0.10.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
@@ -185,10 +224,13 @@
       <Version>12.0.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.5.11</Version>
+      <Version>4.6.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.853-ci</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.SfSchedule.UWP">
+      <Version>17.1.0.41</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
+    <Folder Include="Usos\Converters\Entities\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -7,7 +7,7 @@ using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
 
-namespace ElkaUWP.DataLayer.Propertiary
+namespace ElkaUWP.DataLayer.Propertiary.Services
 {
     public class UserService
     {
