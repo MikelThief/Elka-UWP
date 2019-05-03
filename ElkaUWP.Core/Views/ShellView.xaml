@@ -9,18 +9,20 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
     xmlns:helpers="using:ElkaUWP.Core.Helpers"
+    xmlns:misc="using:ElkaUWP.Infrastructure.Misc"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
 
     <winui:NavigationView
+                        IsSettingsVisible="True"
                         x:Name="NavigationViewControl"
                         IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=TwoWay}"
                         IsBackButtonVisible="Auto"
                         BackRequested="Nv_OnBackRequested"
                         ItemInvoked="Nv_ItemInvoked"
-                        SelectedItem=""
+                        Padding="0,-32,0,0"
                         Loaded="Nv_Loaded"
                         OpenPaneLength="170">
         <winui:NavigationView.MenuItems>
@@ -80,9 +82,8 @@
                         <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal"/>
                     </VisualState.Setters>
                 </VisualState>
-               
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Frame x:Name="ContentFrame"/>
+        <misc:ThemeAwareFrame x:Name="ContentFrame"/>
     </winui:NavigationView>
 </Page>

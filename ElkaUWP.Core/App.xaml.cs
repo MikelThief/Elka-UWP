@@ -45,6 +45,7 @@ using ElkaUWP.Modularity.CalendarModule;
 using ElkaUWP.Modularity.GradesModule;
 using ElkaUWP.Modularity.UserModule;
 using ElkaUWP.DataLayer;
+using ElkaUWP.Infrastructure.Misc;
 
 namespace ElkaUWP.Core
 {
@@ -140,7 +141,7 @@ namespace ElkaUWP.Core
             SetUpLogger();
 
             // creating the initial frame
-            var coreFrame = new Frame();
+            var coreFrame = new ThemeAwareFrame();
 
             // creating navigation service for this frame
             NavigationService = (Prism.Navigation.NavigationService.Create(frame: coreFrame, Gesture.Back,
@@ -208,6 +209,7 @@ namespace ElkaUWP.Core
             // register types for navigation. SetAutoWireViewModel is still needed in View's code-behind.
             container.RegisterForNavigation<ShellView, ShellViewModel>(key: PageTokens.ShellViewToken);
             container.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.SampleViewToken);
+            container.RegisterForNavigation<SettingsView, SettingsViewModel>(key: PageTokens.SettingsViewToken);
 
             // Register services
             container.RegisterSingleton<SecretService>();
@@ -225,6 +227,8 @@ namespace ElkaUWP.Core
 
         public override async Task OnStartAsync(StartArgs args)
         {
+            await StartAppServices();
+
             var secretService = Container.Resolve<SecretService>();
             switch (args.StartKind)
             {
@@ -298,9 +302,15 @@ namespace ElkaUWP.Core
             base.OnSuspending();
         }
 
-        public void RegisterLicences()
+        public static void RegisterLicences()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_UWP_SECRET);
+        }
+
+        public async Task StartAppServices()
+        {
+            await ThemeService.InitializeAsync();
+            await ThemeService.SetRequestedThemeAsync();
         }
     }
 }

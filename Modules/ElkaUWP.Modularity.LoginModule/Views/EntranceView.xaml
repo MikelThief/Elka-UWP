@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.LoginModule.Views.EntranceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:AppInfrastructure="using:ElkaUWP.Infrastructure"
+    xmlns:media="using:Microsoft.UI.Xaml.Media"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <media:AcrylicBrush x:Key="WizardAcrylicBackgroundBrush" BackgroundSource="HostBackdrop"
+                                TintOpacity="0.7" TintColor="#515C6B" FallbackColor="#515C6B" />
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid x:Name="ContentArea" Background="{ThemeResource WizardAcrylicBackgroundBrush}">
+        <StackPanel VerticalAlignment="Top" Margin="20,150,20,0" Spacing="10">
+            <TextBlock x:Uid="App_Name_Title_TextBlock" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
+            <TextBlock x:Uid="Login_Wizard_Description_TextBlock" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" Foreground="FloralWhite" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" TextWrapping="WrapWholeWords"/>
+            <Button x:Uid="Start_Wizard_Button" Command="{x:Bind ViewModel.StartWizardDelegateCommand}" Content="Sign_In" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonButtonBackgroundPointerOverBackground" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ButtonForeground" Color="FloralWhite"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#FFB900"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#F7630C"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrush" Color="FloralWhite"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="#FFB900"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="#F7630C"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>

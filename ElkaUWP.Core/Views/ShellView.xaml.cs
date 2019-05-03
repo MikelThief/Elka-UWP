@@ -8,8 +8,10 @@ using Windows.UI.Xaml;
 using ElkaUWP.Core.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using ElkaUWP.Infrastructure;
 using Prism.Mvvm;
+using Prism.Navigation;
 using Prism.Services;
 using WinUI = Microsoft.UI.Xaml.Controls;
 
@@ -19,18 +21,27 @@ namespace ElkaUWP.Core.Views
     public sealed partial class ShellView : Page
     {
         private ShellViewModel ViewModel => DataContext as ShellViewModel;
+
         public ShellView()
         {
             InitializeComponent();
 
 
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            formattableTitleBar.InactiveBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+            var formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-            // Hide default title bar.
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonForegroundColor = (Color) Resources["SystemBaseMediumColor"];
+
+            formattableTitleBar.ButtonPressedBackgroundColor = (Color) Resources["SystemAccentColorDark3"];
+            formattableTitleBar.ButtonPressedForegroundColor = (Color) Resources["SystemBaseLowColor"];
+
+            formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            formattableTitleBar.ButtonInactiveForegroundColor = (Color) Resources["SystemChromeGrayColor"];
+
+            formattableTitleBar.ButtonHoverBackgroundColor = (Color) Resources["SystemAccentColor"];
+            formattableTitleBar.ButtonHoverForegroundColor = (Color) Resources["SystemAltMediumColor"];
+
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
@@ -42,28 +53,40 @@ namespace ElkaUWP.Core.Views
 
         private void Nv_ItemInvoked(WinUI.NavigationView navigationView, WinUI.NavigationViewItemInvokedEventArgs args)
         {
-            // check if item belongs to Nv
-            var invokedItems = this.NavigationViewControl.MenuItems.Cast<WinUI.NavigationViewItem>();
-
-            var invokedItem = invokedItems.FirstOrDefault(e => e.Content.Equals(obj: args.InvokedItem));
-
-            switch (invokedItem?.Tag)
+            if (args.IsSettingsInvoked)
             {
-                case PageTokens.GradesModuleGradesView:
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesModuleGradesView);
-                    break;
-                case "SampleViewToken":
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken);
-                    break;
-                case "LoginToken":
-                    ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken);
-                    break;
-                case PageTokens.CalendarSummaryView:
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView);
-                    break;
-                case PageTokens.UserSummaryViewToken:
-                    ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken);
-                    break;
+                ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SettingsViewToken,
+                    transitionInfo: new EntranceNavigationTransitionInfo());
+            }
+            else if (args.InvokedItemContainer != null)
+            {
+                switch (args.InvokedItemContainer.Tag.ToString())
+                {
+                    case PageTokens.GradesModuleGradesView:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesModuleGradesView,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    //TODO: Remove when going to production
+                    case "SampleViewToken":
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    //TODO: Remove when going to production
+                    case "LoginToken":
+                        ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    case PageTokens.CalendarSummaryView:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    case PageTokens.UserSummaryViewToken:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
