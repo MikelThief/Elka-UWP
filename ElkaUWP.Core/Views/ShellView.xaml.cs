@@ -39,10 +39,6 @@ namespace ElkaUWP.Core.Views
 
             formattableTitleBar.ButtonHoverBackgroundColor = (Color) Resources["SystemAccentColor"];
             formattableTitleBar.ButtonHoverForegroundColor = (Color) Resources["SystemAltMediumColor"];
-
-            // Hide default title bar.
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)

@@ -227,8 +227,7 @@ namespace ElkaUWP.Core
 
         public override async Task OnStartAsync(StartArgs args)
         {
-            await ThemeService.InitializeAsync();
-            await ThemeService.SetRequestedThemeAsync();
+            await StartAppServices();
 
             var secretService = Container.Resolve<SecretService>();
             switch (args.StartKind)
@@ -303,9 +302,15 @@ namespace ElkaUWP.Core
             base.OnSuspending();
         }
 
-        public void RegisterLicences()
+        public static void RegisterLicences()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_UWP_SECRET);
+        }
+
+        public async Task StartAppServices()
+        {
+            await ThemeService.InitializeAsync();
+            await ThemeService.SetRequestedThemeAsync();
         }
     }
 }
