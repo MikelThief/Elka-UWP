@@ -22,7 +22,7 @@
                         IsBackButtonVisible="Auto"
                         BackRequested="Nv_OnBackRequested"
                         ItemInvoked="Nv_ItemInvoked"
-                        Padding="0,32,0,0"
+                        Padding="0,-32,0,0"
                         Loaded="Nv_Loaded"
                         OpenPaneLength="170">
         <winui:NavigationView.MenuItems>

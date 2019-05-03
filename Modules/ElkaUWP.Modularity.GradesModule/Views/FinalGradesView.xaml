@@ -229,7 +229,7 @@
                 <dataTemplateSelectors:SubjectApproachDataTemplateSelector InProgressSubjectApproachDataTemplate="{StaticResource InProgressSubjectApproachDataTemplate}" FinishedSubjectApproachDataTemplate="{StaticResource FinishedSubjectApproachDataTemplate}" />
             </tcontrols:MasterDetailsView.ItemTemplateSelector>
             <tcontrols:MasterDetailsView.NoSelectionContent>
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <tcontrols:ImageEx Height="170" Width="170" Name="NoSelectionImage" Source="/ElkaUWP.Modularity.GradesModule/Images/common/GradesNoSelection.png"/>
                     <TextBlock
                         x:Uid="NoSelectionText"
@@ -246,7 +246,7 @@
                 </Style>
             </tcontrols:MasterDetailsView.ItemContainerStyle>
             <tcontrols:MasterDetailsView.MasterCommandBar>
-                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right" Margin="-4,0,0,-4">
+                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right" Margin="-4,0,-4,-4">
                     <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
                 </CommandBar>
             </tcontrols:MasterDetailsView.MasterCommandBar>

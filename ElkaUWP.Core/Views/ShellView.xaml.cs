@@ -21,6 +21,7 @@ namespace ElkaUWP.Core.Views
     public sealed partial class ShellView : Page
     {
         private ShellViewModel ViewModel => DataContext as ShellViewModel;
+
         public ShellView()
         {
             InitializeComponent();
@@ -39,6 +40,9 @@ namespace ElkaUWP.Core.Views
 
             formattableTitleBar.ButtonHoverBackgroundColor = (Color) Resources["SystemAccentColor"];
             formattableTitleBar.ButtonHoverForegroundColor = (Color) Resources["SystemAltMediumColor"];
+
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
