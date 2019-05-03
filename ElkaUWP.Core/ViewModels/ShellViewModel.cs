@@ -11,6 +11,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ElkaUWP.Infrastructure;
 using Prism.Services;
@@ -47,22 +48,27 @@ namespace ElkaUWP.Core.ViewModels
                 Gesture.Forward, Gesture.Refresh);
         }
 
-        public async void RequestExternalNavigation(string navigationPath, INavigationParameters parameters = null)
+        public async void RequestExternalNavigation(string navigationPath, INavigationParameters parameters = null, NavigationTransitionInfo transitionInfo = null)
         {
-            if(parameters is null)
-                await _externalNavigationService.NavigateAsync(name: "/" + navigationPath);
-            else await _externalNavigationService.NavigateAsync(name: "/" + navigationPath, parameters: parameters);
+            if (transitionInfo == null)
+                transitionInfo = new SuppressNavigationTransitionInfo();
+
+            await _externalNavigationService.NavigateAsync(path: "/" + navigationPath, parameter: parameters,
+                infoOverride: transitionInfo);
         }
 
-        public async void RequestInternalNavigation(string navigationPath, INavigationParameters parameters = null)
+        public async void RequestInternalNavigation(string navigationPath, INavigationParameters parameters = null, NavigationTransitionInfo transitionInfo = null)
         {
+            if(transitionInfo == null)
+                transitionInfo = new SuppressNavigationTransitionInfo();
+
             switch (navigationPath)
             {
                 // TODO: Very dirty fix for an issue: https://github.com/windows-toolkit/WindowsCommunityToolkit/issues/2638
                 case "../":
                     if (isGradesViewSelected)
                     {
-                        await _internalNavigationService.NavigateAsync(name: "/" + PageTokens.GradesModuleGradesView);
+                        await _internalNavigationService.NavigateAsync(path: "/" + PageTokens.GradesModuleGradesView, parameter: parameters, infoOverride: transitionInfo);
                         CanGoBack = false;
                     }
                     else
@@ -76,13 +82,10 @@ namespace ElkaUWP.Core.ViewModels
                         isGradesViewSelected = true;
                     else
                         isGradesViewSelected = false;
-                    await _internalNavigationService.NavigateAsync(name:"/" + navigationPath, parameters: parameters);
+                    await _internalNavigationService.NavigateAsync(path: "/" + navigationPath, parameter: parameters, infoOverride: transitionInfo);
                     CanGoBack = false;
                     break;
             }
-
-
-            
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

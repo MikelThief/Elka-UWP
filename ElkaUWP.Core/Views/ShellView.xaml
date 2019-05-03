@@ -9,12 +9,14 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
     xmlns:helpers="using:ElkaUWP.Core.Helpers"
+    xmlns:misc="using:ElkaUWP.Infrastructure.Misc"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
 
     <winui:NavigationView
+                        IsSettingsVisible="True"
                         x:Name="NavigationViewControl"
                         IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=TwoWay}"
                         IsBackButtonVisible="Auto"
@@ -83,6 +85,6 @@
                
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Frame x:Name="ContentFrame"/>
+        <misc:ThemeAwareFrame x:Name="ContentFrame"/>
     </winui:NavigationView>
 </Page>

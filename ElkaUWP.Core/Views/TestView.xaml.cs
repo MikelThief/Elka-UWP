@@ -25,6 +25,7 @@ namespace ElkaUWP.Core.Views
     public sealed partial class TestView : Page
     {
         private TestViewModel ViewModel => DataContext as TestViewModel;
+
         public TestView()
         {
             this.InitializeComponent();
