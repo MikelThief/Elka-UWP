@@ -29,6 +29,8 @@ namespace ElkaUWP.Core.Views
 
             var formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 
+            formattableTitleBar.BackgroundColor = Colors.Transparent;
+
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
             formattableTitleBar.ButtonForegroundColor = (Color) Resources["SystemBaseMediumColor"];
 

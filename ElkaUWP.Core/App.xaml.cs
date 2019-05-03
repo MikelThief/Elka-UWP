@@ -253,11 +253,7 @@ namespace ElkaUWP.Core
                                 oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
 
                             secretService.CreateOrUpdateSecret(providedCredential: credential);
-
-                            var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY, value: credential.UserName);
-;
+                            ;
                             var navigationParameters = new NavigationParameters
                             {
                                 { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }

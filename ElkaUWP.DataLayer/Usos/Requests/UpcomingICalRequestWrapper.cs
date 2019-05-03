@@ -38,8 +38,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
         public UpcomingICalRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
-            var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME,
-                key: Windows.Storage.ApplicationData.Current.LocalSettings.Values[key: Constants.USOSAPI_ACCESS_TOKEN_KEY].ToString());
+            var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
 
             UnderlyingOAuthRequest = new OAuthRequest
