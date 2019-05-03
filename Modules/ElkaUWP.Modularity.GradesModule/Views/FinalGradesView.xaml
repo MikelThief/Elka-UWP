@@ -12,8 +12,7 @@
     xmlns:viewModels="using:ElkaUWP.Modularity.GradesModule.ViewModels"
     xmlns:dataTemplateSelectors="using:ElkaUWP.Modularity.GradesModule.Models.DataTemplateSelectors"
     xmlns:syncfusion="using:Syncfusion.UI.Xaml.TreeGrid"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter"/>
@@ -26,10 +25,7 @@
             </Style>
             <DataTemplate x:Key="FinishedSubjectApproachDataTemplate"
                       x:DataType="entities:SubjectApproach">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6">
-                    <Grid.Background>
-                        <SolidColorBrush Color="{StaticResource SystemChromeLowColor}"/>
-                    </Grid.Background>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,4,0,4" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                     <StackPanel BorderThickness="4,0,0,0" BorderBrush="{x:Bind IsPassed, Converter={StaticResource FinishedSubjectPassedStatusToBrushConverter}}">
                             <Grid Padding="12,12,12,0">
                                 <Grid.RowDefinitions>
@@ -79,10 +75,7 @@
             </DataTemplate>
             <DataTemplate x:Key="InProgressSubjectApproachDataTemplate"
                       x:DataType="entities:SubjectApproach">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6">
-                    <Grid.Background>
-                        <SolidColorBrush Color="{StaticResource SystemChromeLowColor}"/>
-                    </Grid.Background>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,4,0,4" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                     <StackPanel BorderThickness="4,0,0,0" BorderBrush="Violet">
                         <Grid Padding="12,12,12,0">
                             <Grid.RowDefinitions>
@@ -163,7 +156,7 @@
                         x:Name="GradesMasterDetailsHeaderText"
                         Text="{Binding}"
                         VerticalAlignment="Center"
-                        Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                         Style="{StaticResource TitleTextBlockStyle}" />
                 </Grid>
             </DataTemplate>
@@ -174,14 +167,14 @@
                          x:Name="GradesMasterDetailsStaticDetailHeaderText"
                          x:Uid="GradesMasterDetailsStaticDetailHeaderText"
                          VerticalAlignment="Center"
-                         Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                         Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                          Style="{StaticResource TitleTextBlockStyle}" />
                     <TextBlock
                         Margin="0,0,0,8"
                         x:Name="GradesMasterDetailsSubjectDetailHeaderText"
                         Text="{Binding}"
                         VerticalAlignment="Center"
-                        Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                         Style="{StaticResource TitleTextBlockStyle}" />
                 </StackPanel>
             </DataTemplate>
@@ -192,7 +185,7 @@
     </Page.Resources>
 
 
-    <Grid x:Name="PageGrid">
+    <Grid x:Name="PageGrid" Background="{ThemeResource RegionBrush}">
         <!-- Head -->
 
         <VisualStateManager.VisualStateGroups>
@@ -253,7 +246,7 @@
                 </Style>
             </tcontrols:MasterDetailsView.ItemContainerStyle>
             <tcontrols:MasterDetailsView.MasterCommandBar>
-                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <CommandBar x:Name="GradesPerSemesterCommandBar" IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right" Margin="-4,0,0,-4">
                     <AppBarButton Icon="Refresh" Name="GradesPerSemesterRefreshButton" x:Uid="GradesPerSemesterRefreshButton"/>
                 </CommandBar>
             </tcontrols:MasterDetailsView.MasterCommandBar>

@@ -26,18 +26,20 @@ namespace ElkaUWP.Core.Views
             InitializeComponent();
 
 
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            var formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonForegroundColor = (Color) Resources["SystemBaseMediumHighColor"];
+            formattableTitleBar.ButtonForegroundColor = (Color) Resources["SystemBaseMediumColor"];
 
             formattableTitleBar.ButtonPressedBackgroundColor = (Color) Resources["SystemAccentColorDark3"];
             formattableTitleBar.ButtonPressedForegroundColor = (Color) Resources["SystemBaseLowColor"];
 
             formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonInactiveForegroundColor = (Color) Resources["SystemBaseMediumLowColor"];
+            formattableTitleBar.ButtonInactiveForegroundColor = (Color) Resources["SystemChromeGrayColor"];
 
             formattableTitleBar.ButtonHoverBackgroundColor = (Color) Resources["SystemAccentColor"];
             formattableTitleBar.ButtonHoverForegroundColor = (Color) Resources["SystemAltMediumColor"];
+
             // Hide default title bar.
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
