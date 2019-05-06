@@ -15,7 +15,7 @@ using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
-    public class StudiaLoginViewModel : BindableBase
+    public class StudiaLoginViewModel : BindableBase, INavigatedAware
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
