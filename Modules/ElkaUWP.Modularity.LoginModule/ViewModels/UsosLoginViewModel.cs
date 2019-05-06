@@ -15,36 +15,34 @@ using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
-    public class UsosStepViewModel : BindableBase, INavigationAware
+    public class UsosLoginViewModel : BindableBase, INavigatedAware
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
-
         private readonly IUsosOAuthService _usosOAuthService;
 
-        #region ControlsBindingVariables
         private bool _isSignInButtonEnabled;
         public bool IsSignInButtonEnabled
         {
             get => _isSignInButtonEnabled;
-            set => SetProperty(storage: ref _isSignInButtonEnabled, value: value);
+            set => SetProperty(storage: ref _isSignInButtonEnabled, value: value,
+                propertyName: nameof(IsSignInButtonEnabled));
         }
 
         private bool _isContinueButtonVisible;
         public bool IsContinueButtonVisible
         {
             get => _isContinueButtonVisible;
-            set => SetProperty(storage: ref _isContinueButtonVisible, value: value);
+            set => SetProperty(storage: ref _isContinueButtonVisible, value: value,
+                propertyName: nameof(IsContinueButtonVisible));
         }
 
-        #endregion
-
-        public AsyncCommand StartUsosAuthorizationProcessCommand { get; private set; }
+        public AsyncCommand AuthenticateUsosAccountCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
-        public UsosStepViewModel(IUsosOAuthService usosOAuthService)
+        public UsosLoginViewModel(IUsosOAuthService usosOAuthService)
         {
-            StartUsosAuthorizationProcessCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
+            AuthenticateUsosAccountCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
             _usosOAuthService = usosOAuthService;
             IsSignInButtonEnabled = default;
@@ -70,7 +68,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
 
         private async Task Continue()
         {
-            await _navigationService.NavigateAsync(name: PageTokens.ShellViewToken);
+            await _navigationService.NavigateAsync(name: PageTokens.StudiaLoginViewToken);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -93,13 +91,6 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 IsSignInButtonEnabled = true;
                 IsContinueButtonVisible = false;
             }
-
-        }
-
-        /// <inheritdoc />
-        public void OnNavigatingTo(INavigationParameters parameters)
-        {
-            
         }
     }
 }

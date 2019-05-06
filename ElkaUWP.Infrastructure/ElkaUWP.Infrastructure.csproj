@@ -133,6 +133,7 @@
     <Compile Include="Abstractions\Interfaces\IUsosOAuthService.cs" />
     <Compile Include="Constants.App.cs" />
     <Compile Include="Constants.Usos.cs" />
+    <Compile Include="Converters\BoolToNegatedBoolConverter.cs" />
     <Compile Include="Converters\HashSetToStringConverter.cs" />
     <Compile Include="Converters\UsosDateTimeConverter.cs" />
     <Compile Include="Enums\ThemeEnhancement.cs" />
@@ -205,7 +206,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Constants.Studia.cs" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

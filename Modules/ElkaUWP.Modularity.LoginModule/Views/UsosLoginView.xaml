@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.LoginModule.Views.UsosLoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:Microsoft.UI.Xaml.Media"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d"
+    Loaded="UsosLoginView_OnLoaded">
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
+
+    <Grid x:Name="ContentArea" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <StackPanel VerticalAlignment="Stretch" Margin="20,150,20,0" Spacing="10">
+            <TextBlock x:Uid="Usos_Login_Title" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
+            <TextBlock x:Uid="Usos_Login_Description" Margin="0,10" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" TextWrapping="WrapWholeWords" />
+            <Button x:Uid="Sign_In" Command="{x:Bind ViewModel.AuthenticateUsosAccountCommand}" IsEnabled="{x:Bind ViewModel.IsSignInButtonEnabled}" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120" Style="{StaticResource AccentButtonStyle}" />
+            <Button x:Uid="Continue" Command="{x:Bind ViewModel.ContinueCommand}" Visibility="{x:Bind ViewModel.IsContinueButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" FontSize="20px" HorizontalAlignment="Center" Height="40" Width="120" Style="{StaticResource AccentButtonStyle}"/>
+
+            <TextBlock x:Uid="Step1of2" Padding="20" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"/>
+        </StackPanel>
+        <Grid x:Name="NotificationGrid"/>
+    </Grid>
+</Page>

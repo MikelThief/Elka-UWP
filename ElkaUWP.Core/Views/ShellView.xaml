@@ -329,7 +329,7 @@
                     IsSelected="True"
                     Tag="SampleViewToken" />
                 <winui:NavigationViewItem
-                    Content="LoginView"
+                    Content="WelcomeView"
                     Icon="Play"
                     IsSelected="True"
                     Tag="LoginToken" />

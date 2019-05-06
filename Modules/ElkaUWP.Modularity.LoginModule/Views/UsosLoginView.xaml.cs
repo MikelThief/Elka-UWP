@@ -17,22 +17,22 @@ namespace ElkaUWP.Modularity.LoginModule.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public partial class UsosStepView : Page
+    public partial class UsosLoginView : Page
     {
-        private UsosStepViewModel ViewModel => DataContext as UsosStepViewModel;
+        private UsosLoginViewModel ViewModel => DataContext as UsosLoginViewModel;
 
         private LocalNotificationManager localNotificationmanager;
 
         private readonly ResourceLoader _resourceLoader =
             ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
 
-        public UsosStepView()
+        public UsosLoginView()
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void UsosLoginView_OnLoaded(object sender, RoutedEventArgs e)
         {
             localNotificationmanager = new RavinduL.LocalNotifications.LocalNotificationManager(grid: NotificationGrid);
 
@@ -41,10 +41,10 @@ namespace ElkaUWP.Modularity.LoginModule.Views
                 localNotificationmanager.Show(new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 30),
-                        Text = _resourceLoader.GetString(resource: "Usos_Login_Success_InAppNotification"),
+                        Text = _resourceLoader.GetString(resource: "Usos_Login_Success_Notification"),
                         Glyph = "\uE8D7",
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.LightGreen))
+                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Green))
                     }
                 );
             }

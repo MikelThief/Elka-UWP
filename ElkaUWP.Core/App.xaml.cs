@@ -86,7 +86,7 @@ namespace ElkaUWP.Core
         public override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             // TODO: Loading optimization: set loading to ondemand and load all if user is already authenticated or just login module if it is fresh start.
-            // Login module
+            // Username module
             var loginModuleType = typeof(LoginModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
@@ -259,7 +259,7 @@ namespace ElkaUWP.Core
                                 { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }
                             };
 
-                            await NavigationService.NavigateAsync(name: PageTokens.UsosStepViewToken, parameters: navigationParameters);
+                            await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken, parameters: navigationParameters);
                         }
                     }
                     break;

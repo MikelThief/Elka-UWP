@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="App_Name_Title_TextBlock.Text" xml:space="preserve">
+  <data name="App_Name_Title.Text" xml:space="preserve">
     <value>Volta</value>
     <comment>Displayed on the login screen</comment>
   </data>
-  <data name="Login_Wizard_Description_TextBlock.Text" xml:space="preserve">
+  <data name="Continue.Content" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Encouragement.Content" xml:space="preserve">
+    <value>Let's start!</value>
+  </data>
+  <data name="Login_Wizard_Description.Text" xml:space="preserve">
     <value>This wizard will guide you through login process to USOS and Studia systems.</value>
   </data>
   <data name="No_Internet_Body" xml:space="preserve">
@@ -130,29 +136,41 @@
   <data name="No_Internet_Title" xml:space="preserve">
     <value>No connection detected</value>
   </data>
-  <data name="Start_Wizard_Button.Content" xml:space="preserve">
-    <value>Let's start!</value>
+  <data name="Sign_In.Content" xml:space="preserve">
+    <value>Sign In</value>
   </data>
-  <data name="Step_1_TextBlock.Text" xml:space="preserve">
+  <data name="Step1of2.Text" xml:space="preserve">
     <value>Step 1 of 2</value>
   </data>
-  <data name="Step_2_TextBlock.Text" xml:space="preserve">
+  <data name="Step2of2.Text" xml:space="preserve">
     <value>Step 2 of 2</value>
   </data>
-  <data name="Usos_Login_Success_InAppNotification" xml:space="preserve">
+  <data name="Studia_Login_Password.Header" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Studia_Login_Password.PlaceholderText" xml:space="preserve">
+    <value>••••••••</value>
+  </data>
+  <data name="Studia_Login_Title.Text" xml:space="preserve">
+    <value>Log in to Studia</value>
+  </data>
+  <data name="Studia_Login_Username.Header" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Studia_Login_Username.PlaceholderText" xml:space="preserve">
+    <value>jkowalski</value>
+  </data>
+  <data name="Studia_Login_User_Has_No_Account.Text" xml:space="preserve">
+    <value>I don't have Studia account. Skip this step.</value>
+  </data>
+  <data name="Usos_Login_Description.Text" xml:space="preserve">
+    <value>Pressing the button will take you to CAS page, where you will be able to grant our app access to your account!</value>
+  </data>
+  <data name="Usos_Login_Success_Notification" xml:space="preserve">
     <value>Access to USOS was granted. Credentials were saved in a Windows Credential Locker.</value>
     <comment>Displayed when login attemt was successfull</comment>
   </data>
-  <data name="Usos_Step_Continue_Button.Content" xml:space="preserve">
-    <value>Continue</value>
-  </data>
-  <data name="Usos_Step_Description_TextBlock.Text" xml:space="preserve">
-    <value>Pressing the button will take you to CAS page, where you will be able to grant our app access to your account!</value>
-  </data>
-  <data name="Usos_Step_Log_In_Button.Content" xml:space="preserve">
-    <value>Sign In</value>
-  </data>
-  <data name="Usos_Step_Title_TextBlock.Text" xml:space="preserve">
+  <data name="Usos_Login_Title.Text" xml:space="preserve">
     <value>Log in to USOS</value>
   </data>
 </root>

@@ -3,7 +3,8 @@
     public static class PageTokens
     {
         public const string LoginViewToken = "LoginViewToken";
-        public const string UsosStepViewToken = "UsosStepViewToken";
+        public const string UsosLoginViewToken = "UsosLoginViewToken";
+        public const string StudiaLoginViewToken = "StudiaLoginViewToken";
         public const string ShellViewToken = "ShellViewToken";
         public const string UserSummaryViewToken = "UserSummaryViewToken";
         public const string SampleViewToken = "SampleViewToken";

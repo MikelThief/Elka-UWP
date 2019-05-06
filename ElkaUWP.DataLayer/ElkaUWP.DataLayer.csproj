@@ -135,6 +135,12 @@
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
+    <Compile Include="Studia\Abstractions\Interfaces\ILogonStrategy.cs" />
+    <Compile Include="Studia\Abstractions\Interfaces\ILogonStrategyResolver.cs" />
+    <Compile Include="Studia\Enums\LogonStrategies.cs" />
+    <Compile Include="Studia\Resolvers\LogonStrategyResolver.cs" />
+    <Compile Include="Studia\Services\LogonService.cs" />
+    <Compile Include="Studia\Strategies\LdapLogonStrategy.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
@@ -206,6 +212,9 @@
     <PackageReference Include="Equals.Fody">
       <Version>2.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Flurl.Http">
+      <Version>2.4.2</Version>
+    </PackageReference>
     <PackageReference Include="Fody">
       <Version>5.0.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -248,6 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
+    <Folder Include="Studia\Entities\" />
     <Folder Include="Usos\Converters\Entities\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

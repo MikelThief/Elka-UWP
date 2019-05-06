@@ -133,13 +133,17 @@
     <Compile Include="LoginModuleInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\UsosOAuthService.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\UsosStepViewModel.cs" />
-    <Compile Include="Views\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <Compile Include="ViewModels\StudiaLoginViewModel.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="ViewModels\UsosLoginViewModel.cs" />
+    <Compile Include="Views\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UsosStepView.xaml.cs">
-      <DependentUpon>UsosStepView.xaml</DependentUpon>
+    <Compile Include="Views\StudiaLoginView.xaml.cs">
+      <DependentUpon>StudiaLoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UsosLoginView.xaml.cs">
+      <DependentUpon>UsosLoginView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\ElkaUWP.LoginModule.rd.xml" />
   </ItemGroup>
@@ -187,11 +191,15 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\LoginView.xaml">
+    <Page Include="Views\WelcomeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UsosStepView.xaml">
+    <Page Include="Views\StudiaLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UsosLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
