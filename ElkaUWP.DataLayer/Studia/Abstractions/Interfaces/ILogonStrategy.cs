@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Net;
 using System.Threading.Tasks;
-using Windows.Web.Http;
 using ElkaUWP.DataLayer.Studia.Enums;
 
 namespace ElkaUWP.DataLayer.Studia.Abstractions.Interfaces
@@ -21,7 +17,7 @@ namespace ElkaUWP.DataLayer.Studia.Abstractions.Interfaces
         /// <param name="username">Username to the service</param>
         /// <param name="password">Password to the service</param>
         /// <returns>Cookie which lifetime is 15 minutes if not reused</returns>
-        HttpCookie GetSessionCookie(string username, string password);
+        Cookie GetSessionCookie(string username, string password);
 
         /// <summary>
         /// Asynchronously retrieves Studia server session cookie.
@@ -29,6 +25,6 @@ namespace ElkaUWP.DataLayer.Studia.Abstractions.Interfaces
         /// <param name="username">Username to the service</param>
         /// <param name="password">Password to the service</param>
         /// <returns>Cookie which lifetime is 15 minutes if not reused</returns>
-        Task<HttpCookie> GetSessionCookieAsync(string username, string password);
+        Task<Cookie> GetSessionCookieAsync(string username, string password);
     }
 }

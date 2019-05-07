@@ -40,7 +40,7 @@ namespace ElkaUWP.DataLayer
             containerRegistry.Register<ILogonStrategyResolver, LogonStrategyResolver>();
 
             //Register other types
-            containerRegistry.RegisterSingleton<IFlurlClientFactory, PerHostFlurlClientFactory>();
+            containerRegistry.RegisterSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();
 
         }
 

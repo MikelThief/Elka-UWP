@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.UserDataAccounts.Provider;
 using ElkaUWP.DataLayer.Propertiary.Entities;
+using ElkaUWP.DataLayer.Studia.Enums;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Helpers;
+using Studia = ElkaUWP.DataLayer.Studia;
 
 namespace ElkaUWP.DataLayer.Propertiary.Services
 {
@@ -20,14 +22,19 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
         private HashSet<int> CollectedNodeIds = new HashSet<int>();
 
         private CrstestsService _crstestsService;
+        private Studia.Services.LogonService _studiaLogonService;
 
-        public PartialGradesService(CrstestsService crstestsService)
+        public PartialGradesService(CrstestsService crstestsService, Studia.Services.LogonService studiaLogonService)
         {
             _crstestsService = crstestsService;
+            _studiaLogonService = studiaLogonService;
         }
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
+            var res = _studiaLogonService.CheckIfCorrectLogin(logonStrategy: LogonStrategies.LdapAsForm, "mbator",
+                "Nokia6120");
+
             var nodes = GetUsosTreeAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 
             return new PartialGradesContainer()

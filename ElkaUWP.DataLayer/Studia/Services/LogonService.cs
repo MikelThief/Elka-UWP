@@ -28,7 +28,7 @@ namespace ElkaUWP.DataLayer.Studia.Services
                 await resolvedLogonStrategy.GetSessionCookieAsync(username: username, password: password);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
