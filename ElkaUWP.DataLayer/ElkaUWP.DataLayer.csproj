@@ -138,6 +138,8 @@
     <Compile Include="Studia\Abstractions\Interfaces\ILogonStrategy.cs" />
     <Compile Include="Studia\Abstractions\Interfaces\ILogonStrategyResolver.cs" />
     <Compile Include="Studia\Enums\LogonStrategies.cs" />
+    <Compile Include="Studia\Flurl\FlurlClientExtensions.cs" />
+    <Compile Include="Studia\Flurl\NoRedirectPerBaseAddressHttpClientFactory.cs" />
     <Compile Include="Studia\Resolvers\LogonStrategyResolver.cs" />
     <Compile Include="Studia\Services\LogonService.cs" />
     <Compile Include="Studia\Strategies\LdapLogonStrategy.cs" />
@@ -237,6 +239,12 @@
     </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.853-ci</Version>
+    </PackageReference>
+    <PackageReference Include="RestSharp">
+      <Version>106.6.9</Version>
+    </PackageReference>
+    <PackageReference Include="RestSharp.Newtonsoft.Json">
+      <Version>1.5.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSchedule.UWP">
       <Version>17.1.0.42</Version>

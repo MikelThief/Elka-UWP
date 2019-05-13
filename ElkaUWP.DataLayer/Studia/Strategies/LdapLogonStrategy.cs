@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
 using Anotar.NLog;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Enums;
+using ElkaUWP.DataLayer.Studia.Flurl;
+using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
 using Flurl.Http;
 using Flurl.Http.Configuration;
+using ElkaUWP.Infrastructure.Extensions;
+using ElkaUWP.Infrastructure.Helpers;
 using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace ElkaUWP.DataLayer.Studia.Strategies
@@ -19,13 +26,12 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
         private const string LdapPathSegment = "19L/-/login-ldap";
 
         private const string CookiesAllowedCookieName = "STUDIA_COOKIES";
-        private const string CookiesAllowedCookieValue = "YES&";
+        private const string CookiesAllowedCookieValue = "YES";
         private const string StudiaIdCookieName = "STUDIA_SID";
 
         public LdapLogonStrategy(IFlurlClientFactory flurlClientFactory)
         {
-            _restClient = flurlClientFactory.Get(url: Constants.STUDIA_BASE_URL)
-                .WithCookie(name: CookiesAllowedCookieName, value: CookiesAllowedCookieValue);
+            _restClient = flurlClientFactory.Get(url: Constants.STUDIA_BASE_URL).EnableCookies();
         }
 
         /// <inheritdoc />
@@ -40,21 +46,26 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
         /// <inheritdoc />
         public async Task<Cookie> GetSessionCookieAsync(string username, string password)
         {
-            var unauthenticatedCookiesRequest = _restClient.Request();
+            var unauthenticatedCookiesRequest = _restClient.Request().AppendPathSegment("pl/19L/-/login/");
 
-            var unauthenticatedCookiesResponse = await unauthenticatedCookiesRequest.SendAsync(verb: HttpMethod.Get);
+            var unauthenticatedCookiesResponse =
+                await unauthenticatedCookiesRequest.PostUrlEncodedAsync(new {cookie_ok = "Zgadzam się"});
 
-            if (!_restClient.Cookies.ContainsKey(key: StudiaIdCookieName))
-                throw new Exception(message: "Failed to get unauthenticated cookie from Studia");
+            unauthenticatedCookiesResponse.Headers.TryGetValues("Set-Cookie", out var cookiesy);
 
-            var authenticateCookieRequest = _restClient.Request().AppendPathSegment(segment: LdapPathSegment);
+            var cookiesCollection = CookieHelper.GetAllCookiesFromHeader(cookiesy.ToList().FirstOrDefault(), "studia3.pw.edu.pl");
 
-            var authenticateCookieResponse = authenticateCookieRequest.PostUrlEncodedAsync(data:
+            var authenticateCookieRequest = _restClient.Request().AppendPathSegment("pl/")
+                .AppendPathSegment(segment: LdapPathSegment).WithCookie(cookiesCollection[0]);
+
+            var authenticateCookieResponse = await authenticateCookieRequest.PostUrlEncodedAsync(data:
                 new { studia_login = username, studia_passwd = password });
 
 
+            var thefinalrequest = _restClient.Request().AppendPathSegment("pl/19L/103B-CTxxx-ISA-ECONE/api/info/")
+                .WithCookie(cookiesCollection[0]);
 
-
+            var respo = await thefinalrequest.GetStringAsync();
             return null;
 
         }

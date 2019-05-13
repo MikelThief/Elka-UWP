@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Windows.Web.Http;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace ElkaUWP.DataLayer.Studia.Services
                 await resolvedLogonStrategy.GetSessionCookieAsync(username: username, password: password);
                 return true;
             }
-            catch (Exception ex)
+            catch (CookieException ex)
             {
                 return false;
             }
