@@ -8,8 +8,8 @@ namespace ElkaUWP.DataLayer.Studia.Enums
 {
     public enum LogonStrategies
     {
-        LdapAsForm,
-        Cas,
-        UsosApiViaCas
+        Unspecified,
+        // HTML form accepting Studia account credentials, called LDAP on site
+        StudiaForm
     }
 }

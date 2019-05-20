@@ -34,7 +34,7 @@ namespace ElkaUWP.DataLayer
             containerRegistry.RegisterSingleton<UserService>();
 
             // Register strategies
-            containerRegistry.RegisterSingleton<ILogonStrategy, LdapLogonStrategy>(name: nameof(LogonStrategies.LdapAsForm));
+            containerRegistry.RegisterSingleton<ILogonStrategy, StudiaFormLogonStrategy>(name: nameof(LogonStrategies.StudiaForm));
 
             // Register Resolvers
             containerRegistry.Register<ILogonStrategyResolver, LogonStrategyResolver>();

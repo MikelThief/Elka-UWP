@@ -138,11 +138,13 @@
     <Compile Include="Studia\Abstractions\Interfaces\ILogonStrategy.cs" />
     <Compile Include="Studia\Abstractions\Interfaces\ILogonStrategyResolver.cs" />
     <Compile Include="Studia\Enums\LogonStrategies.cs" />
+    <Compile Include="Studia\Exceptions\LogonStrategyResolutionFailedException.cs" />
     <Compile Include="Studia\Flurl\FlurlClientExtensions.cs" />
     <Compile Include="Studia\Flurl\NoRedirectPerBaseAddressHttpClientFactory.cs" />
+    <Compile Include="Studia\ResolverParameters\LogonStrategyParametersContainer.cs" />
     <Compile Include="Studia\Resolvers\LogonStrategyResolver.cs" />
     <Compile Include="Studia\Services\LogonService.cs" />
-    <Compile Include="Studia\Strategies\LdapLogonStrategy.cs" />
+    <Compile Include="Studia\Strategies\StudiaFormLogonStrategy.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />

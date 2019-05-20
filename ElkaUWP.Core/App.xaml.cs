@@ -278,7 +278,7 @@ namespace ElkaUWP.Core
         /// <summary>
         /// Register types without application cannot perform startup here.
         /// </summary>
-        /// <param name="containerRegistry">Container against which registrations should be performed</param>
+        /// <param name="containerRegistry">ParametersContainer against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         { 
             var nLogExtension = new NLogExtension

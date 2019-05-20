@@ -32,7 +32,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
-            var res = _studiaLogonService.CheckIfCorrectLogin(logonStrategy: LogonStrategies.LdapAsForm, "mbator",
+            var res = _studiaLogonService.CheckIfCorrectLogin(logonStrategy: LogonStrategies.StudiaForm, "mbator",
                 "Nokia6120");
 
             var nodes = GetUsosTreeAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);

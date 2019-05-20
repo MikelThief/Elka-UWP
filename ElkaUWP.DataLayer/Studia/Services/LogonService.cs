@@ -7,14 +7,13 @@ using Windows.Web.Http;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Enums;
+using ElkaUWP.DataLayer.Studia.ResolverParameters;
 
 namespace ElkaUWP.DataLayer.Studia.Services
 {
     public class LogonService
     {
         private readonly ILogonStrategyResolver _logonStrategyResolver;
-
-
 
         public LogonService(ILogonStrategyResolver logonStrategyResolver)
         {
@@ -23,10 +22,13 @@ namespace ElkaUWP.DataLayer.Studia.Services
 
         public async Task<bool> CheckIfCorrectLogin(LogonStrategies logonStrategy, string username, string password)
         {
-            var resolvedLogonStrategy = _logonStrategyResolver.Resolve(strategy: logonStrategy);
+            var container = new LogonStrategyParametersContainer(preferredStrategy: logonStrategy, username: username,
+                password: password);
+
+            var resolvedLogonStrategy = _logonStrategyResolver.Resolve(container: container);
             try
             {
-                await resolvedLogonStrategy.GetSessionCookieAsync(username: username, password: password);
+                
                 return true;
             }
             catch (CookieException ex)
