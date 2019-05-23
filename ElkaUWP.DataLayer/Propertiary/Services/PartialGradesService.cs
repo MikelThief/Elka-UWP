@@ -22,18 +22,17 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
         private HashSet<int> CollectedNodeIds = new HashSet<int>();
 
         private CrstestsService _crstestsService;
-        private Studia.Services.LogonService _studiaLogonService;
+        private Studia.Services.SubjectsPartialGradesService _studiaSubjectsPartialGradesService;
 
-        public PartialGradesService(CrstestsService crstestsService, Studia.Services.LogonService studiaLogonService)
+        public PartialGradesService(CrstestsService crstestsService, Studia.Services.SubjectsPartialGradesService studiaSubjectsPartialGradesService)
         {
             _crstestsService = crstestsService;
-            _studiaLogonService = studiaLogonService;
+            _studiaSubjectsPartialGradesService = studiaSubjectsPartialGradesService;
         }
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
-            var res = _studiaLogonService.CheckIfCorrectLogin(logonStrategy: LogonStrategies.StudiaForm, "mbator",
-                "Nokia6120");
+            var res = _studiaSubjectsPartialGradesService.CheckIfCorrectLogin();
 
             var nodes = GetUsosTreeAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 

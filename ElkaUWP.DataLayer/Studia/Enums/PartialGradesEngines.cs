@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ElkaUWP.DataLayer.Studia.Enums
 {
-    public enum LogonStrategies
+    public enum PartialGradesEngines : short
     {
-        Unspecified,
-        // HTML form accepting Studia account credentials, called LDAP on site
-        StudiaForm
+        LdapFormEngine
     }
 }
