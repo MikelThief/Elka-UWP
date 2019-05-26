@@ -8,6 +8,6 @@ namespace ElkaUWP.DataLayer.Studia.Enums
 {
     public enum PartialGradesEngines : short
     {
-        LdapFormEngine
+        LdapFormPartialGradeEngine
     }
 }

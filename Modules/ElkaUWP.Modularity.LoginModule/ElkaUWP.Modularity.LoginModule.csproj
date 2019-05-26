@@ -208,6 +208,10 @@
     <PRIResource Include="Strings\en-us\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ElkaUWP.DataLayer\ElkaUWP.DataLayer.csproj">
+      <Project>{dc706b3b-7a4d-4b23-be2a-ed8744a57250}</Project>
+      <Name>ElkaUWP.DataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
       <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
       <Name>ElkaUWP.Infrastructure</Name>

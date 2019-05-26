@@ -2,44 +2,100 @@
     x:Class="ElkaUWP.Modularity.LoginModule.Views.StudiaLoginView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ElkaUWP.Modularity.LoginModule.Views"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:ElkaUWP.Modularity.LoginModule.Views"
+    xmlns:localConverters="using:ElkaUWP.Infrastructure.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wctConverters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:localConverters="using:ElkaUWP.Infrastructure.Converters"
-    mc:Ignorable="d"
     Loaded="StudiaLoginView_OnLoaded"
->
+    mc:Ignorable="d">
     <Page.Resources>
         <wctConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <localConverters:BoolToNegatedBoolConverter x:Key="BoolToNegatedBoolConverter"/>
+        <localConverters:BoolToNegatedBoolConverter x:Key="BoolToNegatedBoolConverter" />
+        <localConverters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
     <Grid x:Name="ContentArea" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-        <StackPanel VerticalAlignment="Stretch" Margin="20,150,20,0" Spacing="10">
-            <TextBlock x:Uid="Studia_Login_Title" Style="{StaticResource HeaderTextBlockStyle}"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" IsTapEnabled="False"
-                       IsRightTapEnabled="False" ManipulationMode="None" />
-            <TextBlock x:Uid="Studia_Login_Description" Style="{StaticResource BodyTextBlockStyle}"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" IsTapEnabled="False"
-                       IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center"
-                       TextWrapping="WrapWholeWords" />
-            <TextBox x:Uid="Studia_Login_Username" Width="180" Text="{x:Bind ViewModel.Username, Mode=TwoWay}" AcceptsReturn="False"
-                         IsHandwritingViewEnabled="False" />
-            <PasswordBox x:Uid="Studia_Login_Password" Width="180" Password="{x:Bind ViewModel.Password, Mode=TwoWay}" InputScope="Password"/>
-            <Button x:Uid="Sign_In" Command="{x:Bind ViewModel.AuthenticateStudiaAccountCommand}"
-                    IsEnabled="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToNegatedBoolConverter}}" FontSize="20px" Margin="0,50,0,0"
-                    HorizontalAlignment="Center" Height="40" Width="120"
-                    Style="{StaticResource AccentButtonStyle}" />
-            <Button x:Uid="Continue" Command="{x:Bind ViewModel.ContinueCommand}"
-                    Visibility="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToVisibilityConverter}}"
-                    FontSize="20px" HorizontalAlignment="Center" Height="40" Width="120"
-                    Style="{StaticResource AccentButtonStyle}" />
-            <HyperlinkButton Command="{x:Bind ViewModel.ContinueCommand}" FontSize="14px" HorizontalAlignment="Center">
-                <TextBlock x:Uid="Studia_Login_User_Has_No_Account" Foreground="{StaticResource SystemControlForegroundBaseMediumBrush}"/>
+        <StackPanel
+            Margin="24,120,24,0"
+            VerticalAlignment="Stretch"
+            Spacing="10">
+            <TextBlock
+                x:Uid="Studia_Login_Title"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                IsRightTapEnabled="False"
+                IsTapEnabled="False"
+                ManipulationMode="None"
+                Style="{StaticResource HeaderTextBlockStyle}" />
+            <TextBlock
+                x:Uid="Studia_Login_Description"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                HorizontalTextAlignment="Center"
+                IsRightTapEnabled="False"
+                IsTapEnabled="False"
+                ManipulationMode="None"
+                Style="{StaticResource BodyTextBlockStyle}"
+                TextWrapping="WrapWholeWords" />
+            <StackPanel
+                MinHeight="120"
+                Orientation="Vertical"
+                Visibility="{x:Bind ViewModel.IsLoginAndPasswordFieldsVisible}">
+                <TextBox
+                    x:Uid="Studia_Login_Username"
+                    Width="180"
+                    AcceptsReturn="False"
+                    IsHandwritingViewEnabled="False"
+                    Text="{x:Bind ViewModel.Username, Mode=TwoWay}" />
+                <PasswordBox
+                    x:Uid="Studia_Login_Password"
+                    Width="180"
+                    InputScope="Password"
+                    Password="{x:Bind ViewModel.Password, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="10">
+                <RadioButton
+                    x:Uid="Studia_LoginMethodGroup_LDAP"
+                    GroupName="LoginMethodGroup"
+                    IsChecked="{x:Bind ViewModel.IsLdapLogonChecked}" />
+            </StackPanel>
+            <Button
+                x:Uid="Sign_In"
+                Width="120"
+                Height="40"
+                Margin="0,30,0,0"
+                HorizontalAlignment="Center"
+                Command="{x:Bind ViewModel.LogInCommand}"
+                FontSize="20px"
+                IsEnabled="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToNegatedBoolConverter}}"
+                Style="{StaticResource AccentButtonStyle}" />
+            <Button
+                x:Uid="Continue"
+                Width="120"
+                Height="40"
+                HorizontalAlignment="Center"
+                Command="{x:Bind ViewModel.ContinueCommand}"
+                FontSize="20px"
+                Style="{StaticResource AccentButtonStyle}"
+                Visibility="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <HyperlinkButton
+                HorizontalAlignment="Center"
+                Command="{x:Bind ViewModel.ContinueCommand}"
+                FontSize="14px">
+                <TextBlock x:Uid="Studia_Login_User_Has_No_Account" Foreground="{StaticResource SystemControlForegroundBaseMediumBrush}" />
             </HyperlinkButton>
-            <TextBlock x:Uid="Step2of2" Padding="20" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" />
+            <TextBlock
+                x:Uid="Step2of2"
+                Padding="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}" />
         </StackPanel>
         <Grid x:Name="NotificationGrid" />
     </Grid>

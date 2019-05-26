@@ -173,4 +173,10 @@
   <data name="Usos_Login_Title.Text" xml:space="preserve">
     <value>Log in to USOS</value>
   </data>
+  <data name="Studia_LoginMethodGroup_LDAP.Content" xml:space="preserve">
+    <value>LDAP</value>
+  </data>
+  <data name="Studia_LoginMethodGroup_LDAP.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Default login method. Uses same credentials used by STUDIA2.</value>
+  </data>
 </root>

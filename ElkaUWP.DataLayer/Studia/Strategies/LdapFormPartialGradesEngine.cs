@@ -25,8 +25,11 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
     {
         private readonly IFlurlClient _restClient;
 
-        private const string LoginPagePathSegment = "pl/19L/-/login/";
-        private const string LdapPathSegment = "19L/-/login-ldap";
+        private const string PlPathSegment = "pl/";
+        private const string LoginPagePathSegment = "19L/-/login/";
+        private const string LdapPagePathSegment = "19L/-/login-ldap";
+        private const string PersonEndpointPathSegment = "-/api/person/";
+        private const string ClassesEndPointPathSegment = "-/api/classes/";
 
         private const string CookieAllowedFieldValue = "Zgadzam się";
         private const string StudiaAuthCookieName = "STUDIA_SID";
@@ -38,21 +41,22 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
             _restClient = flurlClientFactory.Get(url: Constants.STUDIA_BASE_URL).EnableCookies();
         }
 
-        //studia3.elka.pw.edu.pl/pl/19L/103B-CTxxx-ISA-ECONE/api/info/
         /// <inheritdoc />
         public async Task<Subject> GetPartialGradesAsync(string subjectId)
         {
             if (!IsAuthenticated())
             {
+                _restClient.Cookies.Clear();
                 await Authenticate().ConfigureAwait(continueOnCapturedContext: false);
             }
 
-            var request = _restClient.Request().AppendPathSegments("pl/19L/", subjectId, "api/info");
+            var request = _restClient.Request().AppendPathSegment(segment: PlPathSegment)
+                .AppendPathSegments("19L/", subjectId, "api/info");
 
             Subject subject;
             try
             {
-                var response = await request.PostAsync(content: null).ConfigureAwait(continueOnCapturedContext: true);
+                var response = await request.GetAsync().ConfigureAwait(continueOnCapturedContext: true);
                 subject = JsonConvert.DeserializeObject<Subject>(value: response.Content.ToString());
             }
             catch (FlurlHttpException fexc)
@@ -74,16 +78,17 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
             }
 
             return subject;
-
-
         }
 
-        private bool IsAuthenticated() =>
+        /// <inheritdoc />
+        public bool IsAuthenticated() =>
             _restClient.Cookies.ContainsKey(key: StudiaAuthCookieName) && _restClient.Cookies[key: StudiaAuthCookieName].Expired;
 
-        private async Task Authenticate()
+        /// <inheritdoc />
+        public async Task Authenticate()
         {
-            var unauthenticatedCookiesRequest = _restClient.Request().AppendPathSegment(segment: LoginPagePathSegment);
+            var unauthenticatedCookiesRequest = _restClient.Request()
+                .AppendPathSegment(segment: PlPathSegment).AppendPathSegment(segment: LoginPagePathSegment);
 
             var unauthenticatedCookiesResponse =
                 await unauthenticatedCookiesRequest.PostUrlEncodedAsync(data: new
@@ -98,8 +103,10 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
                 strHost: Constants.STUDIA_BASE_URL.Substring(
                     startIndex: 1 + Constants.STUDIA_BASE_URL.LastIndexOf(value: '/')));
 
-            var authenticateCookieRequest = _restClient.Request().AppendPathSegment(segment: "pl/")
-                .AppendPathSegment(segment: LdapPathSegment).WithCookie(cookie: cookiesCollection[index: 0]);
+            var authenticateCookieRequest = _restClient.Request()
+                .AppendPathSegment(segment: PlPathSegment)
+                .AppendPathSegment(segment: LdapPagePathSegment)
+                .WithCookie(cookie: cookiesCollection[index: 0]);
 
             var authenticateCookieResponse = await authenticateCookieRequest.PostUrlEncodedAsync(data:
                 new {studia_login = _username, studia_passwd = _password}).ConfigureAwait(continueOnCapturedContext: false);

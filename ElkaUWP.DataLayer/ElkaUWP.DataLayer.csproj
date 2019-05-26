@@ -135,12 +135,14 @@
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
+    <Compile Include="Studia\Abstractions\Bases\StudiaServiceBase.cs" />
     <Compile Include="Studia\Abstractions\Interfaces\IPartialGradesEngine.cs" />
-    <Compile Include="Studia\Entities\Subject.cs" />
+    <Compile Include="Studia\Entities\SubjectEntities.cs" />
     <Compile Include="Studia\Enums\PartialGradesEngines.cs" />
     <Compile Include="Studia\Flurl\FlurlClientExtensions.cs" />
     <Compile Include="Studia\Flurl\NoRedirectPerBaseAddressHttpClientFactory.cs" />
-    <Compile Include="Studia\Services\SubjectsPartialGradesService.cs" />
+    <Compile Include="Studia\Resolvers\SimpleStrategyResolver.cs" />
+    <Compile Include="Studia\Services\LogonService.cs" />
     <Compile Include="Studia\Strategies\LdapFormPartialGradesEngine.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
