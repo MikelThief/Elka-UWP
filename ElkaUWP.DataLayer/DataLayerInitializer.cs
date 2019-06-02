@@ -7,7 +7,6 @@ using ElkaUWP.DataLayer.Propertiary;
 using ElkaUWP.DataLayer.Propertiary.Services;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Enums;
-using ElkaUWP.DataLayer.Studia.Resolvers;
 using ElkaUWP.DataLayer.Studia.Strategies;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.DataLayer.Usos.Services;
@@ -34,11 +33,8 @@ namespace ElkaUWP.DataLayer
             containerRegistry.RegisterSingleton<UserService>();
 
             // Register strategies
-            containerRegistry.RegisterSingleton<IPartialGradesEngine, LdapFormPartialGradesEngine>
+            containerRegistry.RegisterSingleton<IGradesEngine, LdapFormGradesEngine>
                 (name: nameof(PartialGradesEngines.LdapFormPartialGradeEngine));
-
-            // Register resolvers
-            containerRegistry.RegisterSingleton<SimpleStrategyResolver>();
 
             //Register other types
             containerRegistry.RegisterSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();

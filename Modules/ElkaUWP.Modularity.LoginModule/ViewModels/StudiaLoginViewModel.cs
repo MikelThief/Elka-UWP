@@ -79,7 +79,21 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
 
         public async Task LogInAsync()
         {
-            await _logonService.ValidateCredentials(PartialGradesEngines.LdapFormPartialGradeEngine);
+            _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
+            var validationResult = await _logonService.ValidateCredentials()
+                .ConfigureAwait(continueOnCapturedContext: true);
+
+            if (validationResult)
+            {
+                // Display success popup
+                await _navigationService.NavigateAsync(name: PageTokens.ShellViewToken)
+                    .ConfigureAwait(continueOnCapturedContext: false);
+            }
+            else
+            {
+                // display failure popup
+            }
+
         }
 
         private Task Continue()

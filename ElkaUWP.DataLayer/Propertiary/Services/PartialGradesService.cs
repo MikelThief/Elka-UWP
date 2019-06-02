@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.UserDataAccounts.Provider;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Studia.Enums;
+using ElkaUWP.DataLayer.Studia.Services;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
@@ -21,30 +22,31 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
         // keeps ids of nodes collected while running Get()
         private HashSet<int> CollectedNodeIds = new HashSet<int>();
 
-        private CrstestsService _crstestsService;
-        private Studia.Services.LogonService _studiaLogonService;
+        private readonly CrstestsService _crstestsService;
+        private readonly GradeService _studiaGradesService;
 
-        public PartialGradesService(CrstestsService crstestsService, Studia.Services.LogonService studiaLogonService)
+        public PartialGradesService(CrstestsService crstestsService, GradeService studiaGradesService)
         {
             _crstestsService = crstestsService;
-            _studiaLogonService = studiaLogonService;
+            _studiaGradesService = studiaGradesService;
         }
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
-            var res = _studiaLogonService.ValidateCredentials(PartialGradesEngines.LdapFormPartialGradeEngine);
+            var studiaGrades = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral,
+                subjectId: subjectId);
 
-            var nodes = GetUsosTreeAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
+            var usosGrades = GetUsosGradesAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 
             return new PartialGradesContainer()
             {
                 SemesterLiteral = semesterLiteral,
                 SubjectId = subjectId,
-                Nodes = await nodes
+                Nodes = await usosGrades.ConfigureAwait(continueOnCapturedContext: false)
             };
         }
 
-        private async Task<List<PartialGradeNode>> GetUsosTreeAsync(string semesterLiteral, string subjectId)
+        private async Task<List<PartialGradeNode>> GetUsosGradesAsync(string semesterLiteral, string subjectId)
         {
             // pseudo state-less behaviour to achieve greater processing speed
             CollectedNodeIds.Clear();

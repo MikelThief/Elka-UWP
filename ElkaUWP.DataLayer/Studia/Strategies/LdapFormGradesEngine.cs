@@ -21,7 +21,7 @@ using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace ElkaUWP.DataLayer.Studia.Strategies
 {
-    public class LdapFormPartialGradesEngine : IPartialGradesEngine
+    public class LdapFormGradesEngine : IGradesEngine
     {
         private readonly IFlurlClient _restClient;
 
@@ -36,13 +36,13 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
         private readonly string _username;
         private readonly string _password;
 
-        public LdapFormPartialGradesEngine(IFlurlClientFactory flurlClientFactory)
+        public LdapFormGradesEngine(IFlurlClientFactory flurlClientFactory)
         {
             _restClient = flurlClientFactory.Get(url: Constants.STUDIA_BASE_URL).EnableCookies();
         }
 
         /// <inheritdoc />
-        public async Task<Subject> GetPartialGradesAsync(string subjectId)
+        public async Task<Subject> GetAsync(string semesterLiteral, string subjectId)
         {
             if (!IsAuthenticated())
             {
@@ -51,7 +51,7 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
             }
 
             var request = _restClient.Request().AppendPathSegment(segment: PlPathSegment)
-                .AppendPathSegments("19L/", subjectId, "api/info");
+                .AppendPathSegments($"{semesterLiteral.Substring(startIndex: 3)}/", subjectId, "api", "info");
 
             Subject subject;
             try
@@ -82,7 +82,8 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
 
         /// <inheritdoc />
         public bool IsAuthenticated() =>
-            _restClient.Cookies.ContainsKey(key: StudiaAuthCookieName) && _restClient.Cookies[key: StudiaAuthCookieName].Expired;
+            _restClient.Cookies.ContainsKey(key: StudiaAuthCookieName)
+            && _restClient.Cookies[key: StudiaAuthCookieName].Expired;
 
         /// <inheritdoc />
         public async Task Authenticate()
