@@ -20,16 +20,16 @@ namespace ElkaUWP.DataLayer.Studia.Services
     public class LogonService : StudiaServiceBase
     {
 
-        private readonly IGradesEngine _engine;
+        private readonly IGradesProxy _proxy;
 
         // possible login data fields
         private string _username;
         private string _password;
 
         /// <inheritdoc />
-        public LogonService(IGradesEngine engine, SecretService secretService) : base(secretService: secretService)
+        public LogonService(IGradesProxy proxy, SecretService secretService) : base(secretService: secretService)
         {
-            _engine = engine;
+            _proxy = proxy;
         }
 
         public async Task<bool> ValidateCredentials()
@@ -38,7 +38,7 @@ namespace ElkaUWP.DataLayer.Studia.Services
             {
                 _secretService.CreateOrUpdateSecret(container: Constants.STUDIA_RESOURCE_TOKEN, key: _username,
                     secret: _password);
-                await _engine.Authenticate().ConfigureAwait(false);
+                await _proxy.Authenticate().ConfigureAwait(false);
                 return true;
             }
             catch (FlurlHttpException fhexc)

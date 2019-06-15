@@ -103,7 +103,6 @@ namespace ElkaUWP.DataLayer.Usos.Services
             return result;
         }
 
-
         public async Task<List<TestPoint>> UserPointsAsync(IEnumerable<int> nodeIds)
         {
             var request = (Container.Resolve<CrstestsUserPointsRequestWrapper>());
@@ -130,7 +129,5 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
             return result;
         }
-
-
     }
 }

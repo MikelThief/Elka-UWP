@@ -32,9 +32,8 @@ namespace ElkaUWP.DataLayer
             containerRegistry.RegisterSingleton<TimeTableService>();
             containerRegistry.RegisterSingleton<UserService>();
 
-            // Register strategies
-            containerRegistry.RegisterSingleton<IGradesEngine, LdapFormGradesEngine>
-                (name: nameof(PartialGradesEngines.LdapFormPartialGradeEngine));
+            // Register proxies
+            containerRegistry.RegisterSingleton<IGradesProxy, LdapFormGradesProxy>();
 
             //Register other types
             containerRegistry.RegisterSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();

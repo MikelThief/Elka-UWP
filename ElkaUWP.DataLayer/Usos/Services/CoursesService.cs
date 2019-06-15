@@ -17,7 +17,8 @@ namespace ElkaUWP.DataLayer.Usos.Services
     public class CoursesService : UsosServiceBase
     {
         /// <inheritdoc />
-        public CoursesService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
+        public CoursesService(ILogger logger, IContainerExtension containerExtension) 
+            : base(logger, containerExtension)
         {
 
         }
@@ -33,7 +34,8 @@ namespace ElkaUWP.DataLayer.Usos.Services
             {
                 var json = await webClient.DownloadStringTaskAsync(address: requestString);
 
-                result = JsonConvert.DeserializeObject<UserCoursesPerSemester>(value: json, converters: new JsonPassTypeBoolConverter());
+                result = JsonConvert.DeserializeObject<UserCoursesPerSemester>
+                    (value: json, converters: new JsonPassTypeBoolConverter());
             }
             catch (WebException wexc)
             {

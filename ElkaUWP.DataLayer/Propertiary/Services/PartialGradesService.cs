@@ -19,7 +19,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 {
     public class PartialGradesService
     {
-        // keeps ids of nodes collected while running Get()
+        /// Keeps ids of nodes collected while running <see cref="GetAsync"/>
         private HashSet<int> CollectedNodeIds = new HashSet<int>();
 
         private readonly CrstestsService _crstestsService;
@@ -33,8 +33,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
-            var studiaGrades = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral,
-                subjectId: subjectId);
+            //var studiaGrades = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 
             var usosGrades = GetUsosGradesAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 

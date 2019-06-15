@@ -12,12 +12,12 @@ namespace ElkaUWP.DataLayer.Studia.Services
 {
     public class GradeService : StudiaServiceBase
     {
-        private readonly IGradesEngine _engine;
+        private readonly IGradesProxy _proxy;
 
         /// <inheritdoc />
-        public GradeService(IGradesEngine engine, SecretService secretService) : base(secretService: secretService)
+        public GradeService(IGradesProxy proxy, SecretService secretService) : base(secretService: secretService)
         {
-            _engine = engine;
+            _proxy = proxy;
         }
 
         public Task<Subject> GetAsync(string semesterLiteral, string subjectId)

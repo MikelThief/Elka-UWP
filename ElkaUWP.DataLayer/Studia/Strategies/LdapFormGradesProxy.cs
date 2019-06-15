@@ -21,7 +21,7 @@ using HttpMethod = System.Net.Http.HttpMethod;
 
 namespace ElkaUWP.DataLayer.Studia.Strategies
 {
-    public class LdapFormGradesEngine : IGradesEngine
+    public class LdapFormGradesProxy : IGradesProxy
     {
         private readonly IFlurlClient _restClient;
 
@@ -36,7 +36,7 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
         private readonly string _username;
         private readonly string _password;
 
-        public LdapFormGradesEngine(IFlurlClientFactory flurlClientFactory)
+        public LdapFormGradesProxy(IFlurlClientFactory flurlClientFactory)
         {
             _restClient = flurlClientFactory.Get(url: Constants.STUDIA_BASE_URL).EnableCookies();
         }
@@ -93,7 +93,7 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
 
             var unauthenticatedCookiesResponse =
                 await unauthenticatedCookiesRequest.PostUrlEncodedAsync(data: new
-                    {cookie_ok = CookieAllowedFieldValue}).ConfigureAwait(continueOnCapturedContext: false);
+                { cookie_ok = CookieAllowedFieldValue }).ConfigureAwait(continueOnCapturedContext: false);
 
             // manually extracting cookies. In-built behaviour is somewhat broken on UWP
             unauthenticatedCookiesResponse.Headers.TryGetValues(name: "Set-Cookie",
@@ -110,7 +110,7 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
                 .WithCookie(cookie: cookiesCollection[index: 0]);
 
             var authenticateCookieResponse = await authenticateCookieRequest.PostUrlEncodedAsync(data:
-                new {studia_login = _username, studia_passwd = _password}).ConfigureAwait(continueOnCapturedContext: false);
+                new { studia_login = _username, studia_passwd = _password }).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

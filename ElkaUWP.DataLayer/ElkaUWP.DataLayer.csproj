@@ -136,14 +136,14 @@
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
     <Compile Include="Studia\Abstractions\Bases\StudiaServiceBase.cs" />
-    <Compile Include="Studia\Abstractions\Interfaces\IGradesEngine.cs" />
+    <Compile Include="Studia\Abstractions\Interfaces\IGradesProxy.cs" />
     <Compile Include="Studia\Entities\SubjectEntities.cs" />
     <Compile Include="Studia\Enums\PartialGradesEngines.cs" />
     <Compile Include="Studia\Flurl\FlurlClientExtensions.cs" />
     <Compile Include="Studia\Flurl\NoRedirectPerBaseAddressHttpClientFactory.cs" />
     <Compile Include="Studia\Services\LogonService.cs" />
     <Compile Include="Studia\Services\GradeService.cs" />
-    <Compile Include="Studia\Strategies\LdapFormGradesEngine.cs" />
+    <Compile Include="Studia\Strategies\LdapFormGradesProxy.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
@@ -239,7 +239,7 @@
       <Version>7.2.0.853-ci</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSchedule.UWP">
-      <Version>17.1.0.49</Version>
+      <Version>17.1.0.51</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
