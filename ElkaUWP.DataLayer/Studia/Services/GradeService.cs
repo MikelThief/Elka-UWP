@@ -7,6 +7,7 @@ using ElkaUWP.DataLayer.Studia.Abstractions.Bases;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Entities;
 using ElkaUWP.Infrastructure.Services;
+using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Studia.Services
 {
@@ -20,9 +21,23 @@ namespace ElkaUWP.DataLayer.Studia.Services
             _proxy = proxy;
         }
 
-        public Task<Subject> GetAsync(string semesterLiteral, string subjectId)
+        public async Task<Subject> GetAsync(string semesterLiteral, string subjectId)
         {
-            throw new NotImplementedException();
+            if (!_proxy.IsAuthenticated())
+                await _proxy.Authenticate();
+
+            Subject result;
+            try
+            {
+                var response = await _proxy.GetAsync(subjectId: subjectId, semesterLiteral: semesterLiteral);
+                result = JsonConvert.DeserializeObject<Subject>(value: response.Content.ToString());
+            }
+            catch(Exception exc)
+            {
+
+            }
+
+            return null;
         }
     }
 }

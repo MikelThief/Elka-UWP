@@ -34,7 +34,7 @@ namespace ElkaUWP.Modularity.LoginModule.Views
         private LocalNotificationManager localNotificationmanager;
 
         private readonly ResourceLoader _resourceLoader =
-            ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
+            ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
 
         public StudiaLoginView()
         {

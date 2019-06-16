@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.UI.Xaml.Media"
     Loaded="UsosLoginView_OnLoaded"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>

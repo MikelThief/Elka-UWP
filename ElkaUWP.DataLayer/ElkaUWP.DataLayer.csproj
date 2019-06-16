@@ -124,8 +124,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Propertiary\Abstractions\Bases\ModelBase.cs" />
     <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
+    <Compile Include="Propertiary\Entities\Error.cs" />
     <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
     <Compile Include="Propertiary\Entities\PartialGradesContainer.cs" />
     <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />

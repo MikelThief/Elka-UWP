@@ -21,10 +21,8 @@ namespace ElkaUWP.Modularity.LoginModule.Views
     {
         private UsosLoginViewModel ViewModel => DataContext as UsosLoginViewModel;
 
-        private LocalNotificationManager localNotificationmanager;
-
         private readonly ResourceLoader _resourceLoader =
-            ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(LoginModuleInitializer));
+            ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
 
         public UsosLoginView()
         {
@@ -34,20 +32,7 @@ namespace ElkaUWP.Modularity.LoginModule.Views
 
         private void UsosLoginView_OnLoaded(object sender, RoutedEventArgs e)
         {
-            localNotificationmanager = new RavinduL.LocalNotifications.LocalNotificationManager(grid: NotificationGrid);
-
-            if (ViewModel.IsContinueButtonVisible)
-            {
-                localNotificationmanager.Show(new SimpleNotification
-                    {
-                        TimeSpan = TimeSpan.FromSeconds(value: 30),
-                        Text = _resourceLoader.GetString(resource: "Usos_Login_Success_Notification"),
-                        Glyph = "\uE8D7",
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Green))
-                    }
-                );
-            }
+            ViewModel.NotificationManager = new LocalNotificationManager(grid: NotificationGrid);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
         public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
         {
-            //var studiaGrades = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
+            var studiaGrades = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 
             var usosGrades = GetUsosGradesAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 

@@ -21,7 +21,7 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
     public class UserSummaryViewModel : BindableBase, INavigationAware
     {
         private UserService _userService;
-        private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(UserModuleInitializer));
+        private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(UserModuleInitializer));
 
         private Uri _photoUri;
         public Uri PhotoUri { get => _photoUri; private set => SetProperty(storage: ref _photoUri, value: value, propertyName: nameof(PhotoUri)); }

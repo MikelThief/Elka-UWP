@@ -3,8 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Windows.Web.Http;
-using Windows.Web.Http.Filters;
 using Anotar.NLog;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Entities;
@@ -42,7 +40,7 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
         }
 
         /// <inheritdoc />
-        public async Task<Subject> GetAsync(string semesterLiteral, string subjectId)
+        public async Task<HttpResponseMessage> GetAsync(string semesterLiteral, string subjectId)
         {
             if (!IsAuthenticated())
             {
@@ -53,11 +51,9 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
             var request = _restClient.Request().AppendPathSegment(segment: PlPathSegment)
                 .AppendPathSegments($"{semesterLiteral.Substring(startIndex: 3)}/", subjectId, "api", "info");
 
-            Subject subject;
             try
             {
-                var response = await request.GetAsync().ConfigureAwait(continueOnCapturedContext: true);
-                subject = JsonConvert.DeserializeObject<Subject>(value: response.Content.ToString());
+                return await request.GetAsync().ConfigureAwait(continueOnCapturedContext: true);
             }
             catch (FlurlHttpException fexc)
             {
@@ -76,8 +72,6 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
                     exception: exc);
                 throw;
             }
-
-            return subject;
         }
 
         /// <inheritdoc />
