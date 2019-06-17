@@ -145,7 +145,7 @@
     <Compile Include="Studia\Flurl\NoRedirectPerBaseAddressHttpClientFactory.cs" />
     <Compile Include="Studia\Services\LogonService.cs" />
     <Compile Include="Studia\Services\GradeService.cs" />
-    <Compile Include="Studia\Strategies\LdapFormGradesProxy.cs" />
+    <Compile Include="Studia\Proxies\LdapFormGradesProxy.cs" />
     <Compile Include="Usos\Converters\Json\JsonNodeTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPassTypeBoolConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />

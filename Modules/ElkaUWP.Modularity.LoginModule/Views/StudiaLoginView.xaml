@@ -8,11 +8,10 @@
     xmlns:localConverters="using:ElkaUWP.Infrastructure.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wctConverters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    Loaded="StudiaLoginView_OnLoaded"
     mc:Ignorable="d">
     <Page.Resources>
         <wctConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <localConverters:BoolToNegatedBoolConverter x:Key="BoolToNegatedBoolConverter" />
+        <localConverters:NegatedBoolToVisibilityConverter x:Key="NegatedBoolToVisibilityConverter" />
         <localConverters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
@@ -39,30 +38,19 @@
                 ManipulationMode="None"
                 Style="{StaticResource BodyTextBlockStyle}"
                 TextWrapping="WrapWholeWords" />
-            <StackPanel
-                MinHeight="120"
-                Orientation="Vertical"
-                Visibility="{x:Bind ViewModel.IsLoginAndPasswordFieldsVisible}">
+            <StackPanel MinHeight="120" Orientation="Vertical">
                 <TextBox
                     x:Uid="Studia_Login_Username"
                     Width="180"
                     AcceptsReturn="False"
-                    IsHandwritingViewEnabled="False"
+                    IsEnabled="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource NegatedBoolToVisibilityConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Username, Mode=TwoWay}" />
                 <PasswordBox
                     x:Uid="Studia_Login_Password"
                     Width="180"
                     InputScope="Password"
+                    IsEnabled="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource NegatedBoolToVisibilityConverter}, Mode=OneWay}"
                     Password="{x:Bind ViewModel.Password, Mode=TwoWay}" />
-            </StackPanel>
-            <StackPanel
-                HorizontalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="10">
-                <RadioButton
-                    x:Uid="Studia_LoginMethodGroup_LDAP"
-                    GroupName="LoginMethodGroup"
-                    IsChecked="{x:Bind ViewModel.IsLdapLogonChecked}" />
             </StackPanel>
             <Button
                 x:Uid="Sign_In"
@@ -70,9 +58,9 @@
                 Height="40"
                 Margin="0,30,0,0"
                 HorizontalAlignment="Center"
-                Command="{x:Bind ViewModel.LogInCommand}"
+                Command="{x:Bind ViewModel.AuthenticateCommand}"
                 FontSize="20px"
-                IsEnabled="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToNegatedBoolConverter}}"
+                IsEnabled="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource NegatedBoolToVisibilityConverter}, Mode=OneWay}"
                 Style="{StaticResource AccentButtonStyle}" />
             <Button
                 x:Uid="Continue"
@@ -82,7 +70,7 @@
                 Command="{x:Bind ViewModel.ContinueCommand}"
                 FontSize="20px"
                 Style="{StaticResource AccentButtonStyle}"
-                Visibility="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToVisibilityConverter}}" />
+                Visibility="{x:Bind ViewModel.IsAuthenticationSuccesful, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
             <HyperlinkButton
                 HorizontalAlignment="Center"
                 Command="{x:Bind ViewModel.ContinueCommand}"
@@ -97,6 +85,6 @@
                 Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}" />
         </StackPanel>
-        <Grid x:Name="NotificationGrid" />
+        <Grid x:Name="NotificationGrid" Loaded="NotificationGrid_OnLoaded" />
     </Grid>
 </Page>

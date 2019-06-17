@@ -30,7 +30,7 @@ namespace ElkaUWP.Modularity.LoginModule.Views
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
-        private void UsosLoginView_OnLoaded(object sender, RoutedEventArgs e)
+        private void NotificationGrid_OnLoaded(object sender, RoutedEventArgs e)
         {
             ViewModel.NotificationManager = new LocalNotificationManager(grid: NotificationGrid);
         }

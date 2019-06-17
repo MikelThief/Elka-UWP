@@ -7,7 +7,7 @@ using ElkaUWP.DataLayer.Propertiary;
 using ElkaUWP.DataLayer.Propertiary.Services;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Enums;
-using ElkaUWP.DataLayer.Studia.Strategies;
+using ElkaUWP.DataLayer.Studia.Proxies;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.DataLayer.Usos.Services;
 using Flurl.Http.Configuration;

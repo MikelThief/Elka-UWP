@@ -4,15 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ElkaUWP.DataLayer.Studia.Enums;
 using ElkaUWP.DataLayer.Studia.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Helpers;
+using ElkaUWP.Infrastructure.Services;
+using Microsoft.Toolkit.Uwp.Connectivity;
 using Nito.Mvvm;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RavinduL.LocalNotifications;
+using RavinduL.LocalNotifications.Notifications;
 
 namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
@@ -23,23 +29,9 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         private readonly ResourceLoader _resourceLoader = 
             ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
 
+        public LocalNotificationManager NotificationManager { get; set; }
+
         private bool _isAuthenticationSuccesful;
-
-        private bool? _isLdapLogonChecked;
-
-        public bool? IsLdapLogonChecked
-        {
-            get => _isLdapLogonChecked;
-            set
-            {
-                SetProperty(storage: ref _isLdapLogonChecked, value: value,
-                    propertyName: nameof(IsAuthenticationSuccesful));
-                RaisePropertyChanged(propertyName: nameof(IsAuthenticationSuccesful));
-            }
-        }
-
-        public bool IsLoginAndPasswordFieldsVisible =>
-            IsLdapLogonChecked.HasValue && IsLdapLogonChecked.Value;
 
         public bool IsAuthenticationSuccesful
         {
@@ -58,6 +50,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         }
 
         private string _password;
+        private readonly SecretService _secretService;
 
         public string Password
         {
@@ -66,32 +59,64 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 propertyName: nameof(Password));
         }
 
-        public AsyncCommand LogInCommand { get; private set; }
+        public AsyncCommand AuthenticateCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
-        public StudiaLoginViewModel(LogonService logonService)
+        public StudiaLoginViewModel(LogonService logonService, SecretService secretService)
         {
             _logonService = logonService;
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
-            LogInCommand = new AsyncCommand(executeAsync: LogInAsync);
+            AuthenticateCommand = new AsyncCommand(executeAsync: AuthenticateAsync);
             IsAuthenticationSuccesful = default;
+            _secretService = secretService;
         }
 
-        public async Task LogInAsync()
+        private async Task AuthenticateAsync()
         {
             _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
-            var validationResult = await _logonService.ValidateCredentials()
+
+            if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
+            {
+                NotificationManager.Show(notification: new SimpleNotification
+                    {
+                        TimeSpan = TimeSpan.FromSeconds(value: 4),
+                        Text = _resourceLoader.GetString(resource: "No_Internet_Body"),
+                        Glyph = "\uF384",
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Red))
+                    }
+                );
+                return;
+            }
+
+            var validationResult = await _logonService.ValidateCredentialsAsync()
                 .ConfigureAwait(continueOnCapturedContext: true);
+
 
             if (validationResult)
             {
-                // Display success popup
-                await _navigationService.NavigateAsync(name: PageTokens.ShellViewToken)
-                    .ConfigureAwait(continueOnCapturedContext: false);
+                NotificationManager.Show(notification: new SimpleNotification
+                    {
+                        TimeSpan = TimeSpan.FromSeconds(value: 30),
+                        Text = _resourceLoader.GetString(resource: "Studia_Login_Success_Notification"),
+                        Glyph = "\uE8D7",
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Green))
+                    }
+                );
+                IsAuthenticationSuccesful = true;
             }
             else
             {
-                // display failure popup
+                NotificationManager.Show(notification: new SimpleNotification
+                    {
+                        TimeSpan = TimeSpan.FromSeconds(value: 3),
+                        Text = _resourceLoader.GetString(resource: "Studia_Login_Failure_Notification"),
+                        Glyph = "\uEB90",
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Red))
+                    }
+                );
             }
 
         }

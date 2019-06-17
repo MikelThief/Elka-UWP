@@ -35,27 +35,27 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 propertyName: nameof(IsSignInButtonEnabled));
         }
 
-        private bool _isContinueButtonVisible;
-        public bool IsContinueButtonVisible
+        private bool _isAuthenticationSuccessful;
+        public bool IsAuthenticationSuccessful
         {
-            get => _isContinueButtonVisible;
-            set => SetProperty(storage: ref _isContinueButtonVisible, value: value,
-                propertyName: nameof(IsContinueButtonVisible));
+            get => _isAuthenticationSuccessful;
+            set => SetProperty(storage: ref _isAuthenticationSuccessful, value: value,
+                propertyName: nameof(IsAuthenticationSuccessful));
         }
 
-        public AsyncCommand AuthenticateUsosAccountCommand { get; private set; }
+        public AsyncCommand AuthenticateCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
         public UsosLoginViewModel(IUsosOAuthService usosOAuthService)
         {
-            AuthenticateUsosAccountCommand = new AsyncCommand(executeAsync: StartUsosAuthorizationProcessAsync);
+            AuthenticateCommand = new AsyncCommand(executeAsync: AuthenticateAsync);
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
             _usosOAuthService = usosOAuthService;
             IsSignInButtonEnabled = default;
-            IsContinueButtonVisible = default;
+            IsAuthenticationSuccessful = default;
         }
 
-        private async Task StartUsosAuthorizationProcessAsync()
+        private async Task AuthenticateAsync()
         {
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {
@@ -92,8 +92,8 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 && parameters.GetValue<bool>(key: NavigationParameterKeys.IS_USOS_AUTHORIZED))
             {
                 IsSignInButtonEnabled = false;
-                IsContinueButtonVisible = true;
-                NotificationManager.Show(new SimpleNotification
+                IsAuthenticationSuccessful = true;
+                NotificationManager.Show(notification: new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 30),
                         Text = _resourceLoader.GetString(resource: "Usos_Login_Success_Notification"),
@@ -106,7 +106,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
             else
             {
                 IsSignInButtonEnabled = true;
-                IsContinueButtonVisible = false;
+                IsAuthenticationSuccessful = false;
             }
         }
     }

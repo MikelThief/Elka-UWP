@@ -133,9 +133,6 @@
   <data name="No_Internet_Body" xml:space="preserve">
     <value>Make sure you have access to the Internet and try again.</value>
   </data>
-  <data name="No_Internet_Title" xml:space="preserve">
-    <value>No connection detected</value>
-  </data>
   <data name="Sign_In.Content" xml:space="preserve">
     <value>Sign In</value>
   </data>
@@ -167,7 +164,7 @@
     <value>Pressing the button will take you to CAS page, where you will be able to grant our app access to your account!</value>
   </data>
   <data name="Usos_Login_Success_Notification" xml:space="preserve">
-    <value>Access to USOS was granted. Credentials were saved in a Windows Credential Locker.</value>
+    <value>Access to USOS is now granted! Credentials are saved in Windows Credential Locker.</value>
     <comment>Displayed when login attemt was successfull</comment>
   </data>
   <data name="Usos_Login_Title.Text" xml:space="preserve">
@@ -178,5 +175,11 @@
   </data>
   <data name="Studia_LoginMethodGroup_LDAP.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Default login method. Uses same credentials used by STUDIA2.</value>
+  </data>
+  <data name="Studia_Login_Failure_Notification" xml:space="preserve">
+    <value>You provided incorrect credentials. Try again.</value>
+  </data>
+  <data name="Studia_Login_Success_Notification" xml:space="preserve">
+    <value>Access to Studia is now granted! Credentials are saved in Windows Credential Locker.</value>
   </data>
 </root>

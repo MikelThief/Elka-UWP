@@ -31,19 +31,14 @@ namespace ElkaUWP.Modularity.LoginModule.Views
     {
         private StudiaLoginViewModel ViewModel => DataContext as StudiaLoginViewModel;
 
-        private LocalNotificationManager localNotificationmanager;
-
-        private readonly ResourceLoader _resourceLoader =
-            ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
-
         public StudiaLoginView()
         {
             this.InitializeComponent();
         }
 
-        private void StudiaLoginView_OnLoaded(object sender, RoutedEventArgs e)
+        private void NotificationGrid_OnLoaded(object sender, RoutedEventArgs e)
         {
-            localNotificationmanager = new RavinduL.LocalNotifications.LocalNotificationManager(grid: NotificationGrid);
+            ViewModel.NotificationManager = new LocalNotificationManager(grid: NotificationGrid);
         }
     }
 }

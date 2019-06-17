@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.UI.Xaml.Media"
-    Loaded="UsosLoginView_OnLoaded"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -46,7 +45,7 @@
                 Margin="0,50,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
-                Command="{x:Bind ViewModel.AuthenticateUsosAccountCommand}"
+                Command="{x:Bind ViewModel.AuthenticateCommand}"
                 FontSize="20px"
                 IsEnabled="{x:Bind ViewModel.IsSignInButtonEnabled}"
                 Style="{StaticResource AccentButtonStyle}" />
@@ -58,7 +57,7 @@
                 Command="{x:Bind ViewModel.ContinueCommand}"
                 FontSize="20px"
                 Style="{StaticResource AccentButtonStyle}"
-                Visibility="{x:Bind ViewModel.IsContinueButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                Visibility="{x:Bind ViewModel.IsAuthenticationSuccessful, Converter={StaticResource BoolToVisibilityConverter}}" />
 
             <TextBlock
                 x:Uid="Step1of2"
@@ -68,6 +67,6 @@
                 Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}" />
         </StackPanel>
-        <Grid x:Name="NotificationGrid" />
+        <Grid x:Name="NotificationGrid" Loaded="NotificationGrid_OnLoaded" />
     </Grid>
 </Page>

@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Anotar.NLog;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
-using ElkaUWP.DataLayer.Studia.Entities;
-using ElkaUWP.DataLayer.Studia.Flurl;
-using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Helpers;
+using ElkaUWP.Infrastructure.Services;
 using Flurl.Http;
 using Flurl.Http.Configuration;
-using ElkaUWP.Infrastructure.Extensions;
-using ElkaUWP.Infrastructure.Helpers;
 using Newtonsoft.Json;
-using HttpCompletionOption = System.Net.Http.HttpCompletionOption;
-using HttpMethod = System.Net.Http.HttpMethod;
 
-namespace ElkaUWP.DataLayer.Studia.Strategies
+namespace ElkaUWP.DataLayer.Studia.Proxies
 {
     public class LdapFormGradesProxy : IGradesProxy
     {
+        private readonly SecretService _secretService;
         private readonly IFlurlClient _restClient;
 
         private const string PlPathSegment = "pl/";
@@ -31,11 +26,12 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
 
         private const string CookieAllowedFieldValue = "Zgadzam się";
         private const string StudiaAuthCookieName = "STUDIA_SID";
-        private readonly string _username;
-        private readonly string _password;
+        private string _username;
+        private string _password;
 
-        public LdapFormGradesProxy(IFlurlClientFactory flurlClientFactory)
+        public LdapFormGradesProxy(IFlurlClientFactory flurlClientFactory, SecretService secretService)
         {
+            _secretService = secretService;
             _restClient = flurlClientFactory.Get(url: Constants.STUDIA_BASE_URL).EnableCookies();
         }
 
@@ -82,6 +78,12 @@ namespace ElkaUWP.DataLayer.Studia.Strategies
         /// <inheritdoc />
         public async Task Authenticate()
         {
+            var secret = _secretService.GetSecret(container: Constants.STUDIA_CREDENTIAL_CONTAINER_NAME);
+            secret.RetrievePassword();
+
+            _username = secret.UserName;
+            _password = secret.Password;
+
             var unauthenticatedCookiesRequest = _restClient.Request()
                 .AppendPathSegment(segment: PlPathSegment).AppendPathSegment(segment: LoginPagePathSegment);
 

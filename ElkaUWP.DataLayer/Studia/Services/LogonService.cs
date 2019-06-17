@@ -32,11 +32,11 @@ namespace ElkaUWP.DataLayer.Studia.Services
             _proxy = proxy;
         }
 
-        public async Task<bool> ValidateCredentials()
+        public async Task<bool> ValidateCredentialsAsync()
         {
             try
             {
-                _secretService.CreateOrUpdateSecret(container: Constants.STUDIA_RESOURCE_TOKEN, key: _username,
+                _secretService.CreateOrUpdateSecret(container: Constants.STUDIA_CREDENTIAL_CONTAINER_NAME, key: _username,
                     secret: _password);
                 await _proxy.Authenticate().ConfigureAwait(false);
                 return true;
@@ -44,13 +44,13 @@ namespace ElkaUWP.DataLayer.Studia.Services
             catch (FlurlHttpException fhexc)
             {
                 LogTo.FatalException(message: "Failed to authenticate user against Studia", exception: fhexc);
-                _secretService.RemoveSecret(container: Constants.STUDIA_RESOURCE_TOKEN, key: _username);
+                _secretService.RemoveSecret(container: Constants.STUDIA_CREDENTIAL_CONTAINER_NAME, key: _username);
             }
             catch (InvalidOperationException iopexc)
             {
                 LogTo.FatalException(message: "Studia server could have changed authentication workflow",
                     exception: iopexc);
-                _secretService.RemoveSecret(container: Constants.STUDIA_RESOURCE_TOKEN, key: _username);
+                _secretService.RemoveSecret(container: Constants.STUDIA_CREDENTIAL_CONTAINER_NAME, key: _username);
             }
             return false;
         }
