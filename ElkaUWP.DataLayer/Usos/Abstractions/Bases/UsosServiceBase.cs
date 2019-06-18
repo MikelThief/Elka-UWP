@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Abstractions.Bases
         protected IContainerExtension Container { get; private set; }
 
         public UsosServiceBase(ILogger logger, IContainerExtension containerExtension)
-        { 
+        {
             Logger = logger;
             Container = containerExtension;
         }

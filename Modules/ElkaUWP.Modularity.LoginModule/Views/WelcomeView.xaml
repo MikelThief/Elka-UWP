@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.LoginModule.Views.WelcomeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:AppInfrastructure="using:ElkaUWP.Infrastructure"
+    xmlns:media="using:Microsoft.UI.Xaml.Media"
+    mc:Ignorable="d">
+
+    <Grid x:Name="ContentArea" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <StackPanel VerticalAlignment="Top" Margin="20,150,20,0" Spacing="10">
+            <TextBlock x:Uid="App_Name_Title" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" />
+            <TextBlock x:Uid="Login_Wizard_Description" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Center"  VerticalAlignment="Top" IsTapEnabled="False" IsRightTapEnabled="False" ManipulationMode="None" HorizontalTextAlignment="Center" TextWrapping="WrapWholeWords"/>
+            <Button x:Uid="Encouragement" Command="{x:Bind ViewModel.StartWizardDelegateCommand}" Content="Sign_In" FontSize="20px" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="120" Style="{StaticResource AccentButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</Page>

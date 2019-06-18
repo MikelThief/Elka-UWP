@@ -16,7 +16,7 @@ namespace ElkaUWP.Infrastructure.Services
 
         public void CreateOrUpdateSecret(string container, string key, string secret)
         {
-            if (_vault.RetrieveAll().Any(predicate: x => x.Resource == container && x.UserName == key))
+            if (_vault.RetrieveAll().Any(x => x.Resource == container && x.UserName == key))
             {
                 var credential = _vault.Retrieve(resource: container, userName: key);
                 credential.RetrievePassword();
@@ -31,7 +31,7 @@ namespace ElkaUWP.Infrastructure.Services
         }
         public void CreateOrUpdateSecret(PasswordCredential providedCredential)
         {
-            if (_vault.RetrieveAll().Any(predicate: x => x.Resource == providedCredential.Resource && x.UserName == providedCredential.UserName))
+            if (_vault.RetrieveAll().Any(x => x.Resource == providedCredential.Resource && x.UserName == providedCredential.UserName))
             {
                 var credential = _vault.Retrieve(resource: providedCredential.Resource, userName: providedCredential.UserName);
                 providedCredential.RetrievePassword();
@@ -46,7 +46,7 @@ namespace ElkaUWP.Infrastructure.Services
 
         public void RemoveSecret(string container, string key)
         {
-            if (_vault.RetrieveAll().Any(predicate: x => x.Resource == container && x.UserName == key))
+            if (_vault.RetrieveAll().Any(x => x.Resource == container && x.UserName == key))
             {
                 var credential = _vault.Retrieve(resource: container, userName: key);
                 _vault.Remove(credential: credential);
@@ -55,17 +55,28 @@ namespace ElkaUWP.Infrastructure.Services
 
         public PasswordCredential GetSecret(string container, string key)
         {
-            if (_vault.RetrieveAll().Any(predicate: x => x.Resource == container && x.UserName == key))
+            if (_vault.RetrieveAll().Any(x => x.Resource == container && x.UserName == key))
             {
-                var credential = _vault.Retrieve(resource: container, userName: key);
-                return credential;
+                return _vault.Retrieve(resource: container, userName: key);
             }
-            else
-                throw new ArgumentException(message: "Credential not found for pair: [" + container + ", " + key + "]");
+
+            throw new ArgumentException(message: "Credential not found for pair: [" + container + ", " + key + "]");
+        }
+
+        public PasswordCredential GetSecret(string container)
+        {
+            if (_vault.RetrieveAll().Any(x => x.Resource == container))
+            {
+                var retrievedContainer = _vault.RetrieveAll().Single(x => x.Resource == container);
+
+                return _vault.Retrieve(resource: container, userName: retrievedContainer.UserName);
+            }
+
+            throw new ArgumentException(message: "Credential not found for pair: [" + container + "]");
         }
 
         public bool IsContainerPresent(string container) =>
-            _vault.RetrieveAll().Any(predicate: x => x.Resource == container);
+            _vault.RetrieveAll().Any(x => x.Resource == container);
     }
 
 }

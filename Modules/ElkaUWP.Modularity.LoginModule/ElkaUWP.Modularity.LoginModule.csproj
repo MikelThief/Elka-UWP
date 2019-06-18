@@ -133,13 +133,17 @@
     <Compile Include="LoginModuleInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\UsosOAuthService.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\UsosStepViewModel.cs" />
-    <Compile Include="Views\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <Compile Include="ViewModels\StudiaLoginViewModel.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="ViewModels\UsosLoginViewModel.cs" />
+    <Compile Include="Views\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UsosStepView.xaml.cs">
-      <DependentUpon>UsosStepView.xaml</DependentUpon>
+    <Compile Include="Views\StudiaLoginView.xaml.cs">
+      <DependentUpon>StudiaLoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UsosLoginView.xaml.cs">
+      <DependentUpon>UsosLoginView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\ElkaUWP.LoginModule.rd.xml" />
   </ItemGroup>
@@ -151,9 +155,6 @@
       <Version>5.0.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.DependencyValidation.Analyzers">
-      <Version>0.10.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
@@ -168,10 +169,10 @@
       <Version>5.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.0.181018003</Version>
+      <Version>2.1.190606001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
-      <Version>2.0.0</Version>
+      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Nito.Mvvm.Async">
       <Version>1.0.0-pre-03</Version>
@@ -187,11 +188,15 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\LoginView.xaml">
+    <Page Include="Views\WelcomeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UsosStepView.xaml">
+    <Page Include="Views\StudiaLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UsosLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,6 +205,10 @@
     <PRIResource Include="Strings\en-us\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ElkaUWP.DataLayer\ElkaUWP.DataLayer.csproj">
+      <Project>{dc706b3b-7a4d-4b23-be2a-ed8744a57250}</Project>
+      <Name>ElkaUWP.DataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj">
       <Project>{9f821561-3596-4949-99c4-a32eaa91ee6c}</Project>
       <Name>ElkaUWP.Infrastructure</Name>

@@ -1,89 +1,90 @@
 ﻿<Page
     x:Class="ElkaUWP.Core.Views.ShellView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:helpers="using:ElkaUWP.Core.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
-    xmlns:helpers="using:ElkaUWP.Core.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:misc="using:ElkaUWP.Infrastructure.Misc"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+    <Page.Resources />
 
 
 
-    <winui:NavigationView
-                        IsSettingsVisible="True"
-                        x:Name="NavigationViewControl"
-                        IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=TwoWay}"
-                        IsBackButtonVisible="Auto"
-                        BackRequested="Nv_OnBackRequested"
-                        ItemInvoked="Nv_ItemInvoked"
-                        Padding="0,-32,0,0"
-                        Loaded="Nv_Loaded"
-                        OpenPaneLength="170">
-        <winui:NavigationView.MenuItems>
-            <winui:NavigationViewItem
+    <Grid Background="{ThemeResource RegionBrush}">
+        <winui:NavigationView
+            x:Name="NavigationViewControl"
+            BackRequested="Nv_OnBackRequested"
+            IsBackButtonVisible="Auto"
+            IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=TwoWay}"
+            IsSettingsVisible="True"
+            ItemInvoked="Nv_ItemInvoked"
+            Loaded="Nv_Loaded"
+            OpenPaneLength="170">
+            <winui:NavigationView.MenuItems>
+                <winui:NavigationViewItem
                     Content="Grades"
                     Icon="Play"
                     IsSelected="True"
                     Tag="GradesModuleGradesViewToken" />
-            <winui:NavigationViewItem
+                <winui:NavigationViewItem
                     Content="TestView"
                     Icon="Play"
                     IsSelected="True"
                     Tag="SampleViewToken" />
-            <winui:NavigationViewItem
-                    Content="LoginView"
+                <winui:NavigationViewItem
+                    Content="WelcomeView"
                     Icon="Play"
                     IsSelected="True"
                     Tag="LoginToken" />
-            <winui:NavigationViewItem
+                <winui:NavigationViewItem
                     Content="Calendar"
                     Icon="Play"
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
-            <winui:NavigationViewItem
-                Content="Profile"
-                Icon="Play"
-                IsSelected="True"
-                Tag="UserSummaryViewToken" />
-        </winui:NavigationView.MenuItems>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+                <winui:NavigationViewItem
+                    Content="Profile"
+                    Icon="Play"
+                    IsSelected="True"
+                    Tag="UserSummaryViewToken" />
+            </winui:NavigationView.MenuItems>
+            <misc:ThemeAwareFrame x:Name="ContentFrame" />
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
 
-                <VisualState x:Name="LargeState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Left"/>
-                    </VisualState.Setters>
-                </VisualState>
+                    <VisualState x:Name="LargeState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Left" />
+                        </VisualState.Setters>
+                    </VisualState>
 
-                <VisualState x:Name="MediumState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}"/>
-                    </VisualState.StateTriggers>
+                    <VisualState x:Name="MediumState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                        </VisualState.StateTriggers>
 
-                    <VisualState.Setters>
-                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftCompact"/>
-                    </VisualState.Setters>
-                </VisualState>
+                        <VisualState.Setters>
+                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftCompact" />
+                        </VisualState.Setters>
+                    </VisualState>
 
-                <VisualState x:Name="SmallState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <misc:ThemeAwareFrame x:Name="ContentFrame"/>
-    </winui:NavigationView>
+                    <VisualState x:Name="SmallState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </winui:NavigationView>
+    </Grid>
 </Page>

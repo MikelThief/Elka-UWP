@@ -7,14 +7,14 @@ using Prism.Navigation;
 
 namespace ElkaUWP.Modularity.LoginModule.ViewModels
 {
-    public class LoginViewModel : BindableBase, INavigationAware
+    public class WelcomeViewModel : BindableBase, INavigatedAware
     {
         public DelegateCommand StartWizardDelegateCommand { get; private set; }
 
         protected INavigationService _navigationService;
         protected ILogger Logger { get; }
 
-        public LoginViewModel(ILogger logger)
+        public WelcomeViewModel(ILogger logger)
         {
             StartWizardDelegateCommand = new DelegateCommand(executeMethod: NavigateToUsosStep);
             Logger = logger;
@@ -22,7 +22,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
 
         private async void NavigateToUsosStep()
         {
-            await _navigationService.NavigateAsync(path: PageTokens.UsosStepViewToken, infoOverride: new SlideNavigationTransitionInfo()
+            await _navigationService.NavigateAsync(path: PageTokens.UsosLoginViewToken, infoOverride: new SlideNavigationTransitionInfo()
                 { Effect = SlideNavigationTransitionEffect.FromRight }) ;
         }
 
@@ -32,11 +32,6 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
-        {
-
-        }
-
-        public void OnNavigatingTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
         }

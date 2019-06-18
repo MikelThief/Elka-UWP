@@ -15,5 +15,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
         public string SubjectId { get; set; }
 
         public string SemesterLiteral { get; set; }
+
+        public Dictionary<string, string> StudiaDictionary { get; set; }
     }
 }

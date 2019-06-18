@@ -18,7 +18,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 {
     public class CalendarEventDialogViewModel : BindableBase
     {
-        private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(loginViewType: typeof(CalendarModuleInitializer));
+        private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(CalendarModuleInitializer));
 
         private ScheduleAppointment appointment;
 

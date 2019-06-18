@@ -16,10 +16,11 @@ namespace ElkaUWP.Modularity.LoginModule
             containerRegistry.RegisterSingleton<IUsosOAuthService, UsosOAuthService>();
 
             // Register View-VieModel pairs for navigation
-            containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>(key: PageTokens.LoginViewToken);
-            containerRegistry.RegisterForNavigation<UsosStepView, UsosStepViewModel>(key: PageTokens.UsosStepViewToken);
+            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>(key: PageTokens.LoginViewToken);
+            containerRegistry.RegisterForNavigation<UsosLoginView, UsosLoginViewModel>(key: PageTokens.UsosLoginViewToken);
+            containerRegistry.RegisterForNavigation<StudiaLoginView, StudiaLoginViewModel>(key: PageTokens.StudiaLoginViewToken);
 
-            // Register other types
+
         }
 
         public void OnInitialized(IContainerProvider containerProvider)

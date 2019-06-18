@@ -19,7 +19,6 @@ namespace ElkaUWP.DataLayer.Usos.Services
         /// <inheritdoc />
         public ExamrepService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
         {
-
         }
 
         public async Task<Dictionary<string, Dictionary<string, List<ExamRepGradedSubject>>>> GetUserGradesPerSemesterAsync()

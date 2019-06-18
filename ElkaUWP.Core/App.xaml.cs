@@ -86,7 +86,7 @@ namespace ElkaUWP.Core
         public override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             // TODO: Loading optimization: set loading to ondemand and load all if user is already authenticated or just login module if it is fresh start.
-            // Login module
+            // Username module
             var loginModuleType = typeof(LoginModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
@@ -253,17 +253,13 @@ namespace ElkaUWP.Core
                                 oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
 
                             secretService.CreateOrUpdateSecret(providedCredential: credential);
-
-                            var localSettingsContainer = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-                            localSettingsContainer.SaveString(key: Constants.USOSAPI_ACCESS_TOKEN_KEY, value: credential.UserName);
-;
+                            ;
                             var navigationParameters = new NavigationParameters
                             {
                                 { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }
                             };
 
-                            await NavigationService.NavigateAsync(name: PageTokens.UsosStepViewToken, parameters: navigationParameters);
+                            await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken, parameters: navigationParameters);
                         }
                     }
                     break;
@@ -282,7 +278,7 @@ namespace ElkaUWP.Core
         /// <summary>
         /// Register types without application cannot perform startup here.
         /// </summary>
-        /// <param name="containerRegistry">Container against which registrations should be performed</param>
+        /// <param name="containerRegistry">ParametersContainer against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         { 
             var nLogExtension = new NLogExtension
