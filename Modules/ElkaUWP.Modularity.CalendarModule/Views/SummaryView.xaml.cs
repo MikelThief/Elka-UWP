@@ -37,7 +37,7 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             // Set up schedule
             CurrentWeekSchedule.ShowNonWorkingHours = false;
             CurrentWeekSchedule.WorkStartHour = 8;
-            CurrentWeekSchedule.WorkEndHour = 20;
+            CurrentWeekSchedule.WorkEndHour = 19;
         }
 
         private void CreateEventButton_Click(object sender, RoutedEventArgs e)
@@ -50,6 +50,18 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             e.Cancel = true;
 
             await ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (CalendarEvent) e.Appointment);
+        }
+
+        private void SummaryCommandBar_OnOpening(object sender, object e)
+        {
+            var cb = sender as CommandBar;
+            if (cb != null) cb.Background.Opacity = 1.0;
+        }
+
+        private void SummaryCommandBar_OnClosing(object sender, object e)
+        {
+            var cb = sender as CommandBar;
+            if (cb != null) cb.Background.Opacity = 0.5;
         }
     }
 }

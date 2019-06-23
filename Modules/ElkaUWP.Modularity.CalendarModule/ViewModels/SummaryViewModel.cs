@@ -38,6 +38,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             get => _webCalFeedHyperlink;
             private set => SetProperty(storage: ref _webCalFeedHyperlink, value: value, propertyName: nameof(WebCalFeedHyperlink));
         }
+
         public ObservableCollection<UserDeadline> UserDeadlines = new ObservableCollection<UserDeadline>();
 
         public ObservableCollection<CalendarEvent> CalendarEvents = new ObservableCollection<CalendarEvent>();
