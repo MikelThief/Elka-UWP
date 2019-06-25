@@ -9,17 +9,21 @@
         <ResourceDictionary>
 
             <!--  Fix for NavigationView Expanded Pane Background 1809 SDK  -->
-
+            <!-- Unused
             <AcrylicBrush
                 x:Key="NavigationViewDefaultPaneBackground"
                 BackgroundSource="Backdrop"
                 TintColor="{ThemeResource SystemChromeMediumColor}"
                 TintOpacity=".5" />
+            -->
+            <!--  overriding brush for top nav pane to enchance the experience  -->
             <AcrylicBrush
                 x:Key="NavigationViewTopPaneBackground"
-                BackgroundSource="Backdrop"
+                BackgroundSource="HostBackdrop"
                 TintColor="{ThemeResource SystemChromeMediumColor}"
-                TintOpacity=".5" />
+                TintOpacity=".6" />
+
+            <!--  Fix for NavigationView Expanded Pane Background 1809 SDK  -->
             <AcrylicBrush
                 x:Key="NavigationViewExpandedPaneBackground"
                 BackgroundSource="HostBackdrop"

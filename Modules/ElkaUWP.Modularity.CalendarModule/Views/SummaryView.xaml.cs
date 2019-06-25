@@ -51,17 +51,5 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
 
             await ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (CalendarEvent) e.Appointment);
         }
-
-        private void SummaryCommandBar_OnOpening(object sender, object e)
-        {
-            var cb = sender as CommandBar;
-            if (cb != null) cb.Background.Opacity = 1.0;
-        }
-
-        private void SummaryCommandBar_OnClosing(object sender, object e)
-        {
-            var cb = sender as CommandBar;
-            if (cb != null) cb.Background.Opacity = 0.5;
-        }
     }
 }

@@ -22,84 +22,75 @@
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
         </ResourceDictionary>
     </Page.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Body  -->
-        <CommandBar
-            x:Name="SummaryCommandBar"
-            Grid.Row="0"
-            Background="Transparent"
-            Closing="SummaryCommandBar_OnClosing"
-            DefaultLabelPosition="Bottom"
-            IsDynamicOverflowEnabled="True"
-            Opening="SummaryCommandBar_OnOpening">
-            <AppBarButton
-                Name="SummaryAddButton"
-                x:Uid="SummaryAddButton"
-                AllowFocusOnInteraction="True"
-                Icon="Add">
-                <AppBarButton.Flyout>
-                    <Flyout x:Name="CreateDeadlineFlyout">
-                        <StackPanel Orientation="Vertical" Spacing="15">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Create new deadline" />
-                            <StackPanel
-                                HorizontalAlignment="Center"
-                                Orientation="Vertical"
-                                Spacing="8">
-                                <input:RadDatePicker
-                                    Name="CreateDeadlineFlyoutDatePicker"
-                                    x:Uid="CreateDeadlineFlyoutDatePicker"
-                                    HorizontalAlignment="Stretch"
-                                    Value="{x:Bind ViewModel.CreateDeadlineFlyoutDateTime, Mode=TwoWay}" />
-                                <TextBox
-                                    x:Name="CreateDeadlineFlyoutTitle"
-                                    x:Uid="CreateDeadlineFlyoutTitle"
-                                    HorizontalAlignment="Stretch"
-                                    MaxLength="10"
-                                    Text="{x:Bind ViewModel.CreateDeadlineFlyOutTitle, Mode=TwoWay}" />
-                                <TextBox
-                                    x:Name="CreateDeadlineFlyoutDescription"
-                                    x:Uid="CreateDeadlineFlyoutDescription"
-                                    MaxLength="18"
-                                    Text="{x:Bind ViewModel.CreateDeadlineFlyoutDescription, Mode=TwoWay}" />
+        <Grid Grid.Row="0">
+
+            <CommandBar
+                x:Name="SummaryCommandBar"
+                DefaultLabelPosition="Bottom"
+                IsDynamicOverflowEnabled="True"
+                Style="{StaticResource TopCommandBar}">
+                <AppBarButton
+                    Name="SummaryAddButton"
+                    x:Uid="SummaryAddButton"
+                    AllowFocusOnInteraction="True"
+                    Icon="Add">
+                    <AppBarButton.Flyout>
+                        <Flyout x:Name="CreateDeadlineFlyout">
+                            <StackPanel Orientation="Vertical" Spacing="15">
+                                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Create new deadline" />
                                 <StackPanel
                                     HorizontalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
-                                    <Button
-                                        MinWidth="120"
-                                        MinHeight="35"
-                                        Click="CreateEventButton_Click"
-                                        Command="{x:Bind ViewModel.CreateEventCommand}"
-                                        Content="Create" />
+                                    Orientation="Vertical"
+                                    Spacing="8">
+                                    <input:RadDatePicker
+                                        Name="CreateDeadlineFlyoutDatePicker"
+                                        x:Uid="CreateDeadlineFlyoutDatePicker"
+                                        HorizontalAlignment="Stretch"
+                                        Value="{x:Bind ViewModel.CreateDeadlineFlyoutDateTime, Mode=TwoWay}" />
+                                    <TextBox
+                                        x:Name="CreateDeadlineFlyoutTitle"
+                                        x:Uid="CreateDeadlineFlyoutTitle"
+                                        HorizontalAlignment="Stretch"
+                                        MaxLength="10"
+                                        Text="{x:Bind ViewModel.CreateDeadlineFlyOutTitle, Mode=TwoWay}" />
+                                    <TextBox
+                                        x:Name="CreateDeadlineFlyoutDescription"
+                                        x:Uid="CreateDeadlineFlyoutDescription"
+                                        MaxLength="18"
+                                        Text="{x:Bind ViewModel.CreateDeadlineFlyoutDescription, Mode=TwoWay}" />
+                                    <StackPanel
+                                        HorizontalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        Spacing="10">
+                                        <Button
+                                            MinWidth="120"
+                                            MinHeight="35"
+                                            Click="CreateEventButton_Click"
+                                            Command="{x:Bind ViewModel.CreateEventCommand}"
+                                            Content="Create" />
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </Flyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>
-            <AppBarButton
-                Name="SummaryDownloadButton"
-                x:Uid="SummaryDownloadButton"
-                Command="{x:Bind ViewModel.DownloadScheduleFromUsosCommand}"
-                Icon="Download" />
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton
+                    Name="SummaryDownloadButton"
+                    x:Uid="SummaryDownloadButton"
+                    Command="{x:Bind ViewModel.DownloadScheduleFromUsosCommand}"
+                    Icon="Download" />
 
-            <CommandBar.Content>
-                <TextBlock
-                    Name="SummaryPageHeader"
-                    x:Uid="SummaryPageHeader"
-                    Style="{StaticResource TitleTextBlockStyle}" />
-            </CommandBar.Content>
+            </CommandBar>
+        </Grid>
 
-        </CommandBar>
-        <ScrollViewer
-            Grid.Row="1"
-            VerticalScrollBarVisibility="Auto"
-            VerticalScrollMode="Auto">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <Grid x:Name="ScheduleGrid">
                 <!--  Head  -->
 
@@ -113,44 +104,37 @@
                 </Grid.RowDefinitions>
 
                 <!--  Body  -->
-                <Pivot
-                    Name="FirstElement"
-                    Grid.Row="0"
-                    Grid.Column="0">
-                    <PivotItem Header="Current Week">
-                        <sfcontrols:SfSchedule
-                            x:Name="CurrentWeekSchedule"
-                            Height="440"
-                            VerticalAlignment="Top"
-                            AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening"
-                            EnableAutoFormat="True"
-                            EnableNavigation="False"
-                            FirstDayOfWeek="Monday"
-                            IntervalHeight="40"
-                            ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}"
-                            ScheduleType="WorkWeek"
-                            ShowAllDay="False"
-                            TimeInterval="OneHour">
+                <sfcontrols:SfSchedule
+                    x:Name="CurrentWeekSchedule"
+                    Height="440"
+                    VerticalAlignment="Top"
+                    AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening"
+                    EnableAutoFormat="True"
+                    EnableNavigation="False"
+                    FirstDayOfWeek="Monday"
+                    IntervalHeight="40"
+                    ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}"
+                    ScheduleType="WorkWeek"
+                    ShowAllDay="False"
+                    TimeInterval="OneHour">
 
-                            <sfcontrols:SfSchedule.AppointmentMapping>
-                                <sfcontrols:ScheduleAppointmentMapping
-                                    AppointmentBackgroundMapping="Background"
-                                    EndTimeMapping="EndTime"
-                                    IsRecursiveMapping="IsRecursive"
-                                    LocationMapping="Location"
-                                    NotesMapping="Notes"
-                                    RecurrenceProperitesMapping="RecurrenceProperties"
-                                    RecurrenceRuleMapping="RecurrenceRule"
-                                    StartTimeMapping="StartTime"
-                                    SubjectMapping="Subject" />
-                            </sfcontrols:SfSchedule.AppointmentMapping>
-                            <!--  Head  -->
-                            <sfcontrols:SfSchedule.ScheduleHeaderStyle>
-                                <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />
-                            </sfcontrols:SfSchedule.ScheduleHeaderStyle>
-                        </sfcontrols:SfSchedule>
-                    </PivotItem>
-                </Pivot>
+                    <sfcontrols:SfSchedule.AppointmentMapping>
+                        <sfcontrols:ScheduleAppointmentMapping
+                            AppointmentBackgroundMapping="Background"
+                            EndTimeMapping="EndTime"
+                            IsRecursiveMapping="IsRecursive"
+                            LocationMapping="Location"
+                            NotesMapping="Notes"
+                            RecurrenceProperitesMapping="RecurrenceProperties"
+                            RecurrenceRuleMapping="RecurrenceRule"
+                            StartTimeMapping="StartTime"
+                            SubjectMapping="Subject" />
+                    </sfcontrols:SfSchedule.AppointmentMapping>
+                    <!--  Head  -->
+                    <sfcontrols:SfSchedule.ScheduleHeaderStyle>
+                        <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />
+                    </sfcontrols:SfSchedule.ScheduleHeaderStyle>
+                </sfcontrols:SfSchedule>
                 <Grid
                     x:Name="SecondElement"
                     Grid.Row="0"

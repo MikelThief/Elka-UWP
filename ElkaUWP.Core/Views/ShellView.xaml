@@ -2,6 +2,7 @@
     x:Class="ElkaUWP.Core.Views.ShellView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:behaviors="using:ElkaUWP.Core.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="using:ElkaUWP.Core.Helpers"
@@ -10,12 +11,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:misc="using:ElkaUWP.Infrastructure.Misc"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Page.Resources />
-
-
-
-    <Grid Background="{ThemeResource RegionBrush}">
+    <Grid>
+        <TextBlock
+            x:Name="TitleBar"
+            Margin="{x:Bind TitleHelper.TitlePosition, Mode=OneWay}"
+            VerticalAlignment="Top"
+            Foreground="{StaticResource SystemControlBackgroundBaseHighBrush}"
+            Style="{ThemeResource CaptionTextBlockStyle}"
+            Text="Volta"
+            Visibility="{x:Bind TitleHelper.TitleVisibility, Mode=OneWay}" />
         <winui:NavigationView
             x:Name="NavigationViewControl"
             BackRequested="Nv_OnBackRequested"
@@ -24,67 +30,44 @@
             IsSettingsVisible="True"
             ItemInvoked="Nv_ItemInvoked"
             Loaded="Nv_Loaded"
-            OpenPaneLength="170">
+            OverflowLabelMode="NoLabel"
+            PaneDisplayMode="Top">
             <winui:NavigationView.MenuItems>
                 <winui:NavigationViewItem
                     Content="Grades"
-                    Icon="Play"
+                    FontSize="18"
+                    FontWeight="Light"
                     IsSelected="True"
                     Tag="GradesModuleGradesViewToken" />
                 <winui:NavigationViewItem
                     Content="TestView"
-                    Icon="Play"
+                    FontSize="18"
+                    FontWeight="Light"
                     IsSelected="True"
                     Tag="SampleViewToken" />
                 <winui:NavigationViewItem
                     Content="WelcomeView"
-                    Icon="Play"
+                    FontSize="18"
+                    FontWeight="Light"
                     IsSelected="True"
                     Tag="LoginToken" />
                 <winui:NavigationViewItem
                     Content="Calendar"
-                    Icon="Play"
+                    FontSize="18"
+                    FontWeight="Light"
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
                 <winui:NavigationViewItem
                     Content="Profile"
-                    Icon="Play"
+                    FontSize="18"
+                    FontWeight="Light"
                     IsSelected="True"
                     Tag="UserSummaryViewToken" />
             </winui:NavigationView.MenuItems>
             <misc:ThemeAwareFrame x:Name="ContentFrame" />
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup>
-
-                    <VisualState x:Name="LargeState">
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
-                        </VisualState.StateTriggers>
-                        <VisualState.Setters>
-                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Left" />
-                        </VisualState.Setters>
-                    </VisualState>
-
-                    <VisualState x:Name="MediumState">
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
-                        </VisualState.StateTriggers>
-
-                        <VisualState.Setters>
-                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftCompact" />
-                        </VisualState.Setters>
-                    </VisualState>
-
-                    <VisualState x:Name="SmallState">
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
-                        </VisualState.StateTriggers>
-                        <VisualState.Setters>
-                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="LeftMinimal" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
+            <winui:NavigationView.Resources>
+                <SolidColorBrush x:Key="TopNavigationViewItemForeground" Color="{ThemeResource SystemBaseHighColor}" />
+            </winui:NavigationView.Resources>
         </winui:NavigationView>
     </Grid>
 </Page>
