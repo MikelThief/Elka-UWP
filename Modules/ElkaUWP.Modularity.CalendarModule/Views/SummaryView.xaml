@@ -23,16 +23,15 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Name="MainGrid">
+    <Grid Name="MasterRegion">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
-
+        <Grid Name="CommandsRegion" Grid.Row="0">
             <CommandBar
                 x:Name="SummaryCommandBar"
+                Margin="0,0,0,12"
                 DefaultLabelPosition="Bottom"
                 IsDynamicOverflowEnabled="True"
                 Style="{StaticResource TopCommandBar}">
@@ -89,152 +88,143 @@
 
             </CommandBar>
         </Grid>
+        <Grid Name="ContentRegion" Grid.Row="1">
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="ScheduleRegion">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <sfcontrols:SfSchedule
+                        x:Name="Schedule"
+                        Height="440"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening"
+                        EnableAutoFormat="True"
+                        EnableNavigation="False"
+                        FirstDayOfWeek="Monday"
+                        IntervalHeight="40"
+                        ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}"
+                        ScheduleType="WorkWeek"
+                        ShowAllDay="False"
+                        TimeInterval="OneHour">
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid x:Name="ScheduleGrid">
-                <!--  Head  -->
+                        <sfcontrols:SfSchedule.AppointmentMapping>
+                            <sfcontrols:ScheduleAppointmentMapping
+                                AppointmentBackgroundMapping="Background"
+                                EndTimeMapping="EndTime"
+                                IsRecursiveMapping="IsRecursive"
+                                LocationMapping="Location"
+                                NotesMapping="Notes"
+                                RecurrenceProperitesMapping="RecurrenceProperties"
+                                RecurrenceRuleMapping="RecurrenceRule"
+                                StartTimeMapping="StartTime"
+                                SubjectMapping="Subject" />
+                        </sfcontrols:SfSchedule.AppointmentMapping>
+                        <sfcontrols:SfSchedule.ScheduleHeaderStyle>
+                            <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />
+                        </sfcontrols:SfSchedule.ScheduleHeaderStyle>
+                    </sfcontrols:SfSchedule>
+                    <Grid Name="SideRegion">
+                        <StackPanel Orientation="Vertical" Spacing="32">
+                            <controls:HeaderedContentControl
+                                Name="DeadlineListHeader"
+                                x:Uid="DeadlineListHeader"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                FontSize="15">
+                                <controls:AdaptiveGridView
+                                    x:Name="DeadlineListGrid"
+                                    ItemsSource="{x:Bind ViewModel.UserDeadlines}"
+                                    SelectionMode="None">
+                                    <!--  Head  -->
+                                    <controls:AdaptiveGridView.ItemContainerStyle>
+                                        <Style TargetType="FrameworkElement">
+                                            <Setter Property="Margin" Value="0,2,4,2" />
+                                        </Style>
+                                    </controls:AdaptiveGridView.ItemContainerStyle>
+                                    <!--  Body  -->
+                                    <controls:AdaptiveGridView.ItemTemplate>
+                                        <DataTemplate x:DataType="entities:UserDeadline">
+                                            <Grid Padding="4,2,4,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="144" />
+                                                    <ColumnDefinition Width="40" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel
+                                                    Grid.Column="0"
+                                                    HorizontalAlignment="Left"
+                                                    Orientation="Vertical">
+                                                    <TextBlock Text="{x:Bind Header}" TextWrapping="WrapWholeWords" />
+                                                    <TextBlock Text="{x:Bind Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyyy}'}" />
+                                                    <TextBlock
+                                                        Foreground="DarkGray"
+                                                        Text="{x:Bind Description}"
+                                                        TextWrapping="WrapWholeWords" />
+                                                </StackPanel>
+                                                <Button
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Right"
+                                                    Background="Transparent"
+                                                    Command="{Binding ElementName=DeadlineListGrid, Path=DataContext.RemoveUserDeadlineCommand}"
+                                                    CommandParameter="{Binding}">
+                                                    <SymbolIcon Symbol="Delete" />
+                                                </Button>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </controls:AdaptiveGridView.ItemTemplate>
+                                </controls:AdaptiveGridView>
+                            </controls:HeaderedContentControl>
+                            <controls:HeaderedContentControl
+                                Name="CalendarLinksHeader"
+                                x:Uid="CalendarLinksHeader"
+                                FontSize="15">
+                                <StackPanel
+                                    VerticalAlignment="Top"
+                                    Orientation="Vertical"
+                                    Spacing="10">
+                                    <HyperlinkButton Name="ICalHyperLinkButton" NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
+                                        <HyperlinkButton.Content>
+                                            <TextBlock x:Uid="ICalHyperLink" FontSize="15" />
+                                        </HyperlinkButton.Content>
+                                    </HyperlinkButton>
+                                    <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalFeedHyperlink}">
+                                        <HyperlinkButton.Content>
+                                            <TextBlock x:Uid="WebCalHyperLink" FontSize="15" />
+                                        </HyperlinkButton.Content>
+                                    </HyperlinkButton>
+                                </StackPanel>
+                            </controls:HeaderedContentControl>
+                        </StackPanel>
+                    </Grid>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <!--  Body  -->
-                <sfcontrols:SfSchedule
-                    x:Name="CurrentWeekSchedule"
-                    Height="440"
-                    VerticalAlignment="Top"
-                    AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening"
-                    EnableAutoFormat="True"
-                    EnableNavigation="False"
-                    FirstDayOfWeek="Monday"
-                    IntervalHeight="40"
-                    ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}"
-                    ScheduleType="WorkWeek"
-                    ShowAllDay="False"
-                    TimeInterval="OneHour">
-
-                    <sfcontrols:SfSchedule.AppointmentMapping>
-                        <sfcontrols:ScheduleAppointmentMapping
-                            AppointmentBackgroundMapping="Background"
-                            EndTimeMapping="EndTime"
-                            IsRecursiveMapping="IsRecursive"
-                            LocationMapping="Location"
-                            NotesMapping="Notes"
-                            RecurrenceProperitesMapping="RecurrenceProperties"
-                            RecurrenceRuleMapping="RecurrenceRule"
-                            StartTimeMapping="StartTime"
-                            SubjectMapping="Subject" />
-                    </sfcontrols:SfSchedule.AppointmentMapping>
-                    <!--  Head  -->
-                    <sfcontrols:SfSchedule.ScheduleHeaderStyle>
-                        <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />
-                    </sfcontrols:SfSchedule.ScheduleHeaderStyle>
-                </sfcontrols:SfSchedule>
-                <Grid
-                    x:Name="SecondElement"
-                    Grid.Row="0"
-                    Grid.Column="1">
-                    <StackPanel Orientation="Vertical" Spacing="32">
-                        <controls:HeaderedContentControl
-                            Name="DeadlineListHeader"
-                            x:Uid="DeadlineListHeader"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            FontSize="15">
-                            <controls:AdaptiveGridView
-                                x:Name="DeadlineListGrid"
-                                ItemsSource="{x:Bind ViewModel.UserDeadlines}"
-                                SelectionMode="None">
-                                <!--  Head  -->
-                                <controls:AdaptiveGridView.ItemContainerStyle>
-                                    <Style TargetType="FrameworkElement">
-                                        <Setter Property="Margin" Value="0,2,4,2" />
-                                    </Style>
-                                </controls:AdaptiveGridView.ItemContainerStyle>
-                                <!--  Body  -->
-                                <controls:AdaptiveGridView.ItemTemplate>
-                                    <DataTemplate x:DataType="entities:UserDeadline">
-                                        <Grid Padding="4,2,4,2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="144" />
-                                                <ColumnDefinition Width="40" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel
-                                                Grid.Column="0"
-                                                HorizontalAlignment="Left"
-                                                Orientation="Vertical">
-                                                <TextBlock Text="{x:Bind Header}" TextWrapping="WrapWholeWords" />
-                                                <TextBlock Text="{x:Bind Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyyy}'}" />
-                                                <TextBlock
-                                                    Foreground="DarkGray"
-                                                    Text="{x:Bind Description}"
-                                                    TextWrapping="WrapWholeWords" />
-                                            </StackPanel>
-                                            <Button
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Right"
-                                                Background="Transparent"
-                                                Command="{Binding ElementName=DeadlineListGrid, Path=DataContext.RemoveUserDeadlineCommand}"
-                                                CommandParameter="{Binding}">
-                                                <SymbolIcon Symbol="Delete" />
-                                            </Button>
-                                        </Grid>
-                                    </DataTemplate>
-                                </controls:AdaptiveGridView.ItemTemplate>
-                            </controls:AdaptiveGridView>
-                        </controls:HeaderedContentControl>
-                        <controls:HeaderedContentControl
-                            Name="CalendarLinksHeader"
-                            x:Uid="CalendarLinksHeader"
-                            FontSize="15">
-                            <StackPanel
-                                VerticalAlignment="Top"
-                                Orientation="Vertical"
-                                Spacing="10">
-                                <HyperlinkButton Name="ICalHyperLinkButton" NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
-                                    <HyperlinkButton.Content>
-                                        <TextBlock x:Uid="ICalHyperLink" FontSize="15" />
-                                    </HyperlinkButton.Content>
-                                </HyperlinkButton>
-                                <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalFeedHyperlink}">
-                                    <HyperlinkButton.Content>
-                                        <TextBlock x:Uid="WebCalHyperLink" FontSize="15" />
-                                    </HyperlinkButton.Content>
-                                </HyperlinkButton>
-                            </StackPanel>
-                        </controls:HeaderedContentControl>
-                    </StackPanel>
                 </Grid>
-            </Grid>
-        </ScrollViewer>
-        <!--  Head  -->
+            </ScrollViewer>
+        </Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="MediumState">
+                <VisualState x:Name="LargeState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="ScheduleGrid.Margin" Value="24" />
-                        <Setter Target="ScheduleGrid.RowDefinitions[1].Height" Value="auto" />
-                        <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="200" />
-                        <Setter Target="FirstElement.Margin" Value="0 0 4 0" />
-                        <Setter Target="SecondElement.Margin" Value="4 0 0 0" />
+                        <Setter Target="ScheduleRegion.Margin" Value="{StaticResource MediumLeftRightMargin}" />
+                        <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
+                        <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
 
-                        <Setter Target="SecondElement.(Grid.Column)" Value="1" />
-                        <Setter Target="SecondElement.(Grid.Row)" Value="0" />
+                        <Setter Target="SideRegion.Margin" Value="64,0,0,0" />
+                        <Setter Target="SideRegion.(Grid.Column)" Value="1" />
+                        <Setter Target="SideRegion.(Grid.Row)" Value="0" />
 
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Right" />
+                        <Setter Target="Schedule.MaxWidth" Value="1200" />
 
-                        <Setter Target="SummaryPageHeader.Padding" Value="24 2 0 0" />
-
-                        <Setter Target="CurrentWeekSchedule.MinWidth" Value="400" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -243,20 +233,21 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ScheduleGrid.Margin" Value="12" />
-                        <Setter Target="FirstElement.Margin" Value="0 0 0 4" />
-                        <Setter Target="SecondElement.Margin" Value="0 4 0 0" />
-                        <Setter Target="ScheduleGrid.RowDefinitions[1].Height" Value="*" />
-                        <Setter Target="ScheduleGrid.ColumnDefinitions[1].Width" Value="auto" />
+                        <Setter Target="ScheduleRegion.Margin" Value="{StaticResource SmallLeftRightMargin}" />
+                        <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
+                        <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
 
-                        <Setter Target="SecondElement.(Grid.Column)" Value="0" />
-                        <Setter Target="SecondElement.(Grid.Row)" Value="1" />
+                        <!--
+                            Workaround for hardcoded min width.
+                            Should consider displaying a message if too small area is available instead of schedule
+                        -->
+                        <Setter Target="Schedule.MinWidth" Value="1" />
+
+                        <Setter Target="SideRegion.(Grid.Column)" Value="0" />
+                        <Setter Target="SideRegion.(Grid.Row)" Value="1" />
+                        <Setter Target="SideRegion.Margin" Value="0,64,0,0" />
 
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Bottom" />
-
-                        <Setter Target="SummaryPageHeader.Padding" Value="96 2 0 0" />
-
-                        <Setter Target="CurrentWeekSchedule.MinWidth" Value="300" />
                     </VisualState.Setters>
                 </VisualState>
 

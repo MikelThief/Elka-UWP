@@ -35,9 +35,9 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
 
             // Set up schedule
-            CurrentWeekSchedule.ShowNonWorkingHours = false;
-            CurrentWeekSchedule.WorkStartHour = 8;
-            CurrentWeekSchedule.WorkEndHour = 19;
+            Schedule.ShowNonWorkingHours = false;
+            Schedule.WorkStartHour = 8;
+            Schedule.WorkEndHour = 19;
         }
 
         private void CreateEventButton_Click(object sender, RoutedEventArgs e)
