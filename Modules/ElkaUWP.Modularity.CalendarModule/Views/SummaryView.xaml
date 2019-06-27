@@ -35,13 +35,28 @@
                 DefaultLabelPosition="Bottom"
                 IsDynamicOverflowEnabled="True"
                 Style="{StaticResource TopCommandBar}">
+                <AppBarButton x:Uid="CalendarGoBackwardButton" Click="CalendarGoBackwardButton_OnClick">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76B;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Uid="CalendarGoForwardButton" Click="CalendarGoForwardButton_OnClick">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarSeparator />
                 <AppBarButton
-                    Name="SummaryAddButton"
                     x:Uid="SummaryAddButton"
                     AllowFocusOnInteraction="True"
                     Icon="Add">
                     <AppBarButton.Flyout>
                         <Flyout x:Name="CreateDeadlineFlyout">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
                             <StackPanel Orientation="Vertical" Spacing="15">
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Create new deadline" />
                                 <StackPanel
@@ -81,10 +96,10 @@
                     </AppBarButton.Flyout>
                 </AppBarButton>
                 <AppBarButton
-                    Name="SummaryDownloadButton"
                     x:Uid="SummaryDownloadButton"
                     Command="{x:Bind ViewModel.DownloadScheduleFromUsosCommand}"
                     Icon="Download" />
+
 
             </CommandBar>
         </Grid>
@@ -92,7 +107,7 @@
             <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="ScheduleRegion">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -101,18 +116,22 @@
                     </Grid.ColumnDefinitions>
                     <sfcontrols:SfSchedule
                         x:Name="Schedule"
-                        Height="440"
+                        Height="460"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening"
                         EnableAutoFormat="True"
-                        EnableNavigation="False"
+                        EnableNavigation="True"
                         FirstDayOfWeek="Monday"
-                        IntervalHeight="40"
+                        IntervalHeight="50"
                         ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}"
+                        MajorTickTimeFormat="HH:mm"
+                        ScheduleTapped="Schedule_OnScheduleTapped"
                         ScheduleType="WorkWeek"
                         ShowAllDay="False"
-                        TimeInterval="OneHour">
+                        TimeInterval="OneHour"
+                        WorkEndHour="19"
+                        WorkStartHour="8">
 
                         <sfcontrols:SfSchedule.AppointmentMapping>
                             <sfcontrols:ScheduleAppointmentMapping
@@ -123,6 +142,7 @@
                                 NotesMapping="Notes"
                                 RecurrenceProperitesMapping="RecurrenceProperties"
                                 RecurrenceRuleMapping="RecurrenceRule"
+                                RecurrenceTypeMapping="RecurrenceType"
                                 StartTimeMapping="StartTime"
                                 SubjectMapping="Subject" />
                         </sfcontrols:SfSchedule.AppointmentMapping>
@@ -130,7 +150,7 @@
                             <sfcontrols:ScheduleHeaderStyle HeaderHeight="0" />
                         </sfcontrols:SfSchedule.ScheduleHeaderStyle>
                     </sfcontrols:SfSchedule>
-                    <Grid Name="SideRegion">
+                    <Grid Name="SideRegion" Grid.Row="0">
                         <StackPanel Orientation="Vertical" Spacing="32">
                             <controls:HeaderedContentControl
                                 Name="DeadlineListHeader"
@@ -218,7 +238,7 @@
                         <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
                         <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
 
-                        <Setter Target="SideRegion.Margin" Value="64,0,0,0" />
+                        <Setter Target="SideRegion.Margin" Value="64,0,20,0" />
                         <Setter Target="SideRegion.(Grid.Column)" Value="1" />
                         <Setter Target="SideRegion.(Grid.Row)" Value="0" />
 

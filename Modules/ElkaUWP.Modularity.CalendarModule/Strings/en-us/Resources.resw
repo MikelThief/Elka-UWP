@@ -126,6 +126,12 @@
   <data name="CalendarEventContentDialog.Title" xml:space="preserve">
     <value>Create new calendar event</value>
   </data>
+  <data name="CalendarGoBackwardButton.Label" xml:space="preserve">
+    <value>Previous week</value>
+  </data>
+  <data name="CalendarGoForwardButton.Label" xml:space="preserve">
+    <value>Next week</value>
+  </data>
   <data name="CalendarLinksHeader.Header" xml:space="preserve">
     <value>Get schedule from USOS</value>
   </data>
@@ -202,10 +208,10 @@
     <value>Add new deadline to the list</value>
   </data>
   <data name="SummaryDownloadButton.Label" xml:space="preserve">
-    <value>Download</value>
+    <value>Get from USOS</value>
   </data>
   <data name="SummaryDownloadButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Download schedule from USOS</value>
+    <value>Downloads schedule from USOS and sets it recursively in the schedule</value>
   </data>
   <data name="SummaryPageHeader.Text" xml:space="preserve">
     <value>Summary</value>

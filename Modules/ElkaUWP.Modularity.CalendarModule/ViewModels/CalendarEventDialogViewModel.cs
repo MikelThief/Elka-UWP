@@ -171,32 +171,47 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 EndTime = EventEndDateTime.Value
             };
 
-            if (SelectedCalendarEventRecursionMode != CalendarEventRecursionMode.None)
-            {
-                resultingAppointment.IsRecursive = true;
-                var recurrenceProperties = new RecurrenceProperties();
-                switch (SelectedCalendarEventRecursionMode)
-                {
-                    case CalendarEventRecursionMode.EveryTwoWeeks:
-                        recurrenceProperties.IsDailyEveryNDays = true;
-                        recurrenceProperties.DailyNDays = 14;
-                        break;
-                    case CalendarEventRecursionMode.EveryWeek:
-                        recurrenceProperties.IsDailyEveryNDays = true;
-                        recurrenceProperties.DailyNDays = 7;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                recurrenceProperties.RecurrenceRule = ScheduleHelper.RRuleGenerator(RecProp: recurrenceProperties, AppStartTime: resultingAppointment.StartTime, AppEndTime: resultingAppointment.EndTime);
-                resultingAppointment.RecurrenceRule = recurrenceProperties.RecurrenceRule;
-            }
-            else
-            {
-                resultingAppointment.IsRecursive = false;
-            }
-            var brush = CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
-            resultingAppointment.Background = brush;
+            resultingAppointment.Background =
+                CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
+            resultingAppointment.IsRecursive = false;
+
+            RecurrenceProperties recurrenceProperties = new RecurrenceProperties();
+            recurrenceProperties.RecurrenceType = RecurrenceType.Daily;
+            recurrenceProperties.IsRangeRecurrenceCount = true;
+            recurrenceProperties.DailyNDays = 2;
+            recurrenceProperties.IsDailyEveryNDays = true;
+            recurrenceProperties.IsWeeklySunday = false;
+            recurrenceProperties.IsWeeklyMonday = false;
+            recurrenceProperties.IsWeeklyTuesday = false;
+            recurrenceProperties.IsWeeklyWednesday = false;
+            recurrenceProperties.IsWeeklyThursday = false;
+            recurrenceProperties.IsWeeklyFriday = false;
+            recurrenceProperties.IsWeeklySaturday = false;
+            recurrenceProperties.RangeRecurrenceCount = 10;
+            recurrenceProperties.RecurrenceRule = ScheduleHelper.RRuleGenerator(recurrenceProperties,
+                resultingAppointment.StartTime, resultingAppointment.EndTime);
+
+            //recurrenceProperties.IsRangeNoEndDate = true;
+            //recurrenceProperties.RecurrenceType = RecurrenceType.Daily;
+
+            //switch (SelectedCalendarEventRecursionMode)
+            //{
+            //    case CalendarEventRecursionMode.EveryTwoWeeks:
+            //        recurrenceProperties.IsDailyEveryNDays = true;
+            //        recurrenceProperties.DailyNDays = 14;
+            //        break;
+            //    case CalendarEventRecursionMode.EveryWeek:
+            //        recurrenceProperties.IsDailyEveryNDays = true;
+            //        recurrenceProperties.DailyNDays = 2;
+            //        break;
+            //    case CalendarEventRecursionMode.None:
+            //        resultingAppointment.IsRecursive = false;
+            //        return resultingAppointment;
+            //    default:
+            //        throw new ArgumentOutOfRangeException();
+            //}
+
+            resultingAppointment.RecurrenceRule = recurrenceProperties.RecurrenceRule;
 
             return resultingAppointment;
         }

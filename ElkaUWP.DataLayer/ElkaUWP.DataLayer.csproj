@@ -221,7 +221,7 @@
       <Version>2.4.2</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>5.0.1</Version>
+      <Version>5.1.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -241,7 +241,7 @@
       <Version>7.2.0.853-ci</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSchedule.UWP">
-      <Version>17.1.0.51</Version>
+      <Version>17.1.0.53</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -259,7 +259,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
-    <Folder Include="Usos\Converters\Entities\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

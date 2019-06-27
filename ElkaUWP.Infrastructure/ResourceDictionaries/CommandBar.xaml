@@ -6,7 +6,7 @@
         x:Key="TopCommandBarBackground"
         BackgroundSource="HostBackdrop"
         TintColor="{ThemeResource SystemChromeMediumColor}"
-        TintOpacity=".7" />
+        TintOpacity=".8" />
     <Style x:Key="TopCommandBar" TargetType="CommandBar">
         <Setter Property="Background" Value="{StaticResource TopCommandBarBackground}" />
     </Style>
