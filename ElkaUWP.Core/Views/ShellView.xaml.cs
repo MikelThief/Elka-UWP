@@ -10,6 +10,7 @@ using ElkaUWP.Core.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Helpers;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
@@ -26,25 +27,26 @@ namespace ElkaUWP.Core.Views
         {
             InitializeComponent();
 
-
             var formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 
             formattableTitleBar.BackgroundColor = Colors.Transparent;
 
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonForegroundColor = (Color) Resources["SystemBaseMediumColor"];
+            formattableTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
 
-            formattableTitleBar.ButtonPressedBackgroundColor = (Color) Resources["SystemAccentColorDark3"];
-            formattableTitleBar.ButtonPressedForegroundColor = (Color) Resources["SystemBaseLowColor"];
+            formattableTitleBar.ButtonPressedBackgroundColor = (Color)Resources["SystemAccentColorDark3"];
+            formattableTitleBar.ButtonPressedForegroundColor = (Color)Resources["SystemBaseLowColor"];
 
             formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            formattableTitleBar.ButtonInactiveForegroundColor = (Color) Resources["SystemChromeGrayColor"];
+            formattableTitleBar.ButtonInactiveForegroundColor = (Color)Resources["SystemChromeGrayColor"];
 
-            formattableTitleBar.ButtonHoverBackgroundColor = (Color) Resources["SystemAccentColor"];
-            formattableTitleBar.ButtonHoverForegroundColor = (Color) Resources["SystemAltMediumColor"];
+            formattableTitleBar.ButtonHoverBackgroundColor = (Color)Resources["SystemAccentColor"];
+            formattableTitleBar.ButtonHoverForegroundColor = (Color)Resources["SystemAltMediumColor"];
 
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
@@ -96,5 +98,7 @@ namespace ElkaUWP.Core.Views
         {
             ViewModel.RequestInternalNavigation("../");
         }
+
+        public TitleBarHelper TitleHelper => TitleBarHelper.Instance;
     }
 }

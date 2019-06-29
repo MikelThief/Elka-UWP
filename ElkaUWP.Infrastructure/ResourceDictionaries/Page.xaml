@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ElkaUWP.Infrastructure">
+    <Style x:Key="PageStyle" TargetType="Page">
+        <Setter Property="Background" Value="{ThemeResource RegionBrush}" />
+    </Style>
+    <Thickness x:Key="PageMargin">24,35,0,0</Thickness>
+    <Thickness x:Key="PagePadding">24,35,24,0</Thickness>
+    <Thickness x:Key="PageTopPosition">0,45,0,0</Thickness>
+    <Thickness x:Key="PageTitleMargin">12,0,12,25</Thickness>
+
+</ResourceDictionary>

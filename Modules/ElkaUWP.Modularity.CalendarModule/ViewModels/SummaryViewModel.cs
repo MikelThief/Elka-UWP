@@ -38,9 +38,10 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             get => _webCalFeedHyperlink;
             private set => SetProperty(storage: ref _webCalFeedHyperlink, value: value, propertyName: nameof(WebCalFeedHyperlink));
         }
+
         public ObservableCollection<UserDeadline> UserDeadlines = new ObservableCollection<UserDeadline>();
 
-        public ObservableCollection<CalendarEvent> CalendarEvents = new ObservableCollection<CalendarEvent>();
+        public ObservableCollection<CalendarEvent> CalendarEvents { get; set; }
 
 
         #region CreateEventFlyout
@@ -85,6 +86,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             CreateDeadlineFlyoutDateTime = DateTime.Now;
             CreateDeadlineFlyOutTitle = string.Empty;
             CreateDeadlineFlyoutDescription = string.Empty;
+            CalendarEvents = new ObservableCollection<CalendarEvent>();
         }
 
         private async Task DownloadSechuleFromUsosAsync()
@@ -155,7 +157,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
             var result = await _dialogService.ShowContentDialogAsync(viewModel: vm);
 
-            if (result != ContentDialogResult.Primary) return;
+            if (result != ContentDialogResult.Primary)
+                return;
 
             if (!(appointment is null))
             {

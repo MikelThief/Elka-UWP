@@ -35,9 +35,7 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
 
             // Set up schedule
-            CurrentWeekSchedule.ShowNonWorkingHours = false;
-            CurrentWeekSchedule.WorkStartHour = 8;
-            CurrentWeekSchedule.WorkEndHour = 20;
+            Schedule.ShowNonWorkingHours = false;
         }
 
         private void CreateEventButton_Click(object sender, RoutedEventArgs e)
@@ -45,11 +43,21 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
             CreateDeadlineFlyout.Hide();
         }
 
-        private async void CurrentWeekSchedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
+        private void CurrentWeekSchedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
         {
             e.Cancel = true;
-
-            await ViewModel.OpenCalendarEventDialog(startDateTime: e.StartTime, appointment: (CalendarEvent) e.Appointment);
         }
+
+        private async void Schedule_OnScheduleTapped(object sender, ScheduleTappedEventArgs e)
+        {
+            var properlyConvertedEvent = e.Appointment as CalendarEvent;
+
+            await ViewModel.OpenCalendarEventDialog(startDateTime: e.SelectedDate.GetValueOrDefault(),
+                appointment: (CalendarEvent) e.Appointment);
+        }
+
+        private void CalendarGoBackwardButton_OnClick(object sender, RoutedEventArgs e) => Schedule.Backward();
+
+        private void CalendarGoForwardButton_OnClick(object sender, RoutedEventArgs e) => Schedule.Forward();
     }
 }

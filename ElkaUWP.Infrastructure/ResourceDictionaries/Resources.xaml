@@ -1,9 +1,12 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ElkaUWP.Infrastructure">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Themes.xaml" />
+        <ResourceDictionary Source="Page.xaml" />
         <ResourceDictionary Source="SnapPoints.xaml" />
+        <ResourceDictionary Source="CommandBar.xaml" />
+        <ResourceDictionary Source="Margin.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
