@@ -132,7 +132,6 @@
   <ItemGroup>
     <Compile Include="LoginModuleInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\UsosOAuthService.cs" />
     <Compile Include="ViewModels\StudiaLoginViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
     <Compile Include="ViewModels\UsosLoginViewModel.cs" />
@@ -217,6 +216,9 @@
       <Project>{e41fa7a8-dd6d-4465-9d4d-116931871c95}</Project>
       <Name>OAuthClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

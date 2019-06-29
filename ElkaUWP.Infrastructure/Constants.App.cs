@@ -4,6 +4,7 @@
     {
         public const string USOS_CREDENTIAL_CONTAINER_NAME = "Usos Credentials Container";
         public const string STUDIA_CREDENTIAL_CONTAINER_NAME = "Studia Credentials Container";
+        public const string DATABASE_CACHETYPE_FILE_NAME = "Volta.db";
 
 
         public const string PROTOCOL_URI = "elka://";

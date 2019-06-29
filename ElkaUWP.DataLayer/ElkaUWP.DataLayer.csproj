@@ -208,6 +208,7 @@
     <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\TimeTableService.cs" />
     <Compile Include="Usos\Services\UsersService.cs" />
+    <Compile Include="Usos\Services\UsosOAuthService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -5,18 +5,17 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Windows.Security.Credentials;
+using Anotar.NLog;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Exceptions;
 using ElkaUWP.Infrastructure.Services;
-using NLog;
 using OAuthClient;
 
-namespace ElkaUWP.Modularity.LoginModule.Service
+namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class UsosOAuthService : IUsosOAuthService
+    public class LogonService
     {
-        private readonly IReadOnlyCollection<string> _usosScopes = new List<string>()
+        private IReadOnlyCollection<string> _usosScopes = new List<string>()
         {
             "cards",
             "change_all_preferences",
@@ -43,17 +42,15 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
         private string _requestToken = string.Empty;
         private string _requestTokenSecret = string.Empty;
-        private ILogger Logger { get; }
 
         private readonly SecretService _secretService;
 
-        public UsosOAuthService(SecretService secretService, ILogger logger)
+        public LogonService(SecretService secretService)
         {
-            Logger = logger;
             _secretService = secretService;
         }
 
-        public async Task StartAuthorizationAsync()
+        public async Task StartOAuthHandshakeAsync()
         {
             var tokenRequest = new OAuthRequest()
             {
@@ -81,11 +78,11 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
             try
             {
-                response = await webClient.DownloadStringTaskAsync(address: requestUri);
+                response = await webClient.DownloadStringTaskAsync(address: requestUri).ConfigureAwait(true);
             }
-            catch (WebException exc)
+            catch (WebException wexc)
             {
-                Logger.Fatal(exception: exc, "Unable to start OAuth handshake");
+                LogTo.FatalException(exception: wexc, message: "Unable to start OAuth handshake");
                 throw;
             }
 
@@ -100,14 +97,14 @@ namespace ElkaUWP.Modularity.LoginModule.Service
             }
             catch (FormatException exc)
             {
-                Logger.Warn(exception: exc, message: "USOS API returned ambiguous oauth_callback_confirmed value. Returned value is {value}",
-                    args: (responseParametersCollection.Get(name: "oauth_callback_confirmed")));
+                LogTo.WarnException(exception: exc, message: "USOS API returned ambiguous oauth_callback_confirmed value. Returned value is "
+                                                             + (responseParametersCollection.Get(name: "oauth_callback_confirmed")));
                 throw;
             }
 
             if (!callbackIsAccepted)
             {
-                Logger.Warn(message: "USOS API does not support callback");
+                LogTo.Warn(message: "USOS API does not support callback");
                 throw new InvalidOperationException(message: "USOS API does not support callback");
             }
 
@@ -115,25 +112,38 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
         }
 
+        public async Task<bool> TryFinishOAuthHandshakeAsync(string responseQueryString)
+        {
+            var responseParameters = HttpUtility.ParseQueryString(query: responseQueryString);
+
+            var credential = await FinishOAuthHandshakeInternalAsync(
+                authorizedRequestToken: responseParameters.Get(name: "oauth_token"),
+                oauthVerifier: responseParameters.Get(name: "oauth_verifier")).ConfigureAwait(continueOnCapturedContext: true);
+
+            if (credential == null)
+            {
+                return false;
+            }
+
+            _secretService.CreateOrUpdateSecret(providedCredential: credential);
+            return true;
+
+        }
+
         /// <summary>
-        /// 
+        /// Finished OAuth handshake with USOS.
         /// </summary>
-        /// <param name="authorizedRequestToken"></param>
-        /// <param name="oauthVerifier"></param>
+        /// <param name="authorizedRequestToken">Authorized token from USOS.</param>
+        /// <param name="oauthVerifier">Verifier from USOS.</param>
         /// <returns></returns>
         /// <exception cref="FailedOAuthWorkflowException">Thrown when OAuth session was started multiple times
         /// and application state doesn't match service provider callback</exception>
-        public async Task<PasswordCredential> GetAccessAsync(string authorizedRequestToken, string oauthVerifier)
+        private async Task<PasswordCredential> FinishOAuthHandshakeInternalAsync(string authorizedRequestToken, string oauthVerifier)
         {
             if (authorizedRequestToken != _requestToken)
             {
-                Logger.Fatal("Received token does not match expected one. The value of expected token is {expectedToken}, and the actual value is {actualValue}", argument1: _requestToken, argument2: authorizedRequestToken);
+                LogTo.Fatal( "Request token mismatch. Expected token is {expectedRequestToken}, actual is {actualRequestToken}", _requestToken, authorizedRequestToken);
                 throw new FailedOAuthWorkflowException(expectedToken: _requestToken, actualToken: authorizedRequestToken);
-            }
-            else if (_requestToken == string.Empty)
-            {
-                Logger.Warn(
-                    "Application's token is empty, so application's state is lost. It might took too long for a user to authorize token. It could expire anyway. Application will continue.");
             }
 
             var tokenRequest = new OAuthRequest()
@@ -161,12 +171,12 @@ namespace ElkaUWP.Modularity.LoginModule.Service
 
             try
             {
-                response = await webClient.DownloadStringTaskAsync(address: requestUri);
+                response = await webClient.DownloadStringTaskAsync(address: requestUri).ConfigureAwait(true);
             }
             catch (WebException exc)
             {
-                Logger.Fatal(exception: exc, "USOS API refused to perform a token exchange");
-                throw;
+                LogTo.WarnException(exception: exc, message: "Failed to perform a token exchange");
+                return null;
             }
 
             var responseParametersCollection = HttpUtility.ParseQueryString(query: response);
