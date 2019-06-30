@@ -8,7 +8,7 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    class UserInfoRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class UserInfoRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
 
         private const string _destination = "users/user";

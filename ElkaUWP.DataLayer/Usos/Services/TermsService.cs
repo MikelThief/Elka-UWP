@@ -16,18 +16,18 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class TermsService : UsosServiceBase
+    public class TermsService
     {
+        private readonly TermsSearchRequestWrapper _termsSearchRequestWrapper;
         /// <inheritdoc />
-        public TermsService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
+        public TermsService(TermsSearchRequestWrapper termsSearchRequestWrapper)
         {
-
+            _termsSearchRequestWrapper = termsSearchRequestWrapper;
         }
 
         public async Task<List<Semester>> SearchAsync()
         {
-            var request = (Container.Resolve<TermsSearchRequestWrapper>());
-            var requestString = request.GetRequestString();
+            var requestString = _termsSearchRequestWrapper.GetRequestString();
             List<Semester> result;
             var webClient = new WebClient();
 
@@ -53,8 +53,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<List<Semester>> SearchAsync(DateTime maximumStartDate)
         {
-            var request = (Container.Resolve<TermsSearchRequestWrapper>());
-            var requestString = request.GetRequestString(maximumStartDate: maximumStartDate);
+            var requestString = _termsSearchRequestWrapper.GetRequestString(maximumStartDate: maximumStartDate);
             List<Semester> result;
             var webClient = new WebClient();
 

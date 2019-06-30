@@ -19,17 +19,17 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class GradesService : UsosServiceBase
+    public class GradesService
     {
+        private readonly GradesTerms2RequestWrapper _gradesTerms2RequestWrapper;
         /// <inheritdoc />
-        public GradesService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
+        public GradesService(GradesTerms2RequestWrapper gradesTerms2RequestWrapper)
         {
-
+            _gradesTerms2RequestWrapper = gradesTerms2RequestWrapper;
         }
         public async Task<Dictionary<string, Dictionary<string, GradesGradedSubject>>> Terms2Async()
         {
-            var request = (Container.Resolve<GradesTerms2RequestWrapper>());
-            var requestString = request.GetRequestString();
+            var requestString = _gradesTerms2RequestWrapper.GetRequestString();
             Dictionary<string, Dictionary<string, GradesGradedSubject>> result;
             var webClient = new WebClient();
 
@@ -41,25 +41,26 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
                 return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
                 return null;
             }
+
             var filteredResult = new Dictionary<string, Dictionary<string, GradesGradedSubject>>();
 
             foreach (var semester in result.Keys)
             {
-                // filtering removes null semesters (undefined) and empty semesters (student didn't take part)
+                // filtering removes null semesters (undefined) and empty semesters (no participation)
                 if (result[key: semester] == null || result[key: semester]?.Values.Count < 1)
                     continue;
                 // ArgumentException is never thrown as student cannot enroll more than once for same subject in the semester
-                else filteredResult.Add(key: semester, value: result[key: semester]);
+                filteredResult.Add(key: semester, value: result[key: semester]);
             }
-            
+
             return filteredResult;
         }
     }

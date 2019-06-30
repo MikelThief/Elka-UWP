@@ -12,7 +12,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     /// <summary>
     /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/tt/#student
     /// </summary>
-    public class StudentTimeTableRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class TimetableStudentRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "tt/student";
 
@@ -61,7 +61,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         }
 
         /// <inheritdoc />
-        public StudentTimeTableRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public TimetableStudentRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
         {
             Logger = logger;
             SecretService = secretServiceInstance;

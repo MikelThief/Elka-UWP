@@ -11,19 +11,24 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Extensions;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class UsersService: UsosServiceBase
+    public class UsersService
     {
-        public async Task<UserInfoContainer> User()
+        private readonly UserInfoRequestWrapper _userInfoRequestWrapper;
 
+        public UsersService(UserInfoRequestWrapper userInfoRequestWrapper)
         {
-            var request = (Container.Resolve<UserInfoRequestWrapper>());
+            _userInfoRequestWrapper = userInfoRequestWrapper;
+        }
 
-            var requestString = request.GetRequestString();
+        public async Task<UserInfoContainer> User()
+        {
+            var requestString = _userInfoRequestWrapper.GetRequestString();
             var webClient = new WebClient();
             UserInfoContainer result;
 
@@ -34,21 +39,17 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
-                throw new InvalidOperationException();
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
+                return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
-                throw new InvalidOperationException();
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
+                return null;
             }
 
             return result;
 
-        }
-
-        public UsersService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
-        {
         }
     }
 }

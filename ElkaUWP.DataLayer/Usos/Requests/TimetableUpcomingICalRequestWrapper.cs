@@ -16,7 +16,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     /// <summary>
     /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/tt/#upcoming_ical
     /// </summary>
-    class UpcomingICalRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class TimetableUpcomingICalRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "tt/upcoming_ical";
         public override string GetRequestString()
@@ -36,7 +36,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
 
-        public UpcomingICalRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public TimetableUpcomingICalRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();

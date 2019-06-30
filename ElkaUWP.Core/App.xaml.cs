@@ -239,7 +239,7 @@ namespace ElkaUWP.Core
                     if (secretService.IsContainerPresent(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME))
                         await NavigationService.NavigateAsync(name: PageTokens.ShellViewToken);
                     else
-                        await NavigationService.NavigateAsync(name: PageTokens.LoginViewToken);
+                        await NavigationService.NavigateAsync(name: PageTokens.WelcomeViewToken);
                     break;
                 case StartKinds.Activate:
                 {
@@ -249,7 +249,8 @@ namespace ElkaUWP.Core
                         {
                             var usosOAuthService = Container.Resolve<LogonService>();
                             var usosHandshakeSuccess =
-                                await usosOAuthService.TryFinishOAuthHandshakeAsync(protocolArguments.Uri.Query);
+                                await usosOAuthService.TryFinishOAuthHandshakeAsync(responseQueryString: protocolArguments.Uri.Query)
+                                    .ConfigureAwait(continueOnCapturedContext: true);
                             var navigationParameters = new NavigationParameters
                             {
                                 {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess}

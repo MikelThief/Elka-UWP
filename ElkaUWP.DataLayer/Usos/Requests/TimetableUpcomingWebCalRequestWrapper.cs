@@ -16,7 +16,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     /// <summary>
     /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/tt/#upcoming_share
     /// </summary>
-    public class UpcomingWebCalFeedRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class TimetableUpcomingWebCalRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "tt/upcoming_share";
         public override string GetRequestString()
@@ -32,7 +32,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         }
 
         /// <inheritdoc />
-        public UpcomingWebCalFeedRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public TimetableUpcomingWebCalRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();

@@ -12,7 +12,7 @@ namespace ElkaUWP.Modularity.LoginModule
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register View-VieModel pairs for navigation
-            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>(key: PageTokens.LoginViewToken);
+            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>(key: PageTokens.WelcomeViewToken);
             containerRegistry.RegisterForNavigation<UsosLoginView, UsosLoginViewModel>(key: PageTokens.UsosLoginViewToken);
             containerRegistry.RegisterForNavigation<StudiaLoginView, StudiaLoginViewModel>(key: PageTokens.StudiaLoginViewToken);
 
