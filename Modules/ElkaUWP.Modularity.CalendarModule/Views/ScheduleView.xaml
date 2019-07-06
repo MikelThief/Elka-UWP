@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="ElkaUWP.Modularity.CalendarModule.Views.SummaryView"
+    x:Class="ElkaUWP.Modularity.CalendarModule.Views.ScheduleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -35,6 +35,15 @@
                 DefaultLabelPosition="Bottom"
                 IsDynamicOverflowEnabled="True"
                 Style="{StaticResource TopCommandBar}">
+                <CommandBar.Content>
+                    <TextBlock
+                        Margin="24,4,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="Light"
+                        Text="{x:Bind ViewModel.CurrentMonthAndYear, Mode=OneWay}"
+                        TextTrimming="CharacterEllipsis" />
+                </CommandBar.Content>
                 <AppBarButton x:Uid="CalendarGoBackwardButton" Click="CalendarGoBackwardButton_OnClick">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76B;" />
@@ -95,12 +104,10 @@
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton
+                <AppBarToggleButton
                     x:Uid="SummaryDownloadButton"
-                    Command="{x:Bind ViewModel.DownloadScheduleFromUsosCommand}"
-                    Icon="Download" />
-
-
+                    Icon="Download"
+                    IsChecked="{x:Bind ViewModel.IsScheduleAutoDownloadEnabled, Mode=TwoWay}" />
             </CommandBar>
         </Grid>
         <Grid Name="ContentRegion" Grid.Row="1">
@@ -137,12 +144,8 @@
                             <sfcontrols:ScheduleAppointmentMapping
                                 AppointmentBackgroundMapping="Background"
                                 EndTimeMapping="EndTime"
-                                IsRecursiveMapping="IsRecursive"
                                 LocationMapping="Location"
                                 NotesMapping="Notes"
-                                RecurrenceProperitesMapping="RecurrenceProperties"
-                                RecurrenceRuleMapping="RecurrenceRule"
-                                RecurrenceTypeMapping="RecurrenceType"
                                 StartTimeMapping="StartTime"
                                 SubjectMapping="Subject" />
                         </sfcontrols:SfSchedule.AppointmentMapping>
@@ -208,12 +211,15 @@
                                     VerticalAlignment="Top"
                                     Orientation="Vertical"
                                     Spacing="10">
-                                    <HyperlinkButton Name="ICalHyperLinkButton" NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
+                                    <HyperlinkButton
+                                        Name="ICalHyperLinkButton"
+                                        IsEnabled="False"
+                                        NavigateUri="{x:Bind ViewModel.ICalFileHyperlink}">
                                         <HyperlinkButton.Content>
                                             <TextBlock x:Uid="ICalHyperLink" FontSize="15" />
                                         </HyperlinkButton.Content>
                                     </HyperlinkButton>
-                                    <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalFeedHyperlink}">
+                                    <HyperlinkButton Name="WebCalHyperLinkButton" NavigateUri="{x:Bind ViewModel.WebCalUrlTaskNotifier.Result, Mode=OneWay}">
                                         <HyperlinkButton.Content>
                                             <TextBlock x:Uid="WebCalHyperLink" FontSize="15" />
                                         </HyperlinkButton.Content>

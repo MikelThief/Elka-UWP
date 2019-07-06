@@ -136,6 +136,7 @@
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
+    <Compile Include="Propertiary\Services\TimetableService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
     <Compile Include="Studia\Abstractions\Bases\StudiaServiceBase.cs" />
     <Compile Include="Studia\Abstractions\Interfaces\IGradesProxy.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
     <Compile Include="Usos\Entities\Node.cs" />
+    <Compile Include="Usos\Entities\UpcomingShare.cs" />
     <Compile Include="Usos\Entities\UserCoursesPerSemester.cs" />
     <Compile Include="Usos\Entities\ExamRepGradedSubject.cs" />
     <Compile Include="Usos\Entities\IssuerGrades.cs" />
@@ -174,7 +176,6 @@
     <Compile Include="Usos\Entities\TestPoint.cs" />
     <Compile Include="Usos\Entities\UserInfoContainer.cs" />
     <Compile Include="Usos\Entities\UserTests.cs" />
-    <Compile Include="Usos\Extensions\ClassGroup2Extensions.cs" />
     <Compile Include="Usos\Abstractions\Bases\OAuthProtectedResourceRequestWrapperBase.cs" />
     <Compile Include="Usos\Abstractions\Interfaces\IOAuthProtectedResourceRequestWrapper.cs" />
     <Compile Include="DataLayerInitializer.cs" />
@@ -205,7 +206,7 @@
     <Compile Include="Usos\Services\ExamrepService.cs" />
     <Compile Include="Usos\Services\TermsService.cs" />
     <Compile Include="Usos\Services\GradesService.cs" />
-    <Compile Include="Usos\Services\TimeTableService.cs" />
+    <Compile Include="Usos\Services\TimetableService.cs" />
     <Compile Include="Usos\Services\UsersService.cs" />
     <Compile Include="Usos\Services\UsosOAuthService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
@@ -259,6 +260,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
+    <Folder Include="Usos\Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

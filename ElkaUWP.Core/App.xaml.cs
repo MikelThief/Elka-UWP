@@ -193,7 +193,7 @@ namespace ElkaUWP.Core
             // Step 3: Add targets
 
             // Step 4. Define rules
-            config.AddRule(minLevel: LogLevel.Info, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
+            config.AddRule(minLevel: LogLevel.Warn, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
 
 #if DEBUG
             config.AddRule(minLevel: LogLevel.Trace, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);

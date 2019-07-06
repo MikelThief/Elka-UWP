@@ -31,8 +31,8 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         private PartialGradesService _partialGradesService;
         private INavigationService _navigationService;
 
-        public ObservableCollection<SubjectApproach> SubjectApproaches = new ObservableCollection<SubjectApproach>();
-        public ObservableCollection<PartialGradeNode> UsosPartialGradesSource = new ObservableCollection<PartialGradeNode>();
+        public ObservableCollection<SubjectApproach> SubjectApproaches;
+        public ObservableCollection<PartialGradeNode> UsosPartialGradesSource;
 
         private SubjectApproach _selectedSubjectApproach;
         private PartialGradesContainer _partialGrades;
@@ -56,6 +56,9 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         {
             _finalGradesService = finalGradesService;
             _partialGradesService = partialGradesService;
+            SubjectApproaches = new ObservableCollection<SubjectApproach>();
+            UsosPartialGradesSource = new ObservableCollection<PartialGradeNode>();
+            MasterPaneInitilizationTaskNotifier = NotifyTask.Create(asyncAction: LoadMasterElementsAsync);
         }
 
         /// <inheritdoc />
@@ -68,7 +71,6 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         public void OnNavigatedTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
-            MasterPaneInitilizationTaskNotifier = NotifyTask.Create(asyncAction: LoadMasterElementsAsync);
         }
 
         private async Task LoadMasterElementsAsync()
@@ -117,7 +119,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
 
         public void GetPartialGradesContainer(string subjectId, string semesterLiteral)
         {
-            DetailPaneInitilizationTaskNotifier = NotifyTask.Create<PartialGradesContainer>(task:
+            DetailPaneInitilizationTaskNotifier = NotifyTask.Create(task:
                 _partialGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId));
 
         }

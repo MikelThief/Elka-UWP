@@ -12,7 +12,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Anotar.NLog;
-using ElkaUWP.DataLayer.Usos.Extensions;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Services

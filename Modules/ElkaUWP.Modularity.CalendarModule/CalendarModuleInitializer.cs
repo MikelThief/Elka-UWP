@@ -19,7 +19,7 @@ namespace ElkaUWP.Modularity.CalendarModule
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register View-Viewmodel pairs
-            containerRegistry.RegisterForNavigation<SummaryView, SummaryViewModel>(key: PageTokens.CalendarSummaryView);
+            containerRegistry.RegisterForNavigation<ScheduleView, ScheduleViewModel>(key: PageTokens.CalendarSummaryView);
 
             var dialogservice = new DialogService();
             // Register types

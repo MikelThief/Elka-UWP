@@ -9,7 +9,7 @@ using Syncfusion.UI.Xaml.Schedule;
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
-    public class CalendarEvent : ScheduleAppointment
+    public class CalendarEvent
     {
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -18,9 +18,5 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
         public Brush Background { get; set; }
         public CalendarEventType Type { get; set; }
         public string Notes { get; set; }
-        public bool IsRecursive { get; set; }
-        public string RecurrenceRule { get; set; }
-        public RecurrenceProperties RecurrenceProperties { get; set; }
-        public RecurrenceType RecurrenceType { get; set; }
     }
 }

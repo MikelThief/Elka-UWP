@@ -25,11 +25,11 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SummaryView : Page
+    public sealed partial class ScheduleView : Page
     {
-        private SummaryViewModel ViewModel => DataContext as SummaryViewModel;
+        private ScheduleViewModel ViewModel => DataContext as ScheduleViewModel;
 
-        public SummaryView()
+        public ScheduleView()
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
@@ -56,8 +56,20 @@ namespace ElkaUWP.Modularity.CalendarModule.Views
                 appointment: (CalendarEvent) e.Appointment);
         }
 
-        private void CalendarGoBackwardButton_OnClick(object sender, RoutedEventArgs e) => Schedule.Backward();
+        private async void CalendarGoBackwardButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CurrentFirstDayOfWeekDate =
+                ViewModel.CurrentFirstDayOfWeekDate.Subtract(value: TimeSpan.FromDays(value: 7));
+            await ViewModel.DownloadScheduleFromUsosCommand.ExecuteAsync(null);
+            Schedule.Backward();
+        }
 
-        private void CalendarGoForwardButton_OnClick(object sender, RoutedEventArgs e) => Schedule.Forward();
+        private async void CalendarGoForwardButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CurrentFirstDayOfWeekDate =
+                ViewModel.CurrentFirstDayOfWeekDate.Add(value: TimeSpan.FromDays(value: 7));
+            await ViewModel.DownloadScheduleFromUsosCommand.ExecuteAsync(null);
+            Schedule.Forward();
+        }
     }
 }

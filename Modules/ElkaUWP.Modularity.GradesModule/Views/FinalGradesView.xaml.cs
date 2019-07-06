@@ -38,7 +38,7 @@ namespace ElkaUWP.Modularity.GradesModule.Views
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);
         }
 
-        private async void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectedSubjectApproach = e.AddedItems[0] as SubjectApproach;
 

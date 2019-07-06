@@ -159,7 +159,7 @@
     <Compile Include="Services\AppFirstLunchService.cs" />
     <Compile Include="Services\SecretService.cs" />
     <Compile Include="Services\ThemeService.cs" />
-    <Compile Include="SettingsKeys.cs" />
+    <Compile Include="SettingsKeys.CalendarModule.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.Infrastructure.rd.xml" />
   </ItemGroup>
   <ItemGroup>

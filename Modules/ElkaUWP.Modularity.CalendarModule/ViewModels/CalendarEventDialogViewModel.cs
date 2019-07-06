@@ -12,7 +12,6 @@ using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Helpers;
 using ElkaUWP.Infrastructure.Helpers;
 using Prism.Mvvm;
-using Syncfusion.UI.Xaml.Schedule;
 
 namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 {
@@ -20,7 +19,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
     {
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(CalendarModuleInitializer));
 
-        private ScheduleAppointment appointment;
+        private CalendarEvent appointment;
 
         private string _title;
         public bool IsPrimaryButtonEnabled => true;
@@ -81,15 +80,6 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             set => SetProperty(storage: ref _selectedCalendarEventType, value: value, propertyName: nameof(SelectedCalendarEventType));
         }
 
-        private CalendarEventRecursionMode _selectedCalendarEventRecursionMode;
-
-        public CalendarEventRecursionMode SelectedCalendarEventRecursionMode
-        {
-            get => _selectedCalendarEventRecursionMode;
-            set => SetProperty(storage: ref _selectedCalendarEventRecursionMode, value: value, propertyName: nameof(SelectedCalendarEventRecursionMode));
-        }
-
-
         public string TimeRange => EventStartDateTime?.ToString(format: "dd/MM/yyyy HH:mm")
                                    + " - "
                                    + EventEndDateTime?.ToString(format: "dd/MM/yyyy HH:mm");
@@ -116,16 +106,6 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 {CalendarEventType.Conversatory, _resourceLoader.GetString(resource: "ConversatoryType")},
                 {CalendarEventType.Other, _resourceLoader.GetString(resource: "OtherType")},
             };
-
-            CalendarEventRecursionModeDictionary = new Dictionary<CalendarEventRecursionMode, string>
-            {
-                {CalendarEventRecursionMode.None, _resourceLoader.GetString(resource: "NoneRecursionMode") },
-                {CalendarEventRecursionMode.EveryWeek, _resourceLoader.GetString(resource: "EveryWeekRecursionMode") },
-                {CalendarEventRecursionMode.EveryTwoWeeks, _resourceLoader.GetString(resource: "EveryTwoWeeksRecursionMode") }
-            };
-
-            SelectedCalendarEventType = CalendarEventType.Other;
-            SelectedCalendarEventRecursionMode = CalendarEventRecursionMode.None;
         }
 
         public CalendarEventDialogViewModel(CalendarEvent appointment)
@@ -146,19 +126,9 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 {CalendarEventType.Conversatory, _resourceLoader.GetString(resource: "ConversatoryType")},
                 {CalendarEventType.Other, _resourceLoader.GetString(resource: "OtherType")},
             };
-
-            CalendarEventRecursionModeDictionary = new Dictionary<CalendarEventRecursionMode, string>
-            {
-                {CalendarEventRecursionMode.None, _resourceLoader.GetString(resource: "NoneRecursionMode") },
-                {CalendarEventRecursionMode.EveryWeek, _resourceLoader.GetString(resource: "EveryWeekRecursionMode") },
-                {CalendarEventRecursionMode.EveryTwoWeeks, _resourceLoader.GetString(resource: "EveryTwoWeeksRecursionMode") }
-            };
-
-            SelectedCalendarEventType = CalendarEventType.Other;
-            SelectedCalendarEventRecursionMode = CalendarEventRecursionMode.None;
         }
 
-        public CalendarEvent GetScheduleAppointment()
+        public CalendarEvent GetUnderlyingObject()
         {
             var resultingAppointment = new CalendarEvent()
             {
@@ -173,45 +143,6 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
             resultingAppointment.Background =
                 CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
-            resultingAppointment.IsRecursive = false;
-
-            RecurrenceProperties recurrenceProperties = new RecurrenceProperties();
-            recurrenceProperties.RecurrenceType = RecurrenceType.Daily;
-            recurrenceProperties.IsRangeRecurrenceCount = true;
-            recurrenceProperties.DailyNDays = 2;
-            recurrenceProperties.IsDailyEveryNDays = true;
-            recurrenceProperties.IsWeeklySunday = false;
-            recurrenceProperties.IsWeeklyMonday = false;
-            recurrenceProperties.IsWeeklyTuesday = false;
-            recurrenceProperties.IsWeeklyWednesday = false;
-            recurrenceProperties.IsWeeklyThursday = false;
-            recurrenceProperties.IsWeeklyFriday = false;
-            recurrenceProperties.IsWeeklySaturday = false;
-            recurrenceProperties.RangeRecurrenceCount = 10;
-            recurrenceProperties.RecurrenceRule = ScheduleHelper.RRuleGenerator(recurrenceProperties,
-                resultingAppointment.StartTime, resultingAppointment.EndTime);
-
-            //recurrenceProperties.IsRangeNoEndDate = true;
-            //recurrenceProperties.RecurrenceType = RecurrenceType.Daily;
-
-            //switch (SelectedCalendarEventRecursionMode)
-            //{
-            //    case CalendarEventRecursionMode.EveryTwoWeeks:
-            //        recurrenceProperties.IsDailyEveryNDays = true;
-            //        recurrenceProperties.DailyNDays = 14;
-            //        break;
-            //    case CalendarEventRecursionMode.EveryWeek:
-            //        recurrenceProperties.IsDailyEveryNDays = true;
-            //        recurrenceProperties.DailyNDays = 2;
-            //        break;
-            //    case CalendarEventRecursionMode.None:
-            //        resultingAppointment.IsRecursive = false;
-            //        return resultingAppointment;
-            //    default:
-            //        throw new ArgumentOutOfRangeException();
-            //}
-
-            resultingAppointment.RecurrenceRule = recurrenceProperties.RecurrenceRule;
 
             return resultingAppointment;
         }

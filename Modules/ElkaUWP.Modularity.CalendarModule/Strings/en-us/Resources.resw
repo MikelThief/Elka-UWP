@@ -208,10 +208,10 @@
     <value>Add new deadline to the list</value>
   </data>
   <data name="SummaryDownloadButton.Label" xml:space="preserve">
-    <value>Get from USOS</value>
+    <value>Download &amp; Save</value>
   </data>
   <data name="SummaryDownloadButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Downloads schedule from USOS and sets it recursively in the schedule</value>
+    <value>Enable the application to automatically download and save the class schedule to the currently displayed week. You can use the saved information when you do not have access to the Internet.</value>
   </data>
   <data name="SummaryPageHeader.Text" xml:space="preserve">
     <value>Summary</value>

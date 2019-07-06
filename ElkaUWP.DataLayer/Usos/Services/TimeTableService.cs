@@ -21,13 +21,13 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class TimeTableService
+    public class TimetableService
     {
         private readonly TimetableStudentRequestWrapper _timetableStudentRequestWrapper;
         private readonly TimetableUpcomingICalRequestWrapper _timetableUpcomingICalRequestWrapper;
         private readonly TimetableUpcomingWebCalRequestWrapper _timetableUpcomingWebCalRequestWrapper;
 
-        public TimeTableService(TimetableStudentRequestWrapper timetableStudentRequestWrapper,
+        public TimetableService(TimetableStudentRequestWrapper timetableStudentRequestWrapper,
             TimetableUpcomingICalRequestWrapper timetableUpcomingICalRequestWrapper,
             TimetableUpcomingWebCalRequestWrapper timetableUpcomingWebCalRequestWrapper)
         {
@@ -39,41 +39,23 @@ namespace ElkaUWP.DataLayer.Usos.Services
         /// <summary>
         /// Fetches activities for next two weeks for current student
         /// </summary>
-        /// <returns>List with elements of type <see cref="ClassGroup2"/></returns>
-        public async Task<List<ClassGroup2>> GetTimeTableActivitiesForStudentAsync()
+        /// <returns>List with elements of type <see cref="ClassGroup2"/> for the next 7 days.</returns>
+        public async Task<List<ClassGroup2>> StudentAsync(DateTime date)
         {
-
-            var firstDayOfCurrentWeekDateTime = DateTimeHelper.GetFirstDateOfWeek(dayInWeek: DateTime.Now, firstDay: DayOfWeek.Monday);
-
-            var currentWeekRequestUri = _timetableStudentRequestWrapper.GetRequestString(startDate: firstDayOfCurrentWeekDateTime);
-            var nextWeekRequestUri = _timetableStudentRequestWrapper.GetRequestString(startDate: firstDayOfCurrentWeekDateTime.AddDays(7));
+            var currentWeekRequestUri = _timetableStudentRequestWrapper.GetRequestString(startDate: date);
 
             var webClient = new WebClient();
 
-            string reponseForCurrentWeek;
-            string responseForNextWeek;
-
-            var currentWeekListOfActivities = new List<ClassGroup2>();
-            var nextWeekListOfActivities = new List<ClassGroup2>();
+            List<ClassGroup2> activities;
 
             try
             {
-                reponseForCurrentWeek = await webClient.DownloadStringTaskAsync(address: currentWeekRequestUri);
+                var response = await webClient.DownloadStringTaskAsync(address: currentWeekRequestUri);
 
-                currentWeekListOfActivities = JsonConvert.DeserializeObject<List<ClassGroup2>>(value: reponseForCurrentWeek,
+                activities = JsonConvert.DeserializeObject<List<ClassGroup2>>(value: response,
                     settings: new JsonSerializerSettings
                     {
-                        DateParseHandling = DateParseHandling.DateTime,
-                        Converters = {new UsosDateTimeConverter()}
-                    });
-
-                responseForNextWeek = await webClient.DownloadStringTaskAsync(address: nextWeekRequestUri);
-
-                nextWeekListOfActivities = JsonConvert.DeserializeObject<List<ClassGroup2>>(value: responseForNextWeek,
-                    settings: new JsonSerializerSettings
-                    {
-                        DateParseHandling = DateParseHandling.DateTime,
-                        Converters = { new UsosDateTimeConverter() }
+                        DateParseHandling = DateParseHandling.DateTime
                     });
             }
             catch (WebException wexc)
@@ -87,20 +69,37 @@ namespace ElkaUWP.DataLayer.Usos.Services
                 return null;
             }
 
-            // merge both lists creating a two-weeks list
-            currentWeekListOfActivities.AddRange(collection: nextWeekListOfActivities);
-
-            return currentWeekListOfActivities;
+            return activities;
         }
 
-        public string GetICalFileUri()
+        public string UpcomingICalAsync()
         {
             return _timetableUpcomingICalRequestWrapper.GetRequestString();
         }
 
-        public string GetWebCalFeedUri()
+        public async Task<UpcomingShare> UpcomingShareAsync()
         {
-            return _timetableUpcomingWebCalRequestWrapper.GetRequestString();
+            var webClient = new WebClient();
+            var requestString = _timetableUpcomingWebCalRequestWrapper.GetRequestString();
+
+            UpcomingShare response;
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+                response = JsonConvert.DeserializeObject<UpcomingShare>(value: json);
+            }
+            catch (WebException wexc)
+            {
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
+                return null;
+            }
+
+            return response;
         }
     }
 }
