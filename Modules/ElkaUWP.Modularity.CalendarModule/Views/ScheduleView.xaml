@@ -139,6 +139,34 @@
                         TimeInterval="OneHour"
                         WorkEndHour="19"
                         WorkStartHour="8">
+                        <sfcontrols:SfSchedule.AppointmentTemplate>
+                            <DataTemplate x:DataType="entities:CalendarEvent">
+                                <Grid Padding="4" Background="{x:Bind Background, Mode=OneWay}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Text="{x:Bind Subject, Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Light"
+                                        Text="{Binding Type}" />
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Light"
+                                        Text="{x:Bind Location, Mode=OneWay}" />
+                                </Grid>
+                            </DataTemplate>
+                        </sfcontrols:SfSchedule.AppointmentTemplate>
                         <sfcontrols:SfSchedule.AppointmentMapping>
                             <sfcontrols:ScheduleAppointmentMapping
                                 AppointmentBackgroundMapping="Background"
@@ -164,13 +192,11 @@
                                     x:Name="DeadlineListGrid"
                                     ItemsSource="{x:Bind ViewModel.UserDeadlines}"
                                     SelectionMode="None">
-                                    <!--  Head  -->
                                     <controls:AdaptiveGridView.ItemContainerStyle>
                                         <Style TargetType="FrameworkElement">
                                             <Setter Property="Margin" Value="0,2,4,2" />
                                         </Style>
                                     </controls:AdaptiveGridView.ItemContainerStyle>
-                                    <!--  Body  -->
                                     <controls:AdaptiveGridView.ItemTemplate>
                                         <DataTemplate x:DataType="entities:UserDeadline">
                                             <Grid Padding="4,2,4,2">
@@ -243,7 +269,7 @@
                         <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
                         <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
 
-                        <Setter Target="SideRegion.Margin" Value="64,0,20,0" />
+                        <Setter Target="SideRegion.Margin" Value="32,0,20,0" />
                         <Setter Target="SideRegion.(Grid.Column)" Value="1" />
                         <Setter Target="SideRegion.(Grid.Row)" Value="0" />
 
