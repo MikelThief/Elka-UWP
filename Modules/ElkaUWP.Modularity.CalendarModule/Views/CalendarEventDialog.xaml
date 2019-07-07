@@ -69,7 +69,7 @@
             HorizontalAlignment="Stretch"
             DisplayMemberPath="Value"
             ItemsSource="{x:Bind ViewModel.CalendarEventTypeDictionary}"
-            SelectedValue="{x:Bind ViewModel.SelectedCalendarEventType, Mode=TwoWay}"
+            SelectedValue="{x:Bind ViewModel.EventType, Mode=TwoWay}"
             SelectedValuePath="Key" />
         <controls:HeaderedContentControl
             x:Name="EventDialogLocationField"

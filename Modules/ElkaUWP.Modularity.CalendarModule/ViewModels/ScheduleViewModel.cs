@@ -85,6 +85,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             }
         }
 
+        private int VisibleDays { get; set; }
+
         public string CurrentMonthAndYear
         {
             get => _currentFirstDayOfWeekDate.ToString(format: "MMMM");
@@ -138,6 +140,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             CalendarEvents = new ObservableCollection<CalendarEvent>();
             CurrentFirstDayOfWeekDate =
                 DateTimeHelper.GetFirstDateOfWeek(dayInWeek: DateTime.Now, firstDay: DayOfWeek.Monday);
+            VisibleDays = 7;
 
             WebCalUrlTaskNotifier = NotifyTask.Create(task: _timeTableService.GetWebCalFeedAsync());
             CalendarEventsNotifier = NotifyTask.Create(task: DownloadScheduleFromUsosAsync());
@@ -151,15 +154,29 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             {
                 IsScheduleAutoDownloadEnabled = true;
             }
+
+            using (var db =
+                new LiteRepository(connectionString: DatabaseConnectionStringHelper.GetCachedDatabaseConnectionString())
+            )
+            {
+                var fromDb = db.Query<CalendarEvent>().ToList();
+
+                foreach (var calendarEvent in fromDb)
+                {
+                    CalendarEvents.Add(item: calendarEvent);
+                }
+            }
         }
 
         private async Task DownloadScheduleFromUsosAsync()
         {
             var result = await _timeTableService.GetScheduleFromUsos(date: CurrentFirstDayOfWeekDate);
+            var nextFirstDayOfWeekDate = CurrentFirstDayOfWeekDate.AddDays(value: VisibleDays);
 
             foreach (var calendarEvent in CalendarEvents.Where(x =>
-                x.Origin == Origin.Usos && x.StartTime >= CurrentFirstDayOfWeekDate
-                && x.EndTime <= CurrentFirstDayOfWeekDate.AddDays(value: 7)))
+                x.Origin == Origin.Usos
+                && x.StartTime >= CurrentFirstDayOfWeekDate
+                && x.EndTime <= nextFirstDayOfWeekDate).ToList())
             {
                 CalendarEvents.Remove(item: calendarEvent);
             }
@@ -171,7 +188,11 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
             using (var db = new LiteRepository(connectionString: DatabaseConnectionStringHelper.GetCachedDatabaseConnectionString()))
             {
-               
+                db.Delete<CalendarEvent>(x =>
+                    x.Origin == Origin.Usos
+                    && x.StartTime >= CurrentFirstDayOfWeekDate
+                    && x.EndTime <= nextFirstDayOfWeekDate);
+                db.Insert(entities: result);
             }
         }
 

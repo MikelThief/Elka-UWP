@@ -134,6 +134,7 @@
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
+    <Compile Include="Propertiary\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Propertiary\Services\TimetableService.cs" />
@@ -187,7 +188,6 @@
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
-    <Compile Include="Usos\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\CoursesUserRequestWrapper.cs" />
     <Compile Include="Usos\Requests\CrstestsNodeRequestWrapper.cs" />

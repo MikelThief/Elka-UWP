@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
-using ElkaUWP.DataLayer.Usos.Helpers;
 using ElkaUWP.Infrastructure.Extensions;
 
 namespace ElkaUWP.DataLayer.Propertiary.Services
@@ -52,9 +51,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                     EndTime = classGroup2.EndTime,
                     Location = classGroup2.RoomNumber,
                     Notes = eventTypeToParse.CapitalizeFirstCharacter(),
-                    Background = CalendarEventBackgroundHelper.GetBackgroundFromEventType(
-                        type: (CalendarEventType) Enum.Parse(enumType: typeof(CalendarEventType),
-                            value: eventTypeToParse, ignoreCase: true)),
+                    Type = (CalendarEventType) Enum.Parse(enumType: typeof(CalendarEventType), value: eventTypeToParse, ignoreCase: true),
                     Origin = Origin.Usos
                 };
 

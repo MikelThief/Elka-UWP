@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using ElkaUWP.DataLayer.Propertiary.Helpers;
 using ElkaUWP.DataLayer.Usos.Entities;
+using LiteDB;
 using Syncfusion.UI.Xaml.Schedule;
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
     public class CalendarEvent
     {
+        public Guid Id { get; set; }
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
@@ -19,7 +22,8 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
 
         public string Location { get; set; }
 
-        public Brush Background { get; set; }
+        [BsonIgnore]
+        public Brush Background => CalendarEventBackgroundHelper.GetBackground(type: Type);
 
         public CalendarEventType Type { get; set; }
 

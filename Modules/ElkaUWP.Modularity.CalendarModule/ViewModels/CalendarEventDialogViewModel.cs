@@ -9,7 +9,6 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
-using ElkaUWP.DataLayer.Usos.Helpers;
 using ElkaUWP.Infrastructure.Helpers;
 using Prism.Mvvm;
 
@@ -72,12 +71,12 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public Dictionary<CalendarEventRecursionMode, string> CalendarEventRecursionModeDictionary;
 
-        private CalendarEventType _selectedCalendarEventType;
+        private CalendarEventType _eventType;
 
-        public CalendarEventType SelectedCalendarEventType
+        public CalendarEventType EventType
         {
-            get => _selectedCalendarEventType;
-            set => SetProperty(storage: ref _selectedCalendarEventType, value: value, propertyName: nameof(SelectedCalendarEventType));
+            get => _eventType;
+            set => SetProperty(storage: ref _eventType, value: value, propertyName: nameof(EventType));
         }
 
         public string TimeRange => EventStartDateTime?.ToString(format: "dd/MM/yyyy HH:mm")
@@ -115,6 +114,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             Location = appointment.Location;
             EventStartDateTime = appointment.StartTime;
             EventEndDateTime = appointment.EndTime;
+            EventType = appointment.Type;
 
             CalendarEventTypeDictionary = new Dictionary<CalendarEventType, string>
             {
@@ -133,14 +133,13 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             return new CalendarEvent()
             {
                 Subject = Title,
-                Notes = CalendarEventTypeDictionary[key: SelectedCalendarEventType],
+                Notes = CalendarEventTypeDictionary[key: EventType],
                 Location = Location,
                 // ReSharper disable once PossibleInvalidOperationException
                 StartTime = EventStartDateTime.Value,
                 // ReSharper disable once PossibleInvalidOperationException
                 EndTime = EventEndDateTime.Value,
-                Background =
-                    CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType),
+                Type = EventType,
                 Origin = Origin.UserCreated
             };
         }
