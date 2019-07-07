@@ -8,9 +8,9 @@ using Windows.Storage;
 
 namespace ElkaUWP.Infrastructure.Helpers
 {
-    public class DatabaseConnectionStringHelper
+    public static class DatabaseConnectionStringHelper
     {
-        public static string GetConnectionString()
+        public static string GetCachedDatabaseConnectionString()
         {
             return Path.Combine(path1: ApplicationData.Current.LocalCacheFolder.Path,
                 path2: Constants.DATABASE_CACHETYPE_FILE_NAME);

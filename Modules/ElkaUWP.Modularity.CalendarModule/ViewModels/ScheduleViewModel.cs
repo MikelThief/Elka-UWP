@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Helpers;
+using LiteDB;
 using MvvmDialogs;
 using Nito.Mvvm;
 using Prism.Commands;
@@ -58,7 +60,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
         public Uri WebCalFeedHyperlink
         {
             get => _webCalFeedHyperlink;
-            private set => SetProperty(storage: ref _webCalFeedHyperlink, value: value, propertyName: nameof(WebCalFeedHyperlink));
+            private set => SetProperty(storage: ref _webCalFeedHyperlink, value: value,
+                propertyName: nameof(WebCalFeedHyperlink));
         }
 
         public ObservableCollection<UserDeadline> UserDeadlines = new ObservableCollection<UserDeadline>();
@@ -89,6 +92,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
 
         #region CreateEventFlyout
+
         private DateTime? _createDeadlineFlyoutDateTime;
         private string _createDeadlineFlyoutTitle;
         private string _createDeadlineFlyoutDescription;
@@ -97,13 +101,15 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
         public DateTime? CreateDeadlineFlyoutDateTime
         {
             get => _createDeadlineFlyoutDateTime;
-            set => SetProperty(storage: ref _createDeadlineFlyoutDateTime, value: value, propertyName: nameof(CreateDeadlineFlyoutDateTime));
+            set => SetProperty(storage: ref _createDeadlineFlyoutDateTime, value: value,
+                propertyName: nameof(CreateDeadlineFlyoutDateTime));
         }
 
         public string CreateDeadlineFlyOutTitle
         {
             get => _createDeadlineFlyoutTitle;
-            set => SetProperty(storage: ref _createDeadlineFlyoutTitle, value: value, propertyName: nameof(CreateDeadlineFlyOutTitle));
+            set => SetProperty(storage: ref _createDeadlineFlyoutTitle, value: value,
+                propertyName: nameof(CreateDeadlineFlyOutTitle));
         }
 
         public string CreateDeadlineFlyoutDescription
@@ -116,6 +122,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
         public DelegateCommand CreateEventCommand { get; private set; }
         public DelegateCommand<UserDeadline> RemoveUserDeadlineCommand { get; private set; }
         public AsyncCommand DownloadScheduleFromUsosCommand { get; private set; }
+
         #endregion
 
         public ScheduleViewModel(TimetableService timeTableService, IDialogService dialogService)
@@ -150,9 +157,21 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
         {
             var result = await _timeTableService.GetScheduleFromUsos(date: CurrentFirstDayOfWeekDate);
 
+            foreach (var calendarEvent in CalendarEvents.Where(x =>
+                x.Origin == Origin.Usos && x.StartTime >= CurrentFirstDayOfWeekDate
+                && x.EndTime <= CurrentFirstDayOfWeekDate.AddDays(value: 7)))
+            {
+                CalendarEvents.Remove(item: calendarEvent);
+            }
+
             foreach (var calendarEvent in result)
             {
-                CalendarEvents.Add(calendarEvent);
+                CalendarEvents.Add(item: calendarEvent);
+            }
+
+            using (var db = new LiteRepository(connectionString: DatabaseConnectionStringHelper.GetCachedDatabaseConnectionString()))
+            {
+               
             }
         }
 
@@ -173,7 +192,8 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public void CreateNewDeadline()
         {
-            UserDeadlines.Add(item: new UserDeadline(date: CreateDeadlineFlyoutDateTime.Value, header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription));
+            UserDeadlines.Add(item: new UserDeadline(date: CreateDeadlineFlyoutDateTime.Value,
+                header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription));
             CreateDeadlineFlyoutDateTime = DateTime.Now;
             CreateDeadlineFlyOutTitle = string.Empty;
             CreateDeadlineFlyoutDescription = string.Empty;
@@ -181,7 +201,9 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public async Task OpenCalendarEventDialog(DateTime startDateTime, CalendarEvent appointment)
         {
-            var vm = appointment is null ? new CalendarEventDialogViewModel(proposedStartTime: startDateTime) : new CalendarEventDialogViewModel(appointment: appointment);
+            var vm = appointment is null
+                ? new CalendarEventDialogViewModel(proposedStartTime: startDateTime)
+                : new CalendarEventDialogViewModel(appointment: appointment);
 
             var result = await _dialogService.ShowContentDialogAsync(viewModel: vm);
 
@@ -193,7 +215,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 CalendarEvents.Remove(item: appointment);
             }
 
-            var item = vm.GetUnderlyingObject();
+            var item = vm.GetResultingModel();
             CalendarEvents.Add(item: item);
         }
 

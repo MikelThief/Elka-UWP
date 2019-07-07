@@ -54,7 +54,8 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                     Notes = eventTypeToParse.CapitalizeFirstCharacter(),
                     Background = CalendarEventBackgroundHelper.GetBackgroundFromEventType(
                         type: (CalendarEventType) Enum.Parse(enumType: typeof(CalendarEventType),
-                            value: eventTypeToParse, ignoreCase: true))
+                            value: eventTypeToParse, ignoreCase: true)),
+                    Origin = Origin.Usos
                 };
 
                 activities.Add(item: appointment);

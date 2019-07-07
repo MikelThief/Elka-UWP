@@ -2,7 +2,6 @@
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
-    [Equals]
     public class UserDeadline
     {
         public DateTime Date { get; private set; }

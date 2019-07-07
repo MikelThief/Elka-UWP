@@ -128,9 +128,9 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             };
         }
 
-        public CalendarEvent GetUnderlyingObject()
+        public CalendarEvent GetResultingModel()
         {
-            var resultingAppointment = new CalendarEvent()
+            return new CalendarEvent()
             {
                 Subject = Title,
                 Notes = CalendarEventTypeDictionary[key: SelectedCalendarEventType],
@@ -138,13 +138,11 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 // ReSharper disable once PossibleInvalidOperationException
                 StartTime = EventStartDateTime.Value,
                 // ReSharper disable once PossibleInvalidOperationException
-                EndTime = EventEndDateTime.Value
+                EndTime = EventEndDateTime.Value,
+                Background =
+                    CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType),
+                Origin = Origin.UserCreated
             };
-
-            resultingAppointment.Background =
-                CalendarEventBackgroundHelper.GetBackgroundFromEventType(type: SelectedCalendarEventType);
-
-            return resultingAppointment;
         }
     }
 }

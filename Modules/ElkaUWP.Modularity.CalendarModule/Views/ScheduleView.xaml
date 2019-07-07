@@ -123,14 +123,14 @@
                     </Grid.ColumnDefinitions>
                     <sfcontrols:SfSchedule
                         x:Name="Schedule"
-                        Height="460"
+                        MinWidth="1"
+                        MinHeight="1"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         AppointmentEditorOpening="CurrentWeekSchedule_AppointmentEditorOpening"
                         EnableAutoFormat="True"
                         EnableNavigation="True"
                         FirstDayOfWeek="Monday"
-                        IntervalHeight="50"
                         ItemsSource="{x:Bind ViewModel.CalendarEvents, Mode=TwoWay}"
                         MajorTickTimeFormat="HH:mm"
                         ScheduleTapped="Schedule_OnScheduleTapped"
@@ -139,7 +139,6 @@
                         TimeInterval="OneHour"
                         WorkEndHour="19"
                         WorkStartHour="8">
-
                         <sfcontrols:SfSchedule.AppointmentMapping>
                             <sfcontrols:ScheduleAppointmentMapping
                                 AppointmentBackgroundMapping="Background"
@@ -233,8 +232,8 @@
             </ScrollViewer>
         </Grid>
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="LargeState">
+            <VisualStateGroup x:Name="WidthStateGroup">
+                <VisualState x:Name="LargeWidthState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowSnapPoint}" />
                     </VisualState.StateTriggers>
@@ -249,12 +248,10 @@
                         <Setter Target="SideRegion.(Grid.Row)" Value="0" />
 
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Right" />
-                        <Setter Target="Schedule.MaxWidth" Value="1200" />
-
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="SmallState">
+                <VisualState x:Name="SmallWidthState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
                     </VisualState.StateTriggers>
@@ -263,20 +260,160 @@
                         <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
                         <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
 
-                        <!--
-                            Workaround for hardcoded min width.
-                            Should consider displaying a message if too small area is available instead of schedule
-                        -->
-                        <Setter Target="Schedule.MinWidth" Value="1" />
-
                         <Setter Target="SideRegion.(Grid.Column)" Value="0" />
                         <Setter Target="SideRegion.(Grid.Row)" Value="1" />
-                        <Setter Target="SideRegion.Margin" Value="0,64,0,0" />
+                        <Setter Target="SideRegion.Margin" Value="0,24,0,0" />
 
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Bottom" />
                     </VisualState.Setters>
                 </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="HeightStateGroup">
+                <!--
+                    SfSchedule size is NumberOfCells*IntervalHeight + 40 (Days Header) + Allday header (if visible).
+                    Its content becomes invisible if Schedule is given more vertical space than it requires.
+                    User has to manipulate the width or height of schedule to let it catch up with showing content.
+                    Height should be then set to amount of required space -1
+                -->
+                <VisualState x:Name="XXXXXXXXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1270" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="1084" />
+                        <Setter Target="Schedule.IntervalHeight" Value="95" />
+                    </VisualState.Setters>
+                </VisualState>
 
+                <VisualState x:Name="XXXXXXXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1210" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="1024" />
+                        <Setter Target="Schedule.IntervalHeight" Value="90" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXXXXXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1150" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="974" />
+                        <Setter Target="Schedule.IntervalHeight" Value="85" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXXXXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1090" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="919" />
+                        <Setter Target="Schedule.IntervalHeight" Value="80" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXXXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1030" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="864" />
+                        <Setter Target="Schedule.IntervalHeight" Value="75" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="970" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="809" />
+                        <Setter Target="Schedule.IntervalHeight" Value="70" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="910" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="754" />
+                        <Setter Target="Schedule.IntervalHeight" Value="65" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XLHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="850" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="699" />
+                        <Setter Target="Schedule.IntervalHeight" Value="60" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="LHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="790" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="644" />
+                        <Setter Target="Schedule.IntervalHeight" Value="55" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="MHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="730" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="589" />
+                        <Setter Target="Schedule.IntervalHeight" Value="50" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="670" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.Height" Value="534" />
+                        <Setter Target="Schedule.IntervalHeight" Value="45" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XSmHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="610" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.IntervalHeight" Value="40" />
+                        <Setter Target="Schedule.Height" Value="479" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXSHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="550" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.IntervalHeight" Value="35" />
+                        <Setter Target="Schedule.Height" Value="424" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="XXXSHeightState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Schedule.IntervalHeight" Value="30" />
+                        <Setter Target="Schedule.Height" Value="369" />
+                    </VisualState.Setters>
+                </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
