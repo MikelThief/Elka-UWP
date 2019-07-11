@@ -182,7 +182,6 @@
     <Compile Include="DataLayerInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usos\Entities\Building.cs" />
-    <Compile Include="Usos\Entities\CalendarEventType.cs" />
     <Compile Include="Usos\Entities\CalendarEventRecursionMode.cs" />
     <Compile Include="Usos\Entities\LangDict.cs" />
     <Compile Include="Usos\Entities\MarkerStyle.cs" />

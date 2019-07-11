@@ -1,7 +1,9 @@
 ﻿using System;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
+using Type = ElkaUWP.DataLayer.Usos.Entities;
 
 namespace ElkaUWP.DataLayer.Propertiary.Helpers
 {

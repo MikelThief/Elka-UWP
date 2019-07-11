@@ -6,7 +6,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class Node
     {
-        [JsonProperty("type"), JsonConverter(converterType: typeof(JsonNodeTypeConverter))]
+        [JsonProperty("calendarEventType"), JsonConverter(converterType: typeof(JsonNodeTypeConverter))]
         public NodeType Type { get; set; }
 
         [JsonProperty("description")]

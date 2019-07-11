@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Anotar.NLog;
 using ElkaUWP.DataLayer.Propertiary.Entities;
@@ -95,12 +96,12 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         #region CreateEventFlyout
 
-        private DateTime? _createDeadlineFlyoutDateTime;
+        private DateTime _createDeadlineFlyoutDateTime;
         private string _createDeadlineFlyoutTitle;
         private string _createDeadlineFlyoutDescription;
 
 
-        public DateTime? CreateDeadlineFlyoutDateTime
+        public DateTime CreateDeadlineFlyoutDateTime
         {
             get => _createDeadlineFlyoutDateTime;
             set => SetProperty(storage: ref _createDeadlineFlyoutDateTime, value: value,
@@ -155,21 +156,32 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
                 IsScheduleAutoDownloadEnabled = true;
             }
 
-            using (var db =
-                new LiteRepository(connectionString: DatabaseConnectionStringHelper.GetCachedDatabaseConnectionString())
-            )
+            using (var db = new LiteRepository
+                (connectionString: DatabaseConnectionStringHelper.GetCachedDatabaseConnectionString()))
             {
-                var fromDb = db.Query<CalendarEvent>().ToList();
-
-                foreach (var calendarEvent in fromDb)
+                foreach (var calendarEvent in db.Query<CalendarEvent>().ToList())
                 {
                     CalendarEvents.Add(item: calendarEvent);
+                }
+
+                db.Delete<CalendarEvent>(predicate: x => x.EndTime < DateTime.Today.Subtract(TimeSpan.FromDays(60)));
+            }
+
+            using (var db = new LiteRepository
+                    (connectionString: DatabaseConnectionStringHelper.GetRoamingDatabaseConnectionString()))
+            {
+                foreach (var userDeadline in db.Query<UserDeadline>().ToList())
+                {
+                    UserDeadlines.Add(item: userDeadline);
                 }
             }
         }
 
         private async Task DownloadScheduleFromUsosAsync()
         {
+            if (!IsScheduleAutoDownloadEnabled)
+                return;
+
             var result = await _timeTableService.GetScheduleFromUsos(date: CurrentFirstDayOfWeekDate);
             var nextFirstDayOfWeekDate = CurrentFirstDayOfWeekDate.AddDays(value: VisibleDays);
 
@@ -198,6 +210,12 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         private void RemoveUserDeadline(UserDeadline obj)
         {
+            using (var db = new LiteRepository
+                (connectionString: DatabaseConnectionStringHelper.GetRoamingDatabaseConnectionString()))
+            {
+                db.Delete<UserDeadline>(x => x.Id == obj.Id);
+            }
+
             UserDeadlines.Remove(item: obj);
         }
 
@@ -213,8 +231,17 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public void CreateNewDeadline()
         {
-            UserDeadlines.Add(item: new UserDeadline(date: CreateDeadlineFlyoutDateTime.Value,
-                header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription));
+            var deadline = new UserDeadline(date: CreateDeadlineFlyoutDateTime,
+                header: CreateDeadlineFlyOutTitle, description: CreateDeadlineFlyoutDescription);
+
+            UserDeadlines.Add(item: deadline);
+
+            using (var db = new LiteRepository
+                (connectionString: DatabaseConnectionStringHelper.GetRoamingDatabaseConnectionString()))
+            {
+                db.Insert(entity: deadline);
+            }
+
             CreateDeadlineFlyoutDateTime = DateTime.Now;
             CreateDeadlineFlyOutTitle = string.Empty;
             CreateDeadlineFlyoutDescription = string.Empty;
@@ -231,7 +258,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             if (result != ContentDialogResult.Primary)
                 return;
 
-            if (!(appointment is null))
+            if (appointment != null)
             {
                 CalendarEvents.Remove(item: appointment);
             }

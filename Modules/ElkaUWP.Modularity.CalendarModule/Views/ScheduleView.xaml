@@ -34,6 +34,7 @@
                 Margin="0,0,0,12"
                 DefaultLabelPosition="Bottom"
                 IsDynamicOverflowEnabled="True"
+                OverflowButtonVisibility="Auto"
                 Style="{StaticResource TopCommandBar}">
                 <CommandBar.Content>
                     <TextBlock
@@ -119,7 +120,7 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition x:Name="SecondColumn" />
                     </Grid.ColumnDefinitions>
                     <sfcontrols:SfSchedule
                         x:Name="Schedule"
@@ -157,7 +158,7 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontWeight="Light"
-                                        Text="{Binding Type}" />
+                                        Text="{Binding CalendarEventType}" />
                                     <TextBlock
                                         Grid.Row="2"
                                         HorizontalAlignment="Center"
@@ -253,7 +254,6 @@
                             </controls:HeaderedContentControl>
                         </StackPanel>
                     </Grid>
-
                 </Grid>
             </ScrollViewer>
         </Grid>
@@ -266,8 +266,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="ScheduleRegion.Margin" Value="{StaticResource MediumLeftRightMargin}" />
-                        <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
-                        <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
+                        <Setter Target="SecondColumn.Width" Value="250" />
 
                         <Setter Target="SideRegion.Margin" Value="32,0,20,0" />
                         <Setter Target="SideRegion.(Grid.Column)" Value="1" />
@@ -276,15 +275,13 @@
                         <Setter Target="SummaryCommandBar.DefaultLabelPosition" Value="Right" />
                     </VisualState.Setters>
                 </VisualState>
-
                 <VisualState x:Name="SmallWidthState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ScheduleRegion.Margin" Value="{StaticResource SmallLeftRightMargin}" />
-                        <Setter Target="ScheduleRegion.(Grid.Row)" Value="0" />
-                        <Setter Target="ScheduleRegion.(Grid.Column)" Value="0" />
+                        <Setter Target="SecondColumn.(Width)" Value="0" />
 
                         <Setter Target="SideRegion.(Grid.Column)" Value="0" />
                         <Setter Target="SideRegion.(Grid.Row)" Value="1" />

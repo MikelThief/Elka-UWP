@@ -10,7 +10,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class PostalAddress
     {
-        [JsonProperty(propertyName: "type")]
+        [JsonProperty(propertyName: "calendarEventType")]
         [JsonConverter(converterType: typeof(JsonPostalAddressTypeConverter))]
         public PostalAddressType Type { get; set; }
 

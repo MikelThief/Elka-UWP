@@ -1,6 +1,7 @@
 ﻿using System;
 using ElkaUWP.DataLayer.Usos.Entities;
 using Newtonsoft.Json;
+using Type = System.Type;
 
 namespace ElkaUWP.DataLayer.Usos.Converters.Json
 {

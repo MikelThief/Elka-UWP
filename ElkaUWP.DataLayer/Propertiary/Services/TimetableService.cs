@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.Infrastructure.Extensions;
+using Type = ElkaUWP.DataLayer.Usos.Entities;
 
 namespace ElkaUWP.DataLayer.Propertiary.Services
 {
@@ -43,17 +44,16 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                 if (eventTypeToParse.EndsWith('s'))
                     eventTypeToParse = eventTypeToParse.Remove(startIndex: eventTypeToParse.LastIndexOf('s'));
 
-                var appointment = new CalendarEvent()
-                {
-                    Subject = classGroup2.CourseId.Substring(
+                var appointment = new CalendarEvent(subject:
+                    classGroup2.CourseId.Substring(
                         startIndex: classGroup2.CourseId.LastIndexOf('-') + 1),
-                    StartTime = classGroup2.StartTime,
-                    EndTime = classGroup2.EndTime,
-                    Location = classGroup2.RoomNumber,
-                    Notes = eventTypeToParse.CapitalizeFirstCharacter(),
-                    Type = (CalendarEventType) Enum.Parse(enumType: typeof(CalendarEventType), value: eventTypeToParse, ignoreCase: true),
-                    Origin = Origin.Usos
-                };
+                    startTime: classGroup2.StartTime,
+                    endTime: classGroup2.EndTime,
+                    location: classGroup2.RoomNumber,
+                    notes: eventTypeToParse.CapitalizeFirstCharacter(),
+                    calendarEventType: (CalendarEventType) Enum.Parse(enumType: typeof(CalendarEventType),
+                        value: eventTypeToParse, ignoreCase: true),
+                    origin: Origin.Usos);
 
                 activities.Add(item: appointment);
             }

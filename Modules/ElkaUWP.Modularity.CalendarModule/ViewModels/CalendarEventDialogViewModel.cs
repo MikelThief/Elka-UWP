@@ -11,6 +11,7 @@ using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.Infrastructure.Helpers;
 using Prism.Mvvm;
+using Type = ElkaUWP.DataLayer.Usos.Entities;
 
 namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 {
@@ -114,7 +115,7 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
             Location = appointment.Location;
             EventStartDateTime = appointment.StartTime;
             EventEndDateTime = appointment.EndTime;
-            EventType = appointment.Type;
+            EventType = appointment.CalendarEventType;
 
             CalendarEventTypeDictionary = new Dictionary<CalendarEventType, string>
             {
@@ -130,18 +131,10 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
 
         public CalendarEvent GetResultingModel()
         {
-            return new CalendarEvent()
-            {
-                Subject = Title,
-                Notes = CalendarEventTypeDictionary[key: EventType],
-                Location = Location,
-                // ReSharper disable once PossibleInvalidOperationException
-                StartTime = EventStartDateTime.Value,
-                // ReSharper disable once PossibleInvalidOperationException
-                EndTime = EventEndDateTime.Value,
-                Type = EventType,
-                Origin = Origin.UserCreated
-            };
+            return new CalendarEvent(subject: Title, notes: CalendarEventTypeDictionary[key: EventType],
+                location: Location, startTime:
+                EventStartDateTime.Value, endTime: EventEndDateTime.Value, calendarEventType: EventType,
+                origin: Origin.UserCreated);
         }
     }
 }

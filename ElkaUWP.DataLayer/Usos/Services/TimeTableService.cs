@@ -39,7 +39,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
         /// <summary>
         /// Fetches activities for next two weeks for current student
         /// </summary>
-        /// <returns>List with elements of type <see cref="ClassGroup2"/> for the next 7 days.</returns>
+        /// <returns>List with elements of calendarEventType <see cref="ClassGroup2"/> for the next 7 days.</returns>
         public async Task<List<ClassGroup2>> StudentAsync(DateTime date)
         {
             var currentWeekRequestUri = _timetableStudentRequestWrapper.GetRequestString(startDate: date);
