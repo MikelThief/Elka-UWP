@@ -77,7 +77,7 @@ namespace ElkaUWP.Core.Views
                         break;
                     //TODO: Remove when going to production
                     case "LoginToken":
-                        ViewModel.RequestExternalNavigation(navigationPath: PageTokens.LoginViewToken,
+                        ViewModel.RequestExternalNavigation(navigationPath: PageTokens.WelcomeViewToken,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
                     case PageTokens.CalendarSummaryView:

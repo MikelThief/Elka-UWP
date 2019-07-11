@@ -22,7 +22,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "node_id",
             "parent_id",
             "name",
-            "type",
+            "calendarEventType",
             "visible_for_students",
             "subnodes",
             "order"

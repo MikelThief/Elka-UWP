@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Entities;
 using Newtonsoft.Json;
+using Type = System.Type;
 
 namespace ElkaUWP.DataLayer.Usos.Converters.Json
 {

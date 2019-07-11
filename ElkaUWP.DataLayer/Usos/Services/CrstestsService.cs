@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
@@ -13,18 +14,26 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class CrstestsService : UsosServiceBase
+    public class CrstestsService
     {
-        /// <inheritdoc />
-        public CrstestsService(ILogger logger, IContainerExtension containerExtension) : base(logger, containerExtension)
-        {
+        private readonly CrstestsParticipantRequestWrapper _crstestsParticipantRequestWrapper;
+        private readonly CrstestsNodeRequestWrapper _crstestsNodeRequestWrapper;
+        private readonly CrstestsUserPointsRequestWrapper _crstestsUserPointsRequestWrapper;
 
+        /// <inheritdoc />
+        public CrstestsService(
+            CrstestsParticipantRequestWrapper crstestsParticipantRequestWrapper,
+            CrstestsNodeRequestWrapper crstestsNodeRequestWrapper,
+            CrstestsUserPointsRequestWrapper crstestsUserPointsRequestWrapper)
+        {
+            _crstestsParticipantRequestWrapper = crstestsParticipantRequestWrapper;
+            _crstestsNodeRequestWrapper = crstestsNodeRequestWrapper;
+            _crstestsUserPointsRequestWrapper = crstestsUserPointsRequestWrapper;
         }
 
         public async Task<Dictionary<string, Dictionary<int, Node>>> ParticipantAsync()
         {
-            var request = (Container.Resolve<CrstestsParticipantRequestWrapper>());
-            var requestString = request.GetRequestString();
+            var requestString = _crstestsParticipantRequestWrapper.GetRequestString();
             UserTests result;
             var webClient = new WebClient();
 
@@ -36,13 +45,13 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
-                return null;
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
+                throw;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
-                return null;
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
+                throw;
             }
 
             // intentional, as API returns a json with just a single element 'tests'
@@ -51,8 +60,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<Node> NodeAsync(int nodeId)
         {
-            var request = (Container.Resolve<CrstestsNodeRequestWrapper>());
-            var requestString = request.GetRequestString(nodeId: nodeId);
+            var requestString = _crstestsNodeRequestWrapper.GetRequestString(nodeId: nodeId);
             Node result;
             var webClient = new WebClient();
 
@@ -64,12 +72,12 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
                 return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
                 return null;
             }
 
@@ -78,8 +86,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<List<TestPoint>> UserPointsAsync(params int[] nodeIds)
         {
-            var request = (Container.Resolve<CrstestsUserPointsRequestWrapper>());
-            var requestString = request.GetRequestString(nodeIds: nodeIds);
+            var requestString = _crstestsUserPointsRequestWrapper.GetRequestString(nodeIds: nodeIds);
             List<TestPoint> result;
             var webClient = new WebClient();
 
@@ -91,12 +98,12 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
                 return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
                 return null;
             }
 
@@ -105,8 +112,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         public async Task<List<TestPoint>> UserPointsAsync(IEnumerable<int> nodeIds)
         {
-            var request = (Container.Resolve<CrstestsUserPointsRequestWrapper>());
-            var requestString = request.GetRequestString(nodeIds: nodeIds.ToList());
+            var requestString = _crstestsUserPointsRequestWrapper.GetRequestString(nodeIds: nodeIds.ToList());
             List<TestPoint> result;
             var webClient = new WebClient();
 
@@ -118,12 +124,12 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
                 return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
                 return null;
             }
 

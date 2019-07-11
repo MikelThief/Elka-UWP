@@ -2,8 +2,6 @@
 {
     public static partial class Constants
     {
-        public const string USOS_RESOURCE_TOKEN = "USOS_RES";
-
         public const string USOSAPI_SECURE_BASE_URL = "https://apps.usos.pw.edu.pl/services/";
 
         public const string USOS_CONSUMER_KEY = "rG4x8AGxGAkZY7BTnuDv";

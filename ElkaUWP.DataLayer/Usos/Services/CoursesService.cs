@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
 using ElkaUWP.DataLayer.Usos.Entities;
@@ -14,19 +16,18 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class CoursesService : UsosServiceBase
+    public class CoursesService
     {
+        private readonly CoursesUserRequestWrapper _coursesUserRequestWrapper;
         /// <inheritdoc />
-        public CoursesService(ILogger logger, IContainerExtension containerExtension) 
-            : base(logger, containerExtension)
+        public CoursesService(CoursesUserRequestWrapper coursesUserRequestWrapper)
         {
-
+            _coursesUserRequestWrapper = coursesUserRequestWrapper;
         }
 
         public async Task<Dictionary<string, List<CourseEdition>>> UserAsync()
         {
-            var request = (Container.Resolve<CoursesUserRequestWrapper>());
-            var requestString = request.GetRequestString();
+            var requestString = _coursesUserRequestWrapper.GetRequestString();
             UserCoursesPerSemester result;
             var webClient = new WebClient();
 
@@ -39,12 +40,12 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
                 return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
                 return null;
             }
 

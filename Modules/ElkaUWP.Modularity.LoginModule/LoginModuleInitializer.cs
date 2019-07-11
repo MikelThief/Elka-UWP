@@ -1,6 +1,5 @@
 ﻿using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
-using ElkaUWP.Modularity.LoginModule.Service;
 using ElkaUWP.Modularity.LoginModule.ViewModels;
 using ElkaUWP.Modularity.LoginModule.Views;
 using Prism.Ioc;
@@ -12,11 +11,8 @@ namespace ElkaUWP.Modularity.LoginModule
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Register services
-            containerRegistry.RegisterSingleton<IUsosOAuthService, UsosOAuthService>();
-
             // Register View-VieModel pairs for navigation
-            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>(key: PageTokens.LoginViewToken);
+            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>(key: PageTokens.WelcomeViewToken);
             containerRegistry.RegisterForNavigation<UsosLoginView, UsosLoginViewModel>(key: PageTokens.UsosLoginViewToken);
             containerRegistry.RegisterForNavigation<StudiaLoginView, StudiaLoginViewModel>(key: PageTokens.StudiaLoginViewToken);
 

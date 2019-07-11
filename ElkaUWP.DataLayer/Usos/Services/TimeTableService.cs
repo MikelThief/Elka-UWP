@@ -4,7 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
@@ -18,80 +21,85 @@ using Prism.Ioc;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
-    public class TimeTableService : UsosServiceBase
+    public class TimetableService
     {
+        private readonly TimetableStudentRequestWrapper _timetableStudentRequestWrapper;
+        private readonly TimetableUpcomingICalRequestWrapper _timetableUpcomingICalRequestWrapper;
+        private readonly TimetableUpcomingWebCalRequestWrapper _timetableUpcomingWebCalRequestWrapper;
+
+        public TimetableService(TimetableStudentRequestWrapper timetableStudentRequestWrapper,
+            TimetableUpcomingICalRequestWrapper timetableUpcomingICalRequestWrapper,
+            TimetableUpcomingWebCalRequestWrapper timetableUpcomingWebCalRequestWrapper)
+        {
+            _timetableStudentRequestWrapper = timetableStudentRequestWrapper;
+            _timetableUpcomingICalRequestWrapper = timetableUpcomingICalRequestWrapper;
+            _timetableUpcomingWebCalRequestWrapper = timetableUpcomingWebCalRequestWrapper;
+        }
+
         /// <summary>
         /// Fetches activities for next two weeks for current student
         /// </summary>
-        /// <returns>List with elements of type <see cref="ClassGroup2"/></returns>
-        public async Task<List<ClassGroup2>> GetTimeTableActivitiesForStudentAsync()
+        /// <returns>List with elements of calendarEventType <see cref="ClassGroup2"/> for the next 7 days.</returns>
+        public async Task<List<ClassGroup2>> StudentAsync(DateTime date)
         {
-            var request = (Container.Resolve<StudentTimeTableRequestWrapper>());
-
-            var firstDayOfCurrentWeekDateTime = DateTimeHelper.GetFirstDateOfWeek(DateTime.Now, DayOfWeek.Monday);
-
-            var currentWeekRequestUri = request.GetRequestString(startDate: firstDayOfCurrentWeekDateTime);
-            var nextWeekRequestUri = request.GetRequestString(startDate: firstDayOfCurrentWeekDateTime.AddDays(value: 7));
+            var currentWeekRequestUri = _timetableStudentRequestWrapper.GetRequestString(startDate: date);
 
             var webClient = new WebClient();
 
-            string reponseForCurrentWeek;
-            string responseForNextWeek;
-
-            var currentWeekListOfActivities = new List<ClassGroup2>();
-            var nextWeekListOfActivities = new List<ClassGroup2>();
+            List<ClassGroup2> activities;
 
             try
             {
-                reponseForCurrentWeek = await webClient.DownloadStringTaskAsync(address: currentWeekRequestUri);
+                var response = await webClient.DownloadStringTaskAsync(address: currentWeekRequestUri);
 
-                currentWeekListOfActivities = JsonConvert.DeserializeObject<List<ClassGroup2>>(value: reponseForCurrentWeek,
+                activities = JsonConvert.DeserializeObject<List<ClassGroup2>>(value: response,
                     settings: new JsonSerializerSettings
                     {
-                        DateParseHandling = DateParseHandling.DateTime,
-                        Converters = {new UsosDateTimeConverter()}
-                    });
-
-                responseForNextWeek = await webClient.DownloadStringTaskAsync(address: nextWeekRequestUri);
-
-                nextWeekListOfActivities = JsonConvert.DeserializeObject<List<ClassGroup2>>(value: responseForNextWeek,
-                    settings: new JsonSerializerSettings
-                    {
-                        DateParseHandling = DateParseHandling.DateTime,
-                        Converters = { new UsosDateTimeConverter() }
+                        DateParseHandling = DateParseHandling.DateTime
                     });
             }
             catch (WebException wexc)
             {
-                Logger.Fatal(exception: wexc, "Unable to start OAuth handshake");
-                throw new InvalidOperationException();
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
+                return null;
             }
             catch (JsonException jexc)
             {
-                Logger.Warn(exception: jexc, "Unable to deserialize incoming data");
-                throw new InvalidOperationException();
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
+                return null;
             }
 
-            // merge both lists creating a two-weeks list
-            currentWeekListOfActivities.AddRange(collection: nextWeekListOfActivities);
-
-            return currentWeekListOfActivities;
+            return activities;
         }
 
-        public string GetICalFileUri()
+        public string UpcomingICalAsync()
         {
-            return Container.Resolve<UpcomingICalRequestWrapper>().GetRequestString();
+            return _timetableUpcomingICalRequestWrapper.GetRequestString();
         }
 
-        public string GetWebCalFeedUri()
+        public async Task<UpcomingShare> UpcomingShareAsync()
         {
-            return Container.Resolve<UpcomingWebCalFeedRequestWrapper>().GetRequestString();
-        }
+            var webClient = new WebClient();
+            var requestString = _timetableUpcomingWebCalRequestWrapper.GetRequestString();
 
-        /// <inheritdoc />
-        public TimeTableService(ILogger logger, IContainerExtension containerExtension) : base(logger: logger, containerExtension: containerExtension)
-        {
+            UpcomingShare response;
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+                response = JsonConvert.DeserializeObject<UpcomingShare>(value: json);
+            }
+            catch (WebException wexc)
+            {
+                LogTo.FatalException(exception: wexc, message: "Unable to perform OAuth data exchange.");
+                return null;
+            }
+            catch (JsonException jexc)
+            {
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data.");
+                return null;
+            }
 
+            return response;
         }
     }
 }

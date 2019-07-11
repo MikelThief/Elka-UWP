@@ -45,7 +45,10 @@ using ElkaUWP.Modularity.CalendarModule;
 using ElkaUWP.Modularity.GradesModule;
 using ElkaUWP.Modularity.UserModule;
 using ElkaUWP.DataLayer;
+using ElkaUWP.DataLayer.Usos.Services;
+using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Misc;
+using LiteDB;
 
 namespace ElkaUWP.Core
 {
@@ -190,7 +193,7 @@ namespace ElkaUWP.Core
             // Step 3: Add targets
 
             // Step 4. Define rules
-            config.AddRule(minLevel: LogLevel.Info, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
+            config.AddRule(minLevel: LogLevel.Warn, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
 
 #if DEBUG
             config.AddRule(minLevel: LogLevel.Trace, maxLevel: LogLevel.Fatal, target: bufferedTargetWrapper);
@@ -236,7 +239,7 @@ namespace ElkaUWP.Core
                     if (secretService.IsContainerPresent(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME))
                         await NavigationService.NavigateAsync(name: PageTokens.ShellViewToken);
                     else
-                        await NavigationService.NavigateAsync(name: PageTokens.LoginViewToken);
+                        await NavigationService.NavigateAsync(name: PageTokens.WelcomeViewToken);
                     break;
                 case StartKinds.Activate:
                 {
@@ -244,26 +247,22 @@ namespace ElkaUWP.Core
                     {
                         if (args.Arguments is IProtocolActivatedEventArgs protocolArguments)
                         {
-                            var usosOAuthService = Container.Resolve<IUsosOAuthService>();
-
-                            var responseParameters = HttpUtility.ParseQueryString(query: protocolArguments.Uri.Query);
-
-                            var credential = await usosOAuthService.GetAccessAsync(
-                                authorizedRequestToken: responseParameters.Get(name: "oauth_token"),
-                                oauthVerifier: responseParameters.Get(name: "oauth_verifier"));
-
-                            secretService.CreateOrUpdateSecret(providedCredential: credential);
-                            ;
+                            var usosOAuthService = Container.Resolve<LogonService>();
+                            var usosHandshakeSuccess =
+                                await usosOAuthService.TryFinishOAuthHandshakeAsync(responseQueryString: protocolArguments.Uri.Query)
+                                    .ConfigureAwait(continueOnCapturedContext: true);
                             var navigationParameters = new NavigationParameters
                             {
-                                { NavigationParameterKeys.IS_USOS_AUTHORIZED, true }
+                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess}
                             };
 
-                            await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken, parameters: navigationParameters);
+                            await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken,
+                                parameters: navigationParameters);
                         }
                     }
-                    break;
                 }
+                    break;
+
                 case StartKinds.Prelaunch:
                     break;
                 case StartKinds.Background:
@@ -272,7 +271,6 @@ namespace ElkaUWP.Core
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
-
             }
         }
         /// <summary>
@@ -280,7 +278,7 @@ namespace ElkaUWP.Core
         /// </summary>
         /// <param name="containerRegistry">ParametersContainer against which registrations should be performed</param>
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
-        { 
+        {
             var nLogExtension = new NLogExtension
             {
                 GetName = (t, n) => t.Name
@@ -305,8 +303,8 @@ namespace ElkaUWP.Core
 
         public async Task StartAppServices()
         {
-            await ThemeService.InitializeAsync();
-            await ThemeService.SetRequestedThemeAsync();
+            await ThemeService.InitializeAsync().ConfigureAwait(continueOnCapturedContext: false);
+            await ThemeService.SetRequestedThemeAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

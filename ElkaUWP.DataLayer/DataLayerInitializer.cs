@@ -13,6 +13,7 @@ using ElkaUWP.DataLayer.Usos.Services;
 using Flurl.Http.Configuration;
 using Prism.Ioc;
 using Prism.Modularity;
+using TimetableService = ElkaUWP.DataLayer.Usos.Services.TimetableService;
 
 namespace ElkaUWP.DataLayer
 {
@@ -22,14 +23,14 @@ namespace ElkaUWP.DataLayer
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register USOS request wrappers
-            containerRegistry.RegisterSingleton<StudentTimeTableRequestWrapper>();
+            containerRegistry.RegisterSingleton<TimetableStudentRequestWrapper>();
             containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
-            containerRegistry.RegisterSingleton<UpcomingICalRequestWrapper>();
-            containerRegistry.RegisterSingleton<UpcomingWebCalFeedRequestWrapper>();
+            containerRegistry.RegisterSingleton<TimetableUpcomingICalRequestWrapper>();
+            containerRegistry.RegisterSingleton<TimetableUpcomingWebCalRequestWrapper>();
             containerRegistry.RegisterSingleton<UserInfoRequestWrapper>();
 
             // Register services
-            containerRegistry.RegisterSingleton<TimeTableService>();
+            containerRegistry.RegisterSingleton<TimetableService>();
             containerRegistry.RegisterSingleton<UserService>();
 
             // Register proxies

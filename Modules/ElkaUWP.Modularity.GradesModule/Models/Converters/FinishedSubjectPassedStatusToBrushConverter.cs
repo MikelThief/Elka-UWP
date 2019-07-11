@@ -18,7 +18,7 @@ namespace ElkaUWP.Modularity.GradesModule.Models.Converters
                 return castedValue ? new SolidColorBrush(Color.FromArgb(100, 32, 223, 32)) : new SolidColorBrush(Color.FromArgb(100, 255, 0, 44));
             }
             else throw new ArgumentException(message: nameof(FinishedSubjectPassedStatusToBrushConverter) +
-                                                      "doesn't support type" + targetType.ToString());
+                                                      "doesn't support calendarEventType" + targetType.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

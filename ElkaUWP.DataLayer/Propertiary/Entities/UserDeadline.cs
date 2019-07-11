@@ -1,21 +1,28 @@
 ﻿using System;
+using LiteDB;
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
-    [Equals]
     public class UserDeadline
     {
-        public DateTime Date { get; private set; }
+        [BsonId]
+        public Guid Id { get; set; }
+        public DateTime Date { get; set; }
 
-        public string Header { get; private set; }
+        public string Header { get; set; }
 
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         public UserDeadline(DateTime date, string header, string description)
         {
             Date = date;
             Header = header;
             Description = description;
+        }
+
+        public UserDeadline()
+        {
+            
         }
     }
 }
