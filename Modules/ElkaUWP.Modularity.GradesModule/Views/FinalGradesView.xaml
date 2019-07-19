@@ -9,6 +9,7 @@
     xmlns:dataTemplateSelectors="using:ElkaUWP.Modularity.GradesModule.Models.DataTemplateSelectors"
     xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:Nito.Mvvm"
     xmlns:syncfusion="using:Syncfusion.UI.Xaml.TreeGrid"
     xmlns:tcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewModels="using:ElkaUWP.Modularity.GradesModule.ViewModels"
@@ -180,11 +181,6 @@
                         TextWrapping="WrapWholeWords" />
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Name="MasterDetailsDetailsPaneElement">
-                <Grid>
-                    <syncfusion:SfTreeGrid ChildPropertyName="Nodes" ItemsSource="{Binding PartialGradesContainer.Nodes}" />
-                </Grid>
-            </DataTemplate>
             <DataTemplate x:Key="MasterHeaderTemplate">
                 <Grid
                     Height="40"
@@ -287,25 +283,27 @@
             </tcontrols:MasterDetailsView.MasterCommandBar>
             <tcontrols:MasterDetailsView.DetailsTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <syncfusion:SfTreeGrid
-                            AutoExpandMode="AllNodesExpanded"
-                            AutoGenerateColumns="False"
-                            ChildPropertyName="Nodes"
-                            ColumnSizer="Auto"
-                            HeaderStyle="{StaticResource headerStyle}"
-                            ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <syncfusion:SfTreeGrid.Columns>
-                                <syncfusion:TreeGridTextColumn x:Uid="UsosPartialGradesTreeDescriptionColumn" MappingName="Description" />
-                                <syncfusion:TreeGridNumericColumn x:Uid="UsosPartialGradesTreePointsColumn" MappingName="Points" />
-                            </syncfusion:SfTreeGrid.Columns>
-                        </syncfusion:SfTreeGrid>
-                    </Grid>
+                    <TreeView ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate>
+                                <TreeViewItem IsExpanded="True" ItemsSource="{Binding Nodes}">
+                                    <TreeViewItem.ContentTransitions>
+                                        <ContentThemeTransition />
+                                    </TreeViewItem.ContentTransitions>
+                                    <TreeViewItem.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Description}" />
+                                            <TextBlock Text=" - " />
+                                            <TextBlock Text="{Binding Points}" />
+                                        </StackPanel>
+                                    </TreeViewItem.Content>
+                                </TreeViewItem>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
                 </DataTemplate>
             </tcontrols:MasterDetailsView.DetailsTemplate>
         </tcontrols:MasterDetailsView>
-        <!--  Head  -->
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="MediumState">

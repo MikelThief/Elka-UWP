@@ -2,24 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 using ColorCode.Common;
 using ElkaUWP.DataLayer.Propertiary.Converters;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
-using ElkaUWP.DataLayer.Usos.Entities;
-using ElkaUWP.DataLayer.Usos.Services;
-using ElkaUWP.Infrastructure;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using Nito.Mvvm;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 
