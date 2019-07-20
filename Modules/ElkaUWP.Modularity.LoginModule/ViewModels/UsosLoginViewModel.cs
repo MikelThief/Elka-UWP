@@ -7,6 +7,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Helpers;
@@ -24,7 +25,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
-        private readonly IUsosOAuthService _usosOAuthService;
+        private readonly LogonService _logonService;
         public LocalNotificationManager NotificationManager { get; set; }
 
         private bool _isSignInButtonEnabled;
@@ -46,11 +47,11 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         public AsyncCommand AuthenticateCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
-        public UsosLoginViewModel(IUsosOAuthService usosOAuthService)
+        public UsosLoginViewModel(LogonService logonService)
         {
             AuthenticateCommand = new AsyncCommand(executeAsync: AuthenticateAsync);
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
-            _usosOAuthService = usosOAuthService;
+            _logonService = logonService;
             IsSignInButtonEnabled = default;
             IsAuthenticationSuccessful = default;
         }
@@ -71,7 +72,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 return;
             }
 
-            await _usosOAuthService.StartAuthorizationAsync().ConfigureAwait(continueOnCapturedContext: false);
+            await _logonService.StartOAuthHandshakeAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         private async Task Continue()

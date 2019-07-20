@@ -13,7 +13,9 @@ using ElkaUWP.DataLayer.Usos.Services;
 using Flurl.Http.Configuration;
 using Prism.Ioc;
 using Prism.Modularity;
-using TimetableService = ElkaUWP.DataLayer.Usos.Services.TimetableService;
+using Usos = ElkaUWP.DataLayer.Usos;
+using ElkaUWP.DataLayer.Studia;
+using ElkaUWP.Infrastructure;
 
 namespace ElkaUWP.DataLayer
 {
@@ -30,11 +32,14 @@ namespace ElkaUWP.DataLayer
             containerRegistry.RegisterSingleton<UserInfoRequestWrapper>();
 
             // Register services
-            containerRegistry.RegisterSingleton<TimetableService>();
+            containerRegistry.RegisterSingleton<Usos.Services.TimetableService>();
             containerRegistry.RegisterSingleton<UserService>();
+            containerRegistry.RegisterSingleton<Usos.Services.LogonService> ();
 
             // Register proxies
-            containerRegistry.RegisterSingleton<IGradesProxy, LdapFormGradesProxy>();
+            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Constants.LDAP_KEY);
 
             //Register other types
             containerRegistry.RegisterSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();

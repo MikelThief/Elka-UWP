@@ -160,6 +160,7 @@
     <Compile Include="Services\SecretService.cs" />
     <Compile Include="Services\ThemeService.cs" />
     <Compile Include="SettingsKeys.CalendarModule.cs" />
+    <Compile Include="SettingsKeys.GradesModule.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.Infrastructure.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.Studia.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.ContainerKeys.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

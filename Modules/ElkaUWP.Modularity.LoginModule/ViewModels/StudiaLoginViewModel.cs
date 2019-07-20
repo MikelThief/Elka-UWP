@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,6 +12,7 @@ using ElkaUWP.DataLayer.Studia.Enums;
 using ElkaUWP.DataLayer.Studia.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
+using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Services;
 using Microsoft.Toolkit.Uwp.Connectivity;
@@ -50,7 +52,6 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         }
 
         private string _password;
-        private readonly SecretService _secretService;
 
         public string Password
         {
@@ -62,19 +63,16 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         public AsyncCommand AuthenticateCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
-        public StudiaLoginViewModel(LogonService logonService, SecretService secretService)
+        public StudiaLoginViewModel(LogonService logonService)
         {
             _logonService = logonService;
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
             AuthenticateCommand = new AsyncCommand(executeAsync: AuthenticateAsync);
             IsAuthenticationSuccesful = default;
-            _secretService = secretService;
         }
 
         private async Task AuthenticateAsync()
         {
-            _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
-
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {
                 NotificationManager.Show(notification: new SimpleNotification
@@ -89,12 +87,15 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                 return;
             }
 
+            _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
             var validationResult = await _logonService.ValidateCredentialsAsync()
                 .ConfigureAwait(continueOnCapturedContext: true);
 
-
             if (validationResult)
             {
+                ApplicationData.Current.RoamingSettings.SaveString(key: SettingsKeys.StudiaStrategyKey,
+                    value: Constants.LDAP_KEY);
+
                 NotificationManager.Show(notification: new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 30),
