@@ -249,7 +249,7 @@ namespace ElkaUWP.Core
                         {
                             var usosOAuthService = Container.Resolve<LogonService>();
                             var usosHandshakeSuccess =
-                                await usosOAuthService.TryFinishOAuthHandshakeAsync(responseQueryString: protocolArguments.Uri.Query)
+                                await usosOAuthService.FinishOAuthHandshakeAsync(responseQueryString: protocolArguments.Uri.Query)
                                     .ConfigureAwait(continueOnCapturedContext: true);
                             var navigationParameters = new NavigationParameters
                             {

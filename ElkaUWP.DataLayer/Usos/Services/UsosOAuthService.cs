@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Web;
 using Windows.Security.Credentials;
 using Anotar.NLog;
+using CSharpFunctionalExtensions;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Exceptions;
 using ElkaUWP.Infrastructure.Services;
 using OAuthClient;
 
@@ -15,7 +15,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 {
     public class LogonService
     {
-        private IReadOnlyCollection<string> _usosScopes = new List<string>()
+        private static readonly IReadOnlyCollection<string> _usosScopes = new List<string>
         {
             "cards",
             "change_all_preferences",
@@ -50,7 +50,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
             _secretService = secretService;
         }
 
-        public async Task StartOAuthHandshakeAsync()
+        public async Task<Result> BeginOAuthHandshakeAsync()
         {
             var tokenRequest = new OAuthRequest()
             {
@@ -82,68 +82,63 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
-                LogTo.FatalException(exception: wexc, message: "Unable to start OAuth handshake");
-                throw;
+                LogTo.ErrorException(message: "Unable to start OAuth handshake.", exception: wexc);
+                return Result.Fail(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
             }
 
             var responseParametersCollection = HttpUtility.ParseQueryString(query: response);
 
             _requestToken = responseParametersCollection.Get(name: "oauth_token");
             _requestTokenSecret = responseParametersCollection.Get(name: "oauth_token_secret");
-            var callbackIsAccepted = default(bool);
+            bool callbackIsAccepted;
             try
             {
                 callbackIsAccepted = Convert.ToBoolean(value: responseParametersCollection.Get(name: "oauth_callback_confirmed"));
             }
             catch (FormatException exc)
             {
-                LogTo.WarnException(exception: exc, message: "USOS API returned ambiguous oauth_callback_confirmed value. Returned value is "
-                                                             + (responseParametersCollection.Get(name: "oauth_callback_confirmed")));
-                throw;
+                LogTo.ErrorException(message: "USOS API returned ambiguous oauth_callback_confirmed value. Returned value is "
+                                                             + (responseParametersCollection.Get(name: "oauth_callback_confirmed")), exception: exc);
+                return Result.Fail(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
             }
 
             if (!callbackIsAccepted)
             {
-                LogTo.Warn(message: "USOS API does not support callback");
-                throw new InvalidOperationException(message: "USOS API does not support callback");
+                LogTo.Error(message: "USOS API does not support callback.");
+                return Result.Fail(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
             }
 
             await Windows.System.Launcher.LaunchUriAsync(uri: new Uri(uriString: Constants.USOSAPI_AUTHORIZE_URL+ "?oauth_token=" + _requestToken));
-
+            return Result.Ok();
         }
 
-        public async Task<bool> TryFinishOAuthHandshakeAsync(string responseQueryString)
+        public async Task<Result> FinishOAuthHandshakeAsync(string responseQueryString)
         {
             var responseParameters = HttpUtility.ParseQueryString(query: responseQueryString);
 
-            var credential = await FinishOAuthHandshakeInternalAsync(
+            var (_, isFailure, value, error) = await FinishOAuthHandshakeInternalAsync(
                 authorizedRequestToken: responseParameters.Get(name: "oauth_token"),
                 oauthVerifier: responseParameters.Get(name: "oauth_verifier")).ConfigureAwait(continueOnCapturedContext: true);
 
-            if (credential == null)
-            {
-                return false;
-            }
+            if(isFailure)
+                return Result.Fail(error: error);
 
-            _secretService.CreateOrUpdateSecret(providedCredential: credential);
-            return true;
-
+            _secretService.CreateOrUpdateSecret(providedCredential: value);
+            return Result.Ok();
         }
 
         /// <summary>
-        /// Finished OAuth handshake with USOS.
+        /// Finishes OAuth handshake with USOS.
         /// </summary>
         /// <param name="authorizedRequestToken">Authorized token from USOS.</param>
         /// <param name="oauthVerifier">Verifier from USOS.</param>
-        /// <returns></returns>
-        /// <exception cref="FailedOAuthWorkflowException">Thrown when OAuth session was started multiple times
-        /// and application state doesn't match service provider callback</exception>
-        private async Task<PasswordCredential> FinishOAuthHandshakeInternalAsync(string authorizedRequestToken, string oauthVerifier)
+        /// <returns><see cref="PasswordCredential"/> if handshake was successful.</returns>
+        private async Task<Result<PasswordCredential>> FinishOAuthHandshakeInternalAsync(string authorizedRequestToken, string oauthVerifier)
         {
             if (authorizedRequestToken != _requestToken)
             {
-                LogTo.Fatal( "Request token mismatch. Expected token is {expectedRequestToken}, actual is {actualRequestToken}", _requestToken, authorizedRequestToken);
-                throw new FailedOAuthWorkflowException(expectedToken: _requestToken, actualToken: authorizedRequestToken);
+                LogTo.Error( "Request token mismatch. Expected token is {expectedRequestToken}, actual is {actualRequestToken}", _requestToken, authorizedRequestToken);
+                return Result.Fail<PasswordCredential>(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
             }
 
             var tokenRequest = new OAuthRequest()
@@ -167,8 +162,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
             var webClient = new WebClient();
 
-            string response = default;
-
+            string response;
             try
             {
                 response = await webClient.DownloadStringTaskAsync(address: requestUri).ConfigureAwait(true);
@@ -176,15 +170,17 @@ namespace ElkaUWP.DataLayer.Usos.Services
             catch (WebException exc)
             {
                 LogTo.WarnException(exception: exc, message: "Failed to perform a token exchange");
-                return null;
+                return Result.Fail<PasswordCredential>(error: ErrorCodes.USOS_BAD_DATA_RECEIVED);
             }
 
             var responseParametersCollection = HttpUtility.ParseQueryString(query: response);
 
-            var oauthAccessToken = responseParametersCollection.Get("oauth_token");
-            var oauthTokenSecret = responseParametersCollection.Get("oauth_token_secret");
+            var oauthAccessToken = responseParametersCollection.Get(name: "oauth_token");
+            var oauthTokenSecret = responseParametersCollection.Get(name: "oauth_token_secret");
 
-            return new PasswordCredential(resource: Constants.USOS_CREDENTIAL_CONTAINER_NAME, userName: oauthAccessToken, password: oauthTokenSecret);
+            var credential = new PasswordCredential(resource: Constants.USOS_CREDENTIAL_CONTAINER_NAME, userName: oauthAccessToken, password: oauthTokenSecret);
+
+            return Result.Ok(value: credential);
         }
     }
 }

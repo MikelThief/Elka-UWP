@@ -8,6 +8,7 @@ using Windows.Web.Http;
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
 using Anotar.NLog;
+using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Studia.Abstractions.Bases;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Entities;
@@ -37,7 +38,7 @@ namespace ElkaUWP.DataLayer.Studia.Services
             _personStrategy = resolver.Resolve<IPersonStrategy>(namedStrategy: Constants.LDAP_KEY);
         }
 
-        public async Task<bool> ValidateCredentialsAsync()
+        public async Task<Result> ValidateCredentialsAsync()
         {
             try
             {
@@ -55,22 +56,18 @@ namespace ElkaUWP.DataLayer.Studia.Services
 
                 _secretService.CreateOrUpdateSecret(container: Constants.STUDIA_CREDENTIAL_CONTAINER_NAME,
                     key: _username, secret: _password);
-                return true;
+                return Result.Ok();
             }
             catch (FlurlHttpException fhexc)
             {
-                LogTo.ErrorException(message: "Failed to authenticate user against Studia.", exception: fhexc);
+                LogTo.ErrorException(message: "Failed to make a request or get an expected response.", exception: fhexc);
+                return Result.Fail(error: ErrorCodes.STUDIA_HANDSHAKE_FAILED);
             }
             catch (JsonReaderException jsexc)
             {
-                LogTo.WarnException(message: "Failed to deserialize incoming data.", exception: jsexc);
+                LogTo.WarnException(message: "Failed to deserialize incoming data. Login credentials are likely invalid.", exception: jsexc);
+                return Result.Fail(error: ErrorCodes.STUDIA_BAD_DATA_RECEIVED);
             }
-            catch (InvalidOperationException iopexc)
-            {
-                LogTo.ErrorException(message: "Studia server could have changed authentication workflow.",
-                    exception: iopexc);
-            }
-            return false;
         }
 
         public void ProvideUsernameAndPassword(string username, string password)

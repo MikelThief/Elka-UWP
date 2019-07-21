@@ -30,7 +30,7 @@ namespace ElkaUWP.DataLayer.Studia.Proxies
         {
             var request = _restClient.Request()
                 .AppendPathSegment(segment: PlPathSegment)
-                .AppendPathSegments($"{semesterLiteral.Substring(startIndex: 3)}/", subjectId, "api", "info");
+                .AppendPathSegments($"{semesterLiteral.Substring(startIndex: 3)}/", subjectId, "api", "info", "/");
             return request.GetAsync();
         }
     }

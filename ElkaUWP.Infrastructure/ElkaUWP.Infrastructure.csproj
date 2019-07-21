@@ -131,17 +131,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Interfaces\IUsosOAuthService.cs" />
-    <Compile Include="Constants.App.cs" />
-    <Compile Include="Constants.Usos.cs" />
+    <Compile Include="Constants\Constants.App.cs" />
+    <Compile Include="Constants\Constants.Colors.cs" />
+    <Compile Include="Constants\Constants.Usos.cs" />
     <Compile Include="Converters\NegatedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\HashSetToStringConverter.cs" />
     <Compile Include="Converters\UsosDateTimeConverter.cs" />
     <Compile Include="Enums\ThemeEnhancement.cs" />
-    <Compile Include="Exceptions\FailedOAuthWorkflowException.cs" />
+    <Compile Include="ErrorCodes\ErrorCodes.LoginModule.cs" />
     <Compile Include="Extensions\NLogExtension.cs" />
     <Compile Include="Extensions\SettingsStorageExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Helpers\BrushFromColorHelper.cs" />
     <Compile Include="Helpers\CookieHelper.cs" />
     <Compile Include="Helpers\CultureInfoHelper.cs" />
     <Compile Include="Helpers\DatabaseConnectionStringHelper.cs" />
@@ -228,10 +228,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.Studia.cs" />
+    <Compile Include="Constants\Constants.Studia.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.ContainerKeys.cs" />
+    <Compile Include="Constants\Constants.ContainerKeys.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
