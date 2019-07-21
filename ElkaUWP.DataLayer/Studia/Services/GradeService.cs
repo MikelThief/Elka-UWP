@@ -8,6 +8,8 @@ using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Studia.Abstractions.Bases;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Entities;
+using ElkaUWP.Infrastructure;
+using ElkaUWP.Infrastructure.Resolvers;
 using ElkaUWP.Infrastructure.Services;
 using Flurl.Http;
 using Newtonsoft.Json;
@@ -19,9 +21,9 @@ namespace ElkaUWP.DataLayer.Studia.Services
         private readonly IGradesStrategy _proxy;
 
         /// <inheritdoc />
-        public GradeService(IGradesStrategy proxy, SecretService secretService) : base(secretService: secretService)
+        public GradeService(SimpleStrategyResolver resolver, SecretService secretService) : base(secretService: secretService)
         {
-            _proxy = proxy;
+            _proxy = resolver.Resolve<IGradesStrategy>(namedStrategy: Constants.LDAP_KEY);
         }
 
         public async Task<Result<Subject>> GetAsync(string semesterLiteral, string subjectId)

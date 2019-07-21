@@ -13,7 +13,6 @@ using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.Infrastructure.Converters;
 using ElkaUWP.Infrastructure.Services;
-using ElkaUWP.Infrastructure.Exceptions;
 using ElkaUWP.Infrastructure.Helpers;
 using Newtonsoft.Json;
 using NLog;
