@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Navigation;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.Modularity.GradesModule.ViewModels;
 using Prism.Mvvm;
-using Syncfusion.UI.Xaml.Grid;
-using Syncfusion.UI.Xaml.TreeGrid;
 using SelectionChangedEventArgs = Windows.UI.Xaml.Controls.SelectionChangedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238

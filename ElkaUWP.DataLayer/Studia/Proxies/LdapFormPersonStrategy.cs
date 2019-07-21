@@ -26,7 +26,7 @@ namespace ElkaUWP.DataLayer.Studia.Proxies
         public Task<HttpResponseMessage> GetAsync()
         {
             var request = _restClient.Request().AppendPathSegment(segment: PlPathSegment)
-                .AppendPathSegments("19L/", "-", "api", "person/");
+                .AppendPathSegments("19L/", "-", "api", "person", "/");
             return request.GetAsync();
         }
     }

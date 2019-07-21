@@ -10,7 +10,6 @@
     xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:Nito.Mvvm"
-    xmlns:syncfusion="using:Syncfusion.UI.Xaml.TreeGrid"
     xmlns:tcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewModels="using:ElkaUWP.Modularity.GradesModule.ViewModels"
     mc:Ignorable="d">
@@ -19,11 +18,6 @@
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter" />
             <convertersInf:HashSetToStringConverter x:Key="HashSetToStringConverter" />
             <convertersFromToolkit:StringFormatConverter x:Key="StringFormatConverter" />
-            <Style x:Key="headerStyle" TargetType="syncfusion:TreeGridHeaderCell">
-                <Setter Property="Background" Value="#4286f4" />
-                <Setter Property="Foreground" Value="White" />
-                <Setter Property="FontWeight" Value="Bold" />
-            </Style>
             <DataTemplate x:Key="FinishedSubjectApproachDataTemplate" x:DataType="entities:SubjectApproach">
                 <Grid
                     Margin="0,4,0,4"

@@ -56,6 +56,8 @@ namespace ElkaUWP.DataLayer.Studia.Proxies
             unauthenticatedCookiesResponse.Headers.TryGetValues(name: "Set-Cookie",
                 values: out var cookiesFromResponse);
 
+            unauthenticatedCookiesResponse.Dispose();
+
             var cookiesCollection = CookieHelper.GetAllCookiesFromHeader(
                 strHeader: cookiesFromResponse.ToList().Single(),
                 strHost: Constants.STUDIA_BASE_URL.Substring(
@@ -69,6 +71,8 @@ namespace ElkaUWP.DataLayer.Studia.Proxies
             var authenticateCookieResponse = await authenticateCookieRequest.PostUrlEncodedAsync(data:
                     new {studia_login = _username, studia_passwd = _password})
                 .ConfigureAwait(continueOnCapturedContext: false);
+
+            authenticateCookieResponse.Dispose();
         }
     }
 }

@@ -25,8 +25,6 @@ namespace ElkaUWP.DataLayer.Studia.Services
 
         public async Task<Subject> GetAsync(string semesterLiteral, string subjectId)
         {
-
-
             Subject result;
             try
             {

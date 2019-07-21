@@ -6,6 +6,7 @@ using Anotar.NLog;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Helpers;
+using ElkaUWP.Infrastructure.Misc;
 using ElkaUWP.Infrastructure.Services;
 using Flurl.Http;
 using Flurl.Http.Configuration;
@@ -27,7 +28,8 @@ namespace ElkaUWP.DataLayer.Studia.Proxies
         /// <inheritdoc />
         public Task<HttpResponseMessage> GetAsync(string semesterLiteral, string subjectId)
         {
-            var request = _restClient.Request().AppendPathSegment(segment: PlPathSegment)
+            var request = _restClient.Request()
+                .AppendPathSegment(segment: PlPathSegment)
                 .AppendPathSegments($"{semesterLiteral.Substring(startIndex: 3)}/", subjectId, "api", "info");
             return request.GetAsync();
         }
