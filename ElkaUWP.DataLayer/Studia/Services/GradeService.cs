@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Anotar.NLog;
 using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Studia.Abstractions.Bases;
@@ -43,12 +44,6 @@ namespace ElkaUWP.DataLayer.Studia.Services
             {
                 LogTo.ErrorException(message: $"Failed to deserialize partial grades json for {subjectId}", exception:
                     jexc);
-            }
-            catch (Exception exc)
-            {
-                LogTo.ErrorException(
-                    message: $"Unexpected exception occured while getting partial grades for {subjectId}",
-                    exception: exc);
             }
 
             return Result.Fail<Subject>("");

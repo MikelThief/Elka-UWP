@@ -21,6 +21,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Anotar.NLog;
 using ElkaUWP.Core.ViewModels;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
@@ -42,13 +43,14 @@ using ElkaUWP.Modularity.LoginModule;
 using Unity;
 using Unity.Lifetime;
 using ElkaUWP.Modularity.CalendarModule;
-using ElkaUWP.Modularity.GradesModule;
 using ElkaUWP.Modularity.UserModule;
 using ElkaUWP.DataLayer;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Misc;
+using ElkaUWP.Modularity.GradesModule;
 using LiteDB;
+using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace ElkaUWP.Core
 {
@@ -66,6 +68,12 @@ namespace ElkaUWP.Core
         public App()
         {
             InitializeComponent();
+            UnhandledException += delegate(object sender, UnhandledExceptionEventArgs args)
+            {
+                LogTo.FatalException(exception: args.Exception, message: "Unhandled exception occured.");
+                args.Handled = false; // crashes the app after delegate finishes
+                LogManager.Flush();
+            };
         }
 
         public override void ConfigureViewModelLocator()
