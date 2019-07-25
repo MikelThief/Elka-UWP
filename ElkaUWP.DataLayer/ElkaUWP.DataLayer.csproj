@@ -212,7 +212,7 @@
     <Compile Include="Usos\Services\GradesService.cs" />
     <Compile Include="Usos\Services\TimetableService.cs" />
     <Compile Include="Usos\Services\UsersService.cs" />
-    <Compile Include="Usos\Services\UsosOAuthService.cs" />
+    <Compile Include="Usos\Services\LogonService.cs" />
     <EmbeddedResource Include="Properties\ElkaUWP.DataLayer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +246,7 @@
       <Version>7.2.0.853-ci</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSchedule.UWP">
-      <Version>17.2.0.35</Version>
+      <Version>17.2.0.36</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Anotar.NLog;
+using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;

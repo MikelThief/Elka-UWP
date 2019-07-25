@@ -46,7 +46,7 @@ namespace ElkaUWP.DataLayer.Studia.Services
                     jexc);
             }
 
-            return Result.Fail<Subject>("");
+            return Result.Fail<Subject>(error: "");
         }
     }
 }
