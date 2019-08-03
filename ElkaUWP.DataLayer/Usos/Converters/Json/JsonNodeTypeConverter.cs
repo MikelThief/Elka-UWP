@@ -47,12 +47,11 @@ namespace ElkaUWP.DataLayer.Usos.Converters.Json
             var value = serializer.Deserialize<string>(reader: reader);
             switch (value)
             {
-                // dokuemntacja jest chuja warta:
-                // realne mapowanie tak jak w switchu
+                // docs are wrong. The real values are following:
                 case "root":
                     return NodeType.Root;
                 case "fld":
-                    return NodeType.Grade;
+                    return NodeType.Folder;
                 case "oc":
                     return NodeType.Grade;
                 case "pkt":

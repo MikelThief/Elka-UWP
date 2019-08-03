@@ -13,7 +13,7 @@ namespace ElkaUWP.DataLayer.Studia.Entities
         public string Status { get; set; }
 
         [JsonProperty(propertyName: "info")]
-        public List<PartialGrade> PartialGrades { get; set; }
+        public List<PartialGradeItem> PartialGrades { get; set; }
 
         [JsonProperty(propertyName: "chn")]
         public Attributes Attributes { get; set; }
@@ -46,7 +46,7 @@ namespace ElkaUWP.DataLayer.Studia.Entities
         public string Typ { get; set; }
     }
 
-    public class PartialGrade
+    public class PartialGradeItem
     {
         [JsonProperty(propertyName: "title")]
         public string Title { get; set; }

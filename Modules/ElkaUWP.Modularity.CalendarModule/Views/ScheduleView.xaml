@@ -86,7 +86,7 @@
                                         Text="{x:Bind ViewModel.CreateDeadlineFlyOutTitle, Mode=TwoWay}" />
                                     <TextBox
                                         x:Name="CreateDeadlineFlyoutDescription"
-                                        x:Uid="CreateDeadlineFlyoutDescription"
+                                        x:Uid="CreateDeadlineFlyoutHeader"
                                         MaxLength="18"
                                         Text="{x:Bind ViewModel.CreateDeadlineFlyoutDescription, Mode=TwoWay}" />
                                     <StackPanel

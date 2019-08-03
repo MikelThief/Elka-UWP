@@ -139,7 +139,7 @@
     <value>Pursuing</value>
   </data>
   <data name="UsosPartialGradesTreeDescriptionColumn.HeaderText" xml:space="preserve">
-    <value>Description</value>
+    <value>Header</value>
   </data>
   <data name="UsosPartialGradesTreeNameColumn.HeaderText" xml:space="preserve">
     <value>Name</value>

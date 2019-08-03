@@ -277,24 +277,40 @@
             </tcontrols:MasterDetailsView.MasterCommandBar>
             <tcontrols:MasterDetailsView.DetailsTemplate>
                 <DataTemplate>
-                    <TreeView ItemsSource="{Binding Result.Nodes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <TreeView.ItemTemplate>
-                            <DataTemplate>
-                                <TreeViewItem IsExpanded="True" ItemsSource="{Binding Nodes}">
-                                    <TreeViewItem.ContentTransitions>
-                                        <ContentThemeTransition />
-                                    </TreeViewItem.ContentTransitions>
-                                    <TreeViewItem.Content>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Description}" />
-                                            <TextBlock Text=" - " />
-                                            <TextBlock Text="{Binding Points}" />
-                                        </StackPanel>
-                                    </TreeViewItem.Content>
-                                </TreeViewItem>
-                            </DataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TreeView Grid.Row="0" ItemsSource="{Binding Result.GradeNodes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TreeView.ItemTemplate>
+                                <DataTemplate>
+                                    <TreeViewItem IsExpanded="True" ItemsSource="{Binding Nodes}">
+                                        <TreeViewItem.ContentTransitions>
+                                            <ContentThemeTransition />
+                                        </TreeViewItem.ContentTransitions>
+                                        <TreeViewItem.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Header}" />
+                                                <TextBlock Text=" - " />
+                                                <TextBlock Text="{Binding Points}" />
+                                            </StackPanel>
+                                        </TreeViewItem.Content>
+                                    </TreeViewItem>
+                                </DataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                        <ListView Grid.Row="1" ItemsSource="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="{Binding Title}" />
+                                        <TextBlock Text="{Binding Value}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
                 </DataTemplate>
             </tcontrols:MasterDetailsView.DetailsTemplate>
         </tcontrols:MasterDetailsView>

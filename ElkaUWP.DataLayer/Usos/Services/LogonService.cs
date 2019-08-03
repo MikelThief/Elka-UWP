@@ -78,7 +78,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
             try
             {
-                response = await webClient.DownloadStringTaskAsync(address: requestUri).ConfigureAwait(true);
+                response = await webClient.DownloadStringTaskAsync(address: requestUri).ConfigureAwait(continueOnCapturedContext: true);
             }
             catch (WebException wexc)
             {
@@ -169,7 +169,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException exc)
             {
-                LogTo.WarnException(exception: exc, message: "Failed to perform a token exchange");
+                LogTo.WarnException(exception: exc, message: "Failed to perform a token exchange.");
                 return Result.Fail<PasswordCredential>(error: ErrorCodes.USOS_BAD_DATA_RECEIVED);
             }
 

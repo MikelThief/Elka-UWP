@@ -18,11 +18,15 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id|type_id|type_description|sessions[number|issuer_grades[value_symbol|counts_into_average|passes]]|grades_distribution"
+            "sessions[number|issuer_grades[value_symbol|counts_into_average|passes]]",
+            "id",
+            "type_id",
+            "type_description",
+            "grades_distribution"
         };
 
         /// <inheritdoc />
-        public ExamrepUser2RequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public ExamrepUser2RequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -40,9 +44,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 Type = OAuthRequestType.ProtectedResource
             };
         }
-
-        /// <inheritdoc />
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()

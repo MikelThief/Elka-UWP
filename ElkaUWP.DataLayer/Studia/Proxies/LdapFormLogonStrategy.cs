@@ -20,8 +20,6 @@ namespace ElkaUWP.DataLayer.Studia.Proxies
         private const string PlPathSegment = "pl/";
         private const string LoginPagePathSegment = "19L/-/login/";
         private const string LdapPagePathSegment = "19L/-/login-ldap";
-        private const string PersonEndpointPathSegment = "-/api/person/";
-        private const string ClassesEndPointPathSegment = "-/api/classes/";
 
         private const string CookieAllowedFieldValue = "Zgadzam się";
         private const string StudiaAuthCookieName = "STUDIA_SID";

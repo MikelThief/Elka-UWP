@@ -39,10 +39,6 @@ namespace ElkaUWP.Modularity.GradesModule.Views
         private void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectedSubjectApproach = e.AddedItems[0] as SubjectApproach;
-
-            if(ViewModel.SelectedSubjectApproach != null)
-                ViewModel.GetPartialGradesContainer(subjectId: ViewModel.SelectedSubjectApproach.Id,
-                    semesterLiteral: ViewModel.SelectedSubjectApproach.SemesterLiteral);
         }
 
         private void GradesMasterDetailsView_OnLoaded(object sender, RoutedEventArgs e)
@@ -52,6 +48,9 @@ namespace ElkaUWP.Modularity.GradesModule.Views
 
         private object MapDetails(object arg)
         {
+            var sender = (SubjectApproach) arg;
+
+            ViewModel.GetPartialGradesContainer(semesterLiteral: sender.SemesterLiteral, subjectId: sender.Id);
             return ViewModel.DetailPaneInitilizationTaskNotifier;
         }
 

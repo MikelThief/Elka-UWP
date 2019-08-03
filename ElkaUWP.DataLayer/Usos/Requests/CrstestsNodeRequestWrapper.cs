@@ -22,14 +22,19 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "node_id",
             "parent_id",
             "name",
-            "calendarEventType",
+            "points_min",
+            "points_max",
+            "description",
             "visible_for_students",
+            "root_id",
+            "course_edition",
+            "type",
             "subnodes",
             "order"
         };
 
         /// <inheritdoc />
-        public CrstestsNodeRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CrstestsNodeRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -48,12 +53,6 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        /// <inheritdoc />
-        public override string GetRequestString()
-        {
-            throw new InvalidOperationException("Not supported by USOS API. Call requires at least one node id.");
-        }
-
         public string GetRequestString(int nodeId)
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
@@ -67,5 +66,5 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
     }
-   
+
 }

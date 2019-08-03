@@ -142,7 +142,7 @@
     <value>Date</value>
   </data>
   <data name="CreateDeadlineFlyoutDescription.Header" xml:space="preserve">
-    <value>Description</value>
+    <value>Header</value>
   </data>
   <data name="CreateDeadlineFlyoutTitle.Header" xml:space="preserve">
     <value>Title</value>

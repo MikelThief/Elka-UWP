@@ -19,7 +19,8 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     public class TimetableUpcomingWebCalRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "tt/upcoming_share";
-        public override string GetRequestString()
+
+        public string GetRequestString()
         {
             var language = CultureInfo.CurrentCulture.ToString() == "pl-PL" ? "pl" : "en";
 
@@ -32,7 +33,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         }
 
         /// <inheritdoc />
-        public TimetableUpcomingWebCalRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public TimetableUpcomingWebCalRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance: secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
