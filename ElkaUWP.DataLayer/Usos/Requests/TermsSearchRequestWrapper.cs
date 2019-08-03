@@ -19,7 +19,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     {
         private const string _destination = "terms/search";
         /// <inheritdoc />
-        public TermsSearchRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public TermsSearchRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -38,8 +38,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        /// <inheritdoc />
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             var additionalParameters = new NameValueCollection()
             {

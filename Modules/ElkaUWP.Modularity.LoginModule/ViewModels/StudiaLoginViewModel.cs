@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using ElkaUWP.DataLayer.Studia.Enums;
 using ElkaUWP.DataLayer.Studia.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
+using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Services;
 using Microsoft.Toolkit.Uwp.Connectivity;
@@ -50,7 +53,6 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         }
 
         private string _password;
-        private readonly SecretService _secretService;
 
         public string Password
         {
@@ -62,59 +64,72 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         public AsyncCommand AuthenticateCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
-        public StudiaLoginViewModel(LogonService logonService, SecretService secretService)
+        public StudiaLoginViewModel(LogonService logonService)
         {
             _logonService = logonService;
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
             AuthenticateCommand = new AsyncCommand(executeAsync: AuthenticateAsync);
             IsAuthenticationSuccesful = default;
-            _secretService = secretService;
         }
 
         private async Task AuthenticateAsync()
         {
-            _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
-
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {
                 NotificationManager.Show(notification: new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 4),
-                        Text = _resourceLoader.GetString(resource: "No_Internet_Body"),
+                        Text = _resourceLoader.GetString(resource: "No_Internet_Notification"),
                         Glyph = "\uF384",
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Red))
+                        Background = new SolidColorBrush(color: Constants.RedColor)
                     }
                 );
                 return;
             }
 
+            _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
             var validationResult = await _logonService.ValidateCredentialsAsync()
-                .ConfigureAwait(continueOnCapturedContext: true);
+                .ConfigureAwait(continueOnCapturedContext: false);
 
 
-            if (validationResult)
+            if (validationResult.IsSuccess)
             {
+                ApplicationData.Current.RoamingSettings.SaveString(key: SettingsKeys.StudiaStrategyKey,
+                    value: Constants.LDAP_KEY);
+
                 NotificationManager.Show(notification: new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 30),
                         Text = _resourceLoader.GetString(resource: "Studia_Login_Success_Notification"),
                         Glyph = "\uE8D7",
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Green))
-                    }
+                        Background = new SolidColorBrush(color: Constants.GreenColor)
+                }
                 );
                 IsAuthenticationSuccesful = true;
             }
-            else
+            else if(validationResult.IsFailure && validationResult.Error == ErrorCodes.STUDIA_HANDSHAKE_FAILED)
             {
                 NotificationManager.Show(notification: new SimpleNotification
                     {
                         TimeSpan = TimeSpan.FromSeconds(value: 3),
-                        Text = _resourceLoader.GetString(resource: "Studia_Login_Failure_Notification"),
+                        Text = _resourceLoader.GetString(resource: "Studia_Handshake_Failed_Notification"),
                         Glyph = "\uEB90",
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Red))
+                        Background = new SolidColorBrush(color: Constants.RedColor)
+                    }
+                );
+            }
+            else if(validationResult.IsFailure && validationResult.Error == ErrorCodes.STUDIA_BAD_DATA_RECEIVED)
+            {
+                NotificationManager.Show(notification: new SimpleNotification
+                    {
+                        TimeSpan = TimeSpan.FromSeconds(value: 3),
+                        Text = _resourceLoader.GetString(resource: "Studia_Invalid_Credentials_Notification"),
+                        Glyph = "\uEB90",
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Background = new SolidColorBrush(color: Constants.RedColor)
                     }
                 );
             }

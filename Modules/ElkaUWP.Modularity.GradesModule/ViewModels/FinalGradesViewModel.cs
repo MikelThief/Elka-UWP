@@ -2,24 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 using ColorCode.Common;
+using CSharpFunctionalExtensions;
+using ElkaUWP.DataLayer.Propertiary.Abstractions.Bases;
 using ElkaUWP.DataLayer.Propertiary.Converters;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
-using ElkaUWP.DataLayer.Usos.Entities;
-using ElkaUWP.DataLayer.Usos.Services;
-using ElkaUWP.Infrastructure;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using Nito.Mvvm;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 
@@ -35,7 +25,7 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         public ObservableCollection<PartialGradeNode> UsosPartialGradesSource;
 
         private SubjectApproach _selectedSubjectApproach;
-        private PartialGradesContainer _partialGrades;
+        private PartialGradesModel _partialGrades;
 
         public SubjectApproach SelectedSubjectApproach
         {
@@ -43,14 +33,14 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
             set => SetProperty(storage: ref _selectedSubjectApproach, value: value, propertyName: nameof(SelectedSubjectApproach));
         }
 
-        public PartialGradesContainer PartialGrades
+        public PartialGradesModel PartialGrades
         {
             get => _partialGrades;
             set => SetProperty(storage: ref _partialGrades, value: value, propertyName: nameof(PartialGrades));
         }
 
         public NotifyTask MasterPaneInitilizationTaskNotifier { get; private set; }
-        public NotifyTask<PartialGradesContainer> DetailPaneInitilizationTaskNotifier { get; private set; }
+        public NotifyTask<PartialGradesModel> DetailPaneInitilizationTaskNotifier { get; private set; }
 
         public FinalGradesViewModel(FinalGradesService finalGradesService, PartialGradesService partialGradesService)
         {
@@ -121,7 +111,6 @@ namespace ElkaUWP.Modularity.GradesModule.ViewModels
         {
             DetailPaneInitilizationTaskNotifier = NotifyTask.Create(task:
                 _partialGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId));
-
         }
     }
 }

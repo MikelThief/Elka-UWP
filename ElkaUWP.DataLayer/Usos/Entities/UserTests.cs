@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class UserTests
     {
-        [JsonProperty("tests")]
+        [JsonProperty(propertyName: "tests")]
         public Dictionary<string, Dictionary<int, Node>> RootNodesPerSemester;
     }
 }

@@ -18,7 +18,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         private const string _destination = "crstests/user_points";
 
         /// <inheritdoc />
-        public CrstestsUserPointsRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CrstestsUserPointsRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -35,12 +35,6 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 SignatureTreatment = OAuthSignatureTreatment.Escaped,
                 Type = OAuthRequestType.ProtectedResource
             };
-        }
-
-        /// <inheritdoc />
-        public override string GetRequestString()
-        {
-            throw new InvalidOperationException("Not supported by USOS API. Call requires at least one node id.");
         }
 
         public string GetRequestString(params int[] nodeIds)

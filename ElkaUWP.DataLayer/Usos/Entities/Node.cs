@@ -6,45 +6,44 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class Node
     {
-        [JsonProperty("calendarEventType"), JsonConverter(converterType: typeof(JsonNodeTypeConverter))]
+        [JsonProperty(propertyName: "type"), JsonConverter(converterType: typeof(JsonNodeTypeConverter))]
         public NodeType Type { get; set; }
 
-        [JsonProperty("description")]
+        [JsonProperty(propertyName: "description")]
         public LangDict Description { get; set; }
 
-        [JsonProperty("root_id")]
+        [JsonProperty(propertyName: "root_id")]
         public int RootId { get; set; }
 
-        [JsonProperty("parent_id")]
+        [JsonProperty(propertyName: "parent_id")]
         public int? ParentId { get; set; }
 
-        /*
-        Returns list of groups if the list exists or... false if not
-        TODO: Deserialization requires custom (de)serializer
-        Co za kretyn to wymyślił...
-        [JsonProperty("limit_to_groups")]
-        public List<Group> GroupsList { get; set; }
-        */
-
-        [JsonProperty("order")]
+        [JsonProperty(propertyName: "order")]
         public byte Order { get; set; }
 
-        [JsonProperty("visible_for_students")]
+        [JsonProperty(propertyName: "visible_for_students")]
         public bool VisibleForStudents { get; set; }
 
-        [JsonProperty("course_edition")]
+        [JsonProperty(propertyName: "course_edition")]
         public CourseEdition CourseEdition { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty(propertyName: "name")]
         public LangDict Name { get; set; }
 
-        [JsonProperty("public")]
+        [JsonProperty(propertyName: "public")]
         public bool IsPublic { get; set; }
 
-        [JsonProperty("node_id")]
+        [JsonProperty(propertyName: "node_id")]
         public int NodeId { get; set; }
 
-        [JsonProperty("subnodes")]
+        [JsonProperty(propertyName: "subnodes")]
         public List<Node> SubNodes { get; set; }
+
+        [JsonProperty("points_max", NullValueHandling = NullValueHandling.Ignore)]
+        public long? PointsMax { get; set; }
+
+        [JsonProperty("points_min", NullValueHandling = NullValueHandling.Ignore)]
+        public long? PointsMin { get; set; }
+
     }
 }

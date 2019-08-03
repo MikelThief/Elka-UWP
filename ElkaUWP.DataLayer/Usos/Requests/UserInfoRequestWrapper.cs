@@ -28,7 +28,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "postal_addresses"
         };
 
-        public UserInfoRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public UserInfoRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance: secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -47,7 +47,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()
@@ -58,5 +58,5 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
     }
-  
+
 }

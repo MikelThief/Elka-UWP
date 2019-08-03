@@ -19,7 +19,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         private const string _destination = "crstests/participant";
 
         /// <inheritdoc />
-        public CrstestsParticipantRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CrstestsParticipantRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -39,7 +39,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         }
 
         /// <inheritdoc />
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery();
         }

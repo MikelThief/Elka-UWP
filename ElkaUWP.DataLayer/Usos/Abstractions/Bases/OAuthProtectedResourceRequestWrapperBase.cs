@@ -1,24 +1,18 @@
-﻿using ElkaUWP.DataLayer.Usos.Abstractions.Interfaces;
+﻿using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Abstractions.Bases
 {
-    public abstract class OAuthProtectedResourceRequestWrapperBase : IOAuthProtectedResourceRequestWrapper
-
+    public abstract class OAuthProtectedResourceRequestWrapperBase
     {
         protected OAuthRequest UnderlyingOAuthRequest;
         protected SecretService SecretService { get; set; }
-        protected ILogger Logger { get; set; }
 
-        protected OAuthProtectedResourceRequestWrapperBase(SecretService secretServiceInstance, ILogger logger)
+        protected OAuthProtectedResourceRequestWrapperBase(SecretService secretServiceInstance)
         {
-            Logger = logger;
             SecretService = secretServiceInstance;
         }
-
-        /// <inheritdoc />
-        public abstract string GetRequestString();
     }
 }

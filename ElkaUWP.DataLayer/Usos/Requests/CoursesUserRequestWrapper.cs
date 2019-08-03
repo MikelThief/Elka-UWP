@@ -25,7 +25,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         };
 
         /// <inheritdoc />
-        public CoursesUserRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public CoursesUserRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -45,7 +45,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         }
 
         /// <inheritdoc />
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()

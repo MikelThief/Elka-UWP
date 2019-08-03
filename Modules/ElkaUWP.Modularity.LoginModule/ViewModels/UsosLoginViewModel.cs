@@ -7,6 +7,8 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Helpers;
@@ -24,10 +26,11 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
     {
         private INavigationService _navigationService;
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
-        private readonly IUsosOAuthService _usosOAuthService;
+        private readonly LogonService _logonService;
         public LocalNotificationManager NotificationManager { get; set; }
 
         private bool _isSignInButtonEnabled;
+
         public bool IsSignInButtonEnabled
         {
             get => _isSignInButtonEnabled;
@@ -36,6 +39,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         }
 
         private bool _isAuthenticationSuccessful;
+
         public bool IsAuthenticationSuccessful
         {
             get => _isAuthenticationSuccessful;
@@ -46,11 +50,11 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
         public AsyncCommand AuthenticateCommand { get; private set; }
         public AsyncCommand ContinueCommand { get; private set; }
 
-        public UsosLoginViewModel(IUsosOAuthService usosOAuthService)
+        public UsosLoginViewModel(LogonService logonService)
         {
             AuthenticateCommand = new AsyncCommand(executeAsync: AuthenticateAsync);
             ContinueCommand = new AsyncCommand(executeAsync: Continue);
-            _usosOAuthService = usosOAuthService;
+            _logonService = logonService;
             IsSignInButtonEnabled = default;
             IsAuthenticationSuccessful = default;
         }
@@ -61,17 +65,30 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
             {
                 NotificationManager.Show(new SimpleNotification
                     {
-                        TimeSpan = TimeSpan.FromSeconds(value: 4),
-                        Text = _resourceLoader.GetString(resource: "No_Internet_Body"),
+                        TimeSpan = TimeSpan.FromSeconds(value: 3),
+                        Text = _resourceLoader.GetString(resource: "No_Internet_Notification"),
                         Glyph = "\uF384",
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Red))
+                        Background = new SolidColorBrush(color: Constants.RedColor)
                     }
                 );
                 return;
             }
 
-            await _usosOAuthService.StartAuthorizationAsync().ConfigureAwait(continueOnCapturedContext: false);
+            var (_, isFailure, error) = await _logonService.BeginOAuthHandshakeAsync().ConfigureAwait(continueOnCapturedContext: false);
+
+            if (isFailure && error == ErrorCodes.USOS_HANDSHAKE_FAILED)
+            {
+                NotificationManager.Show(notification: new SimpleNotification
+                    {
+                        TimeSpan = TimeSpan.FromSeconds(value: 3),
+                        Text = _resourceLoader.GetString(resource: "Usos_Handshake_Failed_Notification"),
+                        Glyph = "\uE8D7",
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Background = new SolidColorBrush(color: Constants.GreenColor)
+                    }
+                );
+            }
         }
 
         private async Task Continue()
@@ -99,7 +116,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
                         Text = _resourceLoader.GetString(resource: "Usos_Login_Success_Notification"),
                         Glyph = "\uE8D7",
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        Background = BrushFromColorHelper.GetSolidColorBrush(colorName: nameof(Colors.Green))
+                        Background = new SolidColorBrush(color: Constants.GreenColor)
                     }
                 );
             }

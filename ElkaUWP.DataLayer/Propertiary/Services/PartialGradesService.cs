@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.UserDataAccounts.Provider;
+using Windows.Media.Audio;
+using Windows.UI.Xaml.Media.Animation;
+using CSharpFunctionalExtensions;
+using ElkaUWP.DataLayer.Propertiary.Abstractions.Bases;
 using ElkaUWP.DataLayer.Propertiary.Entities;
-using ElkaUWP.DataLayer.Studia.Enums;
 using ElkaUWP.DataLayer.Studia.Services;
 using ElkaUWP.DataLayer.Usos.Entities;
+using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Helpers;
-using Studia = ElkaUWP.DataLayer.Studia;
 
 namespace ElkaUWP.DataLayer.Propertiary.Services
 {
     public class PartialGradesService
     {
+        /// <summary>
         /// Keeps ids of nodes collected while running <see cref="GetAsync"/>
-        private HashSet<int> CollectedNodeIds = new HashSet<int>();
+        /// </summary>
+        private List<PartialGradeNode> CollectedReturningNodes;
 
         private readonly CrstestsService _crstestsService;
         private readonly GradeService _studiaGradesService;
@@ -29,157 +31,171 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
         {
             _crstestsService = crstestsService;
             _studiaGradesService = studiaGradesService;
+            CollectedReturningNodes =  new List<PartialGradeNode>();
         }
 
-        public async Task<PartialGradesContainer> GetAsync(string semesterLiteral, string subjectId)
+        public async Task<PartialGradesModel> GetAsync(string semesterLiteral, string subjectId)
         {
-            var studiaGrades = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
+            var studiaGradesTask = _studiaGradesService.GetAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
+            var usosGradesTask = GetUsosGradesAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
 
-            var usosGrades = GetUsosGradesAsync(semesterLiteral: semesterLiteral, subjectId: subjectId);
-
-            return new PartialGradesContainer()
+            var model = new PartialGradesModel
             {
                 SemesterLiteral = semesterLiteral,
-                SubjectId = subjectId,
-                Nodes = await usosGrades.ConfigureAwait(continueOnCapturedContext: false)
+                SubjectId = subjectId
             };
+
+            var usosGradesResult = await usosGradesTask.ConfigureAwait(continueOnCapturedContext: false);
+            if (usosGradesResult.IsSuccess && usosGradesResult.Value.HasValue)
+            {
+                model.GradeNodes = usosGradesResult.Value.Value;
+            }
+
+            var studiaGradesResult = await studiaGradesTask.ConfigureAwait(continueOnCapturedContext: false);
+            if (studiaGradesResult.IsSuccess && studiaGradesResult.Value.HasValue)
+            {
+                model.GradeList = studiaGradesResult.Value.Value;
+            }
+
+            return model;
         }
 
-        private async Task<List<PartialGradeNode>> GetUsosGradesAsync(string semesterLiteral, string subjectId)
+        private async Task<Result<Maybe<List<PartialGradeNode>>>> GetUsosGradesAsync(string semesterLiteral, string subjectId)
         {
             // pseudo state-less behaviour to achieve greater processing speed
-            CollectedNodeIds.Clear();
-
-            var nodes = new List<PartialGradeNode>();
+            CollectedReturningNodes.Clear();
 
             // Step 1 - get all user's tests
-            var testStubs = await _crstestsService.ParticipantAsync().ConfigureAwait(continueOnCapturedContext: false);
+            var participantResult = await _crstestsService.ParticipantAsync().ConfigureAwait(continueOnCapturedContext: false);
 
-            var subjectRootNodes = new List<Node>();
+            if (participantResult.IsFailure)
+                return Result.Fail<Maybe<List<PartialGradeNode>>>(error: participantResult.Error);
 
-            // Step 1a - add tests if there are any for given pair <semester, subject>
-            if(testStubs.ContainsKey(key: semesterLiteral))
+            if (participantResult.Value.HasNoValue || !participantResult.Value.Value.ContainsKey(key : semesterLiteral))
             {
-                foreach (var nodeKey in testStubs[key: semesterLiteral].Keys)
+                // User has no tests at all or in given semester
+                return Result.Ok(value: Maybe<List<PartialGradeNode>>.None);
+            }
+
+            var testsForGivenSemester = participantResult.Value.Value;
+
+            // Step 2 - generate list of root nodes for given subject
+            var rootNodes = new List<Node>();
+
+            rootNodes.AddRange(collection: testsForGivenSemester[key: semesterLiteral].Keys
+                    .Where(nodeKey => testsForGivenSemester[key: semesterLiteral][key: nodeKey].CourseEdition.CourseId == subjectId)
+                    .Select(nodeKey => testsForGivenSemester[key: semesterLiteral][key: nodeKey]));
+
+            if (rootNodes.Count < 1)
+            {
+                // There are no tests root nodes for given subject
+                return Result.Ok(value: Maybe<List<PartialGradeNode>>.None);
+            }
+
+            // Step 3 - download trees for all root nodes for given subject
+            var rootTrees = new List<Node>();
+            var returningRootTrees = new List<PartialGradeNode>();
+
+            foreach (var rootNode in rootNodes)
+            {
+                var rootTreeResult = await _crstestsService.NodeAsync(nodeId: rootNode.NodeId);
+
+                if(rootTreeResult.IsFailure)
+                    continue;
+
+                rootTrees.Add(item: rootTreeResult.Value);
+            }
+
+            // Step 4a - create proprietary data structures to return data
+            foreach (var rootTree in rootTrees)
+            {
+                var returningRootTree = GetPartialGradeNode(usosNode: rootTree);
+                returningRootTrees.Add(item: returningRootTree);
+            }
+
+            // Step 4b - fill proprietary data structures with points
+
+            /* Parallel filling - some iterations that should be successful fail for unknown reason
+            Parallel.ForEach(source: CollectedReturningNodes, new ParallelOptions()
+            { MaxDegreeOfParallelism = 2 }, async collectedReturningNode =>
+            {
+                var pointsResult = await _crstestsService.StudentPointAsync(nodeId: collectedReturningNode.Id);
+
+                if (pointsResult.IsSuccess && pointsResult.Value.HasValue)
                 {
-                    if(testStubs[key: semesterLiteral][key: nodeKey].CourseEdition.CourseId == subjectId)
-                        subjectRootNodes.Add(item: testStubs[key: semesterLiteral][key: nodeKey]);
+                    collectedReturningNode.Points = pointsResult.Value.Value.Points;
+                }
+            });
+            */
+
+            foreach (var collectedReturningNode in CollectedReturningNodes)
+            {
+                var pointsResult = await _crstestsService.StudentPointAsync(nodeId: collectedReturningNode.Id);
+
+                if (pointsResult.IsSuccess && pointsResult.Value.HasValue)
+                {
+                    collectedReturningNode.Points = pointsResult.Value.Value.Points;
                 }
             }
 
-            // Step 2 - download and convert data to proprietary structures
-            foreach (var subjectRootNode in subjectRootNodes)
+            return Result.Ok(value: Maybe<List<PartialGradeNode>>.From(obj: returningRootTrees));
+        }
+
+
+        private PartialGradeNode GetPartialGradeNode(Node usosNode)
+        {
+
+            var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            string name;
+            switch (currentCulture)
             {
-                var subTreeTask = _crstestsService.NodeAsync(nodeId: subjectRootNode.NodeId);
-
-                var partialGradeRootNode = new PartialGradeNode();
-
-                void CopyUsosNodeToPartialGradeNodeRecursive(Node usosNode, PartialGradeNode partialGradeNode)
+                case "pl" when !string.IsNullOrEmpty(value: usosNode.Name.Pl):
                 {
-                    CollectedNodeIds.Add(item: usosNode.NodeId);
-
-                    partialGradeNode.Type = usosNode.Type;
-                    partialGradeNode.Order = usosNode.Order;
-                    partialGradeNode.Id = usosNode.NodeId;
-                    partialGradeNode.Points = null;
-
-                    string name = default;
-                    string desciption = default;
-
-                    if (usosNode.Type == NodeType.Root)
-                    {
-                        desciption = usosNode.Description?.En;
-
-
-                        if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "pl",
-                                comparisonType: StringComparison.OrdinalIgnoreCase) == 0
-                            || string.IsNullOrEmpty(value: desciption))
-                            desciption = usosNode.Description?.Pl;
-                    }
-
-                    name = usosNode.Name?.En;
-                    if (string.Compare(strA: CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "pl",
-                            comparisonType: StringComparison.OrdinalIgnoreCase) == 0
-                        || string.IsNullOrEmpty(value: name))
-                        name = usosNode.Name?.Pl;
-
-                    // Merge description and name
-                    if (string.IsNullOrEmpty(value: name) && !string.IsNullOrEmpty(value: desciption))
-                    {
-                        partialGradeNode.Description = desciption;
-                    }
-                    else if (!string.IsNullOrEmpty(value: name) && string.IsNullOrEmpty(value: desciption))
-                    {
-                        partialGradeNode.Description = name;
-                    }
-                    else if(string.IsNullOrEmpty(value: name) && string.IsNullOrEmpty(value: desciption))
-                    {
-                        partialGradeNode.Description = "";
-                    }
-                    else
-                    {
-                        partialGradeNode.Description = string.Join(separator: " | ", name, desciption);
-                    }
-
-                    if (usosNode.SubNodes != null || usosNode.SubNodes.Count == 0)
-                    {
-                        if (partialGradeNode.Nodes == null)
-                            partialGradeNode.Nodes = new List<PartialGradeNode>();
-
-                        foreach (var node in usosNode.SubNodes)
-                        {
-                            var partialGradeSubNode = new PartialGradeNode();
-                            partialGradeNode.Nodes.Add(item: partialGradeSubNode);
-                            CopyUsosNodeToPartialGradeNodeRecursive(usosNode: node,
-                                partialGradeNode: partialGradeSubNode);
-                        }
-                    }
+                    name = usosNode.Name.Pl;
+                    break;
                 }
-
-                CopyUsosNodeToPartialGradeNodeRecursive(usosNode: await subTreeTask.ConfigureAwait(continueOnCapturedContext: false), partialGradeNode: partialGradeRootNode);
-
-                nodes.Add(item: partialGradeRootNode);
-            }
-
-            // Step 3 - download points for collected nodes points to nodes
-            var pointsList = await _crstestsService.UserPointsAsync(nodeIds: CollectedNodeIds).ConfigureAwait(continueOnCapturedContext: false);
-
-            void AssignPointsToPartialGradeNodeRecursive(PartialGradeNode partialRootGradeNode,
-                List<TestPoint> points)
-            {
-                if (points.Exists(point => point.NodeId == partialRootGradeNode.Id))
-                    partialRootGradeNode.Points =
-                        points.Single(point => point.NodeId == partialRootGradeNode.Id).Points;
-
-
-                if (partialRootGradeNode.Nodes != null && partialRootGradeNode.Nodes.Count > 0)
-                    foreach (var node in partialRootGradeNode.Nodes)
-                        AssignPointsToPartialGradeNodeRecursive(partialRootGradeNode: node, points: points);
-            }
-
-            foreach (var partialGradeNode in nodes)
-                AssignPointsToPartialGradeNodeRecursive(partialRootGradeNode: partialGradeNode, points: pointsList);
-
-            // Step 4 - remove redundant nodes
-            var nodesToRemove = new List<PartialGradeNode>();
-
-            foreach (var rootNode in nodes)
-                if(rootNode.Nodes != null)
-                    foreach (var node in rootNode.Nodes)
-                        if (!node.Points.HasValue && (node.Nodes == null || node.Nodes.Capacity == 0))
-                            nodesToRemove.Add(item: node);
-
-            foreach (var node in nodesToRemove)
-            {
-                foreach (var partialGradeNode in nodes)
+                case "en" when !string.IsNullOrEmpty(value: usosNode.Name.En):
                 {
-                    if (partialGradeNode.Nodes.Contains(item: node))
-                        partialGradeNode.Nodes.Remove(item: node);
+                    name = usosNode.Name.En;
+                    break;
+                }
+                case "pl" when string.IsNullOrEmpty(value: usosNode.Name.Pl)
+                               && !string.IsNullOrEmpty(value: usosNode.Name.En):
+                {
+                    name = usosNode.Name.En;
+                    break;
+                }
+                case "en" when string.IsNullOrEmpty(value: usosNode.Name.En)
+                               && !string.IsNullOrEmpty(value: usosNode.Name.Pl):
+                {
+                    name = usosNode.Name.Pl;
+                    break;
+                }
+                default:
+                    name = string.Empty;
+                    break;
+            }
+            var localSubNodes = new List<PartialGradeNode>();
+
+            if (usosNode.SubNodes != null)
+            {
+                foreach (var subNode in usosNode.SubNodes)
+                {
+                    var localNode = GetPartialGradeNode(usosNode: subNode);
+                    localSubNodes.Add(item: localNode);
                 }
             }
 
-            // for all of that above - USOS: FUCK YOU!
-            return nodes;
+            var returningNode = new PartialGradeNode(
+                nodes: localSubNodes, header: name, points: null, type: usosNode.Type, id: usosNode.NodeId, order: usosNode.Order);
+
+            if (usosNode.VisibleForStudents)
+            {
+                CollectedReturningNodes.Add(item: returningNode);
+            }
+
+            return returningNode;
         }
     }
 }

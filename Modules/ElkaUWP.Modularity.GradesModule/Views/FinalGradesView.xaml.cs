@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Navigation;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.Modularity.GradesModule.ViewModels;
 using Prism.Mvvm;
-using Syncfusion.UI.Xaml.Grid;
-using Syncfusion.UI.Xaml.TreeGrid;
 using SelectionChangedEventArgs = Windows.UI.Xaml.Controls.SelectionChangedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -41,10 +39,6 @@ namespace ElkaUWP.Modularity.GradesModule.Views
         private void GradesMasterDetailsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectedSubjectApproach = e.AddedItems[0] as SubjectApproach;
-
-            if(ViewModel.SelectedSubjectApproach != null)
-                ViewModel.GetPartialGradesContainer(subjectId: ViewModel.SelectedSubjectApproach.Id,
-                    semesterLiteral: ViewModel.SelectedSubjectApproach.SemesterLiteral);
         }
 
         private void GradesMasterDetailsView_OnLoaded(object sender, RoutedEventArgs e)
@@ -54,6 +48,9 @@ namespace ElkaUWP.Modularity.GradesModule.Views
 
         private object MapDetails(object arg)
         {
+            var sender = (SubjectApproach) arg;
+
+            ViewModel.GetPartialGradesContainer(semesterLiteral: sender.SemesterLiteral, subjectId: sender.Id);
             return ViewModel.DetailPaneInitilizationTaskNotifier;
         }
 

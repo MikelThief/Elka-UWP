@@ -19,7 +19,8 @@ namespace ElkaUWP.DataLayer.Usos.Requests
     public class TimetableUpcomingICalRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "tt/upcoming_ical";
-        public override string GetRequestString()
+
+        public  string GetRequestString()
         {
             var language = CultureInfo.CurrentCulture.ToString() == "pl-PL" ? "pl" : "en";
 
@@ -36,7 +37,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
 
-        public TimetableUpcomingICalRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public TimetableUpcomingICalRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance: secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();

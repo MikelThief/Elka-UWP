@@ -68,7 +68,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "2030Z",
         };
 
-        public GradesTerms2RequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public GradesTerms2RequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -87,23 +87,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        //public string GetRequestString(params string[] semesterIds)
-        //{
-        //    if (semesterIds is null)
-        //        return GetRequestString();
-
-        //    var fieldsString = string.Join(separator: "%7C", values: _fields);
-        //    var semesterIdsString = string.Join(separator: "%7C", values: semesterIds.ToList());
-        //    var additionalParameters = new NameValueCollection()
-        //    {
-        //        { "term_ids", semesterIdsString },
-        //        { "fields", fieldsString }
-        //    };
-
-        //    return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
-        //}
-
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var semesterIdsString = string.Join(separator: "%7C", values: _semesterIds);

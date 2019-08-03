@@ -16,10 +16,9 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
             "postal_addresses"
-                       
         };
 
-        public PostalAddressesWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance: secretServiceInstance, logger: logger)
+        public PostalAddressesWrapper(SecretService secretServiceInstance) : base(secretServiceInstance: secretServiceInstance)
         {
 
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
@@ -39,7 +38,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        public override string GetRequestString()
+        public string GetRequestString()
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()

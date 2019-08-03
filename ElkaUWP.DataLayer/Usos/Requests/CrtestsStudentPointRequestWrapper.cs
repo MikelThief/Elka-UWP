@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Services;
@@ -8,25 +12,21 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    /// <summary>
-    /// Wraps https://apps.usos.pw.edu.pl/developers/api/services/geo/#building_index
-    /// </summary>
-    public class BuildingIndexRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class CrtestsStudentPointRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
-        private const string _destination = "geo/building_index";
+        private const string _destination = "crstests/student_point";
 
+        // Fields index to be received in response
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
-            "id",
-            "name",
-            "profile_url",
-            "campus_name",
-            "location",
-            "marker_style",
-            "phone_numbers"
+            "points",
+            "grader",
+            "comment",
+            "last_changed"
         };
 
-        public BuildingIndexRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance: secretServiceInstance)
+        /// <inheritdoc />
+        public CrtestsStudentPointRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -45,16 +45,17 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        public string GetRequestString()
+        public string GetRequestString(int nodeId)
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
             var additionalParameters = new NameValueCollection()
             {
-                { "fields", fieldsString }
+                {"fields", fieldsString},
+                {"node_id", nodeId.ToString()}
             };
 
-            return $"{UnderlyingOAuthRequest.RequestUrl}?" + UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+            return $"{UnderlyingOAuthRequest.RequestUrl}?" +
+                   UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
         }
-
     }
 }

@@ -17,7 +17,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         private const string _destination = "tt/student";
 
         // Fields index to be received in response
-        // API may return more fields 
+        // API may return more fields
         private readonly IReadOnlyCollection<string> _fields = new List<string>()
         {
             "start_time",
@@ -37,17 +37,6 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "cgwm_id"
         };
 
-        public override string GetRequestString()
-        {
-            var fieldsString = string.Join(separator: "%7C", values: _fields);
-            var additionalParameters = new NameValueCollection()
-            {
-                { "fields", fieldsString }
-            };
-
-            return UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
-        }
-
         public string GetRequestString(DateTime startDate)
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
@@ -61,9 +50,8 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         }
 
         /// <inheritdoc />
-        public TimetableStudentRequestWrapper(SecretService secretServiceInstance, ILogger logger) : base(secretServiceInstance, logger)
+        public TimetableStudentRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
-            Logger = logger;
             SecretService = secretServiceInstance;
 
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
