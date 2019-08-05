@@ -48,6 +48,7 @@ using ElkaUWP.DataLayer;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Misc;
+using ElkaUWP.Modularity.CatalogModule;
 using ElkaUWP.Modularity.GradesModule;
 using LiteDB;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
@@ -121,6 +122,15 @@ namespace ElkaUWP.Core
             {
                 ModuleName = calendarModuleType.Name,
                 ModuleType = calendarModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            // Catalog module
+            var catalogModuleType = typeof(CatalogModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = catalogModuleType.Name,
+                ModuleType = catalogModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 

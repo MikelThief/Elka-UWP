@@ -265,6 +265,10 @@
       <Project>{33abb40a-498b-4f91-9938-6c483523c162}</Project>
       <Name>ElkaUWP.Modularity.CalendarModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\ElkaUWP.Modularity.CatalogModule\ElkaUWP.Modularity.CatalogModule.csproj">
+      <Project>{e7810ce1-fad3-4bf6-b677-a54ac87ec81a}</Project>
+      <Name>ElkaUWP.Modularity.CatalogModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\ElkaUWP.Modularity.GradesModule\ElkaUWP.Modularity.GradesModule.csproj">
       <Project>{1bcbe45a-bb35-4acd-97d0-2db3ab50d09a}</Project>
       <Name>ElkaUWP.Modularity.GradesModule</Name>
