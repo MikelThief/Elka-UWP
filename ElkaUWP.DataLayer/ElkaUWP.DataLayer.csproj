@@ -172,7 +172,7 @@
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
     <Compile Include="Usos\Entities\PostalAddressType.cs" />
     <Compile Include="Usos\Entities\SearchedUser.cs" />
-    <Compile Include="Usos\Entities\SearchedUsers.cs" />
+    <Compile Include="Usos\Entities\SearchedUserMatches.cs" />
     <Compile Include="Usos\Entities\Semester.cs" />
     <Compile Include="Usos\Entities\Location.cs" />
     <Compile Include="Usos\Entities\StudentPoint.cs" />

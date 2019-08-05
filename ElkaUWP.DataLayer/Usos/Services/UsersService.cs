@@ -14,16 +14,19 @@ using System.Threading.Tasks;
 using Anotar.NLog;
 using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
+using ElkaUWP.Infrastructure;
 
 namespace ElkaUWP.DataLayer.Usos.Services
 {
     public class UsersService
     {
         private readonly UserInfoRequestWrapper _userInfoRequestWrapper;
+        private readonly UsersSearch2RequestWrapper _usersSearch2RequestWrapper;
 
-        public UsersService(UserInfoRequestWrapper userInfoRequestWrapper)
+        public UsersService(UserInfoRequestWrapper userInfoRequestWrapper, UsersSearch2RequestWrapper usersSearch2RequestWrapper)
         {
             _userInfoRequestWrapper = userInfoRequestWrapper;
+            _usersSearch2RequestWrapper = usersSearch2RequestWrapper;
         }
 
         public async Task<UserInfoContainer> User()
@@ -52,11 +55,37 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
         }
 
-        public async Task Search2Async()
+        public async Task<Result<Maybe<List<MatchedUserItem>>>> Search2Async(string query, UserCategory userCategory)
         {
+            string lang = "pl";
 
+            var requestString = _usersSearch2RequestWrapper.GetRequestString(query: query, userCategory: userCategory, lang: lang);
+            var webClient = new WebClient();
 
-            return;
+            try
+            {
+                var json = await webClient.DownloadStringTaskAsync(address: requestString);
+                var result = JsonConvert.DeserializeObject<SearchedUserMatches>(value: json);
+
+                return Result.Ok(value: result.Items.Count > 0 ?
+                    Maybe<List<MatchedUserItem>>.From(obj: result.Items)
+                    : Maybe<List<MatchedUserItem>>.None);
+            }
+            catch (WebException wexc)
+            {
+                LogTo.FatalException(exception: wexc, message: "Unable to perform handshake with USOS.");
+                return Result.Fail<Maybe<List<MatchedUserItem>>>(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
+            }
+            catch (JsonException jexc)
+            {
+                LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data from USOS.");
+                return Result.Fail<Maybe<List<MatchedUserItem>>>(error: ErrorCodes.USOS_BAD_DATA_RECEIVED);
+            }
+            finally
+            {
+                webClient.Dispose();
+                webClient = null;
+            }
         }
     }
 }

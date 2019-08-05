@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class SearchedUsers
+    public class SearchedUserMatches
     {
         [JsonProperty(propertyName: "items")]
         public List<MatchedUserItem> Items { get; set; }
