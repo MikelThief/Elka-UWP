@@ -11,26 +11,26 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class CourseEdition
     {
-        [JsonProperty("term_id")]
+        [JsonProperty(propertyName: "term_id")]
         public string TermId { get; set; }
 
-        [JsonProperty("passing_status")]
+        [JsonProperty(propertyName: "passing_status")]
         [JsonConverter(converterType: typeof(JsonPassTypeBoolConverter))]
         public bool PassingStatus { get; set; }
 
-        [JsonProperty("course_name")]
+        [JsonProperty(propertyName: "course_name")]
         public LangDict CourseName { get; set; }
 
-        [JsonProperty("course_id")]
+        [JsonProperty(propertyName: "course_id")]
         public string CourseId { get; set; }
 
-        [JsonProperty("lecturers")]
+        [JsonProperty(propertyName: "lecturers")]
         public List<SubjectStaffMember> Lecturers { get; set; }
 
-        [JsonProperty("profile_url")]
+        [JsonProperty(propertyName: "profile_url")]
         public Uri ProfileUrl { get; set; }
 
-        [JsonProperty("coordinators")]
+        [JsonProperty(propertyName: "coordinators")]
         public List<SubjectStaffMember> Coordinators { get; set; }
     }
 }

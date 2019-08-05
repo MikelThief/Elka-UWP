@@ -58,6 +58,12 @@
                     IsSelected="True"
                     Tag="CalendarSummaryViewToken" />
                 <winui:NavigationViewItem
+                    Content="Catalog"
+                    FontSize="18"
+                    FontWeight="Light"
+                    IsSelected="True"
+                    Tag="CatalogSearchUsersViewToken" />
+                <winui:NavigationViewItem
                     Content="Profile"
                     FontSize="18"
                     FontWeight="Light"

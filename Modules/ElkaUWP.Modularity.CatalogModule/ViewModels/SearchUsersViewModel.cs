@@ -9,5 +9,6 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
 {
     public class SearchUsersViewModel : BindableBase
     {
+
     }
 }

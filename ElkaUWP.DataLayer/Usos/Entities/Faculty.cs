@@ -7,9 +7,12 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class UserCoursesPerSemester
+    public class Faculty
     {
-        [JsonProperty(propertyName: "course_editions")]
-        public Dictionary<string, List<CourseEdition>> CourseEditions { get; set; }
+        [JsonProperty(propertyName: "id")]
+        public long Id { get; set; }
+
+        [JsonProperty(propertyName: "name")]
+        public LangDict Name { get; set; }
     }
 }

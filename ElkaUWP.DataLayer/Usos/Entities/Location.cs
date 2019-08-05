@@ -4,10 +4,10 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class Location
     {
-        [JsonProperty("lat")]
+        [JsonProperty(propertyName: "lat")]
         public double Lat { get; private set; }
 
-        [JsonProperty("long")]
+        [JsonProperty(propertyName: "long")]
         public double Long { get; private set; }
     }
 }

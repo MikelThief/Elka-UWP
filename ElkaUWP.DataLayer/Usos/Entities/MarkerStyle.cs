@@ -4,7 +4,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class MarkerStyle
     {
-        [JsonProperty("color")]
+        [JsonProperty(propertyName: "color")]
         public string Color { get; private set; }
     }
 }

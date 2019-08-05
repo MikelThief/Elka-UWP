@@ -15,5 +15,20 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource RegionBrush}" />
+    <Grid Background="{ThemeResource RegionBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <AutoSuggestBox
+            Grid.Row="0"
+            Width="270"
+            Margin="0,32,0,0"
+            HorizontalAlignment="Center"
+            PlaceholderText="Jan Kowalski">
+            <AutoSuggestBox.QueryIcon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE721;" />
+            </AutoSuggestBox.QueryIcon>
+        </AutoSuggestBox>
+    </Grid>
 </Page>

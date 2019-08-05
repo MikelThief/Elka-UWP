@@ -1,4 +1,7 @@
-﻿using Prism.Ioc;
+﻿using ElkaUWP.Infrastructure;
+using ElkaUWP.Modularity.CatalogModule.ViewModels;
+using ElkaUWP.Modularity.CatalogModule.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 
 namespace ElkaUWP.Modularity.CatalogModule
@@ -7,7 +10,7 @@ namespace ElkaUWP.Modularity.CatalogModule
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterForNavigation<SearchUsersView, SearchUsersViewModel>(key: PageTokens.CatalogSearchUsersView);
         }
 
         /// <inheritdoc />

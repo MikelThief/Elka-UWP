@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class UpcomingShare
     {
-        [JsonProperty("webcal_url")]
+        [JsonProperty(propertyName: "webcal_url")]
         public string WebCalUrl { get; set; }
     }
 }

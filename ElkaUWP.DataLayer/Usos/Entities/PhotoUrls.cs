@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class PhotoUrls
     {
-        [JsonProperty("200x250")]
+        [JsonProperty(propertyName: "200x250")]
         public Uri PhotoUri { get; set; }
     }
 }

@@ -11,22 +11,22 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class Semester
     {
-        [JsonProperty("name")]
+        [JsonProperty(propertyName: "name")]
         public LangDict Name { get; set; }
 
-        [JsonProperty("id")]
+        [JsonProperty(propertyName: "id")]
         public string Id { get; set; }
 
-        [JsonProperty("order_key")]
+        [JsonProperty(propertyName: "order_key")]
         public int OrderKey { get; set; }
 
-        [JsonProperty("start_date"), JsonConverter(converterType: typeof(IsoDateTimeConverter))]
+        [JsonProperty(propertyName: "start_date"), JsonConverter(converterType: typeof(IsoDateTimeConverter))]
         public DateTime StartDate { get; set; }
 
-        [JsonProperty("end_date"), JsonConverter(converterType: typeof(IsoDateTimeConverter))]
+        [JsonProperty(propertyName: "end_date"), JsonConverter(converterType: typeof(IsoDateTimeConverter))]
         public DateTime EndDate { get; set; }
 
-        [JsonProperty("finish_date"), JsonConverter(converterType: typeof(IsoDateTimeConverter))]
+        [JsonProperty(propertyName: "finish_date"), JsonConverter(converterType: typeof(IsoDateTimeConverter))]
         public DateTime FinishDate { get; set; }
     }
 }

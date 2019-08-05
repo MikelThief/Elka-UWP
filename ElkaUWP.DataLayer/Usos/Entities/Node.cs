@@ -39,10 +39,10 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         [JsonProperty(propertyName: "subnodes")]
         public List<Node> SubNodes { get; set; }
 
-        [JsonProperty("points_max", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(propertyName: "points_max", NullValueHandling = NullValueHandling.Ignore)]
         public long? PointsMax { get; set; }
 
-        [JsonProperty("points_min", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(propertyName: "points_min", NullValueHandling = NullValueHandling.Ignore)]
         public long? PointsMin { get; set; }
 
     }

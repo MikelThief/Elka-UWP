@@ -12,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Anotar.NLog;
+using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Services
@@ -49,6 +50,13 @@ namespace ElkaUWP.DataLayer.Usos.Services
 
             return result;
 
+        }
+
+        public async Task Search2Async()
+        {
+
+
+            return;
         }
     }
 }

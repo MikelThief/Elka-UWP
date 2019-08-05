@@ -11,17 +11,17 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class ExamRepGradedSubject
     {
-        [JsonProperty("type_id")]
+        [JsonProperty(propertyName: "type_id")]
         [JsonConverter(converterType: typeof(JsonSubjectPassTypeConverter))]
         public SubjectPassType TypeId { get; set; }
 
-        [JsonProperty("id")]
+        [JsonProperty(propertyName: "id")]
         public int Id { get; set; }
 
-        [JsonProperty("type_description")]
+        [JsonProperty(propertyName: "type_description")]
         public LangDict TypeDescription { get; set; }
 
-        [JsonProperty("sessions")]
+        [JsonProperty(propertyName: "sessions")]
         public List<Session> Sessions { get; set; }
     }
 

@@ -45,8 +45,6 @@ namespace ElkaUWP.Core.Views
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
@@ -86,6 +84,10 @@ namespace ElkaUWP.Core.Views
                         break;
                     case PageTokens.UserSummaryViewToken:
                         ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    case PageTokens.CatalogSearchUsersView:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CatalogSearchUsersView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
                     default:

@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class CourseGrade
     {
-        [JsonProperty("1")]
+        [JsonProperty(propertyName: "1")]
         public CourseGradeSub1 Sub1 { get; set; }
     }
 }

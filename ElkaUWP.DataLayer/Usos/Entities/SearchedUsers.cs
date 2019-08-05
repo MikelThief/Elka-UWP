@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class UserCoursesPerSemester
+    public class SearchedUsers
     {
-        [JsonProperty(propertyName: "course_editions")]
-        public Dictionary<string, List<CourseEdition>> CourseEditions { get; set; }
+        [JsonProperty(propertyName: "items")]
+        public List<MatchedUserItem> Items { get; set; }
     }
 }
