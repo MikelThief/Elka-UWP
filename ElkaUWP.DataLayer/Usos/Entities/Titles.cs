@@ -13,6 +13,6 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         public string Before { get; set; }
 
         [JsonProperty(propertyName: "after")]
-        public object After { get; set; }
+        public string After { get; set; }
     }
 }

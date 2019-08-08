@@ -133,9 +133,11 @@
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
+    <Compile Include="Propertiary\Entities\UserMatch.cs" />
     <Compile Include="Propertiary\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
+    <Compile Include="Propertiary\Services\SearchService.cs" />
     <Compile Include="Propertiary\Services\TimetableService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
     <Compile Include="Studia\Abstractions\Bases\StudiaServiceBase.cs" />

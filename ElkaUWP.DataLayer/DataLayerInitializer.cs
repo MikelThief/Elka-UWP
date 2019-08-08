@@ -34,7 +34,8 @@ namespace ElkaUWP.DataLayer
             // Register services
             containerRegistry.RegisterSingleton<Usos.Services.TimetableService>();
             containerRegistry.RegisterSingleton<UserService>();
-            containerRegistry.RegisterSingleton<Usos.Services.LogonService> ();
+            containerRegistry.RegisterSingleton<Usos.Services.LogonService>();
+            containerRegistry.RegisterSingleton<SearchService>();
 
             // Register proxies
             containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Constants.LDAP_KEY);
