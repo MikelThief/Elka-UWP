@@ -159,6 +159,9 @@
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Entities\ConductedCourse.cs" />
+    <Compile Include="Usos\Entities\ConductedCourseEdition.cs" />
+    <Compile Include="Usos\Entities\ConductedTerm.cs" />
     <Compile Include="Usos\Entities\CourseGrade.cs" />
     <Compile Include="Usos\Entities\CourseGradeSub1.cs" />
     <Compile Include="Usos\Entities\CourseUnitsGrades.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Usos\Entities\SearchedUserMatches.cs" />
     <Compile Include="Usos\Entities\Semester.cs" />
     <Compile Include="Usos\Entities\Location.cs" />
+    <Compile Include="Usos\Entities\StaffUser.cs" />
     <Compile Include="Usos\Entities\StudentPoint.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
@@ -215,7 +219,7 @@
     <Compile Include="Usos\Requests\TimetableUpcomingWebCalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UsersSearch2RequestWrapper.cs" />
-    <Compile Include="Usos\Requests\UserStaffRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UsersStaffUserRequestWrapper.cs" />
     <Compile Include="Usos\Services\CoursesService.cs" />
     <Compile Include="Usos\Services\CrstestsService.cs" />
     <Compile Include="Usos\Services\ExamrepService.cs" />

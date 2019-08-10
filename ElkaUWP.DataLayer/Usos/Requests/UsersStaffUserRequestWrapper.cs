@@ -11,7 +11,7 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    public class UserStaffRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class UsersStaffUserRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "users/user";
 
@@ -31,7 +31,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         };
 
         /// <inheritdoc />
-        public UserStaffRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
+        public UsersStaffUserRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
