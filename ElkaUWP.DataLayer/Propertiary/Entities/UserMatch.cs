@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
+    [DebuggerDisplay("Name = {FirstName} {LastName}, Id = {Id}")]
     public class UserMatch
     {
         public string FirstName { get; set; }

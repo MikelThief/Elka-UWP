@@ -79,7 +79,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             {
                 { "fields", fieldsString },
                 { "lang", lang },
-                { "num", 6.ToString() },
+                { "num", 8.ToString() },
                 { "among", among },
                 { "query", query }
             };

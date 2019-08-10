@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.System;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
 using ElkaUWP.DataLayer.Usos.Requests;
@@ -23,6 +24,14 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
 
         public ObservableCollection<UserMatch> SuggestedItems;
 
+        private User _selectedUserMatch;
+
+        public User SelectedUserMatch
+        {
+            get => _selectedUserMatch;
+            set => SetProperty(storage: ref _selectedUserMatch, value: value, propertyName: nameof(SelectedUserMatch));
+        }
+
         public SearchUsersViewModel(SearchService searchService)
         {
             _searchService = searchService;
@@ -31,12 +40,11 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
 
         public async Task SearchUsersAsync(string query)
         {
-            var result = await _searchService.SearchUsersAsync(query: query);
+            var result = await _searchService.SearchUsersAsync(query: query).ConfigureAwait(continueOnCapturedContext: true);
+            SuggestedItems.Clear();
 
             if (result.IsSuccess && result.Value.HasValue)
             {
-                SuggestedItems.Clear();
-
                 foreach (var userMatch in result.Value.Value)
                 {
                     SuggestedItems.Add(item: userMatch);
@@ -44,8 +52,6 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
             }
             else
             {
-                SuggestedItems.Clear();
-
                 var emptyMatch = new UserMatch(firstName: string.Empty, lastName: string.Empty,
                     title: string.Empty, employmentPosition: string.Empty,
                     id: -1, htmlMatchedName: _resourceLoader.GetString("SearchUsers_NoResultsMessage"));

@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.Modularity.CatalogModule.ViewModels;
 using Prism.Mvvm;
 
@@ -40,7 +41,7 @@ namespace ElkaUWP.Modularity.CatalogModule.Views
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                await ViewModel.SearchUsersAsync(sender.Text);
+                await ViewModel.SearchUsersAsync(query: sender.Text);
             }
         }
 
@@ -58,7 +59,8 @@ namespace ElkaUWP.Modularity.CatalogModule.Views
 
         private void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            // Set sender.Text. You can use args.SelectedItem to build your text string.
+            if (args.SelectedItem is UserMatch selectedItem)
+                sender.Text = selectedItem.FirstName + " " + selectedItem.LastName;
         }
     }
 }

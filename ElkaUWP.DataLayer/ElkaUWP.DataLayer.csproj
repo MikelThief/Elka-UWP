@@ -215,6 +215,7 @@
     <Compile Include="Usos\Requests\TimetableUpcomingWebCalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UsersSearch2RequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UserStaffRequestWrapper.cs" />
     <Compile Include="Usos\Services\CoursesService.cs" />
     <Compile Include="Usos\Services\CrstestsService.cs" />
     <Compile Include="Usos\Services\ExamrepService.cs" />
