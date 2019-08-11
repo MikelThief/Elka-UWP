@@ -133,8 +133,10 @@
     <Compile Include="Propertiary\Entities\StaffUser.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
+    <Compile Include="Propertiary\Entities\User.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserMatch.cs" />
+    <Compile Include="Propertiary\Entities\UserType.cs" />
     <Compile Include="Propertiary\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />

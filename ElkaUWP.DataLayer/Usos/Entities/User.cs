@@ -60,7 +60,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 
         [JsonProperty(propertyName: "staff_status")]
         [JsonConverter(converterType: typeof(StaffStatusConverter))]
-        public long StaffStatus { get; set; }
+        public StaffStatus StaffStatus { get; set; }
 
         [JsonProperty(propertyName: "last_name")]
         public string LastName { get; set; }

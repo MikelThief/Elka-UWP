@@ -78,6 +78,7 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
+            /*
             var result = await _userService.GetAsync();
 
             foreach (var element in result)
@@ -150,20 +151,21 @@ namespace ElkaUWP.Modularity.UserModule.ViewModels
                         break;
                 }
             }
+            */
 
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
-            
+
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
         {
-          
+
         }
     }
-   
+
 
 
 }

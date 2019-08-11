@@ -1,6 +1,4 @@
-﻿using ElkaUWP.DataLayer.Propertiary.Entities;
-using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
-using ElkaUWP.DataLayer.Usos.Entities;
+﻿using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
 using Newtonsoft.Json;
 using NLog;
