@@ -130,6 +130,7 @@
     <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
     <Compile Include="Propertiary\Abstractions\Bases\PartialGradesModel.cs" />
     <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
+    <Compile Include="Propertiary\Entities\StaffUser.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />

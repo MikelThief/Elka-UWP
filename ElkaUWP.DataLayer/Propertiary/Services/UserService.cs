@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Services;
@@ -109,5 +110,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             return elements;
         }
+
+
     }
 }

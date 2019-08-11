@@ -17,7 +17,7 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
         // Fields index to be received in response
         // API may return more fields
-        private readonly IReadOnlyCollection<string> _generalFields = new List<string>()
+        private readonly IReadOnlyCollection<string> _commonFields = new List<string>()
         {
             "id",
             "first_name",
@@ -70,9 +70,9 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        public string GetRequestString(int userId, bool includeStaffProperties = false, bool includeStudentProperties = false)
+        public string GetRequestString(int userId, bool includeStaffProperties, bool includeStudentProperties)
         {
-            var fields = new List<string>(collection: _generalFields);
+            var fields = new List<string>(collection: _commonFields);
 
             if (includeStaffProperties)
             {
