@@ -159,6 +159,8 @@
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Converters\Json\StaffStatusConverter.cs" />
+    <Compile Include="Usos\Converters\Json\StudentStatusConverter.cs" />
     <Compile Include="Usos\Entities\ConductedCourse.cs" />
     <Compile Include="Usos\Entities\ConductedCourseEdition.cs" />
     <Compile Include="Usos\Entities\ConductedTerm.cs" />
@@ -176,11 +178,13 @@
     <Compile Include="Usos\Entities\PostalAddress.cs" />
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
     <Compile Include="Usos\Entities\PostalAddressType.cs" />
+    <Compile Include="Usos\Entities\Programme.cs" />
     <Compile Include="Usos\Entities\SearchedUser.cs" />
     <Compile Include="Usos\Entities\SearchedUserMatches.cs" />
     <Compile Include="Usos\Entities\Semester.cs" />
     <Compile Include="Usos\Entities\Location.cs" />
-    <Compile Include="Usos\Entities\StaffUser.cs" />
+    <Compile Include="Usos\Entities\StudentProgramme.cs" />
+    <Compile Include="Usos\Entities\User.cs" />
     <Compile Include="Usos\Entities\StudentPoint.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
@@ -219,7 +223,7 @@
     <Compile Include="Usos\Requests\TimetableUpcomingWebCalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UsersSearch2RequestWrapper.cs" />
-    <Compile Include="Usos\Requests\UsersStaffUserRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UsersUserRequestWrapper.cs" />
     <Compile Include="Usos\Services\CoursesService.cs" />
     <Compile Include="Usos\Services\CrstestsService.cs" />
     <Compile Include="Usos\Services\ExamrepService.cs" />
@@ -259,6 +263,9 @@
     </PackageReference>
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.853-ci</Version>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.0.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfSchedule.UWP">
       <Version>17.2.0.39</Version>

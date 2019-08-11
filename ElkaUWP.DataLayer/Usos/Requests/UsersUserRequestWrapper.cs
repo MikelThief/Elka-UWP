@@ -11,27 +11,47 @@ using OAuthClient;
 
 namespace ElkaUWP.DataLayer.Usos.Requests
 {
-    public class UsersStaffUserRequestWrapper : OAuthProtectedResourceRequestWrapperBase
+    public class UsersUserRequestWrapper : OAuthProtectedResourceRequestWrapperBase
     {
         private const string _destination = "users/user";
 
         // Fields index to be received in response
         // API may return more fields
-        private readonly IReadOnlyCollection<string> _fields = new List<string>()
+        private readonly IReadOnlyCollection<string> _generalFields = new List<string>()
         {
-            "first_name",
             "id",
+            "first_name",
+            "middle_names",
             "last_name",
+            "email_access",
+            "email",
+            "homepage_url",
+            "profile_url",
+            "has_photo",
+            "photo_urls[400x400]"
+        };
+
+        private readonly IReadOnlyCollection<string> _staffFields = new List<string>()
+        {
             "titles",
             "staff_status",
-            "profile_url",
             "office_hours",
             "employment_positions",
-            "course_editions_conducted"
+            "course_editions_conducted",
+            "staff_status",
+            "phone_numbers",
+            "mobile_numbers"
+        };
+
+        private readonly IReadOnlyCollection<string> _studentFields = new List<string>()
+        {
+            "student_status",
+            "student_number",
+            "student_programmes"
         };
 
         /// <inheritdoc />
-        public UsersStaffUserRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
+        public UsersUserRequestWrapper(SecretService secretServiceInstance) : base(secretServiceInstance)
         {
             var oAuthSecret = SecretService.GetSecret(container: Constants.USOS_CREDENTIAL_CONTAINER_NAME);
             oAuthSecret.RetrievePassword();
@@ -50,9 +70,22 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             };
         }
 
-        public string GetRequestString(int userId)
+        public string GetRequestString(int userId, bool includeStaffProperties = false, bool includeStudentProperties = false)
         {
-            var fieldsString = string.Join(separator: "%7C", values: _fields);
+            var fields = new List<string>(collection: _generalFields);
+
+            if (includeStaffProperties)
+            {
+                fields.AddRange(collection: _staffFields);
+            }
+
+            if (includeStudentProperties)
+            {
+                fields.AddRange(collection: _studentFields);
+            }
+
+
+            var fieldsString = string.Join(separator: "%7C", values: fields);
 
             var additionalParameters = new NameValueCollection()
             {

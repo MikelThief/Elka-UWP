@@ -8,10 +8,12 @@ using Windows.ApplicationModel.Resources;
 using Windows.System;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
+using ElkaUWP.DataLayer.Usos.Entities;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Helpers;
 using Prism.Mvvm;
+using User = ElkaUWP.DataLayer.Usos.Entities.User;
 
 namespace ElkaUWP.Modularity.CatalogModule.ViewModels
 {
@@ -54,11 +56,14 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
             {
                 var emptyMatch = new UserMatch(firstName: string.Empty, lastName: string.Empty,
                     title: string.Empty, employmentPosition: string.Empty,
-                    id: -1, htmlMatchedName: _resourceLoader.GetString("SearchUsers_NoResultsMessage"));
+                    id: -1, htmlMatchedName: _resourceLoader.GetString(resource: "SearchUsers_NoResultsMessage"));
 
                 SuggestedItems.Add(item: emptyMatch);
             }
+        }
 
+        public async Task GetStaffUserDetails()
+        {
 
         }
     }
