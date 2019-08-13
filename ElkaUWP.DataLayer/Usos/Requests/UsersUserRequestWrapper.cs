@@ -28,7 +28,9 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "homepage_url",
             "profile_url",
             "has_photo",
-            "photo_urls[400x400]"
+            "photo_urls[400x400]",
+            "phone_numbers",
+            "mobile_numbers"
         };
 
         private readonly IReadOnlyCollection<string> _staffFields = new List<string>()
@@ -38,9 +40,6 @@ namespace ElkaUWP.DataLayer.Usos.Requests
             "office_hours",
             "employment_positions",
             "course_editions_conducted",
-            "staff_status",
-            "phone_numbers",
-            "mobile_numbers"
         };
 
         private readonly IReadOnlyCollection<string> _studentFields = new List<string>()

@@ -45,11 +45,12 @@ namespace ElkaUWP.Modularity.CatalogModule.Views
             }
         }
 
-        private void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            if (args.ChosenSuggestion != null)
+            if (args.ChosenSuggestion != null && args.ChosenSuggestion is UserMatch selectedMatch)
             {
                 // User selected an item from the suggestion list, take an action on it here.
+                await ViewModel.GetStaffUserDetails(userId: selectedMatch.Id);
             }
             else
             {
@@ -57,10 +58,12 @@ namespace ElkaUWP.Modularity.CatalogModule.Views
             }
         }
 
-        private void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private async void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            if (args.SelectedItem is UserMatch selectedItem)
-                sender.Text = selectedItem.FirstName + " " + selectedItem.LastName;
+            if (args.SelectedItem is UserMatch selectedMatch)
+            {
+                sender.Text = selectedMatch.FirstName + " " + selectedMatch.LastName;
+            }
         }
     }
 }

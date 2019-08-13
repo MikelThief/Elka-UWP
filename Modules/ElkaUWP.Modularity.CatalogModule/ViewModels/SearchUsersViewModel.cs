@@ -20,23 +20,25 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
     public class SearchUsersViewModel : BindableBase
     {
         private readonly SearchService _searchService;
+        private readonly UserService _userService;
 
         private readonly ResourceLoader _resourceLoader =
             ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(CatalogModuleInitializer));
 
         public ObservableCollection<UserMatch> SuggestedItems;
 
-        private User _selectedUserMatch;
+        private StaffUser _staffUser;
 
-        public User SelectedUserMatch
+        public StaffUser StaffUser
         {
-            get => _selectedUserMatch;
-            set => SetProperty(storage: ref _selectedUserMatch, value: value, propertyName: nameof(SelectedUserMatch));
+            get => _staffUser;
+            set => SetProperty(storage: ref _staffUser, value: value, propertyName: nameof(StaffUser));
         }
 
-        public SearchUsersViewModel(SearchService searchService)
+        public SearchUsersViewModel(SearchService searchService, UserService userService)
         {
             _searchService = searchService;
+            _userService = userService;
             SuggestedItems = new ObservableCollection<UserMatch>();
         }
 
@@ -62,9 +64,18 @@ namespace ElkaUWP.Modularity.CatalogModule.ViewModels
             }
         }
 
-        public async Task GetStaffUserDetails()
+        public async Task GetStaffUserDetails(int userId)
         {
+            var result = await _userService.GetStaffUserAsync(userId: userId);
 
+            if (result.IsSuccess)
+            {
+                StaffUser = result.Value;
+            }
+            else
+            {
+                // raise notification
+            }
         }
     }
 }

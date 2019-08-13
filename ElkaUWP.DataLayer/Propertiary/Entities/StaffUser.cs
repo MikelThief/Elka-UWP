@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Entities;
+using PropertyChanged;
 
 namespace ElkaUWP.DataLayer.Propertiary.Entities
 {
+    [AddINotifyPropertyChangedInterface]
     public class StaffUser : User
     {
         public string Title { get; set; }
