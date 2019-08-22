@@ -58,7 +58,7 @@ namespace ElkaUWP.Modularity.CatalogModule.Views
             }
         }
 
-        private async void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (args.SelectedItem is UserMatch selectedMatch)
             {

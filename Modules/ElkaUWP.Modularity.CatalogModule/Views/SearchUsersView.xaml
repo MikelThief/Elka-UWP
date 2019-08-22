@@ -40,12 +40,22 @@
             </AutoSuggestBox.ItemTemplate>
         </AutoSuggestBox>
 
-        <Grid Grid.Row="1">
-            <TextBlock>
-                <TextBlock.Inlines>
-                    <Run />
-                </TextBlock.Inlines>
-            </TextBlock>
-        </Grid>
+        <RelativePanel Grid.Row="1" HorizontalAlignment="Center">
+            <TextBlock
+                x:Name="TitleTextBlock"
+                FontSize="70"
+                Text="{x:Bind ViewModel.StaffUser.Title, Mode=OneWay}" />
+            <TextBlock
+                x:Name="LastNameTextBlock"
+                FontSize="70"
+                RelativePanel.RightOf="TitleTextBlock"
+                Text="{x:Bind ViewModel.StaffUser.LastName, Mode=OneWay}" />
+            <TextBlock
+                x:Name="FirstNameTextBlock"
+                FontSize="70"
+                RelativePanel.AlignLeftWith="LastNameTextBlock"
+                RelativePanel.Below="LastNameTextBlock"
+                Text="{x:Bind ViewModel.StaffUser.FirstName, Mode=OneWay}" />
+        </RelativePanel>
     </Grid>
 </Page>
