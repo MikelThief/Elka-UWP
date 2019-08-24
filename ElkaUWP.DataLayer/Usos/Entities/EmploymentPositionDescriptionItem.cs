@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
-    public class Faculty
+    public class EmploymentPositionDescriptionItem
     {
         [JsonProperty(propertyName: "id")]
         public long Id { get; set; }

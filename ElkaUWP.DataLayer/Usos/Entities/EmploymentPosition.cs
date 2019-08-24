@@ -10,9 +10,9 @@ namespace ElkaUWP.DataLayer.Usos.Entities
     public partial class EmploymentPosition
     {
         [JsonProperty(propertyName: "faculty")]
-        public Faculty Faculty { get; set; }
+        public EmploymentPositionDescriptionItem Faculty { get; set; }
 
         [JsonProperty(propertyName: "position")]
-        public Faculty Position { get; set; }
+        public EmploymentPositionDescriptionItem Position { get; set; }
     }
 }

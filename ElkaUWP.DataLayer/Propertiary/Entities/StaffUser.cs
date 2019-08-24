@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Usos.Entities;
 using PropertyChanged;
 
@@ -21,8 +15,10 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
 
         public string EmploymentPosition { get; set; }
 
+        public string OfficeHours { get; set; }
+
         public StaffUser(int id, string title, string firstName, string lastName, string phone, Uri profileUri,
-            StaffStatus status, string employmentPosition) : base(id: id,  firstName: firstName, lastName: lastName,  profileUri: profileUri)
+            StaffStatus status, string employmentPosition, string officeHours) : base(id: id,  firstName: firstName, lastName: lastName,  profileUri: profileUri)
         {
             Id = id;
             Title = title;
@@ -32,6 +28,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Entities
             ProfileUri = profileUri;
             Status = status;
             EmploymentPosition = employmentPosition;
+            OfficeHours = officeHours;
         }
     }
 }

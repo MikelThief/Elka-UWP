@@ -79,6 +79,9 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 
         [JsonProperty(propertyName: "employment_positions")]
         public List<EmploymentPosition> EmploymentPositions { get; set; }
+
+        [JsonProperty(propertyName: "office_hours")]
+        public LangDict OfficeHours { get; set; }
     }
 
     public enum StudentStatus : sbyte

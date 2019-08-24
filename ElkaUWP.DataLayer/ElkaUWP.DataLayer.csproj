@@ -171,7 +171,7 @@
     <Compile Include="Usos\Entities\CourseGradeSub1.cs" />
     <Compile Include="Usos\Entities\CourseUnitsGrades.cs" />
     <Compile Include="Usos\Entities\EmploymentPosition.cs" />
-    <Compile Include="Usos\Entities\Faculty.cs" />
+    <Compile Include="Usos\Entities\EmploymentPositionDescriptionItem.cs" />
     <Compile Include="Usos\Entities\Grader.cs" />
     <Compile Include="Usos\Entities\GradesGradedSubject.cs" />
     <Compile Include="Usos\Entities\Group.cs" />
@@ -211,6 +211,7 @@
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
+    <Compile Include="Usos\Extensions\LangDictExtensions.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\CoursesUserRequestWrapper.cs" />
     <Compile Include="Usos\Requests\CrstestsNodeRequestWrapper.cs" />
@@ -290,7 +291,6 @@
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
     <Folder Include="Usos\Abstractions\Interfaces\" />
-    <Folder Include="Usos\Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
