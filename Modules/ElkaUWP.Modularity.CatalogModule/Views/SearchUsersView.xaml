@@ -3,12 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:converters="using:ElkaUWP.Infrastructure.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dataLayerEntities="using:ElkaUWP.DataLayer.Propertiary.Entities"
     xmlns:htmlRichControls="using:RichTextControls"
     xmlns:local="using:ElkaUWP.Modularity.CatalogModule.Views"
+    xmlns:localConverters="using:ElkaUWP.Infrastructure.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusionConverters="using:Syncfusion.UI.Xaml.Converters"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -16,10 +17,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converters:StringToVisibilityConverter x:Name="StringToVisibilityConverter" />
-            <ItemsPanelTemplate x:Key="MyItemsPanelTemplate">
-                <controls:WrapPanel />
-            </ItemsPanelTemplate>
+            <localConverters:StringToVisibilityConverter x:Name="StringToVisibilityConverter" />
+            <syncfusionConverters:NullToVisibilityConverter x:Name="NullToVisibilityConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -71,29 +70,32 @@
                 <controls:HeaderedContentControl
                     Grid.Row="2"
                     Margin="0,20,0,0"
-                    Header="Information">
-                    <GridView x:Name="InformationGridView" ItemsPanel="{StaticResource MyItemsPanelTemplate}">
-                        <GridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="Margin" Value="8" />
+                    Header="Information"
+                    Visibility="{x:Bind ViewModel.StaffUser, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}">
+                    <ListView x:Name="InformationGridView">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="0,4,0,4" />
                                 <Setter Property="Padding" Value="8" />
                             </Style>
-                        </GridView.ItemContainerStyle>
+                        </ListView.ItemContainerStyle>
                         <TextBlock>
                             <TextBlock.Inlines>
                                 <Run
                                     FontFamily="Segoe MDL2 Assets"
                                     FontSize="20"
                                     Text="&#xE717;" />
+                                <Run Text=" " />
                                 <Run Text="{x:Bind ViewModel.StaffUser.Phone, Mode=OneWay}" />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords">
                             <TextBlock.Inlines>
                                 <Run
                                     FontFamily="Segoe MDL2 Assets"
                                     FontSize="20"
                                     Text="&#xE7BE;" />
+                                <Run Text=" " />
                                 <Run Text="{x:Bind ViewModel.StaffUser.EmploymentPosition, Mode=OneWay}" />
                             </TextBlock.Inlines>
                         </TextBlock>
@@ -103,6 +105,7 @@
                                     FontFamily="Segoe MDL2 Assets"
                                     FontSize="20"
                                     Text="&#xE8D4;" />
+                                <Run Text=" " />
                                 <Hyperlink NavigateUri="{x:Bind ViewModel.StaffUser.ProfileUri, Mode=OneWay}">
                                     <Run Text="Click Link" />
                                 </Hyperlink>
@@ -114,10 +117,11 @@
                                     FontFamily="Segoe MDL2 Assets"
                                     FontSize="20"
                                     Text="&#xE823;" />
+                                <Run Text=" " />
                                 <Run Text="{x:Bind ViewModel.StaffUser.OfficeHours, Mode=OneWay}" />
                             </TextBlock.Inlines>
                         </TextBlock>
-                    </GridView>
+                    </ListView>
                 </controls:HeaderedContentControl>
 
 
