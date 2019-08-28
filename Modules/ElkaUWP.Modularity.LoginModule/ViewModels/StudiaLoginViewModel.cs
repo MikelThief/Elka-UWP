@@ -90,7 +90,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
 
             _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
             var validationResult = await _logonService.ValidateCredentialsAsync()
-                .ConfigureAwait(continueOnCapturedContext: false);
+                .ConfigureAwait(continueOnCapturedContext: true);
 
 
             if (validationResult.IsSuccess)

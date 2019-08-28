@@ -40,18 +40,6 @@
                     IsSelected="True"
                     Tag="GradesModuleGradesViewToken" />
                 <winui:NavigationViewItem
-                    Content="TestView"
-                    FontSize="18"
-                    FontWeight="Light"
-                    IsSelected="True"
-                    Tag="SampleViewToken" />
-                <winui:NavigationViewItem
-                    Content="WelcomeView"
-                    FontSize="18"
-                    FontWeight="Light"
-                    IsSelected="True"
-                    Tag="LoginToken" />
-                <winui:NavigationViewItem
                     Content="Calendar"
                     FontSize="18"
                     FontWeight="Light"
@@ -63,7 +51,13 @@
                     FontWeight="Light"
                     IsSelected="True"
                     Tag="UserSummaryViewToken" />
-            </winui:NavigationView.MenuItems>
+                <winui:NavigationViewItem
+                    Content="Maps"
+                    FontSize="18"
+                    FontWeight="Light"
+                    IsSelected="True"
+                    Tag="MapsViewToken" />
+             </winui:NavigationView.MenuItems>
             <misc:ThemeAwareFrame x:Name="ContentFrame" />
             <winui:NavigationView.Resources>
                 <SolidColorBrush x:Key="TopNavigationViewItemForeground" Color="{ThemeResource SystemBaseHighColor}" />

@@ -273,6 +273,10 @@
       <Project>{9271b278-9c6b-45b4-95f2-a52643b26b9a}</Project>
       <Name>ElkaUWP.Modularity.LoginModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\ElkaUWP.Modularity.MapsModule\ElkaUWP.Modularity.MapsModule.csproj">
+      <Project>{ba9b268c-8798-4d22-a321-a3583cbb5277}</Project>
+      <Name>ElkaUWP.Modularity.MapsModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\ElkaUWP.Modularity.UserModule\ElkaUWP.Modularity.UserModule.csproj">
       <Project>{e27a6981-2c9a-43be-a465-d6b541fee523}</Project>
       <Name>ElkaUWP.Modularity.UserModule</Name>

@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.MapsModule.Views.MapsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ElkaUWP.Modularity.MapsModule"
+    xmlns:infrastructure="using:ElkaUWP.Infrastructure"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:sfcontrols="using:Syncfusion.UI.Xaml.Schedule"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+     xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        </ResourceDictionary>
+     </Page.Resources>
+    <Grid>
+        <Pivot x:Name="mainPivot" SelectionChanged="MainPivot_SelectionChanged">
+        
+            <PivotItem Header="Maps">
+                <Grid x:Name="MainGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                   <ScrollViewer ZoomMode="Enabled" MinZoomFactor="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                        <controls:ImageEx x:Name="map" MaxWidth="{Binding ActualWidth, ElementName=mainPivot}" MaxHeight="{Binding ActualHeight, ElementName=mainPivot}" Loaded="Map_Loaded" x:DefaultBindMode="TwoWay"/>
+                    </ScrollViewer>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Grid.Row="2">
+                        <Button x:Name="FloorUnder" CornerRadius="30" BorderThickness="1.0" Content="-1" Height="35" Width="35" Click="FloorUnder_Click"/>
+                        <Button x:Name="FloorZero" CornerRadius="30" BorderThickness="1.0" Content="0" Height="35" Width="35" Click="FloorZero_Click" />
+                        <Button x:Name="FloorOne" CornerRadius="30" BorderThickness="1.0" Content="1" Height="35" Width="35" Click="FloorOne_Click"/>
+                        <Button x:Name="FloorTwo" CornerRadius="30" BorderThickness="1.0" Content="2" Height="35" Width="35" Click="FloorTwo_Click"/>
+                        <Button x:Name="FloorThree" CornerRadius="30" BorderThickness="1.0" Content="3" Height="35" Width="35" Click="FloorThree_Click"/>
+                        <Button x:Name="FloorFour" CornerRadius="30" BorderThickness="1.0" Content="4" Height="35" Width="35" Click="FloorFour_Click"/>
+                        <Button x:Name="FloorFive" CornerRadius="30" BorderThickness="1.0" Content="5" Height="35" Width="35" Click="FloorFive_Click" />
+                        
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="15" Grid.Row="0" Margin="10,10,0,0">
+                        <TextBox x:Name="Search" Text="Search..." Width="150" KeyDown="Search_KeyDown" GotFocus="Search_GotFocus"/>
+                        <Button x:Name="OK" Content="OK" Height="35" Width="50" Click="OK_Click" />
+                    </StackPanel> 
+                    
+                </Grid>
+            </PivotItem>
+            
+            <PivotItem Header="Virtual Walk">
+                <WebView x:Name="VirtualWalk" Source="ms-appx-web:///ElkaUWP.Modularity.MapsModule/Resources/no_internet.png"  Margin="0,0,0,15"  />
+            </PivotItem>
+        </Pivot>
+        <Grid x:Name="NotificationGrid" Loaded="NotificationGrid_Loaded"/>
+    </Grid>
+    
+</Page>
+
