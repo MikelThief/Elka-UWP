@@ -110,15 +110,7 @@ namespace ElkaUWP.Modularity.MapsModule.Views
             img.Source = bitmapImage;
         }
 
-        private void Map_Loaded(object sender, RoutedEventArgs e)
-        {
-            ImageEx img = map as ImageEx;
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.UriSource = new Uri(img.BaseUri, "/ElkaUWP.Modularity.MapsModule/Resources/FloorZero.png");
-            img.Source = bitmapImage;
-
-        }
-
+       
         private void ResetColors()
         {
             FloorOne.Background = new SolidColorBrush(Colors.Silver);

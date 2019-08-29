@@ -15,6 +15,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using ElkaUWP.Infrastructure;
+using Windows.UI;
 
 namespace ElkaUWP.Modularity.MapsModule.ViewModels
 {
@@ -25,7 +26,18 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
         private readonly ResourceLoader _resourceLoader =
          ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(MapsModuleInitializer));
 
-       public string Source= "http://www.google.com";
+        public SolidColorBrush FloorUnder_background;
+        public SolidColorBrush FloorZero_background;
+        public SolidColorBrush FloorOne_background;
+        public SolidColorBrush FloorTwo_background;
+        public SolidColorBrush FloorThree_background;
+        public SolidColorBrush FloorFour_background;
+        public SolidColorBrush FloorFive_background;
+
+        private Uri _img;
+        public Uri Img { get => _img; private set => SetProperty(storage: ref _img, value: value, propertyName: nameof(Img)); }
+
+        public string Source= "http://www.google.com";
        public void OnNavigatedFrom(INavigationParameters parameters)
         {
             //throw new NotImplementedException();
@@ -38,8 +50,19 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
 
         public void OnNavigatingTo(INavigationParameters parameters)
         {
+            Img = new Uri("ms-appx:///ElkaUWP.Modularity.MapsModule/Resources/FloorZero.png");
+            ResetButtons();
+        }
 
-            //throw new NotImplementedException();
+        public void ResetButtons()
+        {
+            FloorFive_background = new SolidColorBrush(Colors.Silver);
+            FloorFour_background = new SolidColorBrush(Colors.Silver);
+            FloorThree_background = new SolidColorBrush(Colors.Silver);
+            FloorTwo_background = new SolidColorBrush(Colors.Silver);
+            FloorOne_background = new SolidColorBrush(Colors.Silver);
+            FloorZero_background = new SolidColorBrush(Colors.Silver);
+            FloorUnder_background = new SolidColorBrush(Colors.Silver);
 
         }
         public Boolean InternetCheck()
@@ -59,9 +82,7 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
             }
             else
             {
-
-                return true;
-              
+                 return true;
             }
         }
 
@@ -76,9 +97,8 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
                 Background = new SolidColorBrush(color: Constants.RedColor)
             }
             );
-            
-           
         }
+
 
     }
 }

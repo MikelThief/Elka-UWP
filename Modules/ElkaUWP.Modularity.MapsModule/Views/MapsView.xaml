@@ -31,16 +31,16 @@
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
                    <ScrollViewer ZoomMode="Enabled" MinZoomFactor="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
-                        <controls:ImageEx x:Name="map" MaxWidth="{Binding ActualWidth, ElementName=mainPivot}" MaxHeight="{Binding ActualHeight, ElementName=mainPivot}" Loaded="Map_Loaded" x:DefaultBindMode="TwoWay"/>
+                        <controls:ImageEx x:Name="map" MaxWidth="{Binding ActualWidth, ElementName=mainPivot}" MaxHeight="{Binding ActualHeight, ElementName=mainPivot}" Source="{x:Bind ViewModel.Img}"/>
                     </ScrollViewer>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Grid.Row="2">
-                        <Button x:Name="FloorUnder" CornerRadius="30" BorderThickness="1.0" Content="-1" Height="35" Width="35" Click="FloorUnder_Click"/>
-                        <Button x:Name="FloorZero" CornerRadius="30" BorderThickness="1.0" Content="0" Height="35" Width="35" Click="FloorZero_Click" />
-                        <Button x:Name="FloorOne" CornerRadius="30" BorderThickness="1.0" Content="1" Height="35" Width="35" Click="FloorOne_Click"/>
-                        <Button x:Name="FloorTwo" CornerRadius="30" BorderThickness="1.0" Content="2" Height="35" Width="35" Click="FloorTwo_Click"/>
-                        <Button x:Name="FloorThree" CornerRadius="30" BorderThickness="1.0" Content="3" Height="35" Width="35" Click="FloorThree_Click"/>
-                        <Button x:Name="FloorFour" CornerRadius="30" BorderThickness="1.0" Content="4" Height="35" Width="35" Click="FloorFour_Click"/>
-                        <Button x:Name="FloorFive" CornerRadius="30" BorderThickness="1.0" Content="5" Height="35" Width="35" Click="FloorFive_Click" />
+                        <Button x:Name="FloorUnder" CornerRadius="30" BorderThickness="1.0" Content="-1" Height="35" Width="35" Click="FloorUnder_Click" Background="{x:Bind ViewModel.FloorUnder_background}"/>
+                        <Button x:Name="FloorZero" CornerRadius="30" BorderThickness="1.0" Content="0" Height="35" Width="35" Click="FloorZero_Click" Background="{x:Bind ViewModel.FloorZero_background}" />
+                        <Button x:Name="FloorOne" CornerRadius="30" BorderThickness="1.0" Content="1" Height="35" Width="35" Click="FloorOne_Click" Background="{x:Bind ViewModel.FloorOne_background}"/>
+                        <Button x:Name="FloorTwo" CornerRadius="30" BorderThickness="1.0" Content="2" Height="35" Width="35" Click="FloorTwo_Click" Background="{x:Bind ViewModel.FloorTwo_background}"/>
+                        <Button x:Name="FloorThree" CornerRadius="30" BorderThickness="1.0" Content="3" Height="35" Width="35" Click="FloorThree_Click" Background="{x:Bind ViewModel.FloorThree_background}"/>
+                        <Button x:Name="FloorFour" CornerRadius="30" BorderThickness="1.0" Content="4" Height="35" Width="35" Click="FloorFour_Click" Background="{x:Bind ViewModel.FloorFour_background}"/>
+                        <Button x:Name="FloorFive" CornerRadius="30" BorderThickness="1.0" Content="5" Height="35" Width="35" Click="FloorFive_Click" Background="{x:Bind ViewModel.FloorFive_background}"/>
                         
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="15" Grid.Row="0" Margin="10,10,0,0">
