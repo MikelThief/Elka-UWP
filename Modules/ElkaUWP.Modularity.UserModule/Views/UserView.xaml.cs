@@ -24,11 +24,11 @@ namespace ElkaUWP.Modularity.UserModule.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SummaryView : Page
+    public sealed partial class UserView : Page
     {
-        private UserSummaryViewModel ViewModel => DataContext as UserSummaryViewModel;
+        private UserViewModel ViewModel => DataContext as UserViewModel;
 
-        public SummaryView()
+        public UserView()
         {
             this.InitializeComponent();
             ViewModelLocator.SetAutowireViewModel(obj: this, value: true);

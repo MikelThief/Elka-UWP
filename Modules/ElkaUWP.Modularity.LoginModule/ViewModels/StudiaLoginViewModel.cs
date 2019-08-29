@@ -29,7 +29,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
     {
         private readonly LogonService _logonService;
         private INavigationService _navigationService;
-        private readonly ResourceLoader _resourceLoader = 
+        private readonly ResourceLoader _resourceLoader =
             ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
 
         public LocalNotificationManager NotificationManager { get; set; }
@@ -90,7 +90,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
 
             _logonService.ProvideUsernameAndPassword(username: Username, password: Password);
             var validationResult = await _logonService.ValidateCredentialsAsync()
-                .ConfigureAwait(continueOnCapturedContext: false);
+                .ConfigureAwait(continueOnCapturedContext: true);
 
 
             if (validationResult.IsSuccess)

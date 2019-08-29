@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.UserModule.Views.UserView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
+    xmlns:infrastructure="using:ElkaUWP.Infrastructure"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sfcontrols="using:Syncfusion.UI.Xaml.Schedule"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <Grid x:Name="ContentGrid" Background="{ThemeResource RegionBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <controls:ImageEx Grid.Column="0" />
+                <TextBlock Grid.Column="1">
+                    <TextBlock.Inlines>
+                        <Run />
+                        <Run />
+                    </TextBlock.Inlines>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Grid>
+
+
+
+</Page>

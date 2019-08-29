@@ -21,7 +21,7 @@ namespace ElkaUWP.Modularity.UserModule
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<SummaryView, UserSummaryViewModel>(key: PageTokens.UserSummaryViewToken);
+            containerRegistry.RegisterForNavigation<UserView, UserViewModel>(key: PageTokens.UserSummaryViewToken);
         }
     }
 }

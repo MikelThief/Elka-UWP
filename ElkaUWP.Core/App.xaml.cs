@@ -269,9 +269,10 @@ namespace ElkaUWP.Core
                             var usosHandshakeSuccess =
                                 await usosOAuthService.FinishOAuthHandshakeAsync(responseQueryString: protocolArguments.Uri.Query)
                                     .ConfigureAwait(continueOnCapturedContext: true);
+
                             var navigationParameters = new NavigationParameters
                             {
-                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess}
+                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess.IsSuccess }
                             };
 
                             await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken,
