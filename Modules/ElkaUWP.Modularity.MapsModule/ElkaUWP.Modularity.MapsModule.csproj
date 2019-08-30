@@ -160,13 +160,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\FloorOne.jpg" />
-    <Content Include="Resources\FloorTwo.jpg" />
-    <Content Include="Resources\FloorThree.jpg" />
-    <Content Include="Resources\FloorFour.jpg" />
-    <Content Include="Resources\FloorFive.jpg" />
-    <Content Include="Resources\FloorUnder.jpg" />
-    <Content Include="Resources\FloorZero.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor1.jpg" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor2.jpg" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor3.jpg" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor4.jpg" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor5.jpg" />
+    <Content Include="Resources\FloorPlans\FEiT\Basement1.jpg" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor0.png" />
     <Content Include="Resources\no_internet.png" />
   </ItemGroup>
   <ItemGroup>

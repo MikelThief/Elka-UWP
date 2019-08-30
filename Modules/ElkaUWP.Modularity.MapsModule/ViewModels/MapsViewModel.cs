@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,57 +16,58 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using ElkaUWP.Infrastructure;
-using Windows.UI;
+using ElkaUWP.DataLayer.Propertiary.Entities;
+using ElkaUWP.DataLayer.Propertiary.Services;
 
 namespace ElkaUWP.Modularity.MapsModule.ViewModels
 {
 
-    public class MapsViewModel : BindableBase, INavigationAware
+    public class MapsViewModel : BindableBase, INavigatedAware
     {
         public LocalNotificationManager NotificationManager { get; set; }
+
         private readonly ResourceLoader _resourceLoader =
          ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(MapsModuleInitializer));
 
-        public SolidColorBrush FloorUnder_background;
-        public SolidColorBrush FloorZero_background;
-        public SolidColorBrush FloorOne_background;
-        public SolidColorBrush FloorTwo_background;
-        public SolidColorBrush FloorThree_background;
-        public SolidColorBrush FloorFour_background;
-        public SolidColorBrush FloorFive_background;
+        private readonly MapsService _mapsService;
 
-        private Uri _img;
-        public Uri Img { get => _img; private set => SetProperty(storage: ref _img, value: value, propertyName: nameof(Img)); }
+        private FloorPlan _selectedFloorPlan;
 
-        public string Source= "http://www.google.com";
+        public FloorPlan SelectedFloorPlan
+        {
+            get => _selectedFloorPlan;
+            set
+            {
+                SetProperty(storage: ref _selectedFloorPlan, value: value, propertyName: nameof(SelectedFloorPlan));
+                RaisePropertyChanged(propertyName: nameof(FloorPlanUri));
+            }
+        }
+
+        public Uri FloorPlanUri => SelectedFloorPlan.ImageUri;
+
+        public ObservableCollection<FloorPlan> FloorPlansCollection { get; private set; }
+
+        public MapsViewModel(MapsService mapsService)
+        {
+            _mapsService = mapsService;
+            FloorPlansCollection = new ObservableCollection<FloorPlan>(
+                collection: _mapsService.GetFloorPlans(building: Constants.FEiTBuilding));
+
+            SelectedFloorPlan = FloorPlansCollection.Single(plan => plan.Level == 0);
+        }
+
+
        public void OnNavigatedFrom(INavigationParameters parameters)
         {
-            //throw new NotImplementedException();
+
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
         {
-            //throw new NotImplementedException();
-        }
-
-        public void OnNavigatingTo(INavigationParameters parameters)
-        {
-            Img = new Uri("ms-appx:///ElkaUWP.Modularity.MapsModule/Resources/FloorZero.png");
-            ResetButtons();
-        }
-
-        public void ResetButtons()
-        {
-            FloorFive_background = new SolidColorBrush(Colors.Silver);
-            FloorFour_background = new SolidColorBrush(Colors.Silver);
-            FloorThree_background = new SolidColorBrush(Colors.Silver);
-            FloorTwo_background = new SolidColorBrush(Colors.Silver);
-            FloorOne_background = new SolidColorBrush(Colors.Silver);
-            FloorZero_background = new SolidColorBrush(Colors.Silver);
-            FloorUnder_background = new SolidColorBrush(Colors.Silver);
 
         }
-        public Boolean InternetCheck()
+
+        public bool CheckIsInternetAvailable()
         {
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {

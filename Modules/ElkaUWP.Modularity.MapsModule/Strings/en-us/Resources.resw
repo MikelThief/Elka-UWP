@@ -127,6 +127,9 @@
   <data name="No_Internet_Notification" xml:space="preserve">
     <value>Make sure you have access to the Internet and try again.</value>
   </data>
+  <data name="PlaceholderText.Text" xml:space="preserve">
+    <value>Search..</value>
+  </data>
   <data name="Unable_to_find" xml:space="preserve">
     <value>The entered room number does not exist. Try again.</value>
   </data>

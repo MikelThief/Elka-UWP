@@ -133,6 +133,7 @@
     <Compile Include="Abstractions\Interfaces\IUsosOAuthService.cs" />
     <Compile Include="Constants\Constants.App.cs" />
     <Compile Include="Constants\Constants.Colors.cs" />
+    <Compile Include="Constants\Constants.FloorPlans.cs" />
     <Compile Include="Constants\Constants.Usos.cs" />
     <Compile Include="Converters\NegatedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\HashSetToStringConverter.cs" />
