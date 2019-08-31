@@ -63,12 +63,6 @@
                     FontWeight="Light"
                     IsSelected="True"
                     Tag="CatalogSearchUsersViewToken" />
-                <winui:NavigationViewItem
-                    Content="Profile"
-                    FontSize="18"
-                    FontWeight="Light"
-                    IsSelected="True"
-                    Tag="UserSummaryViewToken" />
             </winui:NavigationView.MenuItems>
             <misc:ThemeAwareFrame x:Name="ContentFrame" />
             <winui:NavigationView.Resources>

@@ -82,10 +82,6 @@ namespace ElkaUWP.Core.Views
                         ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
-                    case PageTokens.UserSummaryViewToken:
-                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken,
-                            transitionInfo: new EntranceNavigationTransitionInfo());
-                        break;
                     case PageTokens.CatalogSearchUsersView:
                         ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CatalogSearchUsersView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
