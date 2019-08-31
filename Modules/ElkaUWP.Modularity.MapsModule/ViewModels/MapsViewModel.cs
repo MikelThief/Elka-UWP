@@ -69,7 +69,7 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
 
         }
 
-        public bool CheckIsInternetAvailable()
+        public bool IsInternetAvailable()
         {
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {

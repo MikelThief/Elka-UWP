@@ -20,71 +20,110 @@
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
         </ResourceDictionary>
     </Page.Resources>
-    <Grid Background="{ThemeResource RegionBrush}">
-        <Pivot x:Name="mainPivot" SelectionChanged="MainPivot_SelectionChanged">
+    <Grid x:Name="ContentGrid" Background="{ThemeResource RegionBrush}">
+        <Pivot x:Name="MainPivot" SelectionChanged="MainPivot_SelectionChanged">
             <Pivot.ItemContainerStyle>
                 <Style TargetType="PivotItem">
                     <Setter Property="Margin" Value="0,8,0,0" />
                 </Style>
             </Pivot.ItemContainerStyle>
-            <PivotItem
-                x:Name="Maps_PivotItem"
-                x:Uid="Maps_PivotItem"
-                SizeChanged="Maps_PivotItem_OnSizeChanged">
+            <PivotItem x:Uid="Maps_PivotItem">
                 <Grid x:Name="MainGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ScrollViewer
-                        Grid.Row="1"
-                        HorizontalScrollBarVisibility="Auto"
-                        MinZoomFactor="1"
-                        VerticalScrollBarVisibility="Auto"
-                        ZoomMode="Enabled">
-                        <controls:ImageEx
-                            x:Name="MapImage"
-                            MaxWidth="{Binding ActualWidth, ElementName=Maps_PivotItem}"
-                            MaxHeight="{Binding ActualHeight, ElementName=Maps_PivotItem}"
-                            IsCacheEnabled="True"
-                            Source="{x:Bind ViewModel.FloorPlanUri, Mode=OneWay}" />
-                    </ScrollViewer>
 
-                    <ListView
-                        Grid.Row="2"
-                        ItemsSource="{x:Bind ViewModel.FloorPlansCollection, Mode=OneWay}"
-                        SelectedItem="{x:Bind ViewModel.SelectedFloorPlan, Mode=TwoWay}">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="entities:FloorPlan">
-                                <Grid>
-                                    <Ellipse Width="30" Height="30" />
-                                    <TextBlock Text="{x:Bind Level}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer
+                            x:Name="MapsArea"
+                            Grid.Column="0"
+                            HorizontalScrollBarVisibility="Auto"
+                            MinZoomFactor="1"
+                            SizeChanged="MapsArea_OnSizeChanged"
+                            VerticalScrollBarVisibility="Auto"
+                            ZoomMode="Enabled">
+                            <controls:ImageEx
+                                x:Name="MapImage"
+                                IsCacheEnabled="True"
+                                Source="{x:Bind ViewModel.FloorPlanUri, Mode=OneWay}"
+                                UseLayoutRounding="True" />
+                        </ScrollViewer>
 
+                        <ListView
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.FloorPlansCollection, Mode=OneWay}"
+                            SelectedItem="{x:Bind ViewModel.SelectedFloorPlan, Mode=TwoWay}"
+                            SelectionMode="Single">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="Margin" Value="4" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="entities:FloorPlan">
+                                    <Border
+                                        BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="4">
+                                        <TextBlock
+                                            Width="60"
+                                            Padding="12"
+                                            Text="{x:Bind Level}"
+                                            TextAlignment="Center" />
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </Grid>
                 </Grid>
             </PivotItem>
             <PivotItem x:Uid="VirtualWalk_PivotItem">
-                <WebView
-                    x:Name="VirtualWalk"
-                    Margin="0,0,0,15"
-                    Source="ms-appx-web:///ElkaUWP.Modularity.MapsModule/Resources/no_internet.png" />
+                <WebView x:Name="VirtualWalkWebview" Source="ms-appx-web:///ElkaUWP.Modularity.MapsModule/Resources/no_internet.png" />
             </PivotItem>
             <Pivot.RightHeader>
-                <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed">
-                    <AppBarButton Icon="Find" />
+                <CommandBar
+                    Background="Transparent"
+                    DefaultLabelPosition="Right"
+                    OverflowButtonVisibility="Collapsed">
+                    <AppBarButton
+                        x:Name="VirtualWalkRefreshButton"
+                        x:Uid="VirtualWalk_RefreshButton"
+                        Click="VirtualWalkRefreshButton_OnClick"
+                        Icon="Refresh" />
                 </CommandBar>
             </Pivot.RightHeader>
         </Pivot>
         <Grid x:Name="NotificationGrid" Loaded="NotificationGrid_Loaded" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WidthStateGroup">
+                <VisualState x:Name="LargeWidthState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentGrid.Margin" Value="{StaticResource MediumLeftRightMargin}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="SmallWidthState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentGrid.Margin" Value="{StaticResource SmallLeftRightMargin}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 
 </Page>

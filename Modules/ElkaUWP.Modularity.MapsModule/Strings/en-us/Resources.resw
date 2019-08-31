@@ -139,4 +139,7 @@
   <data name="VirtualWalk_PivotItem.Header" xml:space="preserve">
     <value>Virtual Walk</value>
   </data>
+  <data name="VirtualWalk_RefreshButton.Label" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
 </root>

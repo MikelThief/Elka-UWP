@@ -48,19 +48,33 @@ namespace ElkaUWP.Modularity.MapsModule.Views
 
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (mainPivot.SelectedIndex == 1 && ViewModel.CheckIsInternetAvailable())
+            if (MainPivot.SelectedIndex == 1)
             {
-                VirtualWalk.Source = ViewModel.NavVisMapsUri;
+                VirtualWalkRefreshButton.Visibility = Visibility.Visible;
+                if (ViewModel.IsInternetAvailable())
+                {
+                    VirtualWalkWebview.Source = ViewModel.NavVisMapsUri;
+                }
+            }
+            else
+            {
+                VirtualWalkRefreshButton.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void Maps_PivotItem_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        private void MapsArea_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (MapImage != null)
             {
                 MapImage.Width = e.NewSize.Width;
                 MapImage.Height = e.NewSize.Height;
             }
+        }
+
+        private void VirtualWalkRefreshButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if(ViewModel.IsInternetAvailable())
+                VirtualWalkWebview.Refresh();
         }
     }
 }
