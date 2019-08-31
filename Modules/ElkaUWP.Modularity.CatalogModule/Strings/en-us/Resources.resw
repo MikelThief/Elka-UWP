@@ -123,4 +123,7 @@
   <data name="SearchUsers_NoResultsMessage" xml:space="preserve">
     <value>No results. Please try another phrase.</value>
   </data>
+  <data name="SearchUsers_ProfileLink.Text" xml:space="preserve">
+    <value>Click to open profile in browser</value>
+  </data>
 </root>

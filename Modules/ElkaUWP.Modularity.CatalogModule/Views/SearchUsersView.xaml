@@ -108,7 +108,7 @@
                                     Text="&#xE8D4;" />
                                 <Run Text=" " />
                                 <Hyperlink NavigateUri="{x:Bind ViewModel.StaffUser.ProfileUri, Mode=OneWay}">
-                                    <Run Text="Click Link" />
+                                    <Run x:Uid="SearchUsers_ProfileLink" />
                                 </Hyperlink>
                             </TextBlock.Inlines>
                         </TextBlock>
