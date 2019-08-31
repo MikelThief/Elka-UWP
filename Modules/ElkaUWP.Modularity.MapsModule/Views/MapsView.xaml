@@ -22,40 +22,21 @@
     </Page.Resources>
     <Grid Background="{ThemeResource RegionBrush}">
         <Pivot x:Name="mainPivot" SelectionChanged="MainPivot_SelectionChanged">
-            <PivotItem Header="Maps">
+            <Pivot.ItemContainerStyle>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0,8,0,0" />
+                </Style>
+            </Pivot.ItemContainerStyle>
+            <PivotItem
+                x:Name="Maps_PivotItem"
+                x:Uid="Maps_PivotItem"
+                SizeChanged="Maps_PivotItem_OnSizeChanged">
                 <Grid x:Name="MainGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid
-                        Grid.Row="0"
-                        Margin="0,8,0,8"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox
-                            x:Name="Search"
-                            x:Uid="SearchTextBox"
-                            Grid.Column="0"
-                            Width="150"
-                            Margin="0,0,4,0"
-                            GotFocus="Search_GotFocus"
-                            KeyDown="Search_KeyDown" />
-                        <Button
-                            x:Name="OK"
-                            Grid.Column="1"
-                            Width="50"
-                            Height="35"
-                            Margin="4,0,0,0"
-                            Click="OK_Click"
-                            Content="OK" />
-                    </Grid>
-
                     <ScrollViewer
                         Grid.Row="1"
                         HorizontalScrollBarVisibility="Auto"
@@ -63,9 +44,10 @@
                         VerticalScrollBarVisibility="Auto"
                         ZoomMode="Enabled">
                         <controls:ImageEx
-                            x:Name="map"
-                            MaxWidth="{Binding ActualWidth, ElementName=mainPivot}"
-                            MaxHeight="{Binding ActualHeight, ElementName=mainPivot}"
+                            x:Name="MapImage"
+                            MaxWidth="{Binding ActualWidth, ElementName=Maps_PivotItem}"
+                            MaxHeight="{Binding ActualHeight, ElementName=Maps_PivotItem}"
+                            IsCacheEnabled="True"
                             Source="{x:Bind ViewModel.FloorPlanUri, Mode=OneWay}" />
                     </ScrollViewer>
 
@@ -90,13 +72,17 @@
 
                 </Grid>
             </PivotItem>
-
-            <PivotItem Header="Virtual Walk">
+            <PivotItem x:Uid="VirtualWalk_PivotItem">
                 <WebView
                     x:Name="VirtualWalk"
                     Margin="0,0,0,15"
                     Source="ms-appx-web:///ElkaUWP.Modularity.MapsModule/Resources/no_internet.png" />
             </PivotItem>
+            <Pivot.RightHeader>
+                <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed">
+                    <AppBarButton Icon="Find" />
+                </CommandBar>
+            </Pivot.RightHeader>
         </Pivot>
         <Grid x:Name="NotificationGrid" Loaded="NotificationGrid_Loaded" />
     </Grid>

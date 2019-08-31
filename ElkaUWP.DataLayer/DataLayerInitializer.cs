@@ -17,7 +17,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Usos = ElkaUWP.DataLayer.Usos;
 using ElkaUWP.DataLayer.Studia;
-using ElkaUWP.Infrastructure;
+using Infrastructure = ElkaUWP.Infrastructure;
 
 namespace ElkaUWP.DataLayer
 {
@@ -27,10 +27,10 @@ namespace ElkaUWP.DataLayer
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register strategies
-            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<IFloorPlanResolver, FEiTFloorPlanResolver>(name: Constants.FEiTBuilding);
+            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IFloorPlanResolver, FEiTFloorPlanResolver>(name: Infrastructure.Buildings.WUTW_FEIT_BUILDING);
 
             //Register other types
             containerRegistry.RegisterSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();

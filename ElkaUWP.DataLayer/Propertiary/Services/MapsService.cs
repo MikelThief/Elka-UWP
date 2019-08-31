@@ -20,8 +20,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
         public IEnumerable<FloorPlan> GetFloorPlans(string building)
         {
-            var floorPlanResolver = _strategyResolver.Resolve<IFloorPlanResolver>(namedStrategy: building);
-            return floorPlanResolver.ResolveAll();
+            return _strategyResolver.Resolve<IFloorPlanResolver>(namedStrategy: building).ResolveAll();
         }
     }
 }

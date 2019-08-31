@@ -48,35 +48,19 @@ namespace ElkaUWP.Modularity.MapsModule.Views
 
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (mainPivot.SelectedIndex == 1)
+            if (mainPivot.SelectedIndex == 1 && ViewModel.CheckIsInternetAvailable())
             {
-                if(ViewModel.CheckIsInternetAvailable())
-                {
-                   VirtualWalk.Source = new Uri( "http://mapy.ii.pw.edu.pl/iv.PW_WEITI/");
-                }
-
+                VirtualWalk.Source = ViewModel.NavVisMapsUri;
             }
         }
 
-        private void OK_Click(object sender, RoutedEventArgs e)
+        private void Maps_PivotItem_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            String search = Search.Text;
-
-
-        }
-
-        private void Search_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if(e.Key == VirtualKey.Enter)
+            if (MapImage != null)
             {
-                OK_Click(this, new RoutedEventArgs());
+                MapImage.Width = e.NewSize.Width;
+                MapImage.Height = e.NewSize.Height;
             }
-
-        }
-
-        private void Search_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Search.Text = "";
         }
     }
 }

@@ -124,6 +124,9 @@
   <data name="Continue.Content" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Maps_PivotItem.Header" xml:space="preserve">
+    <value>Maps</value>
+  </data>
   <data name="No_Internet_Notification" xml:space="preserve">
     <value>Make sure you have access to the Internet and try again.</value>
   </data>
@@ -132,5 +135,8 @@
   </data>
   <data name="Unable_to_find" xml:space="preserve">
     <value>The entered room number does not exist. Try again.</value>
+  </data>
+  <data name="VirtualWalk_PivotItem.Header" xml:space="preserve">
+    <value>Virtual Walk</value>
   </data>
 </root>

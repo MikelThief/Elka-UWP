@@ -15,9 +15,10 @@ using RavinduL.LocalNotifications.Notifications;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-using ElkaUWP.Infrastructure;
+using Infrastructure = ElkaUWP.Infrastructure;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
+using ElkaUWP.Modularity.MapsModule.Constants;
 
 namespace ElkaUWP.Modularity.MapsModule.ViewModels
 {
@@ -43,6 +44,7 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
             }
         }
 
+        public Uri NavVisMapsUri = new Uri(uriString: Constants.OnlineFloorPlansAddresses.WUTW_FEiT);
         public Uri FloorPlanUri => SelectedFloorPlan.ImageUri;
 
         public ObservableCollection<FloorPlan> FloorPlansCollection { get; private set; }
@@ -51,7 +53,7 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
         {
             _mapsService = mapsService;
             FloorPlansCollection = new ObservableCollection<FloorPlan>(
-                collection: _mapsService.GetFloorPlans(building: Constants.FEiTBuilding));
+                collection: _mapsService.GetFloorPlans(building: Infrastructure.Buildings.WUTW_FEIT_BUILDING));
 
             SelectedFloorPlan = FloorPlansCollection.Single(plan => plan.Level == 0);
         }
@@ -77,30 +79,12 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
                     Text = _resourceLoader.GetString(resource: "No_Internet_Notification"),
                     Glyph = "\uF384",
                     VerticalAlignment = VerticalAlignment.Bottom,
-                    Background = new SolidColorBrush(color: Constants.RedColor)
+                    Background = new SolidColorBrush(color: Infrastructure.Constants.RedColor)
                 }
                 );
                 return false;
             }
-            else
-            {
-                 return true;
-            }
+            return true;
         }
-
-        public void UnableToFind()
-        {
-            NotificationManager.Show(notification: new SimpleNotification
-            {
-                TimeSpan = TimeSpan.FromSeconds(value: 4),
-                Text = _resourceLoader.GetString(resource: "Unable_to_find"),
-                Glyph = "\uE721",
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Background = new SolidColorBrush(color: Constants.RedColor)
-            }
-            );
-        }
-
-
     }
 }
