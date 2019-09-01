@@ -230,7 +230,6 @@ namespace ElkaUWP.Core
         {
             // register types for navigation. SetAutoWireViewModel is still needed in View's code-behind.
             container.RegisterForNavigation<ShellView, ShellViewModel>(key: PageTokens.ShellViewToken);
-            container.RegisterForNavigation<TestView, TestViewModel>(key: PageTokens.SampleViewToken);
             container.RegisterForNavigation<SettingsView, SettingsViewModel>(key: PageTokens.SettingsViewToken);
 
             // Register services
