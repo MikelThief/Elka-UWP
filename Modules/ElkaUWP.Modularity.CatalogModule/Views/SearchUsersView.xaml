@@ -57,11 +57,13 @@
                     x:Name="TitleTextBlock"
                     Grid.Row="0"
                     Foreground="{ThemeResource SystemControlHighlightAltBaseMediumBrush}"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
                     Text="{x:Bind ViewModel.StaffUser.Title, Mode=OneWay}"
                     Visibility="{x:Bind ViewModel.StaffUser.Title, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
                 <TextBlock
                     x:Name="NameTextBlock"
                     Grid.Row="1"
+                    Style="{StaticResource TitleTextBlockStyle}"
                     TextWrapping="WrapWholeWords">
                     <TextBlock.Inlines>
                         <Run Text="{x:Bind ViewModel.StaffUser.LastName, Mode=OneWay}" />
@@ -80,7 +82,7 @@
                                 <Setter Property="Padding" Value="8" />
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <TextBlock>
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}">
                             <TextBlock.Inlines>
                                 <Run
                                     FontFamily="Segoe MDL2 Assets"
@@ -90,7 +92,7 @@
                                 <Run Text="{x:Bind ViewModel.StaffUser.Phone, Mode=OneWay}" />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock TextWrapping="WrapWholeWords">
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" TextWrapping="WrapWholeWords">
                             <TextBlock.Inlines>
                                 <Run
                                     FontFamily="Segoe MDL2 Assets"
@@ -100,7 +102,7 @@
                                 <Run Text="{x:Bind ViewModel.StaffUser.EmploymentPosition, Mode=OneWay}" />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock>
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}">
                             <TextBlock.Inlines>
                                 <Run
                                     FontFamily="Segoe MDL2 Assets"
@@ -112,7 +114,7 @@
                                 </Hyperlink>
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock>
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}">
                             <TextBlock.Inlines>
                                 <Run
                                     FontFamily="Segoe MDL2 Assets"
@@ -134,8 +136,8 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NameTextBlock.FontSize" Value="46" />
-                        <Setter Target="TitleTextBlock.FontSize" Value="35" />
+                        <Setter Target="NameTextBlock.FontSize" Value="50" />
+                        <Setter Target="TitleTextBlock.FontSize" Value="36" />
                         <Setter Target="ContentGrid.Margin" Value="24,0,24,0" />
                     </VisualState.Setters>
                 </VisualState>
@@ -145,8 +147,8 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="NameTextBlock.FontSize" Value="36" />
-                        <Setter Target="TitleTextBlock.FontSize" Value="15" />
+                        <Setter Target="NameTextBlock.FontSize" Value="40" />
+                        <Setter Target="TitleTextBlock.FontSize" Value="16" />
                         <Setter Target="ContentGrid.Margin" Value="12,0,12,0" />
                     </VisualState.Setters>
                 </VisualState>
