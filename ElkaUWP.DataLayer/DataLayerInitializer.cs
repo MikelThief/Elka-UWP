@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ElkaUWP.DataLayer.Propertiary;
+using ElkaUWP.DataLayer.Propertiary.Abstractions.Interfaces;
+using ElkaUWP.DataLayer.Propertiary.Resolvers.FloorPlanResolvers;
 using ElkaUWP.DataLayer.Propertiary.Services;
 using ElkaUWP.DataLayer.Studia.Abstractions.Interfaces;
 using ElkaUWP.DataLayer.Studia.Enums;
@@ -15,7 +17,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Usos = ElkaUWP.DataLayer.Usos;
 using ElkaUWP.DataLayer.Studia;
-using ElkaUWP.Infrastructure;
+using Infrastructure = ElkaUWP.Infrastructure;
 
 namespace ElkaUWP.DataLayer
 {
@@ -24,22 +26,11 @@ namespace ElkaUWP.DataLayer
         /// <inheritdoc />
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Register USOS request wrappers
-            containerRegistry.RegisterSingleton<TimetableStudentRequestWrapper>();
-            containerRegistry.RegisterSingleton<BuildingIndexRequestWrapper>();
-            containerRegistry.RegisterSingleton<TimetableUpcomingICalRequestWrapper>();
-            containerRegistry.RegisterSingleton<TimetableUpcomingWebCalRequestWrapper>();
-            containerRegistry.RegisterSingleton<UserInfoRequestWrapper>();
-
-            // Register services
-            containerRegistry.RegisterSingleton<Usos.Services.TimetableService>();
-            containerRegistry.RegisterSingleton<UserService>();
-            containerRegistry.RegisterSingleton<Usos.Services.LogonService> ();
-
-            // Register proxies
-            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Constants.LDAP_KEY);
+            // Register strategies
+            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IFloorPlanResolver, FEiTFloorPlanResolver>(name: Infrastructure.Buildings.WUTW_FEIT_BUILDING);
 
             //Register other types
             containerRegistry.RegisterSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();

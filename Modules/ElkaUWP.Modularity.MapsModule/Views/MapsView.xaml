@@ -1,0 +1,133 @@
+﻿<Page
+    x:Class="ElkaUWP.Modularity.MapsModule.Views.MapsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:entities="using:ElkaUWP.DataLayer.Propertiary.Entities"
+    xmlns:infrastructure="using:ElkaUWP.Infrastructure"
+    xmlns:local="using:ElkaUWP.Modularity.MapsModule"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sfcontrols="using:Syncfusion.UI.Xaml.Schedule"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:StringFormatConverter x:Key="StringFormatConverter" />
+         </ResourceDictionary>
+    </Page.Resources>
+    <Grid x:Name="ContentGrid" Background="{ThemeResource RegionBrush}">
+        <Pivot x:Name="MainPivot" SelectionChanged="MainPivot_SelectionChanged">
+            <Pivot.ItemContainerStyle>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0,8,0,0" />
+                </Style>
+            </Pivot.ItemContainerStyle>
+            <PivotItem x:Uid="Maps_PivotItem">
+                <Grid x:Name="MainGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer
+                            x:Name="MapsArea"
+                            Grid.Column="0"
+                            HorizontalScrollBarVisibility="Auto"
+                            MinZoomFactor="1"
+                            SizeChanged="MapsArea_OnSizeChanged"
+                            VerticalScrollBarVisibility="Auto"
+                            ZoomMode="Enabled">
+                            <controls:ImageEx
+                                x:Name="MapImage"
+                                IsCacheEnabled="True"
+                                Source="{x:Bind ViewModel.FloorPlanUri, Mode=OneWay}"
+                                UseLayoutRounding="True" 
+                              
+                                />
+                        </ScrollViewer>
+
+                        <ListView
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.FloorPlansCollection, Mode=OneWay}"
+                            SelectedItem="{x:Bind ViewModel.SelectedFloorPlan, Mode=TwoWay}"
+                            SelectionMode="Single"
+                            >
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="Margin" Value="4" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="entities:FloorPlan">
+                                    <Border
+                                        BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="15">
+                                        <TextBlock
+                                            Width="30"
+                                            Padding="8"
+                                            Text="{x:Bind Level}"
+                                            TextAlignment="Center" />
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </Grid>
+                </Grid>
+            </PivotItem>
+            <PivotItem x:Uid="VirtualWalk_PivotItem">
+                <WebView x:Name="VirtualWalkWebview" Source="ms-appx-web:///ElkaUWP.Modularity.MapsModule/Resources/no_internet.png" />
+            </PivotItem>
+            <Pivot.RightHeader>
+                <CommandBar
+                    Background="Transparent"
+                    DefaultLabelPosition="Right"
+                    OverflowButtonVisibility="Collapsed">
+                    <AppBarButton
+                        x:Name="VirtualWalkRefreshButton"
+                        x:Uid="VirtualWalk_RefreshButton"
+                        Click="VirtualWalkRefreshButton_OnClick"
+                        Icon="Refresh" />
+                </CommandBar>
+            </Pivot.RightHeader>
+        </Pivot>
+        <Grid x:Name="NotificationGrid" Loaded="NotificationGrid_Loaded" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WidthStateGroup">
+                <VisualState x:Name="LargeWidthState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentGrid.Margin" Value="{StaticResource MediumLeftRightMargin}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="SmallWidthState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowSnapPoint}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentGrid.Margin" Value="{StaticResource SmallLeftRightMargin}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+
+</Page>
+

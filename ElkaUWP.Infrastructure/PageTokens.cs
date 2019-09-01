@@ -11,5 +11,6 @@
         public const string CalendarSummaryView = "CalendarSummaryViewToken";
         public const string GradesModuleGradesView = "GradesModuleGradesViewToken";
         public const string SettingsViewToken = "SettingsViewToken";
+        public const string MapsViewToken = "MapsViewToken";
     }
 }

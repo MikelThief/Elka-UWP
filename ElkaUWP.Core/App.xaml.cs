@@ -44,6 +44,7 @@ using Unity;
 using Unity.Lifetime;
 using ElkaUWP.Modularity.CalendarModule;
 using ElkaUWP.Modularity.UserModule;
+using ElkaUWP.Modularity.MapsModule;
 using ElkaUWP.DataLayer;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Helpers;
@@ -140,6 +141,15 @@ namespace ElkaUWP.Core
                 ModuleType = userModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
+            // Maps Module
+            var mapsModuleType = typeof(MapsModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = mapsModuleType.Name,
+                ModuleType = mapsModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
 
 
         }
@@ -261,7 +271,7 @@ namespace ElkaUWP.Core
                                     .ConfigureAwait(continueOnCapturedContext: true);
                             var navigationParameters = new NavigationParameters
                             {
-                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess}
+                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess.IsSuccess}
                             };
 
                             await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken,
