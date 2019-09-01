@@ -160,8 +160,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\FloorPlans\FEiT\Floor-1-theme-dark.png" />
-    <Content Include="Resources\FloorPlans\FEiT\Floor-1-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Basement-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Basement-theme-light.png" />
     <Content Include="Resources\FloorPlans\FEiT\Floor0-theme-dark.png" />
     <Content Include="Resources\FloorPlans\FEiT\Floor0-theme-light.png" />
     <Content Include="Resources\FloorPlans\FEiT\Floor1-theme-dark.png" />

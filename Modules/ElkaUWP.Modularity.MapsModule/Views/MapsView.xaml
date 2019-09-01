@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
-        </ResourceDictionary>
+         </ResourceDictionary>
     </Page.Resources>
     <Grid x:Name="ContentGrid" Background="{ThemeResource RegionBrush}">
         <Pivot x:Name="MainPivot" SelectionChanged="MainPivot_SelectionChanged">
@@ -51,7 +51,9 @@
                                 x:Name="MapImage"
                                 IsCacheEnabled="True"
                                 Source="{x:Bind ViewModel.FloorPlanUri, Mode=OneWay}"
-                                UseLayoutRounding="True" />
+                                UseLayoutRounding="True" 
+                              
+                                />
                         </ScrollViewer>
 
                         <ListView
