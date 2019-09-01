@@ -11,13 +11,13 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class IssuerGrades
     {
-        [JsonProperty("value_symbol")]
+        [JsonProperty(propertyName: "value_symbol")]
         public string ValueSymbol { get; set; }
 
-        [JsonProperty("passes")]
+        [JsonProperty(propertyName: "passes")]
         public bool Passes { get; set; }
 
-        [JsonProperty("counts_into_average")]
+        [JsonProperty(propertyName: "counts_into_average")]
         [JsonConverter(converterType: typeof(JsonTOrNBoolConverter))]
         public bool CountsIntoAverage { get; set; }
     }

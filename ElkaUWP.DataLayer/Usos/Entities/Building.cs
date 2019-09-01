@@ -6,10 +6,10 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class Building
     {
-        [JsonProperty("phone_numbers")]
+        [JsonProperty(propertyName: "phone_numbers")]
         public List<string> PhoneNumbers { get; private set; }
 
-        [JsonProperty("marker_style")]
+        [JsonProperty(propertyName: "marker_style")]
         public MarkerStyle MarkerStyle { get; private set; }
 
         /*
@@ -29,19 +29,19 @@ namespace ElkaUWP.DataLayer.Usos.Entities
         related_faculties - not allowed by USOS API. State unknown.
         */
 
-        [JsonProperty("location")]
+        [JsonProperty(propertyName: "location")]
         public Location Location { get; private set; }
 
-        [JsonProperty("campus_name")]
+        [JsonProperty(propertyName: "campus_name")]
         public LangDict CampusName { get; private set; }
 
-        [JsonProperty("name")]
+        [JsonProperty(propertyName: "name")]
         public LangDict Name { get; private set; }
 
-        [JsonProperty("id")]
+        [JsonProperty(propertyName: "id")]
         public string Id { get; private set; }
 
-        [JsonProperty("profile_url")]
+        [JsonProperty(propertyName: "profile_url")]
         public Uri ProfileUrl { get; private set; }
     }
 }

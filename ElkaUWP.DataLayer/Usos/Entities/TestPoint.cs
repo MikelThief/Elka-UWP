@@ -9,22 +9,22 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class TestPoint
     {
-        [JsonProperty("node_id")]
+        [JsonProperty(propertyName: "node_id")]
         public int NodeId { get; set; }
 
-        [JsonProperty("last_changed")]
+        [JsonProperty(propertyName: "last_changed")]
         public DateTime LastChanged { get; set; }
 
-        [JsonProperty("grader_id")]
+        [JsonProperty(propertyName: "grader_id")]
         public int GraderId { get; set; }
 
-        [JsonProperty("comment")]
+        [JsonProperty(propertyName: "comment")]
         public string Comment { get; set; }
 
-        [JsonProperty("points")]
+        [JsonProperty(propertyName: "points")]
         public float Points { get; set; }
 
-        [JsonProperty("student_id")]
+        [JsonProperty(propertyName: "student_id")]
         public int StudentId { get; set; }
     }
 }

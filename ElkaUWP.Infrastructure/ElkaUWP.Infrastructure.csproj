@@ -137,6 +137,7 @@
     <Compile Include="Constants\Constants.Usos.cs" />
     <Compile Include="Converters\NegatedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\HashSetToStringConverter.cs" />
+    <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\UsosDateTimeConverter.cs" />
     <Compile Include="Enums\ThemeEnhancement.cs" />
     <Compile Include="ErrorCodes\ErrorCodes.LoginModule.cs" />
@@ -234,6 +235,7 @@
   <ItemGroup>
     <Compile Include="Constants\Constants.ContainerKeys.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

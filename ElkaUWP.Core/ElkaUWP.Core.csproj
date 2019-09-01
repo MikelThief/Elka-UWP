@@ -266,6 +266,10 @@
       <Project>{33abb40a-498b-4f91-9938-6c483523c162}</Project>
       <Name>ElkaUWP.Modularity.CalendarModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\ElkaUWP.Modularity.CatalogModule\ElkaUWP.Modularity.CatalogModule.csproj">
+      <Project>{e7810ce1-fad3-4bf6-b677-a54ac87ec81a}</Project>
+      <Name>ElkaUWP.Modularity.CatalogModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\ElkaUWP.Modularity.GradesModule\ElkaUWP.Modularity.GradesModule.csproj">
       <Project>{1bcbe45a-bb35-4acd-97d0-2db3ab50d09a}</Project>
       <Name>ElkaUWP.Modularity.GradesModule</Name>
@@ -277,10 +281,6 @@
     <ProjectReference Include="..\Modules\ElkaUWP.Modularity.MapsModule\ElkaUWP.Modularity.MapsModule.csproj">
       <Project>{ba9b268c-8798-4d22-a321-a3583cbb5277}</Project>
       <Name>ElkaUWP.Modularity.MapsModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\ElkaUWP.Modularity.UserModule\ElkaUWP.Modularity.UserModule.csproj">
-      <Project>{e27a6981-2c9a-43be-a465-d6b541fee523}</Project>
-      <Name>ElkaUWP.Modularity.UserModule</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

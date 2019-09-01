@@ -62,47 +62,47 @@
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexCalendarEventType>
+      <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
-            <xsd:complexCalendarEventType>
+            <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" calendarEventType="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" calendarEventType="xsd:string" />
-              <xsd:attribute name="calendarEventType" calendarEventType="xsd:string" />
-              <xsd:attribute name="mimecalendarEventType" calendarEventType="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
-            </xsd:complexCalendarEventType>
+            </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
-            <xsd:complexCalendarEventType>
-              <xsd:attribute name="alias" calendarEventType="xsd:string" />
-              <xsd:attribute name="name" calendarEventType="xsd:string" />
-            </xsd:complexCalendarEventType>
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
-            <xsd:complexCalendarEventType>
+            <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" calendarEventType="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" calendarEventType="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" calendarEventType="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="calendarEventType" calendarEventType="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimecalendarEventType" calendarEventType="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
-            </xsd:complexCalendarEventType>
+            </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
-            <xsd:complexCalendarEventType>
+            <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" calendarEventType="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" calendarEventType="xsd:string" use="required" />
-            </xsd:complexCalendarEventType>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
           </xsd:element>
         </xsd:choice>
-      </xsd:complexCalendarEventType>
+      </xsd:complexType>
     </xsd:element>
   </xsd:schema>
   <resheader name="resmimetype">
@@ -132,11 +132,6 @@
   <data name="Settings_About.Text" xml:space="preserve">
     <value>About this application</value>
   </data>
-  <data name="Settings_
-        
-.Text" xml:space="preserve">
-    <value>Choose theme</value>
-  </data>
   <data name="Settings_Theme_Dark.Content" xml:space="preserve">
     <value>Dark</value>
   </data>
@@ -145,5 +140,20 @@
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
     <value>Light</value>
+  </data>
+  <data name="Settings_ThemeHeader.Header" xml:space="preserve">
+    <value>Choose theme</value>
+  </data>
+  <data name="Shell_CalendarNavigationItem.Content" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="Shell_CatalogNavigationItem.Content" xml:space="preserve">
+    <value>Catalog</value>
+  </data>
+  <data name="Shell_GradesNavigationItem.Content" xml:space="preserve">
+    <value>Grades</value>
+  </data>
+  <data name="Shell_MapsNavigationItem.Content" xml:space="preserve">
+    <value>Maps</value>
   </data>
 </root>

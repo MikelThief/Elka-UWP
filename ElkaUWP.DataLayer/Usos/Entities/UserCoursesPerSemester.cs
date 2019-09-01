@@ -9,7 +9,7 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class UserCoursesPerSemester
     {
-        [JsonProperty("course_editions")]
+        [JsonProperty(propertyName: "course_editions")]
         public Dictionary<string, List<CourseEdition>> CourseEditions { get; set; }
     }
 }

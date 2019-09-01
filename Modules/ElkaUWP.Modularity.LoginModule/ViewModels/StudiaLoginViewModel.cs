@@ -29,7 +29,7 @@ namespace ElkaUWP.Modularity.LoginModule.ViewModels
     {
         private readonly LogonService _logonService;
         private INavigationService _navigationService;
-        private readonly ResourceLoader _resourceLoader = 
+        private readonly ResourceLoader _resourceLoader =
             ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(LoginModuleInitializer));
 
         public LocalNotificationManager NotificationManager { get; set; }

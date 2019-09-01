@@ -45,14 +45,16 @@ namespace ElkaUWP.Core.Views
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            
         }
 
         private void Nv_Loaded(object sender, RoutedEventArgs e)
         {
             // NavigationService for internal frame
             ViewModel.Initialize(internalFrame: ContentFrame);
+
+            // Set default page
+            ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView,
+                transitionInfo: new EntranceNavigationTransitionInfo());
         }
 
         private void Nv_ItemInvoked(WinUI.NavigationView navigationView, WinUI.NavigationViewItemInvokedEventArgs args)
@@ -66,26 +68,16 @@ namespace ElkaUWP.Core.Views
             {
                 switch (args.InvokedItemContainer.Tag.ToString())
                 {
-                    case PageTokens.GradesModuleGradesView:
-                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesModuleGradesView,
+                    case PageTokens.GradesGradesView:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.GradesGradesView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
-                    //TODO: Remove when going to production
-                 //  case "SampleViewToken":
-                 //      ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken,
-                 //         transitionInfo: new EntranceNavigationTransitionInfo());
-                  //     break;
-                    //TODO: Remove when going to production
-                  //  case "LoginToken":
-                  //      ViewModel.RequestExternalNavigation(navigationPath: PageTokens.WelcomeViewToken,
-                  //          transitionInfo: new EntranceNavigationTransitionInfo());
-                   //     break;
                     case PageTokens.CalendarSummaryView:
                         ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
-                    case PageTokens.UserSummaryViewToken:
-                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.UserSummaryViewToken,
+                    case PageTokens.CatalogSearchUsersView:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CatalogSearchUsersView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
                     case PageTokens.MapsViewToken:

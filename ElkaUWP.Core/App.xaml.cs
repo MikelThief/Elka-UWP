@@ -43,12 +43,12 @@ using ElkaUWP.Modularity.LoginModule;
 using Unity;
 using Unity.Lifetime;
 using ElkaUWP.Modularity.CalendarModule;
-using ElkaUWP.Modularity.UserModule;
 using ElkaUWP.Modularity.MapsModule;
 using ElkaUWP.DataLayer;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Misc;
+using ElkaUWP.Modularity.CatalogModule;
 using ElkaUWP.Modularity.GradesModule;
 using LiteDB;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
@@ -125,20 +125,21 @@ namespace ElkaUWP.Core
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
+            // Catalog module
+            var catalogModuleType = typeof(CatalogModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = catalogModuleType.Name,
+                ModuleType = catalogModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
             // Grades module
             var gradesModuleType = typeof(GradesModuleInitializer);
             moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
             {
                 ModuleName = gradesModuleType.Name,
                 ModuleType = gradesModuleType,
-                InitializationMode = InitializationMode.WhenAvailable
-            });
-            // User Module
-            var userModuleType = typeof(UserModuleInitializer);
-            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
-            {
-                ModuleName = userModuleType.Name,
-                ModuleType = userModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
             // Maps Module
@@ -269,9 +270,10 @@ namespace ElkaUWP.Core
                             var usosHandshakeSuccess =
                                 await usosOAuthService.FinishOAuthHandshakeAsync(responseQueryString: protocolArguments.Uri.Query)
                                     .ConfigureAwait(continueOnCapturedContext: true);
+
                             var navigationParameters = new NavigationParameters
                             {
-                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess.IsSuccess}
+                                {NavigationParameterKeys.IS_USOS_AUTHORIZED, usosHandshakeSuccess.IsSuccess }
                             };
 
                             await NavigationService.NavigateAsync(name: PageTokens.UsosLoginViewToken,

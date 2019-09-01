@@ -132,14 +132,20 @@
     <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
     <Compile Include="Propertiary\Abstractions\Bases\PartialGradesModel.cs" />
     <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
+    <Compile Include="Propertiary\Entities\StaffUser.cs" />
+    <Compile Include="Propertiary\Entities\StudentUser.cs" />
     <Compile Include="Propertiary\Entities\SubjectApproach.cs" />
     <Compile Include="Propertiary\Entities\SubjectInfoElement.cs" />
+    <Compile Include="Propertiary\Entities\User.cs" />
     <Compile Include="Propertiary\Entities\UserInfoElement.cs" />
+    <Compile Include="Propertiary\Entities\UserMatch.cs" />
+    <Compile Include="Propertiary\Entities\UserType.cs" />
     <Compile Include="Propertiary\Helpers\CalendarEventBackgroundHelper.cs" />
     <Compile Include="Propertiary\Resolvers\FloorPlanResolvers\FEiTFloorPlanResolver.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
     <Compile Include="Propertiary\Services\MapsService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
+    <Compile Include="Propertiary\Services\SearchService.cs" />
     <Compile Include="Propertiary\Services\TimetableService.cs" />
     <Compile Include="Propertiary\Services\UserService.cs" />
     <Compile Include="Studia\Abstractions\Bases\StudiaServiceBase.cs" />
@@ -161,23 +167,37 @@
     <Compile Include="Usos\Converters\Json\JsonPostalAddressTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonSubjectPassTypeConverter.cs" />
     <Compile Include="Usos\Converters\Json\JsonTOrNBoolConverter.cs" />
+    <Compile Include="Usos\Converters\Json\StaffStatusConverter.cs" />
+    <Compile Include="Usos\Converters\Json\StudentStatusConverter.cs" />
+    <Compile Include="Usos\Entities\ConductedCourse.cs" />
+    <Compile Include="Usos\Entities\ConductedCourseEdition.cs" />
+    <Compile Include="Usos\Entities\ConductedTerm.cs" />
     <Compile Include="Usos\Entities\CourseGrade.cs" />
     <Compile Include="Usos\Entities\CourseGradeSub1.cs" />
     <Compile Include="Usos\Entities\CourseUnitsGrades.cs" />
+    <Compile Include="Usos\Entities\EmploymentPosition.cs" />
+    <Compile Include="Usos\Entities\EmploymentPositionDescriptionItem.cs" />
     <Compile Include="Usos\Entities\Grader.cs" />
     <Compile Include="Usos\Entities\GradesGradedSubject.cs" />
     <Compile Include="Usos\Entities\Group.cs" />
+    <Compile Include="Usos\Entities\MatchedUserItem.cs" />
     <Compile Include="Usos\Entities\NodeType.cs" />
     <Compile Include="Usos\Entities\PhotoUrls.cs" />
     <Compile Include="Usos\Entities\PostalAddress.cs" />
     <Compile Include="Usos\Entities\PostalAddressesContainer.cs" />
     <Compile Include="Usos\Entities\PostalAddressType.cs" />
+    <Compile Include="Usos\Entities\Programme.cs" />
+    <Compile Include="Usos\Entities\SearchedUser.cs" />
+    <Compile Include="Usos\Entities\SearchedUserMatches.cs" />
     <Compile Include="Usos\Entities\Semester.cs" />
     <Compile Include="Usos\Entities\Location.cs" />
+    <Compile Include="Usos\Entities\StudentProgramme.cs" />
+    <Compile Include="Usos\Entities\User.cs" />
     <Compile Include="Usos\Entities\StudentPoint.cs" />
     <Compile Include="Usos\Entities\SubjectStaffMember.cs" />
     <Compile Include="Usos\Entities\CourseEdition.cs" />
     <Compile Include="Usos\Entities\Node.cs" />
+    <Compile Include="Usos\Entities\Titles.cs" />
     <Compile Include="Usos\Entities\UpcomingShare.cs" />
     <Compile Include="Usos\Entities\UserCoursesPerSemester.cs" />
     <Compile Include="Usos\Entities\ExamRepGradedSubject.cs" />
@@ -196,6 +216,7 @@
     <Compile Include="Usos\Entities\MarkerStyle.cs" />
     <Compile Include="Usos\Entities\ClassGroup2.cs" />
     <Compile Include="Propertiary\Entities\UserDeadline.cs" />
+    <Compile Include="Usos\Extensions\LangDictExtensions.cs" />
     <Compile Include="Usos\Requests\BuildingIndexRequestWrapper.cs" />
     <Compile Include="Usos\Requests\CoursesUserRequestWrapper.cs" />
     <Compile Include="Usos\Requests\CrstestsNodeRequestWrapper.cs" />
@@ -210,6 +231,8 @@
     <Compile Include="Usos\Requests\TimetableUpcomingICalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\TimetableUpcomingWebCalRequestWrapper.cs" />
     <Compile Include="Usos\Requests\UserInfoRequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UsersSearch2RequestWrapper.cs" />
+    <Compile Include="Usos\Requests\UsersUserRequestWrapper.cs" />
     <Compile Include="Usos\Services\CoursesService.cs" />
     <Compile Include="Usos\Services\CrstestsService.cs" />
     <Compile Include="Usos\Services\ExamrepService.cs" />
@@ -250,6 +273,9 @@
     <PackageReference Include="Prism.Unity.Windows">
       <Version>7.2.0.853-ci</Version>
     </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.SfSchedule.UWP">
       <Version>17.2.0.39</Version>
     </PackageReference>
@@ -270,7 +296,6 @@
   <ItemGroup>
     <Folder Include="Propertiary\Extensions\" />
     <Folder Include="Usos\Abstractions\Interfaces\" />
-    <Folder Include="Usos\Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -62,47 +62,47 @@
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexCalendarEventType>
+      <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
-            <xsd:complexCalendarEventType>
+            <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" calendarEventType="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" calendarEventType="xsd:string" />
-              <xsd:attribute name="calendarEventType" calendarEventType="xsd:string" />
-              <xsd:attribute name="mimecalendarEventType" calendarEventType="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
-            </xsd:complexCalendarEventType>
+            </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
-            <xsd:complexCalendarEventType>
-              <xsd:attribute name="alias" calendarEventType="xsd:string" />
-              <xsd:attribute name="name" calendarEventType="xsd:string" />
-            </xsd:complexCalendarEventType>
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
-            <xsd:complexCalendarEventType>
+            <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" calendarEventType="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" calendarEventType="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" calendarEventType="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="calendarEventType" calendarEventType="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimecalendarEventType" calendarEventType="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
-            </xsd:complexCalendarEventType>
+            </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
-            <xsd:complexCalendarEventType>
+            <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" calendarEventType="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" calendarEventType="xsd:string" use="required" />
-            </xsd:complexCalendarEventType>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
           </xsd:element>
         </xsd:choice>
-      </xsd:complexCalendarEventType>
+      </xsd:complexType>
     </xsd:element>
   </xsd:schema>
   <resheader name="resmimetype">
@@ -117,58 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CorrespondenceAddressKey" xml:space="preserve">
-    <value>Correspondence address</value>
+  <data name="SearchUsers_AutoSuggestBox.PlaceholderText" xml:space="preserve">
+    <value>Search USOS staff catalog</value>
   </data>
-  <data name="EmailKey" xml:space="preserve">
-    <value>Email</value>
+  <data name="SearchUsers_NoResultsMessage" xml:space="preserve">
+    <value>No results. Please try another phrase.</value>
   </data>
-  <data name="FirstNameKey" xml:space="preserve">
-    <value>First name</value>
-  </data>
-  <data name="IdKey" xml:space="preserve">
-    <value>USOS ID</value>
-  </data>
-  <data name="LastNameKey" xml:space="preserve">
-    <value>Last name</value>
-  </data>
-  <data name="MiddleNamesKey" xml:space="preserve">
-    <value>Middle Name</value>
-  </data>
-  <data name="PeselKey" xml:space="preserve">
-    <value>PESEL</value>
-  </data>
-  <data name="PhotoUriKey" xml:space="preserve">
-    <value>Photo Uri</value>
-  </data>
-  <data name="PrimaryAddressKey" xml:space="preserve">
-    <value>Primary address</value>
-  </data>
-  <data name="SexKey" xml:space="preserve">
-    <value>Sex</value>
-  </data>
-  <data name="IndexNumberKey" xml:space="preserve">
-    <value>Student number</value>
-  </data>
-  <data name="StudentStatusKey" xml:space="preserve">
-    <value>Student status</value>
-  </data>
-  <data name="OtherAddressKey" xml:space="preserve">
-    <value>Other address</value>
-  </data>
-  <data name="ResidenceAddressKey" xml:space="preserve">
-    <value>Residence address</value>
-  </data>
-  <data name="StudentStatusValue0" xml:space="preserve">
-    <value>N/A</value>
-  </data>
-  <data name="StudentStatusValue1" xml:space="preserve">
-    <value>Inactive student</value>
-  </data>
-  <data name="StudentStatusValue2" xml:space="preserve">
-    <value>Active student</value>
-  </data>
-  <data name="StudentStatusValueNull" xml:space="preserve">
-    <value>Unknown</value>
+  <data name="SearchUsers_ProfileLink.Text" xml:space="preserve">
+    <value>Click to open profile in browser</value>
   </data>
 </root>

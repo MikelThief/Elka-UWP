@@ -9,10 +9,10 @@ namespace ElkaUWP.DataLayer.Usos.Entities
 {
     public class Session
     {
-        [JsonProperty("number")]
+        [JsonProperty(propertyName: "number")]
         public long Number { get; set; }
 
-        [JsonProperty("issuer_grades", Required = Required.AllowNull)]
+        [JsonProperty(propertyName: "issuer_grades", Required = Required.AllowNull)]
         public IssuerGrades IssuerGrades { get; set; }
     }
 }
