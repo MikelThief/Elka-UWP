@@ -43,6 +43,7 @@ using ElkaUWP.Modularity.LoginModule;
 using Unity;
 using Unity.Lifetime;
 using ElkaUWP.Modularity.CalendarModule;
+using ElkaUWP.Modularity.MapsModule;
 using ElkaUWP.DataLayer;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Helpers;
@@ -141,6 +142,15 @@ namespace ElkaUWP.Core
                 ModuleType = gradesModuleType,
                 InitializationMode = InitializationMode.WhenAvailable
             });
+            // Maps Module
+            var mapsModuleType = typeof(MapsModuleInitializer);
+            moduleCatalog.AddModule(moduleInfo: new ModuleInfo()
+            {
+                ModuleName = mapsModuleType.Name,
+                ModuleType = mapsModuleType,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
 
 
         }

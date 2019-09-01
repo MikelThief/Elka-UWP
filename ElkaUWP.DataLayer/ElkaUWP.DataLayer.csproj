@@ -124,9 +124,11 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Propertiary\Abstractions\Interfaces\IFloorPlanResolver.cs" />
     <Compile Include="Propertiary\Converters\SemesterLiteralAndShortConverter.cs" />
     <Compile Include="Propertiary\Entities\CalendarEvent.cs" />
     <Compile Include="Propertiary\Entities\Error.cs" />
+    <Compile Include="Propertiary\Entities\FloorPlan.cs" />
     <Compile Include="Propertiary\Entities\PartialGradeNode.cs" />
     <Compile Include="Propertiary\Abstractions\Bases\PartialGradesModel.cs" />
     <Compile Include="Propertiary\Entities\PartialGradesTree.cs" />
@@ -139,7 +141,9 @@
     <Compile Include="Propertiary\Entities\UserMatch.cs" />
     <Compile Include="Propertiary\Entities\UserType.cs" />
     <Compile Include="Propertiary\Helpers\CalendarEventBackgroundHelper.cs" />
+    <Compile Include="Propertiary\Resolvers\FloorPlanResolvers\FEiTFloorPlanResolver.cs" />
     <Compile Include="Propertiary\Services\FinalGradesService.cs" />
+    <Compile Include="Propertiary\Services\MapsService.cs" />
     <Compile Include="Propertiary\Services\PartialGradesService.cs" />
     <Compile Include="Propertiary\Services\SearchService.cs" />
     <Compile Include="Propertiary\Services\TimetableService.cs" />

@@ -69,21 +69,25 @@ namespace ElkaUWP.Core.Views
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
                     //TODO: Remove when going to production
-                    case "SampleViewToken":
-                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken,
-                            transitionInfo: new EntranceNavigationTransitionInfo());
-                        break;
+                 //  case "SampleViewToken":
+                 //      ViewModel.RequestInternalNavigation(navigationPath: PageTokens.SampleViewToken,
+                 //         transitionInfo: new EntranceNavigationTransitionInfo());
+                  //     break;
                     //TODO: Remove when going to production
-                    case "LoginToken":
-                        ViewModel.RequestExternalNavigation(navigationPath: PageTokens.WelcomeViewToken,
-                            transitionInfo: new EntranceNavigationTransitionInfo());
-                        break;
+                  //  case "LoginToken":
+                  //      ViewModel.RequestExternalNavigation(navigationPath: PageTokens.WelcomeViewToken,
+                  //          transitionInfo: new EntranceNavigationTransitionInfo());
+                   //     break;
                     case PageTokens.CalendarSummaryView:
                         ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CalendarSummaryView,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
                     case PageTokens.CatalogSearchUsersView:
                         ViewModel.RequestInternalNavigation(navigationPath: PageTokens.CatalogSearchUsersView,
+                            transitionInfo: new EntranceNavigationTransitionInfo());
+                        break;
+                    case PageTokens.MapsViewToken:
+                        ViewModel.RequestInternalNavigation(navigationPath: PageTokens.MapsViewToken,
                             transitionInfo: new EntranceNavigationTransitionInfo());
                         break;
                     default:
