@@ -153,7 +153,6 @@
       <Name>ElkaUWP.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\MapsView.xaml">
       <SubType>Designer</SubType>
@@ -161,13 +160,20 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\FloorPlans\FEiT\Floor1.jpg" />
-    <Content Include="Resources\FloorPlans\FEiT\Floor2.jpg" />
-    <Content Include="Resources\FloorPlans\FEiT\Floor3.jpg" />
-    <Content Include="Resources\FloorPlans\FEiT\Floor4.jpg" />
-    <Content Include="Resources\FloorPlans\FEiT\Floor5.jpg" />
-    <Content Include="Resources\FloorPlans\FEiT\Basement1.jpg" />
-    <Content Include="Resources\FloorPlans\FEiT\Floor0.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor-1-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor-1-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor0-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor0-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor1-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor1-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor2-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor2-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor3-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor3-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor4-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor4-theme-light.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor5-theme-dark.png" />
+    <Content Include="Resources\FloorPlans\FEiT\Floor5-theme-light.png" />
     <Content Include="Resources\no_internet.png" />
   </ItemGroup>
   <ItemGroup>

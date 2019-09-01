@@ -60,7 +60,8 @@
                             VerticalAlignment="Center"
                             ItemsSource="{x:Bind ViewModel.FloorPlansCollection, Mode=OneWay}"
                             SelectedItem="{x:Bind ViewModel.SelectedFloorPlan, Mode=TwoWay}"
-                            SelectionMode="Single">
+                            SelectionMode="Single"
+                            >
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -72,10 +73,10 @@
                                     <Border
                                         BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
                                         BorderThickness="1"
-                                        CornerRadius="4">
+                                        CornerRadius="15">
                                         <TextBlock
-                                            Width="60"
-                                            Padding="12"
+                                            Width="30"
+                                            Padding="8"
                                             Text="{x:Bind Level}"
                                             TextAlignment="Center" />
                                     </Border>
