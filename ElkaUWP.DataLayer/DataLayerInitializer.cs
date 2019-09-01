@@ -27,9 +27,9 @@ namespace ElkaUWP.DataLayer
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register proxies
-            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Constants.LDAP_KEY);
-            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Infrastructure.Constants.LDAP_KEY);
+            containerRegistry.RegisterSingleton<IPersonStrategy, LdapFormPersonStrategy>(name: Infrastructure.Constants.LDAP_KEY);
 
             // Register strategies
             containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Infrastructure.Constants.LDAP_KEY);

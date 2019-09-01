@@ -9,8 +9,8 @@
         public const string SampleViewToken = "SampleViewToken";
         public const string CalendarSummaryView = "CalendarSummaryViewToken";
         public const string CatalogSearchUsersView = "CatalogSearchUsersViewToken";
-        public const string GradesModuleGradesView = "GradesModuleGradesViewToken";
+        public const string GradesGradesView = "GradesGradesViewToken";
         public const string SettingsViewToken = "SettingsViewToken";
-        public const string MapsViewToken = "MapsViewToken";
+        public const string MapsViewToken = "MapsMapsViewToken";
     }
 }
