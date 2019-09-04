@@ -11,12 +11,9 @@ namespace ElkaUWP.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var castedValue = 
-                (HashSet<string>) value ?? 
+            var castedValue =
+                (HashSet<string>) value ??
                 throw new ArgumentException(message: nameof(HashSetToStringConverter) + "encountered an error", paramName: nameof(value));
-
-            string returnedValue = default;
-
             return string.Join(separator: ", ", castedValue);
         }
 

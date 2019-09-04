@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using ElkaUWP.DataLayer.Usos.Converters.Json;
 using Newtonsoft.Json;
 
 namespace ElkaUWP.DataLayer.Usos.Entities
 {
+    [DebuggerDisplay("NodeId = {NodeId}, Name = {Name}, Type = {Type}, VisibleForStudents = {VisibleForStudents}")]
     public class Node
     {
         [JsonProperty(propertyName: "type"), JsonConverter(converterType: typeof(JsonNodeTypeConverter))]

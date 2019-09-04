@@ -48,14 +48,19 @@ namespace ElkaUWP.DataLayer.Usos.Requests
         public string GetRequestString(int nodeId)
         {
             var fieldsString = string.Join(separator: "%7C", values: _fields);
-            var additionalParameters = new NameValueCollection()
+
+            var additionalParametersDict = new Dictionary<string, string>
             {
                 {"fields", fieldsString},
                 {"node_id", nodeId.ToString()}
             };
 
+            var stringus = UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParametersDict);
+
+            Console.WriteLine(stringus);
+
             return $"{UnderlyingOAuthRequest.RequestUrl}?" +
-                   UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParameters);
+                   UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParametersDict);
         }
     }
 }

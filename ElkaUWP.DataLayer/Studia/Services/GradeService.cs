@@ -19,7 +19,6 @@ namespace ElkaUWP.DataLayer.Studia.Services
 {
     public class GradeService : StudiaServiceBase
     {
-        private readonly SecretService _secretService;
         private readonly IGradesStrategy _gradesProxy;
         private readonly ILogonStrategy _logonStrategy;
 
@@ -40,7 +39,6 @@ namespace ElkaUWP.DataLayer.Studia.Services
         /// <inheritdoc />
         public GradeService(SimpleStrategyResolver resolver, SecretService secretService) : base(secretService: secretService)
         {
-            _secretService = secretService;
             _gradesProxy = resolver.Resolve<IGradesStrategy>(namedStrategy: Constants.LDAP_KEY);
             _logonStrategy = resolver.Resolve<ILogonStrategy>(namedStrategy: Constants.LDAP_KEY);
         }

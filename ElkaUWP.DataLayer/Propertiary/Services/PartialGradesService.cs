@@ -130,6 +130,9 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             foreach (var collectedReturningNode in CollectedReturningNodes)
             {
+                //if(collectedReturningNode.Id > 82508 && collectedReturningNode.Id < 82512)
+                //    continue;
+
                 var pointsResult = await _crstestsService.StudentPointAsync(nodeId: collectedReturningNode.Id);
 
                 if (pointsResult.IsSuccess && pointsResult.Value.HasValue)

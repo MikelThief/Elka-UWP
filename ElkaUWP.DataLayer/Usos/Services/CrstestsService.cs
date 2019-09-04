@@ -147,6 +147,7 @@ namespace ElkaUWP.DataLayer.Usos.Services
         public async Task<Result<Maybe<StudentPoint>>> StudentPointAsync(int nodeId)
         {
             var requestString = _crtestsStudentPointRequestWrapper.GetRequestString(nodeId: nodeId);
+
             var webClient = new WebClient();
 
             try
@@ -168,6 +169,14 @@ namespace ElkaUWP.DataLayer.Usos.Services
             {
                 LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data from USOS.");
                 return Result.Fail<Maybe<StudentPoint>>(error: ErrorCodes.USOS_BAD_DATA_RECEIVED);
+            }
+            catch (NullReferenceException nexc)
+            {
+                // When code optimization and .NET Native toolchain are turned on this sometimes returns a null string.
+                // The coincidence is that USOS will throw HTTP 500, but we don't know about it yet!
+                // Seriously, what the fuck .NET?
+                LogTo.FatalException(exception: nexc, message: "Unable to perform handshake with USOS.");
+                return Result.Fail<Maybe<StudentPoint>>(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
             }
             finally
             {
