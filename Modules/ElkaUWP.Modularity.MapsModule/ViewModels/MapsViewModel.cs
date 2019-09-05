@@ -1,13 +1,8 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Prism.Navigation;
-using Windows.UI.Xaml.Controls;
 using ElkaUWP.Infrastructure.Helpers;
 using Microsoft.Toolkit.Uwp.Connectivity;
 using RavinduL.LocalNotifications;
@@ -15,10 +10,8 @@ using RavinduL.LocalNotifications.Notifications;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-using Infrastructure = ElkaUWP.Infrastructure;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Propertiary.Services;
-using ElkaUWP.Modularity.MapsModule.Constants;
 
 namespace ElkaUWP.Modularity.MapsModule.ViewModels
 {

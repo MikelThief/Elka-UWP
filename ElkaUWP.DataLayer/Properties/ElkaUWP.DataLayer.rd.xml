@@ -27,7 +27,8 @@
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
   <Library Name="ElkaUWP.DataLayer">
 
-  	<!-- add directives for your library here -->
+
+      <Namespace Name="ElkaUWP.DataLayer" DoNotOptimize="true" />
 
   </Library>
 </Directives>

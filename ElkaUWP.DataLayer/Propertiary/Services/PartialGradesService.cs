@@ -48,11 +48,8 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             var usosGradesResult = await usosGradesTask.ConfigureAwait(continueOnCapturedContext: true);
 
-            LogTo.Fatal("WYNIK USOSA: " + usosGradesResult.IsSuccess);
-
             if (usosGradesResult.IsSuccess && usosGradesResult.Value.HasValue)
             {
-                LogTo.Fatal("OTRZYMANO DRZEWO");
                 model.GradeNodes = usosGradesResult.Value.Value;
             }
 
@@ -62,7 +59,6 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                 model.GradeList = studiaGradesResult.Value.Value;
             }
 
-            LogTo.Fatal("ZWRACAM DRZEWO");
             return model;
         }
 
@@ -137,21 +133,13 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             foreach (var collectedReturningNode in CollectedReturningNodes)
             {
                 var pointsResult = await _crstestsService.StudentPointAsync(nodeId: collectedReturningNode.Id);
-                if (collectedReturningNode.Id > 82508 && collectedReturningNode.Id < 82512)
-                    LogTo.Fatal("WARTOSC ZWROCONA: ");
 
-
-                if (pointsResult.IsSuccess)
+                if (pointsResult.IsSuccess && pointsResult.Value.HasValue)
                 {
-                    if (pointsResult.Value.HasValue)
-                    {
-                        collectedReturningNode.Points = pointsResult.Value.Value.Points;
-                    }
-
+                    collectedReturningNode.Points = pointsResult.Value.Value.Points;
                 }
             }
 
-            LogTo.Fatal("ZWROCENIE ALL PKT");
             return Result.Ok(value: Maybe<List<PartialGradeNode>>.From(obj: returningRootTrees));
         }
 
