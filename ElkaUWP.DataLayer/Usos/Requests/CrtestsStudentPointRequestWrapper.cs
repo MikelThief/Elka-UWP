@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Anotar.NLog;
 using ElkaUWP.DataLayer.Usos.Abstractions.Bases;
 using ElkaUWP.Infrastructure;
 using ElkaUWP.Infrastructure.Services;
@@ -54,10 +55,6 @@ namespace ElkaUWP.DataLayer.Usos.Requests
                 {"fields", fieldsString},
                 {"node_id", nodeId.ToString()}
             };
-
-            var stringus = UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParametersDict);
-
-            Console.WriteLine(stringus);
 
             return $"{UnderlyingOAuthRequest.RequestUrl}?" +
                    UnderlyingOAuthRequest.GetAuthorizationQuery(parameters: additionalParametersDict);

@@ -142,7 +142,7 @@
                         WorkStartHour="8">
                         <sfcontrols:SfSchedule.AppointmentTemplate>
                             <DataTemplate x:DataType="entities:CalendarEvent">
-                                <Grid Padding="4" Background="{x:Bind Background, Mode=OneWay}">
+                                <Grid Padding="4" Background="{x:Bind Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -152,7 +152,7 @@
                                         Grid.Row="0"
                                         HorizontalAlignment="Center"
                                         FontWeight="Bold"
-                                        Text="{x:Bind Subject, Mode=OneWay}" />
+                                        Text="{x:Bind Subject}" />
                                     <TextBlock
                                         Grid.Row="1"
                                         HorizontalAlignment="Center"
@@ -164,7 +164,7 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontWeight="Light"
-                                        Text="{x:Bind Location, Mode=OneWay}" />
+                                        Text="{x:Bind Location}" />
                                 </Grid>
                             </DataTemplate>
                         </sfcontrols:SfSchedule.AppointmentTemplate>

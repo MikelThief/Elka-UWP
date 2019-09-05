@@ -26,6 +26,9 @@ namespace ElkaUWP.DataLayer
         /// <inheritdoc />
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // Register services
+            containerRegistry.RegisterSingleton<LogonService>();
+
             // Register proxies
             containerRegistry.RegisterSingleton<IGradesStrategy, LdapFormGradesStrategy>(name: Infrastructure.Constants.LDAP_KEY);
             containerRegistry.RegisterSingleton<ILogonStrategy, LdapFormLogonStrategy>(name: Infrastructure.Constants.LDAP_KEY);

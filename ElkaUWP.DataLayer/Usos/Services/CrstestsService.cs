@@ -162,26 +162,15 @@ namespace ElkaUWP.DataLayer.Usos.Services
             }
             catch (WebException wexc)
             {
+                LogTo.Fatal("PRZED WEBEXCEPTION");
                 LogTo.FatalException(exception: wexc, message: "Unable to perform handshake with USOS.");
+                LogTo.Fatal("PO WEBEXCEPTION");
                 return Result.Fail<Maybe<StudentPoint>>(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
             }
             catch (JsonException jexc)
             {
                 LogTo.WarnException(exception: jexc, message: "Unable to deserialize incoming data from USOS.");
                 return Result.Fail<Maybe<StudentPoint>>(error: ErrorCodes.USOS_BAD_DATA_RECEIVED);
-            }
-            catch (NullReferenceException nexc)
-            {
-                // When code optimization and .NET Native toolchain are turned on this sometimes returns a null string.
-                // The coincidence is that USOS will throw HTTP 500, but we don't know about it yet!
-                // Seriously, what the fuck .NET?
-                LogTo.FatalException(exception: nexc, message: "Unable to perform handshake with USOS.");
-                return Result.Fail<Maybe<StudentPoint>>(error: ErrorCodes.USOS_HANDSHAKE_FAILED);
-            }
-            finally
-            {
-                webClient.Dispose();
-                webClient = null;
             }
         }
     }

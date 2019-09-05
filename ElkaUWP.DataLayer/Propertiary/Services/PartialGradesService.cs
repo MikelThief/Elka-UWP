@@ -6,6 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Windows.Media.Audio;
 using Windows.UI.Xaml.Media.Animation;
+using Anotar.NLog;
 using CSharpFunctionalExtensions;
 using ElkaUWP.DataLayer.Propertiary.Abstractions.Bases;
 using ElkaUWP.DataLayer.Propertiary.Entities;
@@ -45,9 +46,13 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                 SubjectId = subjectId
             };
 
-            var usosGradesResult = await usosGradesTask.ConfigureAwait(continueOnCapturedContext: false);
+            var usosGradesResult = await usosGradesTask.ConfigureAwait(continueOnCapturedContext: true);
+
+            LogTo.Fatal("WYNIK USOSA: " + usosGradesResult.IsSuccess);
+
             if (usosGradesResult.IsSuccess && usosGradesResult.Value.HasValue)
             {
+                LogTo.Fatal("OTRZYMANO DRZEWO");
                 model.GradeNodes = usosGradesResult.Value.Value;
             }
 
@@ -57,6 +62,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
                 model.GradeList = studiaGradesResult.Value.Value;
             }
 
+            LogTo.Fatal("ZWRACAM DRZEWO");
             return model;
         }
 
@@ -130,17 +136,22 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
             foreach (var collectedReturningNode in CollectedReturningNodes)
             {
-                //if(collectedReturningNode.Id > 82508 && collectedReturningNode.Id < 82512)
-                //    continue;
-
                 var pointsResult = await _crstestsService.StudentPointAsync(nodeId: collectedReturningNode.Id);
+                if (collectedReturningNode.Id > 82508 && collectedReturningNode.Id < 82512)
+                    LogTo.Fatal("WARTOSC ZWROCONA: ");
 
-                if (pointsResult.IsSuccess && pointsResult.Value.HasValue)
+
+                if (pointsResult.IsSuccess)
                 {
-                    collectedReturningNode.Points = pointsResult.Value.Value.Points;
+                    if (pointsResult.Value.HasValue)
+                    {
+                        collectedReturningNode.Points = pointsResult.Value.Value.Points;
+                    }
+
                 }
             }
 
+            LogTo.Fatal("ZWROCENIE ALL PKT");
             return Result.Ok(value: Maybe<List<PartialGradeNode>>.From(obj: returningRootTrees));
         }
 
