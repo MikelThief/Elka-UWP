@@ -28,7 +28,7 @@
   <Library Name="ElkaUWP.DataLayer">
 
 
-      <Namespace Name="ElkaUWP.DataLayer" DoNotOptimize="true" />
+      <Namespace Name="ElkaUWP.DataLayer.Usos.Services" DoNotOptimize="true" />
 
   </Library>
 </Directives>

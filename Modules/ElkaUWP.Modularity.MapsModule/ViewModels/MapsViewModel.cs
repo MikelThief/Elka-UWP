@@ -48,7 +48,7 @@ namespace ElkaUWP.Modularity.MapsModule.ViewModels
             FloorPlansCollection = new ObservableCollection<FloorPlan>(
                 collection: _mapsService.GetFloorPlans(building: Infrastructure.Buildings.WUTW_FEIT_BUILDING));
 
-            SelectedFloorPlan = FloorPlansCollection.Single(plan => plan.Level == 0);
+            SelectedFloorPlan = FloorPlansCollection.Single(predicate: plan => plan.Level == 0);
         }
 
 

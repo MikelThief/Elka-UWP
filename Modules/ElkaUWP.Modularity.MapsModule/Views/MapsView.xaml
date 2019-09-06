@@ -9,7 +9,6 @@
     xmlns:infrastructure="using:ElkaUWP.Infrastructure"
     xmlns:local="using:ElkaUWP.Modularity.MapsModule"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sfcontrols="using:Syncfusion.UI.Xaml.Schedule"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
     <Page.Resources>
@@ -18,7 +17,7 @@
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
-         </ResourceDictionary>
+        </ResourceDictionary>
     </Page.Resources>
     <Grid x:Name="ContentGrid" Background="{ThemeResource RegionBrush}">
         <Pivot x:Name="MainPivot" SelectionChanged="MainPivot_SelectionChanged">
@@ -33,7 +32,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -51,9 +49,7 @@
                                 x:Name="MapImage"
                                 IsCacheEnabled="True"
                                 Source="{x:Bind ViewModel.FloorPlanUri, Mode=OneWay}"
-                                UseLayoutRounding="True" 
-                              
-                                />
+                                UseLayoutRounding="True" />
                         </ScrollViewer>
 
                         <ListView
@@ -62,8 +58,7 @@
                             VerticalAlignment="Center"
                             ItemsSource="{x:Bind ViewModel.FloorPlansCollection, Mode=OneWay}"
                             SelectedItem="{x:Bind ViewModel.SelectedFloorPlan, Mode=TwoWay}"
-                            SelectionMode="Single"
-                            >
+                            SelectionMode="Single">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalAlignment" Value="Stretch" />
