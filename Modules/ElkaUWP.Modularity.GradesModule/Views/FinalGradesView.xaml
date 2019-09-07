@@ -87,7 +87,6 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-
                             <TextBlock
                                 Grid.Row="0"
                                 HorizontalAlignment="Left"
@@ -131,54 +130,9 @@
                 </Grid>
 
             </DataTemplate>
-            <DataTemplate x:Name="MasterDetailsMasterPaneElement" x:DataType="entities:SubjectApproach">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="0,0,4,0"
-                        Style="{StaticResource BaseTextBlockStyle}"
-                        Text="{x:Bind Acronym, Converter={StaticResource StringFormatConverter}, ConverterParameter='[{0}]'}" />
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="0"
-                        Text="{x:Bind Name}"
-                        TextTrimming="CharacterEllipsis" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{x:Bind SemesterLiteral}" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="4,0,4,0"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="|" />
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        Margin="0,2,0,8"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind StaffHashSet, Converter={StaticResource HashSetToStringConverter}}"
-                        TextWrapping="WrapWholeWords" />
-                </Grid>
-            </DataTemplate>
             <DataTemplate x:Key="MasterHeaderTemplate">
-                <Grid
-                    Height="40"
-                    Margin="0,0,0,6"
+                <Border
+                    Margin="0,0,0,4"
                     BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
                     BorderThickness="0,0,0,1">
                     <TextBlock
@@ -188,31 +142,24 @@
                         Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
                         Style="{StaticResource TitleTextBlockStyle}"
                         Text="{Binding}" />
-                </Grid>
+                </Border>
             </DataTemplate>
             <DataTemplate x:Key="DetailHeaderTemplate">
-                <StackPanel
-                    Height="40"
-                    Margin="0,0,0,6"
+                <Border
+                    Margin="0,0,0,4"
+                    VerticalAlignment="Center"
                     BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
-                    BorderThickness="0,0,0,1"
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <TextBlock
-                        x:Name="GradesMasterDetailsStaticDetailHeaderText"
-                        x:Uid="GradesMasterDetailsStaticDetailHeaderText"
-                        Margin="0,0,0,6"
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
-                        Style="{StaticResource TitleTextBlockStyle}" />
-                    <TextBlock
-                        x:Name="GradesMasterDetailsSubjectDetailHeaderText"
-                        Margin="0,0,0,8"
-                        VerticalAlignment="Center"
-                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
-                        Style="{StaticResource TitleTextBlockStyle}"
-                        Text="{Binding}" />
-                </StackPanel>
+                    BorderThickness="0,0,0,1">
+                    <TextBlock Margin="0,0,0,6" Style="{StaticResource TitleTextBlockStyle}">
+                        <TextBlock.Inlines>
+                            <Run
+                                x:Uid="GradesMasterDetailsStaticDetailHeaderText"
+                                Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                Text="" />
+                            <Run Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" Text="{Binding}" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                </Border>
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
@@ -286,9 +233,11 @@
                             <TreeView.ItemTemplate>
                                 <DataTemplate>
                                     <TreeViewItem IsExpanded="True" ItemsSource="{Binding Nodes}">
+                                        <!--
                                         <TreeViewItem.ContentTransitions>
                                             <ContentThemeTransition />
                                         </TreeViewItem.ContentTransitions>
+                                        -->
                                         <TreeViewItem.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Header}" />
