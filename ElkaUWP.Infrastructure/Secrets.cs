@@ -18,5 +18,8 @@ namespace ElkaUWP.Infrastructure
 
         [BuildTimeEnvironmentVariable(environmentVariable: "USOS_CONSUMER_SECRET")]
         public const string USOS_CONSUMER_SECRET = "USOS_CONSUMER_SECRET";
+
+        [BuildTimeEnvironmentVariable(environmentVariable: "APPCENTER_ANALYTICS_SECRET")]
+        public const string APPCENTER_ANALYTICS_SECRET = "APPCENTER_ANALYTICS_SECRET";
     }
 }

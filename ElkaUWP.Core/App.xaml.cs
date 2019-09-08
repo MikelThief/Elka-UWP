@@ -33,6 +33,9 @@ using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure.Misc;
 using ElkaUWP.Modularity.CatalogModule;
 using ElkaUWP.Modularity.GradesModule;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using LogLevel = NLog.LogLevel;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace ElkaUWP.Core
@@ -57,6 +60,7 @@ namespace ElkaUWP.Core
                 args.Handled = false; // crashes the app after delegate finishes
                 LogManager.Flush();
             };
+            StartAnalytics();
         }
 
         public override void ConfigureViewModelLocator()
@@ -230,7 +234,7 @@ namespace ElkaUWP.Core
 
         public override async Task OnStartAsync(StartArgs args)
         {
-            await StartAppServices();
+            await StartAppServicesAsync();
 
             var secretService = Container.Resolve<SecretService>();
             switch (args.StartKind)
@@ -302,10 +306,15 @@ namespace ElkaUWP.Core
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_CONTROLS_SECRET);
         }
 
-        public async Task StartAppServices()
+        public async Task StartAppServicesAsync()
         {
             await ThemeService.InitializeAsync().ConfigureAwait(continueOnCapturedContext: false);
             await ThemeService.SetRequestedThemeAsync().ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        public void StartAnalytics()
+        {
+            AppCenter.Start(appSecret: Secrets.APPCENTER_ANALYTICS_SECRET, services: typeof(Analytics));
         }
     }
 }
