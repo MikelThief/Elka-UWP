@@ -1,56 +1,38 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using Windows.ApplicationModel;
 using ElkaUWP.Core.Views;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.Security.Credentials;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Anotar.NLog;
 using ElkaUWP.Core.ViewModels;
 using ElkaUWP.Infrastructure;
-using ElkaUWP.Infrastructure.Abstractions.Interfaces;
 using ElkaUWP.Infrastructure.Extensions;
 using ElkaUWP.Infrastructure.Services;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
 using Prism;
-using Prism.Events;
 using Prism.Unity;
 using Prism.Ioc;
-using Prism.Logging;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using ElkaUWP.Modularity.LoginModule;
-using Unity;
-using Unity.Lifetime;
 using ElkaUWP.Modularity.CalendarModule;
 using ElkaUWP.Modularity.MapsModule;
 using ElkaUWP.DataLayer;
 using ElkaUWP.DataLayer.Usos.Services;
-using ElkaUWP.Infrastructure.Helpers;
 using ElkaUWP.Infrastructure.Misc;
 using ElkaUWP.Modularity.CatalogModule;
 using ElkaUWP.Modularity.GradesModule;
-using LiteDB;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace ElkaUWP.Core
@@ -317,7 +299,7 @@ namespace ElkaUWP.Core
 
         public static void RegisterLicences()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_UWP_SECRET);
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey: Secrets.SYNCFUSION_CONTROLS_SECRET);
         }
 
         public async Task StartAppServices()

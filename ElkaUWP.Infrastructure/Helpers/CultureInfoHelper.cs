@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ElkaUWP.Infrastructure.Helpers
 {
-    public class CultureInfoHelper
+    public static class CultureInfoHelper
     {
         [DllImport(dllName: "api-ms-win-core-localization-l1-2-0.dll", CharSet = CharSet.Unicode)]
         private static extern int GetLocaleInfoEx(string lpLocaleName, uint LCType, StringBuilder lpLCData, int cchData);

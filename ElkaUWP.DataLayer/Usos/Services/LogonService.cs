@@ -56,8 +56,8 @@ namespace ElkaUWP.DataLayer.Usos.Services
             {
                 Method = "GET",
                 Version = "1.0",
-                ConsumerKey = Constants.USOS_CONSUMER_KEY,
-                ConsumerSecret = Constants.USOS_CONSUMER_SECRET,
+                ConsumerKey = Secrets.USOS_CONSUMER_KEY,
+                ConsumerSecret = Secrets.USOS_CONSUMER_SECRET,
                 SignatureTreatment = OAuthSignatureTreatment.Escaped,
                 SignatureMethod = OAuthSignatureMethod.HmacSha1,
                 RequestUrl = Constants.USOSAPI_REQUEST_URL,
@@ -145,8 +145,8 @@ namespace ElkaUWP.DataLayer.Usos.Services
             {
                 Method = "GET",
                 Version = "1.0",
-                ConsumerKey = Constants.USOS_CONSUMER_KEY,
-                ConsumerSecret = Constants.USOS_CONSUMER_SECRET,
+                ConsumerKey = Secrets.USOS_CONSUMER_KEY,
+                ConsumerSecret = Secrets.USOS_CONSUMER_SECRET,
                 SignatureTreatment = OAuthSignatureTreatment.Escaped,
                 SignatureMethod = OAuthSignatureMethod.HmacSha1,
                 RequestUrl = Constants.USOSAPI_ACCESS_TOKEN_URL,

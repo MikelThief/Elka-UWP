@@ -34,8 +34,8 @@ namespace ElkaUWP.DataLayer.Usos.Requests
 
             UnderlyingOAuthRequest = new OAuthRequest
             {
-                ConsumerKey = Constants.USOS_CONSUMER_KEY,
-                ConsumerSecret = Constants.USOS_CONSUMER_SECRET,
+                ConsumerKey = Secrets.USOS_CONSUMER_KEY,
+                ConsumerSecret = Secrets.USOS_CONSUMER_SECRET,
                 Token = oAuthSecret.UserName,
                 TokenSecret = oAuthSecret.Password,
                 RequestUrl = Constants.USOSAPI_SECURE_BASE_URL + _destination,

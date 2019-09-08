@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{CA44567F-2E4C-4FC8-916A-E04A934C758B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Infrastructure", "ElkaUWP.Infrastructure\ElkaUWP.Infrastructure.csproj", "{9F821561-3596-4949-99C4-A32EAA91EE6C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C6E87304-2DB7-446E-A664-D3613CC476B3} = {C6E87304-2DB7-446E-A664-D3613CC476B3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Modularity.LoginModule", "Modules\ElkaUWP.Modularity.LoginModule\ElkaUWP.Modularity.LoginModule.csproj", "{9271B278-9C6B-45B4-95F2-A52643B26B9A}"
 EndProject
@@ -22,6 +25,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Modularity.CatalogModule", "Modules\ElkaUWP.Modularity.CatalogModule\ElkaUWP.Modularity.CatalogModule.csproj", "{E7810CE1-FAD3-4BF6-B677-A54AC87EC81A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkaUWP.Modularity.MapsModule", "Modules\ElkaUWP.Modularity.MapsModule\ElkaUWP.Modularity.MapsModule.csproj", "{BA9B268C-8798-4D22-A321-A3583CBB5277}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weavers", "Weavers\Weavers.csproj", "{C6E87304-2DB7-446E-A664-D3613CC476B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,6 +224,26 @@ Global
 		{BA9B268C-8798-4D22-A321-A3583CBB5277}.Release|x64.Build.0 = Release|x64
 		{BA9B268C-8798-4D22-A321-A3583CBB5277}.Release|x86.ActiveCfg = Release|x86
 		{BA9B268C-8798-4D22-A321-A3583CBB5277}.Release|x86.Build.0 = Release|x86
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|x64.Build.0 = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Debug|x86.Build.0 = Debug|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|ARM.Build.0 = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|ARM64.Build.0 = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|x64.ActiveCfg = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|x64.Build.0 = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{C6E87304-2DB7-446E-A664-D3613CC476B3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

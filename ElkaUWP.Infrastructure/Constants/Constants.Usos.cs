@@ -4,10 +4,6 @@
     {
         public const string USOSAPI_SECURE_BASE_URL = "https://apps.usos.pw.edu.pl/services/";
 
-        public const string USOS_CONSUMER_KEY = "rG4x8AGxGAkZY7BTnuDv";
-
-        public const string USOS_CONSUMER_SECRET = "HA8gxKEfTPaZkGnTwPDQt8mMX5RPXrT75BKWVk5Y";
-
         public const string USOSAPI_REQUEST_URL = USOSAPI_SECURE_BASE_URL + "oauth/request_token";
 
         public const string USOSAPI_AUTHORIZE_URL = USOSAPI_SECURE_BASE_URL + "oauth/authorize";

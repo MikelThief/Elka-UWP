@@ -19,8 +19,6 @@ namespace ElkaUWP.Modularity.CalendarModule.ViewModels
     {
         private readonly ResourceLoader _resourceLoader = ResourceLoaderHelper.GetResourceLoaderForView(viewType: typeof(CalendarModuleInitializer));
 
-        private CalendarEvent appointment;
-
         private string _title;
         public bool IsPrimaryButtonEnabled => true;
 

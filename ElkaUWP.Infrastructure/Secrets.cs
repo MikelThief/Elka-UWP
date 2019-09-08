@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElkaUWP.Infrastructure.Abstractions;
 
 namespace ElkaUWP.Infrastructure
 {
 
-    // TODO: Place secrets in-app at compile-time. Currently secrets are taken from environment variables.
     public static class Secrets
     {
-        public static string SYNCFUSION_UWP_SECRET { get; private set; }
+        [BuildTimeEnvironmentVariable(environmentVariable: "SYNCFUSION_CONTROLS_SECRET")]
+        public const string SYNCFUSION_CONTROLS_SECRET = "SYNCFUSION_CONTROLS_SECRET";
 
-        static Secrets()
-        {
-            SYNCFUSION_UWP_SECRET = Environment.GetEnvironmentVariable(variable: nameof(SYNCFUSION_UWP_SECRET));
-        }
+        [BuildTimeEnvironmentVariable(environmentVariable: "USOS_CONSUMER_KEY")]
+        public const string USOS_CONSUMER_KEY = "USOS_CONSUMER_KEY";
+
+        [BuildTimeEnvironmentVariable(environmentVariable: "USOS_CONSUMER_SECRET")]
+        public const string USOS_CONSUMER_SECRET = "USOS_CONSUMER_SECRET";
     }
 }
