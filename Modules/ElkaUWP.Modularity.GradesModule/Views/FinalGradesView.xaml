@@ -161,6 +161,75 @@
                     </TextBlock>
                 </Border>
             </DataTemplate>
+            <DataTemplate x:Key="TaskNodeTreeViewItemDataTemplate" x:DataType="entities:PartialGradeNode">
+                <TreeViewItem IsExpanded="True" ItemsSource="{x:Bind Nodes}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <SymbolIcon Grid.Column="0" Symbol="Page" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            TextTrimming="None"
+                            TextWrapping="WrapWholeWords">
+                            <TextBlock.Inlines>
+                                <Run Text="{x:Bind Header, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0}:'}" />
+                                <Run Text="{x:Bind Points}" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                    </Grid>
+                </TreeViewItem>
+            </DataTemplate>
+            <DataTemplate x:Key="GradeNodeTreeViewItemDataTemplate" x:DataType="entities:PartialGradeNode">
+                <TreeViewItem IsExpanded="True" ItemsSource="{x:Bind Nodes}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon
+                            Grid.Column="0"
+                            FontFamily="Segoe MDL2 Assets"
+                            Glyph="&#xED41;" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            TextTrimming="None"
+                            TextWrapping="WrapWholeWords">
+                            <TextBlock.Inlines>
+                                <Run Text="{x:Bind Header, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0}:'}" />
+                                <Run Text="{x:Bind Points}" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                    </Grid>
+                </TreeViewItem>
+            </DataTemplate>
+            <DataTemplate x:Key="RootNodeTreeViewItemDataTemplate" x:DataType="entities:PartialGradeNode">
+                <TreeViewItem IsExpanded="True" ItemsSource="{x:Bind Nodes}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <SymbolIcon Grid.Column="0" Symbol="Favorite" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            Style="{StaticResource BaseTextBlockStyle}"
+                            TextTrimming="None"
+                            TextWrapping="WrapWholeWords">
+                            <TextBlock.Inlines>
+                                <Run Text="{x:Bind Header, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0}:'}" />
+                                <Run Text="{x:Bind Points}" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                    </Grid>
+                </TreeViewItem>
+            </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ElkaUWP.Infrastructure/ResourceDictionaries/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -230,24 +299,19 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TreeView Grid.Row="0" ItemsSource="{Binding Result.GradeNodes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                            <TreeView.ItemTemplate>
-                                <DataTemplate>
-                                    <TreeViewItem IsExpanded="True" ItemsSource="{Binding Nodes}">
-                                        <!--
-                                        <TreeViewItem.ContentTransitions>
-                                            <ContentThemeTransition />
-                                        </TreeViewItem.ContentTransitions>
-                                        -->
-                                        <TreeViewItem.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Header}" />
-                                                <TextBlock Text=" - " />
-                                                <TextBlock Text="{Binding Points}" />
-                                            </StackPanel>
-                                        </TreeViewItem.Content>
-                                    </TreeViewItem>
-                                </DataTemplate>
-                            </TreeView.ItemTemplate>
+                            <TreeView.ItemTemplateSelector>
+                                <dataTemplateSelectors:PartialGradeNodeTreeViewItemDataTemplateSelector
+                                    GradeNodeTreeViewItemDataTemplate="{StaticResource GradeNodeTreeViewItemDataTemplate}"
+                                    RootNodeTreeViewItemDataTemplate="{StaticResource RootNodeTreeViewItemDataTemplate}"
+                                    TaskNodeTreeViewItemDataTemplate="{StaticResource TaskNodeTreeViewItemDataTemplate}" />
+                            </TreeView.ItemTemplateSelector>
+                            <TreeView.ItemContainerTransitions>
+                                <TransitionCollection>
+                                    <ContentThemeTransition />
+                                    <ReorderThemeTransition />
+                                    <EntranceThemeTransition IsStaggeringEnabled="False" />
+                                </TransitionCollection>
+                            </TreeView.ItemContainerTransitions>
                         </TreeView>
                         <ListView Grid.Row="1" ItemsSource="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                             <ListView.ItemTemplate>

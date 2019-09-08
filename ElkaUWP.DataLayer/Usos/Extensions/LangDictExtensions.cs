@@ -12,7 +12,7 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
     {
         private static readonly string _currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
-        public static string GetValueForCurrentCulture(this LangDict langDict, string fallbackValue)
+        public static string GetValueForCurrentCulture(this LangDict langDict, string fallbackValue, bool appendDescriptions = true)
         {
             switch (_currentCulture)
             {
@@ -22,10 +22,10 @@ namespace ElkaUWP.DataLayer.Usos.Extensions
                     return langDict.En;
                 case "pl" when string.IsNullOrEmpty(value: langDict.Pl)
                                && !string.IsNullOrEmpty(value: langDict.En):
-                    return langDict.En + " (po angielsku)";
+                    return langDict.En + (appendDescriptions ? " (po angielsku)" : "");
                 case "en" when string.IsNullOrEmpty(value: langDict.En)
                                && !string.IsNullOrEmpty(value: langDict.Pl):
-                    return langDict.Pl + " (in polish)";
+                    return langDict.Pl + (appendDescriptions ? " (in polish)" : "");
                 default:
                     return fallbackValue;
             }

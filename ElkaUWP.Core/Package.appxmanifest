@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/windowsTemplateStudio" IgnorableNamespaces="uap mp genTemplate">
-  <Identity Name="31123MichaBator.VoltaforFEiT" Publisher="CN=987587AE-DCEF-4FA3-A5F5-9F1F25ECFE73" Version="1.0.1.0" />
+  <Identity Name="31123MichaBator.VoltaforFEiT" Publisher="CN=987587AE-DCEF-4FA3-A5F5-9F1F25ECFE73" Version="1.0.2.0" />
   <mp:PhoneIdentity PhoneProductId="7731d874-5205-4fc3-b057-32e83f70c3e4" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Volta for FEiT</DisplayName>

@@ -133,6 +133,7 @@
     <Compile Include="GradesModuleInitializer.cs" />
     <Compile Include="Models\Converters\FinishedSubjectPassedStatusToBrushConverter.cs" />
     <Compile Include="Models\DataTemplateSelectors\SubjectApproachDataTemplateSelector.cs" />
+    <Compile Include="Models\DataTemplateSelectors\TreeViewItemDataTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\FinalGradesViewModel.cs" />
     <Compile Include="Views\FinalGradesView.xaml.cs">

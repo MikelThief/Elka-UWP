@@ -12,6 +12,7 @@ using ElkaUWP.DataLayer.Propertiary.Abstractions.Bases;
 using ElkaUWP.DataLayer.Propertiary.Entities;
 using ElkaUWP.DataLayer.Studia.Services;
 using ElkaUWP.DataLayer.Usos.Entities;
+using ElkaUWP.DataLayer.Usos.Extensions;
 using ElkaUWP.DataLayer.Usos.Requests;
 using ElkaUWP.DataLayer.Usos.Services;
 using ElkaUWP.Infrastructure;
@@ -145,37 +146,6 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
 
         private PartialGradeNode GetPartialGradeNode(Node usosNode)
         {
-            var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            string name;
-            switch (currentCulture)
-            {
-                case "pl" when !string.IsNullOrEmpty(value: usosNode.Name.Pl):
-                {
-                    name = usosNode.Name.Pl;
-                    break;
-                }
-                case "en" when !string.IsNullOrEmpty(value: usosNode.Name.En):
-                {
-                    name = usosNode.Name.En;
-                    break;
-                }
-                case "pl" when string.IsNullOrEmpty(value: usosNode.Name.Pl)
-                               && !string.IsNullOrEmpty(value: usosNode.Name.En):
-                {
-                    name = usosNode.Name.En;
-                    break;
-                }
-                case "en" when string.IsNullOrEmpty(value: usosNode.Name.En)
-                               && !string.IsNullOrEmpty(value: usosNode.Name.Pl):
-                {
-                    name = usosNode.Name.Pl;
-                    break;
-                }
-                default:
-                    name = string.Empty;
-                    break;
-            }
             var localSubNodes = new List<PartialGradeNode>();
 
             if (usosNode.SubNodes != null)
@@ -188,7 +158,7 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             }
 
             var returningNode = new PartialGradeNode(
-                nodes: localSubNodes, header: name, points: null, type: usosNode.Type, id: usosNode.NodeId, order: usosNode.Order);
+                nodes: localSubNodes, header: usosNode.Name.GetValueForCurrentCulture(fallbackValue: "-", appendDescriptions: false), points: null, type: usosNode.Type, id: usosNode.NodeId, order: usosNode.Order);
 
             if (usosNode.VisibleForStudents)
             {
