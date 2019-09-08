@@ -143,10 +143,8 @@ namespace ElkaUWP.DataLayer.Propertiary.Services
             return Result.Ok(value: Maybe<List<PartialGradeNode>>.From(obj: returningRootTrees));
         }
 
-
         private PartialGradeNode GetPartialGradeNode(Node usosNode)
         {
-
             var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
             string name;

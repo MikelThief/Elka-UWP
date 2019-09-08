@@ -171,7 +171,7 @@
       <Version>7.2.0.853-ci</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfTreeNavigator.UWP">
-      <Version>17.2.0.47</Version>
+      <Version>17.2.0.49</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
       <Version>1.0.1.6</Version>
