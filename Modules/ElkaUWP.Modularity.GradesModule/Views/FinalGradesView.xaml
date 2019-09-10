@@ -315,7 +315,7 @@
                         </TreeView>
                         <tcontrols:DataGrid
                             Grid.Row="1"
-                            AlternatingRowBackground="LightGray"
+                            AlternatingRowBackground="Gray"
                             AutoGenerateColumns="False"
                             CanUserReorderColumns="False"
                             CanUserSortColumns="False"
