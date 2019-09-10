@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:ElkaUWP.Modularity.GradesModule.Models.Converters"
+    xmlns:converters1="using:Syncfusion.UI.Xaml.Converters"
     xmlns:convertersFromToolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:convertersInf="using:ElkaUWP.Infrastructure.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,6 +19,7 @@
             <converters:FinishedSubjectPassedStatusToBrushConverter x:Key="FinishedSubjectPassedStatusToBrushConverter" />
             <convertersInf:HashSetToStringConverter x:Key="HashSetToStringConverter" />
             <convertersFromToolkit:StringFormatConverter x:Key="StringFormatConverter" />
+            <converters1:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <DataTemplate x:Key="FinishedSubjectApproachDataTemplate" x:DataType="entities:SubjectApproach">
                 <Grid
                     Margin="0,4,0,4"
@@ -293,51 +295,57 @@
             </tcontrols:MasterDetailsView.MasterCommandBar>
             <tcontrols:MasterDetailsView.DetailsTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <TreeView Grid.Row="0" ItemsSource="{Binding Result.GradeNodes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                            <TreeView.ItemTemplateSelector>
-                                <dataTemplateSelectors:PartialGradeNodeTreeViewItemDataTemplateSelector
-                                    GradeNodeTreeViewItemDataTemplate="{StaticResource GradeNodeTreeViewItemDataTemplate}"
-                                    RootNodeTreeViewItemDataTemplate="{StaticResource RootNodeTreeViewItemDataTemplate}"
-                                    TaskNodeTreeViewItemDataTemplate="{StaticResource TaskNodeTreeViewItemDataTemplate}" />
-                            </TreeView.ItemTemplateSelector>
-                            <TreeView.ItemContainerTransitions>
-                                <TransitionCollection>
-                                    <ContentThemeTransition />
-                                    <ReorderThemeTransition />
-                                    <EntranceThemeTransition IsStaggeringEnabled="False" />
-                                </TransitionCollection>
-                            </TreeView.ItemContainerTransitions>
-                        </TreeView>
-                        <tcontrols:DataGrid
-                            Grid.Row="1"
-                            AlternatingRowBackground="Gray"
-                            AutoGenerateColumns="False"
-                            CanUserReorderColumns="False"
-                            CanUserSortColumns="False"
-                            ItemsSource="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                            <tcontrols:DataGrid.Columns>
-                                <tcontrols:DataGridTemplateColumn Header="Index">
-                                    <tcontrols:DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Title}" />
-                                        </DataTemplate>
-                                    </tcontrols:DataGridTemplateColumn.CellTemplate>
-                                </tcontrols:DataGridTemplateColumn>
-                                <tcontrols:DataGridTemplateColumn Header="Value">
-                                    <tcontrols:DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Value}" />
-                                        </DataTemplate>
-                                    </tcontrols:DataGridTemplateColumn.CellTemplate>
-                                </tcontrols:DataGridTemplateColumn>
-                            </tcontrols:DataGrid.Columns>
-                        </tcontrols:DataGrid>
-                    </Grid>
+                    <ScrollViewer
+                        HorizontalScrollMode="Disabled"
+                        VerticalScrollBarVisibility="Auto"
+                        VerticalScrollMode="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TreeView Grid.Row="0" ItemsSource="{Binding Result.GradeNodes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TreeView.ItemTemplateSelector>
+                                    <dataTemplateSelectors:PartialGradeNodeTreeViewItemDataTemplateSelector
+                                        GradeNodeTreeViewItemDataTemplate="{StaticResource GradeNodeTreeViewItemDataTemplate}"
+                                        RootNodeTreeViewItemDataTemplate="{StaticResource RootNodeTreeViewItemDataTemplate}"
+                                        TaskNodeTreeViewItemDataTemplate="{StaticResource TaskNodeTreeViewItemDataTemplate}" />
+                                </TreeView.ItemTemplateSelector>
+                                <TreeView.ItemContainerTransitions>
+                                    <TransitionCollection>
+                                        <ContentThemeTransition />
+                                        <ReorderThemeTransition />
+                                        <EntranceThemeTransition IsStaggeringEnabled="False" />
+                                    </TransitionCollection>
+                                </TreeView.ItemContainerTransitions>
+                            </TreeView>
+                            <tcontrols:DataGrid
+                                Grid.Row="1"
+                                AlternatingRowBackground="Gray"
+                                AutoGenerateColumns="False"
+                                CanUserReorderColumns="False"
+                                CanUserSortColumns="False"
+                                ItemsSource="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToVisibilityConverter}}">
+                                <tcontrols:DataGrid.Columns>
+                                    <tcontrols:DataGridTemplateColumn Header="Index">
+                                        <tcontrols:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Title}" />
+                                            </DataTemplate>
+                                        </tcontrols:DataGridTemplateColumn.CellTemplate>
+                                    </tcontrols:DataGridTemplateColumn>
+                                    <tcontrols:DataGridTemplateColumn Header="Value">
+                                        <tcontrols:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Value}" />
+                                            </DataTemplate>
+                                        </tcontrols:DataGridTemplateColumn.CellTemplate>
+                                    </tcontrols:DataGridTemplateColumn>
+                                </tcontrols:DataGrid.Columns>
+                            </tcontrols:DataGrid>
+                        </Grid>
+                    </ScrollViewer>
                 </DataTemplate>
             </tcontrols:MasterDetailsView.DetailsTemplate>
         </tcontrols:MasterDetailsView>
