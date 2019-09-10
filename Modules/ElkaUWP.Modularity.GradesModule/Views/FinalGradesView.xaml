@@ -313,16 +313,30 @@
                                 </TransitionCollection>
                             </TreeView.ItemContainerTransitions>
                         </TreeView>
-                        <ListView Grid.Row="1" ItemsSource="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="{Binding Title}" />
-                                        <TextBlock Text="{Binding Value}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <tcontrols:DataGrid
+                            Grid.Row="1"
+                            AlternatingRowBackground="LightGray"
+                            AutoGenerateColumns="False"
+                            CanUserReorderColumns="False"
+                            CanUserSortColumns="False"
+                            ItemsSource="{Binding Result.GradeList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <tcontrols:DataGrid.Columns>
+                                <tcontrols:DataGridTemplateColumn Header="Index">
+                                    <tcontrols:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Title}" />
+                                        </DataTemplate>
+                                    </tcontrols:DataGridTemplateColumn.CellTemplate>
+                                </tcontrols:DataGridTemplateColumn>
+                                <tcontrols:DataGridTemplateColumn Header="Value">
+                                    <tcontrols:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Value}" />
+                                        </DataTemplate>
+                                    </tcontrols:DataGridTemplateColumn.CellTemplate>
+                                </tcontrols:DataGridTemplateColumn>
+                            </tcontrols:DataGrid.Columns>
+                        </tcontrols:DataGrid>
                     </Grid>
                 </DataTemplate>
             </tcontrols:MasterDetailsView.DetailsTemplate>
